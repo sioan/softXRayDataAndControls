@@ -1,0 +1,49 @@
+#pyton files generated from the code below are 
+runOnSXR.py and runOnMonNode.py.
+
+#to do: find correct ipython to source instead of psana
+
+#on daq-sxr-mon06 
+
+import psana
+from pylab import *
+ds = psana.DataSource("shmem=psana.0:stop=no")
+myEvents = enumerate(ds.events())
+myEvents()
+myEvents
+nevent,evt = next(myEvents)
+evt
+psana.DetNames
+psana.DetNames()
+acquiris1Det = psana.Detector("Acq01")
+y,x = acquiris1Det(evt)
+y
+execfile("numpyClientServer.py")
+numpysocket.startClient("sxr-console",12301,y)
+history
+numpysocket.startClient("sxr-console",12301,y)
+numpysocket.startClient("sxr-control",12301,y)
+clear
+history
+
+#on sxr-console or sxr-controlfrom pylab import *
+execfile("numpyClientServer.py")
+myData = numpysocket.startServer(12301)
+plot(myData[1])
+show()
+plot(myData[1,:500])
+show()
+ion()
+plot(myData[1,:500])
+plot(epics.caget("SXR:NOTE:ARRAY:01"))
+import epics
+plot(epics.caget("SXR:NOTE:ARRAY:01"))
+plot(myData[1,500:1000])
+epics.caput("SXR:NOTE:ARRAY:01",myData[1,500:1000])
+figure(2)
+plot(epics.caget("SXR:NOTE:ARRAY:01"))
+figure(3)
+plot(myData[1,1000:1500])
+clear
+history
+

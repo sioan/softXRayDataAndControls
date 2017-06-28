@@ -1,0 +1,9 @@
+{
+  "ECHO:CHAMBER": " (...)",
+  "LOOK:AT:MY:COLONS": ":::::::::::::::",
+  "PV:FLOAT": 0,
+  "PV:FUNC:INT:SQR": 0,
+  "PV:GROW": 1,
+  "PV:INT": 0,
+  "PV:STRING": "zero"
+}

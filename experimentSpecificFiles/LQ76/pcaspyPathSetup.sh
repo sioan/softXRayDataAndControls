@@ -1,0 +1,3 @@
+#!/bin/bash
+PYTHONPATH="$PYTHONPATH:/reg/common/package/pcaspy/0.5.1-python2.7/$PSPKG_ARCH/lib/python2.7/site-packages/"
+PYTHONPATH="$PYTHONPATH:/reg/g/pcds/pyps/apps/pyioc/latest"
