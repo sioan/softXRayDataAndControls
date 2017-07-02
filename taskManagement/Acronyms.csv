@@ -1,0 +1,8 @@
+,,,,,
+,,,,,
+,,,,,
+MPI,message passing interface,,https://www.open-mpi.org/faq/?category=general,,tutorial here https://www.citutor.org/login.php?course=21
+,,,,,
+btl,byte transfer layer,,https://www.open-mpi.org/faq/?category=tuning,,used for mpi point to point 
+,,,,,
+mca,modular component architecture,,,,"frameworks, components, and modules that are assembled at run-time to create an MPI implementation"

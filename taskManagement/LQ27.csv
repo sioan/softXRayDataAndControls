@@ -1,0 +1,21 @@
+LQ27,start,6/23/2017,,,,,
+,,,,,,,
+person,my requests,requests from others,,date requested,date completed,,notes
+,,,,,,,
+Alex Reid,,Andor Camera,,06/30/17,06/30/17,,forwarded email to damiani
+Alex Reid,,rci motor trouble shooting,,06/29/17,06/29/17,,forgot to search through epics config/release to track down motor record work.  Also # is string replace in db file. Final solution was piezo motor driver swap
+browne,rci motor trouble shooting,,,06/29/17,,,
+Eric Edwards,reach out for data analysis,,,06/27/17,,,initiating conversation for dataanalysis
+,,,,,,,
+Alex Reid,data analysis planning,,,,,,
+,,,,,,,
+Eric Edwards,,getting account setup,,04/26/17,05/17/17,,not sure who dropped the ball. It got solved by Andrea eventually
+,,,,,,,
+Andrea Chan,eric edwards account (requested by alex),,,04/27/17,05/17/17,,
+,,,,,,,
+,,,,,,,
+LQ76,start,6/23/2017,,,,,
+,,,,,,,
+damiani,shared mem transfer to sxr,,operations,?,6/11/2017,,daq-sxr-mon06 communicates to control room over port 12301
+damiani,pcaspy,,operations,?,6/11/2017,,
+turner/alberto,,shared mem to accelerator,operations,6/5/2017,6/16/2017,,

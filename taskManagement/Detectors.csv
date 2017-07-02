@@ -1,0 +1,7 @@
+,,,,,,,,
+,,,,,,,,
+person,my requests,requests from others,,date requested,date required,date completed,,notes
+,,,,,,,,
+kaz,box to control wave8,,,06/27/17,,,,Pre-req for experiment below
+kaz,,Wave 8 integration into the daq and controls. Follow up with phil heimann,L2S-I ,06/27/17,07/12/17,,,can use xpp or mfx daq code as reference. Is fast (shot by shot). Daq-sxr-pgp01 in switch rack 22 in back of hutch. Final test on 18th
+hart,,gpib/ethernet trouble shooting,operations,6/20/2017,,,,

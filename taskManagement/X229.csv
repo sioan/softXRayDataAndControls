@@ -1,0 +1,17 @@
+X229,start,6/23/2017,,,,,
+,,,,,,,
+person,my requests,requests from others,,date requested,date completed,,notes
+paheim,,get MCP data parasitically from experiment,,06/26/17,06/27/17,,
+,,,,,,,
+hart,,copying calibration data to current and coming experiments,,06/27/17,06/27/17,,forwarded to loic
+schlotter,,modify collaborators (Loic's) code,,6/22/2017,6/22/2017,,
+schlotter,,Add new Newport stages,,6/23/2017,6/23/2017,,
+schlotter,,Lakeshore read back temp,,6/23/2017,6/23/2017,,
+schlotter,,diode manipulator position to EPICSarch so they will appear in the DAQ,,6/23/2017,6/23/2017,,
+schlotter,,"Test the DAQ with pnCCD, epicsArch and Acqiris channels all included",,6/23/2017,6/23/2017,,
+schlotter,,Sioan can you help Kevin with getting NoMachine to work,,6/23/2017,,,
+schlotter,,Test Mikhail’s program to see if you can get the correlation  coefficients vs. time,,6/23/2017,,,one day of debugging is insufficient
+schlotter,,The Newport stages are working well and thank you Scott for making the more compact epics screen.  Is there any way to open the Newport motors in their own window without having to scroll down each time,,6/23/2017,6/23/2017,,
+,,,,,,,
+giacomo,,remote ami not working,,06/25/17,06/26/17,,"/reg/g/pcds/dist/pds/sxr/ami-current/build/ami/bin/x86_64-linux-opt/online_ami -p 0 -s 172.21.39.87 -C mono,jet"
+giacomo,,new laser daq laptop and stand,,06/25/17,,,
