@@ -1,0 +1,27 @@
+misc,,,,,,,
+,,,,,,,
+,,,,,,,
+person,my requests,requests from others,,date requested,date completed,,notes
+,,,,,,,
+sioan,go over link for scheduling.,start reaching out to POCs,,06/30/17,never,,https://pswww.slac.stanford.edu/questionnaire_slac/run15/
+,,,,,,,
+,,,,,,,
+omar,nomachine support,,,06/30/17,06/30/17,,really fast. Needed to start using virtual desktop
+SLAC IT,bit locker is a pain and magnifying utility on windows pc,,,06/29/17,,,INC0150913
+Heiman,,ipython not plotting,,06/29/17,,,maybe x11 (xming) forwarding wasn’t turned on
+moeller,,amo elog very slow,,06/22/17,,,
+ovelman,,cables arrived,,06/26/17,,,
+o'grady,base line status of psnehfarm nodes,,,06/27/17,,,
+schlotter,,Archive Viewer,,6/21/2017 21:29,22-Jun,,
+damiani,acqiris communication,,operations,6/21/2017,06/21/17,,
+stephan moeller,,documentation for trippel from previous experiment,operations,6/21/2017,,,
+timur,crappy amo data,,L2S-I,6/21/2017,6/21/2017,,no crappy data saved. Georgi has data in LL72 and LO59
+philip heimann,,data retrieval,L2S-I,6/20/2017,6/20/2017,,mydata = genfromtxt("sxrlq7615Run232Acquirisi0.txt",invalid_raise=False)
+philip heimann,,data retrieval,L2S-I,6/19/2017,6/19/2017,,
+philip heimann,,data retrieval,L2S-I,11/28/2017,11/28/2017,,
+,,,,,,,
+hart,what does imperfect mean?,,,06/27/17,,,
+hart,,copying pnccd gain correction to calibration folder.  Requested to hold off.,,06/27/17,,,
+hart,following up on above,copying pnccd gain correction to calibration folder.  Requested to hold off.,,06/29/17,,,
+,,,,,,,
+omar,computer with pcie,,,05/04/17,06/19/17,,
