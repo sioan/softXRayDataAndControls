@@ -66,20 +66,6 @@ svn ls file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk/screens/edm
 #commmon tools like netconfig and epics-release
 /reg/common/tools/bin
 
-
-
-
-#psana bash commands
-source /reg/g/psdm/etc/ana_env.sh
-Detnames -e exp=xpptu15:run=59
-bqueues
-bjobs -u sioan -d -w
-bkill
-bsub
-batchSubmit = os.system("bsub -o /reg/neh/home/sioan/Desktop/psana/%J.log -q psnehhiprioq -n 32 mpirun --mca btl ^openib python kboPowerPostCleaning.py "+str(i)+" $1")
-
-
-
 #epics paths
 /reg/g/pcds/package/epics/3.14/ioc/sxr/poly/R1.9.0/db
 
@@ -140,6 +126,15 @@ sudo pkill -u -9 steitelb
 bhosts -w psnehfarm
 sudo /etc/init.d/lsf start #restart lsf daemons 
 /reg/common/tools/lsf/show_closed_nodes.sh
+
+#psana bash commands
+source /reg/g/psdm/etc/ana_env.sh
+Detnames -e exp=xpptu15:run=59
+bqueues
+bjobs -u sioan -d -w	#this one doesn't work. one above does
+bkill
+bsub
+batchSubmit = os.system("bsub -o /reg/neh/home/sioan/Desktop/psana/%J.log -q psnehhiprioq -n 32 mpirun --mca btl ^openib python kboPowerPostCleaning.py "+str(i)+" $1")
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
