@@ -6,3 +6,5 @@ MPI,message passing interface,,https://www.open-mpi.org/faq/?category=general,,t
 btl,byte transfer layer,,https://www.open-mpi.org/faq/?category=tuning,,used for mpi point to point 
 ,,,,,
 mca,modular component architecture,,,,"frameworks, components, and modules that are assembled at run-time to create an MPI implementation"
+,,,,,
+lsf,load sharing facility,,https://www.ibm.com/support/knowledgecenter/en/SSETD4_9.1.2/lsf_foundations/lsf_introduction_to.html,,
