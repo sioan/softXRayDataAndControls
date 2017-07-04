@@ -1,0 +1,5 @@
+LQ76,start,6/23/2017,,,,,
+,,,,,,,
+damiani,shared mem transfer to sxr,,operations,?,6/11/2017,,daq-sxr-mon06 communicates to control room over port 12301
+damiani,pcaspy,,operations,?,6/11/2017,,
+turner/alberto,,shared mem to accelerator,operations,6/5/2017,6/16/2017,,

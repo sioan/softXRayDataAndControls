@@ -2,7 +2,8 @@ LQ27,start,6/23/2017,,,,,
 ,,,,,,,
 person,my requests,requests from others,,date requested,date completed,,notes
 ,,,,,,,
-Alex Reid,,Andor Camera,,06/30/17,06/30/17,,forwarded email to damiani
+,,,,,,,
+Alex Reid,,Andor Camera,,06/30/17,7/3/2017,,supposed to be plugin.  But andory  binary wasn’t using right libs…. Damiani strace’d to figure that out.  Copied files from rhel5. Then rebooted.  (figuring out reboot took some time too)
 Alex Reid,,rci motor trouble shooting,,06/29/17,06/29/17,,forgot to search through epics config/release to track down motor record work.  Also # is string replace in db file. Final solution was piezo motor driver swap
 browne,rci motor trouble shooting,,,06/29/17,,,
 Eric Edwards,reach out for data analysis,,,06/27/17,,,initiating conversation for dataanalysis
