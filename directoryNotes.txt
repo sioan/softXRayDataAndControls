@@ -105,8 +105,12 @@ https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=195857401
 /reg/g/psdm/tutorials/examplePython/
 
 #location of xtc files
-/reg/d/psdm/sxr/sxrx22915/xtc/
-/reg/d/ffb/sxr/sxrx22915/xtc/
+/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop
+/reg/d/ffb/sxr/sxrx22915/xtc/	#intermidate
+/u2/pcds/pds/			#first stop after DAQ. physically on the dss node. if breaks, then remove node from daq in cnf file and report to IT.
+
+#DAQ log files
+/reg/g/pcds/pds/sxr/logfiles/	#can grep through them for xtc and find sucessful
 
 #location of amo epicsArch.txt
 #ini file contains names of PV's that are put into the DAQ
