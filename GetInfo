@@ -1,0 +1,180 @@
+#!/reg/g/psdm/web/ws/test/virtualenvs/ques_reporting/bin/python
+import json
+import argparse
+
+specKeys=[]
+for i in range(1,6):
+    specKeys.append('detector-slac-%d'%i)
+for i in range(1,10):
+    specKeys.append('contr-motors-%d'%i)
+specKeyFields={'detector-slac': ['type','qty','env','orient']}
+specKeyFields['contr-motors'] = ['provider','type','qty','prec','range','location','purpose']
+
+
+
+def printProp(runInfo, proposal, reqCat=[]):
+    try:
+        proposalInfo = runInfo[proposal]
+    except:
+        print 'could not get information for proposal ',proposal
+        print 'proposals in this run are: ',runInfo.keys()
+        return
+        
+    keysInProp = sorted(proposalInfo.keys())
+    #if only certain info required, reject other keys
+    relevantKeys=[]
+    mySpecKeys=[]
+
+    relevantSpecKeys=[]
+    for thisSpecKey in specKeys:
+        for cat in reqCat:
+            if thisSpecKey.find(cat)>=0:
+                relevantSpecKeys.append(thisSpecKey)
+    if len(reqCat)==0:
+        relevantSpecKeys = specKeys
+
+
+    for key in keysInProp:
+        isSpecial=False
+        for thisSpecKey in relevantSpecKeys:
+            if key.find(thisSpecKey)>=0:
+                isSpecial=True
+                if thisSpecKey not in mySpecKeys:
+                    mySpecKeys.append(thisSpecKey)
+
+        if not isSpecial:
+            if len(reqCat)==0:
+                relevantKeys.append(key)
+            else:
+                for cat in reqCat:
+                    if key.find(cat)>=0:
+                        relevantKeys.append(key)
+                    
+    print 'key \t \t Info' 
+    for key in relevantKeys:
+        print '%s \t \t %s'%(key, proposalInfo[key])
+
+    for key in mySpecKeys:
+        specInfo=key+'\t'
+        for subInfo in specKeyFields['%s-%s'%(key.split('-')[0],key.split('-')[1])]:
+            try:
+                specInfo+=' \t %s'%(proposalInfo['%s-%s'%(key,subInfo)])
+            except:
+                specInfo+=' \t '
+        print specInfo
+
+def propsInHutches(runInfo, hutches):
+    relevantProposals=[]
+    for proposal in runInfo.keys():
+        if runInfo[proposal]['instrument'] in hutches:
+            relevantProposals.append(proposal)
+    return relevantProposals
+
+
+def getKeys(runInfo, reqCat=[], proposals=[]):
+    relevantSpecKeys=[]
+    for thisSpecKey in specKeys:
+        for cat in reqCat:
+            if thisSpecKey.find(cat)>=0:
+                relevantSpecKeys.append(thisSpecKey)
+    if len(reqCat)==0:
+        relevantSpecKeys = specKeys
+
+    relevantKeys=[]
+    mySpecKeys=[]
+    if proposals==[]: proposals = runInfo.keys()
+    for proposal in proposals:
+        proposalInfo = runInfo[proposal]
+        
+        keysInProp = sorted(proposalInfo.keys())
+        #if only certain info required, reject other keys
+        for key in keysInProp:
+            isSpecial=False
+            for thisSpecKey in relevantSpecKeys:
+                if key.find(thisSpecKey)>=0:
+                    isSpecial=True
+                    if thisSpecKey not in mySpecKeys:
+                        mySpecKeys.append(thisSpecKey)
+
+            if not isSpecial:
+                if len(reqCat)==0 and key not in relevantKeys:
+                    relevantKeys.append(key)
+                else:
+                    for cat in reqCat:
+                        if key.find(cat)>=0 and key not in relevantKeys:
+                            relevantKeys.append(key)
+                    
+    return sorted(relevantKeys), sorted(mySpecKeys)
+
+def printKeys(runInfo, proposals, reqCat=[]):
+    relevantKeys, mySpecKeys = getKeys(runInfo, reqCat=reqCat, proposals=proposals)
+    headerString='Key \t\t'
+    for proposal in proposals:
+        headerString+='%s \t'%proposal
+    print headerString
+
+    for key in relevantKeys:
+        infoString=key+'\t\t'
+        for proposal in proposals:
+            proposalInfo = runInfo[proposal]
+            try:
+                infoString+='%s |'%proposalInfo[key]
+            except:
+                infoString+='No Response|'
+        infoString+='\n'
+        print infoString
+
+    for key in mySpecKeys:
+        specInfo=key+'\t\t'
+        for proposal in proposals:
+            proposalInfo = runInfo[proposal]
+            for subInfo in specKeyFields['%s-%s'%(key.split('-')[0],key.split('-')[1])]:
+                try:
+                    specInfo+=' %s'%(proposalInfo['%s-%s'%(key,subInfo)])
+                except:
+                    specInfo+=' '
+            specInfo+='|'
+        print specInfo
+
+    return
+
+with open('/reg/neh/home/snelson/RunPrep/run15.json','r') as f:
+    run15 = json.load(f)
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--proposal", help="proposal ID")
+parser.add_argument("--hutch", help="hutch, takes a comma separated list")
+parser.add_argument("--category", help="caterogies of information (e.g. \'data,detectors\')")
+parser.add_argument("--each", help="print all information for each proposal, can be combined with category argument",action='store_true')
+
+args = parser.parse_args()
+
+
+hutches=['XCS','XPP']
+if args.hutch:
+    hutches = args.hutch.strip(' ').split(',')
+
+if args.proposal:
+    prop=args.proposal
+else:
+    prop=''
+
+if args.category:
+    cat = args.category.strip(' ').split(',')
+else:
+    cat=[]
+
+if prop!='':
+    printProp(run15, prop, cat)    
+
+else:
+    proposals = propsInHutches(run15, hutches)
+    print 'Hutches ',hutches,' have %d proposals: '%len(proposals)
+    print proposals
+
+    if args.each:
+        for proposal in proposals:
+            print '\n------------------------  %s  ---------------------------------------'%proposal
+            printProp(run15, proposal, cat)    
+    else:
+        print printKeys(run15, proposals, reqCat=cat)
