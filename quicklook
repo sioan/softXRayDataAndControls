@@ -1,4 +1,4 @@
-#!/home/sioan/anaconda2/bin/python
+#!/reg/g/pcds/pkg_mgr/release/python/2.7.5/x86_64-rhel7-gcc48-opt/bin/python
 #import argparse
 import sys
 
@@ -8,7 +8,7 @@ import sys
 
 #args = parser.parse_args()
 
-f = open("/home/sioan/Desktop/softXRayDataAndControls/directoryNotes.txt")
+f = open("/reg/neh/home5/sioan/Desktop/softXRayDataAndControls/directoryNotes.txt")
 
 myString = sys.argv[1]
 
