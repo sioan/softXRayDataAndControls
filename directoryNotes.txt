@@ -133,7 +133,7 @@ https://pswww.slac.stanford.edu/apps/EpicsViewer/
 bjobs -l -u sioan
 sudo bkill
 sudo pkill -u -9 steitelb
-bhosts -w psnehfarm
+bhosts -w psnehfarm	#psana 1501 through 1520, except for psana1508, should all have ok status.
 sudo /etc/init.d/lsf start #restart lsf daemons 
 /reg/common/tools/lsf/show_closed_nodes.sh
 
