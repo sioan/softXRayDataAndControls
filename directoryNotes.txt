@@ -18,6 +18,12 @@ dbps
 /reg/g/xpp/scripts/camViewer -n P2S
 /reg/g/xpp/scripts/gige
 
+#gige cameras to check if camera is working
+#also can search for below name in netconfig
+ping gige-sxr-cam02
+
+
+
 #Damiani's acquiris export
 ~ddamiani/Workarea/psana-scripts/acq/acq_export
 ./acq_export -o SXR:TST:ACQ:01, Acq01,0		#gets psana data from shared memory. arguments are pv Name, psana detector name, and then acquiris channel
