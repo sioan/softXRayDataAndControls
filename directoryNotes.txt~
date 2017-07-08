@@ -192,12 +192,6 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 
 #problem with pnccd ioc, call mike browne
 
-#location of xtc files
-#/u2/pcds/pds/			#first stop after DAQ. physically on the dss node. if breaks, then remove node from daq in cnf file #and report to IT. i.e. ssh to the dss node and check this file space
-#/reg/d/ffb/sxr/sxrx22915/xtc/	#intermidate this is a lustre file system
-#/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop this is also a lustre file system
-
-
 #problem with DAQ cam?  check usb ports with ls usb
 ##################################
 

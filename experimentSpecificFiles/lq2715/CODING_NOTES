@@ -1,0 +1,5 @@
+USEFUL NOTES for DEVELOPING CODE:
+
+Type the following in ipython for automatically reloading the modules before executing code
+1 - %load_ext autoreload
+2 - %autoreload 2

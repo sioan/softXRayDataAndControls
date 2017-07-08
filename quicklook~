@@ -22,6 +22,7 @@ for i in f:
 		myBuffer.append(i)
 	
 		if myString in myBuffer[2]:
+
 			for j in myBuffer:
 				if j not in alreadyPrintedLines: 
 					print j,
