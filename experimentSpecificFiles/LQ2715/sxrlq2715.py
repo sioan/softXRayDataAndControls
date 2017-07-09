@@ -39,9 +39,9 @@ monoDet = myDetector('MONO_encoder')
 pnccdDet = myDetector('pnccd')
 andorDet = myDetector('andor')
 # Path to the file with parameters of the experiment:
-CALS = '/reg/d/psdm/sxr/sxrlq2715/scratch/cals/limits.csv'
+CALS = '/reg/d/psdm/sxr/sxrlq2715/scratch/cals/'
 # Get integration limits from cals file
-with open(CALS, 'rb') as csvfile:
+with open(CALS + 'limits.csv', 'rb') as csvfile:
 	in_data = np.genfromtxt(csvfile, names=True, delimiter=',')
 
 run_start_col = in_data['run_start']
@@ -61,9 +61,7 @@ mcp_limits = [run_cals['mcp_int_start'],run_cals['mcp_int_end'],run_cals['mcp_de
 mcp4_limits = [run_cals['mcp4_int_start'],run_cals['mcp4_int_end'],run_cals['mcp4_dead_start'],run_cals['mcp4_dead_end']]
 yag_limits = [run_cals['yag_int_start'],run_cals['yag_int_end'],run_cals['yag_dead_start'],run_cals['yag_dead_end']]
 sin_limits = [run_cals['sin_int_start'],run_cals['sin_int_end'],run_cals['sin_dead_start'],run_cals['sin_dead_end']]
-x1Start, x1End, y1Start, y1End = [run_cals['x1Start'],run_cals['x1End'],run_cals['y1Start'],run_cals['y1End']]
-x2Start, x2End, y2Start, y2End = [run_cals['x2Start'],run_cals['x2End'],run_cals['y2Start'],run_cals['y2End']]
-x3Start, x3End, y3Start, y3End = [run_cals['x3Start'],run_cals['x3End'],run_cals['y3Start'],run_cals['y3End']]
+andor_limits = [run_cals['andorStart'],run_cals['andorEnd'],run_cals['andorbkgStart'],run_cals['andorbkgEnd']]
 
 def acqiris_int(traces, int_limit):
 	'Integration function for acqiris'
@@ -73,13 +71,24 @@ def acqiris_int(traces, int_limit):
 
 	return np.sum(subTrace_int.astype(np.float64) - np.mean(subTrace_dead.astype(np.float64)))
 
+
+# Binning against something
+try:
+	with open(CALS + 'run' + runnum + '.cfg', 'rb') as csvfile:
+		binvalues = np.genfromtxt(csvfile, names=True, delimiter=',')
+	binkey = binvalues.dtype.names[0]
+except:
+	binvalues = None
+
 acq02Det = myDetector('Acq02')
 acq01Det = myDetector('Acq01')
-magnetDet = myDetector('rci_magnet_voltage')
+#magnetDet = myDetector('rci_magnet_voltage')
+magnetDet = myDetector('SXR:EXP:AOT:04')
 phasecavDet = myDetector('PhaseCavity')
 delayStgDet = myDetector('SXR:LAS:MCN1:06.RBV')
 waveplateDet = myDetector('SXR:LAS:MCN1:04.RBV')
 vitaraDet = myDetector('LAS:FS2:VIT:FS_TGT_TIME')
+vitaraLockedDet = myDetector('LAS:FS2:VIT:PHASE_LOCKED')
 monoPVDet = myDetector('SXR:MON:MMS:06.RBV')
 evrDet = myDetector('evr0')
 gdeDet = myDetector('FEEGasDetEnergy')
@@ -94,11 +103,23 @@ tt_amplDet = myDetector('TTSPEC:AMPL')
 
 smldata = dsource.small_data('run'+runnum+'.h5',gather_interval=1000)
 
-timestamp0seconds = (datetime.datetime(2017,06,21,20,34) - datetime.datetime(1970,1,1)).total_seconds()
+timestamp0seconds = (datetime.datetime(2017,07,8,20,34) - datetime.datetime(1970,1,1)).total_seconds()
 
 pnccdSumImg = None
+pnccdSumImgnb = 0
+
+andorSumImg = None
+andorSumImgnb = 0
+
 mcp4Sum = None
+mcp4Sumnb = 0
+
 sinSum = None
+sinSumnb = 0
+
+binnedpnccd = None
+
+mcp4threshold = -1e8
 
 eventToStartProcessingAt = 1000
 eventToStopProcessingAt = 2000
@@ -107,7 +128,6 @@ from mpi4py import MPI
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
-
 
 for nevt,evt in enumerate(dsource.events()):
 
@@ -135,6 +155,7 @@ for nevt,evt in enumerate(dsource.events()):
 	delayStgPV = delayStgDet[1]()
 	waveplatePV = waveplateDet[1]()
 	vitaraPV = vitaraDet[1]()
+	vitaraLockedPV = vitaraLockedDet[1]()
 	monoPV = monoPVDet[1]()
 	evr = evrDet[1].eventCodes(evt)
 	gde = gdeDet[1].get(evt)
@@ -151,6 +172,8 @@ for nevt,evt in enumerate(dsource.events()):
 	# Skip event if while detector is present it returns None
 	if pnccdDet[0] and (pnccd is None):
 		continue
+	if andorDet[0] and (andor is None):
+		continue
 	if dlsDet[0] and (dls is None):
 		continue
 	if monoDet[0] and (mono is None):
@@ -158,6 +181,8 @@ for nevt,evt in enumerate(dsource.events()):
 	if acq01Det[0] and (acq01 is None):
 		continue
 	if acq02Det[0] and (acq02 is None):
+		continue
+	if magnetDet[0] and (magnet is None):
 		continue
 	if phasecavDet[0] and (phasecav is None):
 		continue
@@ -178,12 +203,12 @@ for nevt,evt in enumerate(dsource.events()):
 
 	# Process event codes
 	if 76 in evr:
-		code = 76	#laser on time
-	elif 77 in evr:		#laser delated (i.e. off)
-		code = 77
+		laser = 1
+	elif 77 in evr:
+		laser = 0
 	else:
-		code = 0
-	myDictionary["code"] = code
+		laser = -1
+	myDictionary["laser"] = laser
 
 	if 162 in evr:
 		bykick = 1
@@ -191,21 +216,15 @@ for nevt,evt in enumerate(dsource.events()):
 		bykick = 0
 	myDictionary["bykick"] = bykick
 
-
-	# Process pnccd if present
-	if pnccdDet[0]:
-		if pnccdSumImg is None:
-			pnccdSumImg = pnccd.astype(np.double)
+	# Process andor if present
+	if andorDet[0]:
+		if andorSumImg is None:
+			andorSumImg = andor.T.astype(np.double)
 		else:
-			pnccdSumImg += pnccd.astype(np.double)
+			andorSumImg += andor.T.astype(np.double)
+		andorSumImgnb += 1
 
-		signal = np.sum(pnccd[int(y1Start):int(y1End),int(x1Start):int(x1End)])
-		reference = np.sum(pnccd[int(y2Start):int(y2End),int(x2Start):int(x2End)])
-		dark = np.sum(pnccd[int(y3Start):int(y3End),int(x3Start):int(x3End)])
-
-		myDictionary["signal"]= signal
-		myDictionary["reference"]= reference
-		myDictionary["dark"]= dark
+		myDictionary["transmission"] = acqiris_int(andor.T, andor_limits)
 
 	# Process acqiris if present
 	if acq02Det[0]:
@@ -216,6 +235,7 @@ for nevt,evt in enumerate(dsource.events()):
 			sinSum = acq02[1].astype(np.double)
 		else:
 			sinSum += acq02[1].astype(np.double)
+		sinSumnb += 1
 	
 	if acq01Det[0]:
 		myDictionary["mcp4"]= acqiris_int(acq01[2], mcp4_limits)
@@ -223,6 +243,7 @@ for nevt,evt in enumerate(dsource.events()):
 			mcp4Sum = acq01[2].astype(np.double)
 		else:
 			mcp4Sum += acq01[2].astype(np.double)
+		mcp4Sumnb += 1
 
 	if dlsDet[0]:
 		myDictionary["dls"] = dls.encoder_count()[0]
@@ -232,6 +253,9 @@ for nevt,evt in enumerate(dsource.events()):
 
 	if phasecavDet[0]:
 		myDictionary["phasecav"] = phasecav.fitTime2()
+
+	if magnetDet[0]:
+		myDictionary["magnet"] = magnet
 
 	if delayStgDet[0]:
 		myDictionary["delayStgPV"] = delayStgPV
@@ -245,6 +269,9 @@ for nevt,evt in enumerate(dsource.events()):
 	if vitaraDet[0]:
 		myDictionary["vitaraPV"] = vitaraPV
 
+	if vitaraLockedDet[0]:
+		myDictionary["vitaraLockedPV"] = vitaraLockedPV
+
 	if gdeDet[0]:
 		enrc = 0.5*(gde.f_21_ENRC() + gde.f_22_ENRC())
 		myDictionary["gde"] = enrc
@@ -255,19 +282,58 @@ for nevt,evt in enumerate(dsource.events()):
 		myDictionary["tt_fwhm"] = tt_fwhm
 		myDictionary["tt_amp"] = tt_ampl
 
+	# Process pnccd if present
+	if pnccdDet[0]:
+		if pnccdSumImg is None:
+			pnccdSumImg = pnccd.astype(np.double)
+		else:
+			pnccdSumImg += pnccd.astype(np.double)
+		pnccdSumImgnb += 1
+
+		if binvalues is not None:
+			# find the proper bin index for this event
+			# the first bin is for laser off
+			if binkey == 'delay':
+				binidx = np.argmin(np.abs(binvalues[binkey] - myDictionary["vitaraPV"])) + 1
+			else:
+				binidx = 0
+
+			if not myDictionary["laser"]:
+				binidx = 0
+
+			# allocate bin places
+			if binnedpnccd is None:
+				binnedpnccd = np.zeros((np.shape(binvalues)[0] + 1, np.shape(pnccd)[0], np.shape(pnccd)[1]))
+				binnedcount = np.zeros((np.shape(binvalues)[0] + 1))
+				binnedmcp4 = np.zeros((np.shape(binvalues)[0] + 1))
+			
+			if (myDictionary["mcp4"] > mcp4threshold) and vitaraLockedPV:
+				binnedpnccd[binidx,:,:] += pnccd
+				binnedcount[binidx] += 1
+				binnedmcp4[binidx] += myDictionary["mcp4"]
+
 	smldata.event(myDictionary)
 
 # save HDF5 file, including summary data
 summary = {}
 
 if pnccdDet[0]:
-	summary["pnccdSumImg"] = smldata.sum(pnccdSumImg)
+	summary["pnccdSumImg"] = smldata.sum(pnccdSumImg/pnccdSumImgnb)/size
+	if binvalues is not None:
+		summary["bin/pnccd"] = smldata.sum(binnedpnccd)
+		summary["bin/count"] = smldata.sum(binnedcount)
+		summary["bin/mcp4"] = smldata.sum(binnedmcp4)
+		summary["bin/bins"] = binvalues[binkey]
+		summary["bin/key"] = binkey
+
+if andorDet[0]:
+	summary["andorSumImg"] = smldata.sum(andorSumImg/andorSumImgnb)/size
 
 if acq01Det[0]:
-	summary["mcp4Sum"] = smldata.sum(mcp4Sum)
+	summary["mcp4Sum"] = smldata.sum(mcp4Sum/mcp4Sumnb)/size
 
 if acq02Det[0]:
-	summary["sinSum"] = smldata.sum(sinSum)
+	summary["sinSum"] = smldata.sum(sinSum/sinSumnb)/size
 
 smldata.save(summary)
 smldata.close()

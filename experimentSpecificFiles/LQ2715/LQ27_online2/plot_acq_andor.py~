@@ -1,0 +1,24 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+import psana
+
+from psmon import publish
+from psmon.plots import XYPlot, Image
+
+psana.setOption('psana.calib-dir', '/reg/d/psdm/sxr/sxro5916/calib')
+ds_str = 'shmem=psana.0:stop=no'
+ds = psana.DataSource(ds_str)
+I0 = psana.Detector('Acq02')
+andor = psana.Detector('andor')
+events = ds.events()
+evt = events.next()
+evt = events.next()
+f, axs = plt.subplots(2, 1, sharex=True)
+axs[0].plot(I0.waveform(evt)[0])
+axs[1].plot(I0.waveform(evt)[3])
+f = plt.figure()
+plt.plot(andor.image(evt)[0])
+plt.show()
+
+

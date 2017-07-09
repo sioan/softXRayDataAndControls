@@ -1,0 +1,49 @@
+import numpy as np
+import ConfigParser
+
+def get_cfg():
+    config = ConfigParser.ConfigParser()
+    config.read('cfg.cfg')
+    cfg = {}
+    # General
+    cfg['psana_ds'] = config.get('Main', 'psana_ds')
+    cfg['update_period'] = config.getfloat('Main', 'update_period')
+    cfg['perc_too_high'] = config.getfloat('Main', 'perc_too_high')
+    cfg['perc_too_low'] = config.getfloat('Main', 'perc_too_low')
+    # MCP
+    cfg['mcp_chan'] = config.getint('mcp', 'mcp_chan')
+    cfg['mcp_sig_start'] = config.getfloat('mcp', 'sig_start')
+    cfg['mcp_sig_end'] = config.getfloat('mcp', 'sig_end')
+    cfg['mcp_dead_start'] = config.getfloat('mcp', 'dead_start')
+    cfg['mcp_dead_end'] = config.getfloat('mcp', 'dead_end')
+    # MCP4
+    cfg['mcp4_chan'] = config.getint('mcp4', 'mcp4_chan')
+    cfg['mcp4_sig1_start'] = config.getfloat('mcp4', 'sig1_start')
+    cfg['mcp4_sig1_end'] = config.getfloat('mcp4', 'sig1_end')
+    cfg['mcp4_sig2_start'] = config.getfloat('mcp4', 'sig2_start')
+    cfg['mcp4_sig2_end'] = config.getfloat('mcp4', 'sig2_end')
+    cfg['mcp4_sig3_start'] = config.getfloat('mcp4', 'sig3_start')
+    cfg['mcp4_sig3_end'] = config.getfloat('mcp4', 'sig3_end')
+    cfg['mcp4_sig4_start'] = config.getfloat('mcp4', 'sig4_start')
+    cfg['mcp4_sig4_end'] = config.getfloat('mcp4', 'sig4_end')
+    cfg['mcp4_dead_start'] = config.getfloat('mcp4', 'dead_start')
+    cfg['mcp4_dead_end'] = config.getfloat('mcp4', 'dead_end')
+    # CCD
+    cfg['ccd_name'] = config.get('ccd', 'name')
+    cfg['ccd_sig_top'] = config.getfloat('ccd', 'sig_top')
+    cfg['ccd_sig_bottom'] = config.getfloat('ccd', 'sig_bottom')
+    cfg['ccd_sig_left'] = config.getfloat('ccd', 'sig_left')
+    cfg['ccd_sig_right'] = config.getfloat('ccd', 'sig_right')
+    cfg['ccd_dead_top'] = config.getfloat('ccd', 'dead_top')
+    cfg['ccd_dead_bottom'] = config.getfloat('ccd', 'dead_bottom')
+    cfg['ccd_dead_left'] = config.getfloat('ccd', 'dead_left')
+    cfg['ccd_dead_right'] = config.getfloat('ccd', 'dead_right')
+    # magnet
+    cfg['magnet_threshold'] = config.getfloat('magnet', 'threshold')
+    # scanning variables
+    cfg['scan_key'] = config.get('scan', 'key')
+    heading = cfg['scan_key']+'scan'
+    cfg['scan_start'] = config.getfloat(heading, 'start')
+    cfg['scan_stop'] = config.getfloat(heading, 'stop')
+    cfg['num_bins'] = config.getfloat(heading, 'num_bins')
+    return cfg

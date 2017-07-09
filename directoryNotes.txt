@@ -91,6 +91,8 @@ export EPICS=file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk
 console ioc-sxr-gmd-vme1
 https://confluence.slac.stanford.edu/display/LCLSControls/MotorolaProcessorRTEMS+How-to+Flash+an+mvme6100
 
+#location of saved PV (pv) values for when an IOC goes down
+/reg/d/iocData/ioc-sxr-evr03/autosave
 
 #epics bash setup.  Some is copied from the files.
 source /reg/neh/home/sioan/setupEpics
