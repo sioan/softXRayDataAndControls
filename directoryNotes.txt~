@@ -91,6 +91,8 @@ export EPICS=file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk
 console ioc-sxr-gmd-vme1
 https://confluence.slac.stanford.edu/display/LCLSControls/MotorolaProcessorRTEMS+How-to+Flash+an+mvme6100
 
+#location of saved PV (pv) values for when an IOC goes down
+/reg/d/iocData/ioc-sxr-evr03/autosave
 
 #epics bash setup.  Some is copied from the files.
 source /reg/neh/home/sioan/setupEpics
@@ -191,6 +193,12 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 #pnccd cards come lose during rack motion.  Just need reseating
 
 #problem with pnccd ioc, call mike browne
+
+#location of xtc files
+#/u2/pcds/pds/			#first stop after DAQ. physically on the dss node. if breaks, then remove node from daq in cnf file #and report to IT. i.e. ssh to the dss node and check this file space
+#/reg/d/ffb/sxr/sxrx22915/xtc/	#intermidate this is a lustre file system
+#/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop this is also a lustre file system
+
 
 #problem with DAQ cam?  check usb ports with ls usb
 ##################################

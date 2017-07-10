@@ -1,4 +1,5 @@
-#!/reg/g/pcds/package/python-2.5.2/bin/python
+#!/reg/g/pcds/pkg_mgr/release/python/2.7.5/x86_64-rhel6-gcc44-opt/bin/python
+##!/reg/g/pcds/package/python-2.5.2/bin/python
 #
 
 import subprocess

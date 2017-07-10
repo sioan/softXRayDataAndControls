@@ -1,0 +1,699 @@
+=== SXR ===
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_09:13:58_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 09:13:58): 
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+ 
+
+                          Run                             -                             -                             -                             -                             - 
+                     Duration                      00:23:07                      00:02:37                      00:00:15                      00:01:21                      00:09:47 
+                       Events                        157779                         18560                          1746                          9606                         69715 
+                      Damaged                          1178                          1974                          1746                            68                           484 
+                        Bytes                      352.5 GB                       37.8 GB                      502.0 MB                        2.7 GB                       19.6 GB 
+                        EvtSz                        2.3 MB                        2.1 MB                      294.4 kB                      294.4 kB                      294.4 kB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                          1896                          1746                             -                             - 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                           220                            26                             2                            13                            98 
+              FEEGasDetEnergy                            55                             0                             0                             0                             1 
+                          GMD                           936                            55                             0                            55                           385 
+                      EOrbits                            22                             0                             0                             0                             0 
+               EBeam Low Curr                         40495                          5161                            95                           832                          4800  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_10:19:52_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 10:19:52): 
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+ 
+
+                          Run                             -                             -                             - 
+                     Duration                      00:00:51                      00:00:10                      00:00:47 
+                       Events                          5877                          1119                          5542 
+                      Damaged                          5877                             2                            10 
+                        Bytes                       13.1 GB                      317.3 MB                       12.4 GB 
+                        EvtSz                        2.3 MB                      290.3 kB                        2.3 MB
+
+                        Evr-1                             0                             0                             0 
+                        Evr-0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             -                             0 
+     SxrEndstation-0|USDUSB-0                          5877                             0                             - 
+                  EpicsArch-0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             1                             0                             0 
+                        EBeam                             0                             0                             0 
+                  PhaseCavity                            10                             2                             9 
+              FEEGasDetEnergy                             0                             0                             0 
+                          GMD                             0                             0                             1 
+                      EOrbits                             0                             0                             0 
+               EBeam Low Curr                          1140                            60                           537  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_02:45:44_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 02:45:44): 
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+ 
+
+                          Run                             -                             3                             -                             -                             4 
+                     Duration                      00:10:33                      00:00:40                      00:00:22                      01:24:24                      00:04:48 
+                       Events                         75112                          4713                          2617                        598418                         34234 
+                      Damaged                           601                             6                            59                          3013                           212 
+                        Bytes                      314.5 GB                       19.7 GB                        5.8 GB                        1.3 TB                       76.5 GB 
+                        EvtSz                        4.3 MB                        4.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                            12                             0 
+                        Evr-0                             0                             0                             0                            12                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                            12                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                            12                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                            12                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                            12                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                            12                             0 
+                  EpicsArch-0                             0                             0                             0                            12                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                            12                             0 
+     SxrBeamline-0|Opal1000-1                             0                             0                             -                             -                             - 
+                        EBeam                             0                             0                             0                            15                             0 
+                  PhaseCavity                           105                             6                             4                           816                            49 
+              FEEGasDetEnergy                             1                             0                             0                            17                             0 
+                          GMD                           496                             0                            55                          2143                           165 
+                      EOrbits                             0                             0                             0                            74                             0 
+               EBeam Low Curr                          6367                           363                           273                         43055                          2200  
+ 
+
+                          Run                             5                             -                             6                             7                             8 
+                     Duration                      00:04:38                      00:06:50                      00:26:34                      00:01:08                      00:01:56 
+                       Events                         33025                         48711                        189362                          8062                         13751 
+                      Damaged                           383                           348                          1035                            67                            19 
+                        Bytes                       73.8 GB                      108.8 GB                      423.0 GB                       18.0 GB                       30.7 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             6                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             -                             -                             -                             -                             - 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                            47                            73                           263                            12                            19 
+              FEEGasDetEnergy                             0                             0                             1                             0                             0 
+                          GMD                           330                           275                           771                            55                             0 
+                      EOrbits                             0                             0                             0                             0                             0 
+               EBeam Low Curr                          2075                          3172                         14297                          1777                          1218  
+ 
+
+                          Run                             9                             -                            10                            11                            12 
+                     Duration                      00:13:48                      00:03:58                      00:07:11                      00:11:02                      00:05:32 
+                       Events                         98323                         28232                         51239                         78554                         39368 
+                      Damaged                           579                           153                           132                           375                           162 
+                        Bytes                      219.7 GB                       63.1 GB                      114.5 GB                      175.5 GB                       87.9 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             -                             -                             -                             -                             - 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                           137                            43                            77                            99                            51 
+              FEEGasDetEnergy                             1                             0                             0                             1                             0 
+                          GMD                           441                           110                            55                           276                           111 
+                      EOrbits                             0                             0                             0                             0                             0 
+               EBeam Low Curr                          8699                          1805                          3671                          5113                          2630  
+ 
+
+                          Run                            13                            14                            15                            16                            17 
+                     Duration                      00:05:36                      00:05:12                      00:06:55                      00:06:11                      00:05:17 
+                       Events                         39899                         36047                         48141                         44119                         37647 
+                      Damaged                           113                            51                          1700                          5675                          5674 
+                        Bytes                       89.1 GB                       80.5 GB                      107.5 GB                       98.6 GB                       84.1 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             -                             -                             -                             -                             - 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                            58                            50                            62                            50                            52 
+              FEEGasDetEnergy                             0                             0                             1                             0                             1 
+                          GMD                            55                             0                          1540                          5633                          5626 
+                      EOrbits                             0                             1                           100                             0                             1 
+               EBeam Low Curr                          3090                          2346                          5679                          2930                          3373  
+ 
+
+                          Run                            18                            19                            20                            21                            22 
+                     Duration                      00:07:43                      00:05:48                      00:05:42                      00:05:09                      00:00:35 
+                       Events                         55003                         41355                         40597                         36672                          4160 
+                      Damaged                          7398                          4833                            55                            50                             5 
+                        Bytes                      122.8 GB                       92.4 GB                       90.7 GB                       81.9 GB                        9.3 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             1                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                            17                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                            17                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             -                             -                             -                             -                             - 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                            70                            58                            54                            50                             5 
+              FEEGasDetEnergy                             1                             1                             0                             0                             0 
+                          GMD                          7315                          4784                             1                             0                             0 
+                      EOrbits                             0                             0                             0                             0                             0 
+               EBeam Low Curr                          3824                          2735                          3019                          2573                           275  
+ 
+
+                          Run                            23                            24                            25                            26                            27 
+                     Duration                      00:00:34                      00:00:37                      00:05:05                      00:05:26                      00:05:08 
+                       Events                          3969                          4330                         36203                         38687                         36510 
+                      Damaged                             5                             8                            49                            46                            48 
+                        Bytes                        8.9 GB                        9.7 GB                       80.9 GB                       86.4 GB                       81.6 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             -                             -                             -                             -                             - 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                             5                             8                            49                            46                            47 
+              FEEGasDetEnergy                             0                             0                             0                             0                             0 
+                          GMD                             0                             0                             0                             0                             1 
+                      EOrbits                             0                             0                             0                             0                             0 
+               EBeam Low Curr                           370                           405                          2696                          2678                          2346  
+ 
+
+                          Run                            28                            29                            30                            31                            32 
+                     Duration                      00:05:04                      00:05:05                      00:05:38                      00:05:03                      00:05:03 
+                       Events                         34867                         36177                         40179                         36002                         35941 
+                      Damaged                           147                           272                           437                           159                            49 
+                        Bytes                       77.9 GB                       80.8 GB                       89.8 GB                       80.4 GB                       80.3 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             -                             -                             -                             -                             - 
+                        EBeam                             0                             1                             0                             0                             0 
+                  PhaseCavity                            42                            50                            51                            51                            49 
+              FEEGasDetEnergy                             0                             1                             0                             0                             0 
+                          GMD                            56                           221                           387                           110                             0 
+                      EOrbits                           105                             1                             1                             0                             0 
+               EBeam Low Curr                          6344                          2540                          2788                          2359                          2588  
+ 
+
+                          Run                            33                            34                            35                            36                            37 
+                     Duration                      00:06:09                      00:05:07                      00:05:15                      00:05:26                      00:01:28 
+                       Events                         43892                         36411                         37365                         38747                         10441 
+                      Damaged                           335                           276                           213                           225                           176 
+                        Bytes                       98.1 GB                       81.3 GB                       83.5 GB                       86.6 GB                       23.3 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             -                             -                             -                             -                             - 
+                        EBeam                             1                             3                             0                             0                             0 
+                  PhaseCavity                            55                            51                            47                            60                            11 
+              FEEGasDetEnergy                             2                             1                             1                             0                             0 
+                          GMD                           275                           222                           165                           165                           165 
+                      EOrbits                             2                             0                             0                             0                             0 
+               EBeam Low Curr                          3014                          2301                          2606                          2531                           657  
+ 
+
+                          Run                            38                            39                            40                            41                            42 
+                     Duration                      00:17:48                      00:01:04                      00:15:39                      00:01:27                      00:00:44 
+                       Events                        126906                          7535                        111529                         10378                          5156 
+                      Damaged                           742                            68                           823                            14                             7 
+                        Bytes                      283.5 GB                       16.8 GB                      249.2 GB                       23.2 GB                       11.5 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             -                             -                             -                             -                             - 
+                        EBeam                             1                             0                             0                             0                             0 
+                  PhaseCavity                           185                            12                           159                            14                             7 
+              FEEGasDetEnergy                             5                             1                             1                             0                             0 
+                          GMD                           550                            55                           662                             0                             0 
+                      EOrbits                             1                             0                             2                             0                             0 
+               EBeam Low Curr                          8442                           478                          7808                          4406                          5156  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_23:31:25_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 23:31:25): 
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+ 
+
+                          Run                            46                             -                             - 
+                     Duration                      00:00:09                      00:00:09                      00:01:03 
+                       Events                           994                           983                          7135 
+                      Damaged                           994                           983                          7135 
+                        Bytes                        2.2 GB                        2.2 GB                        2.0 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                      294.3 kB
+
+                        Evr-1                             0                             0                             0 
+                        Evr-0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0 
+               Camp-0|pnCCD-1                           994                           983                             - 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             0                             0                          7135 
+                        EBeam                             0                             0                             0 
+                  PhaseCavity                             2                             0                            12 
+              FEEGasDetEnergy                             0                             0                             0 
+                          GMD                             0                             0                            60 
+                      EOrbits                             0                             0                             0 
+               EBeam Low Curr                            63                            53                           459 
+     SxrBeamline-0|Opal1000-2                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             -                             0                             0  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_10:37:23_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 10:37:23): 
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+ 
+
+                          Run                             -                             -                             -                             -                            43 
+                     Duration                      00:02:25                      00:00:13                      00:06:04                      00:00:49                      00:00:40 
+                       Events                         17202                          1494                         43175                          5815                          4681 
+                      Damaged                            24                             4                           507                           173                             5 
+                        Bytes                       33.9 GB                       22.5 MB                       85.0 GB                       11.4 GB                        9.2 GB 
+                        EvtSz                        2.0 MB                       15.4 kB                        2.0 MB                        2.0 MB                        2.0 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             -                             0                             0                             0 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                            24                             4                            66                             8                             5 
+              FEEGasDetEnergy                             0                             0                             0                             0                             0 
+                          GMD                             0                             0                           441                           165                             0 
+                      EOrbits                             0                             0                             0                             0                             0 
+               EBeam Low Curr                          1099                            76                          5025                           389                           300 
+    SxrEndstation-0|Acqiris-2                             -                             -                             -                             -                             - 
+    SxrEndstation-0|Acqiris-1                             -                             -                             -                             -                             - 
+     SxrEndstation-0|USDUSB-1                             -                             -                             -                             -                             - 
+      SxrEndstation-0|Andor-0                             -                             -                             -                             -                             -  
+ 
+
+                          Run                             -                             -                             -                             -                             - 
+                     Duration                      00:00:26                      00:00:31                      00:00:05                      00:01:10                      00:00:38 
+                       Events                          3073                           348                           114                          8285                          4510 
+                      Damaged                             6                             0                             1                             5                             7 
+                        Bytes                        6.9 GB                      794.7 MB                      260.8 MB                       18.5 GB                       10.1 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                             0                             0 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                             6                             0                             0                             0                             7 
+              FEEGasDetEnergy                             0                             0                             0                             0                             0 
+                          GMD                             0                             0                             0                             0                             0 
+                      EOrbits                             0                             0                             1                             5                             0 
+               EBeam Low Curr                           192                            17                            10                            54                           280 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             -                             -                             0                             0                             0  
+ 
+
+                          Run                             -                             -                             -                             -                             - 
+                     Duration                      00:02:18                      00:00:08                      00:00:03                      00:00:08                      00:01:10 
+                       Events                         16384                           991                             0                             0                          8314 
+                      Damaged                            85                             0                             0                             0                             0 
+                        Bytes                       36.6 GB                        2.2 GB                        0.0 kB                        0.0 kB                        2.3 GB 
+                        EvtSz                        2.3 MB                        2.3 MB                                                                                  293.0 kB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             0                             0                             -                             - 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                            25                             0                             0                             0                             0 
+              FEEGasDetEnergy                             1                             0                             0                             0                             0 
+                          GMD                            59                             0                             0                             0                             0 
+                      EOrbits                             1                             0                             0                             0                             0 
+               EBeam Low Curr                         10475                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0  
+ 
+
+                          Run                             -                             -                             -                             -                             - 
+                     Duration                      00:00:03                      00:00:40                      00:03:00                      00:12:31                      00:06:53 
+                       Events                             0                          4752                         21384                         89231                         48993 
+                      Damaged                             0                             0                          1012                          5305                          6875 
+                        Bytes                        0.0 kB                        1.3 GB                       47.7 GB                       25.0 GB                       13.7 GB 
+                        EvtSz                                                    293.0 kB                        2.3 MB                      293.6 kB                      294.0 kB
+
+                        Evr-1                             0                             0                             0                            41                             0 
+                        Evr-0                             0                             0                             0                            41                             0 
+                  EpicsArch-0                             0                             0                          1012                          4050                          6085 
+               Camp-0|pnCCD-1                             0                             -                             0                             -                             - 
+                        EBeam                             0                             0                             0                            41                             0 
+                  PhaseCavity                             0                             0                             0                           119                            56 
+              FEEGasDetEnergy                             0                             0                             0                            96                             1 
+                          GMD                             0                             0                             0                           427                           116 
+                      EOrbits                             0                             0                             0                           913                           625 
+               EBeam Low Curr                             0                             0                             0                          5914                          6383 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                            41                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                            41                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                            41                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                            41                             0  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_09:57:51_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 09:57:51): 
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+ 
+
+                          Run                             -                             -                             -                             -                             - 
+                     Duration                      00:00:28                      00:00:15                      00:00:39                      00:00:54                      00:16:38 
+                       Events                          3348                          1811                          4568                          6371                        118562 
+                      Damaged                            61                             2                             7                             9                           551 
+                        Bytes                      949.3 MB                      513.5 MB                        1.3 GB                        1.8 GB                       32.8 GB 
+                        EvtSz                      290.3 kB                      290.3 kB                      290.3 kB                      290.3 kB                      290.3 kB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+                        EBeam                             0                             0                             0                             0                             0 
+                  PhaseCavity                             6                             2                             7                             9                           165 
+              FEEGasDetEnergy                             0                             0                             0                             0                             1 
+                          GMD                            55                             0                             0                             0                           385 
+                      EOrbits                             0                             0                             0                             0                             0 
+               EBeam Low Curr                           193                           100                           257                          1136                         11863  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_22:17:18_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 22:17:18): 
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+ 
+
+                          Run                             -                             -                             -                            44                             - 
+                     Duration                      00:00:19                      00:00:06                      00:41:38                      00:00:32                      00:03:46 
+                       Events                          2283                           650                        296374                          3805                         26798 
+                      Damaged                            56                             1                         10681                             6                          1351 
+                        Bytes                        5.1 GB                        2.7 GB                        1.2 TB                       15.9 GB                      109.8 GB 
+                        EvtSz                        2.3 MB                        4.3 MB                        4.3 MB                        4.3 MB                        4.2 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             1                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             2                             1                             1 
+     SxrBeamline-0|Opal1000-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                          9043                             0                             0 
+                        EBeam                             0                             0                             1                             0                             0 
+                  PhaseCavity                             1                             1                           413                             5                            34 
+              FEEGasDetEnergy                             0                             0                             0                             0                             0 
+                          GMD                            55                             0                          1214                             0                           165 
+                      EOrbits                             0                             0                             2                             0                             1 
+               EBeam Low Curr                           144                            48                         20060                           241                         14982 
+     SxrBeamline-0|Opal1000-2                             0                             0                             0                             0                             0 
+               Camp-0|pnCCD-1                             -                             0                            18                             0                          1207  
+ 
+
+                          Run                             -                            45 
+                     Duration                      00:00:08                      00:00:10 
+                       Events                           922                          1125 
+                      Damaged                           922                          1125 
+                        Bytes                        2.1 GB                        2.5 GB 
+                        EvtSz                        2.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0 
+                        Evr-0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0 
+     SxrBeamline-0|Opal1000-1                             0                             0 
+                  EpicsArch-0                             0                             0 
+                        EBeam                             0                             0 
+                  PhaseCavity                             1                             2 
+              FEEGasDetEnergy                             0                             0 
+                          GMD                             0                             0 
+                      EOrbits                             0                             0 
+               EBeam Low Curr                            60                            78 
+     SxrBeamline-0|Opal1000-2                             0                             0 
+               Camp-0|pnCCD-1                           922                          1125  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_00:04:44_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: 
+----- Contributors:
+ 
+
+                          Run                             -                             -                             1                             -                             - 
+                     Duration                      00:01:02                      00:35:05                      00:01:13                      00:31:15                      00:06:06 
+                       Events                            30                        250094                          8608                        222828                         43495 
+                      Damaged                             0                          1677                            69                           935                           228 
+                        Bytes                      128.5 MB                        1.0 TB                       36.0 GB                      933.1 GB                      182.1 GB 
+                        EvtSz                        4.3 MB                        4.3 MB                        4.3 MB                        4.3 MB                        4.3 MB
+
+                        Evr-1                             0                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0                             0 
+                        EBeam                             0                             0                             0                             3                             0 
+                  PhaseCavity                             0                           345                            14                           321                            63 
+              FEEGasDetEnergy                             0                             7                             0                             0                             0 
+                          GMD                             0                          1326                            55                           612                           165 
+                      EOrbits                             0                             1                             0                             0                             0 
+               EBeam Low Curr                             2                         15448                           493                         16870                          2534 
+               Camp-0|pnCCD-1                             -                             0                             0                             0                             0  
+ 
+
+                          Run                             -                             -                             -                             2 
+                     Duration                      00:33:15                      00:00:04                      00:00:15                      00:00:57 
+                       Events                        237066                           510                          1781                          6723 
+                      Damaged                          1336                             0                             3                             7 
+                        Bytes                      992.7 GB                        2.1 GB                        7.5 GB                       15.0 GB 
+                        EvtSz                        4.3 MB                        4.3 MB                        4.3 MB                        2.3 MB
+
+                        Evr-1                             0                             0                             0                             0 
+                        Evr-0                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0                             0 
+     SxrBeamline-0|Opal1000-1                             0                             0                             0                             - 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0                             0 
+                        EBeam                             1                             0                             0                             0 
+                  PhaseCavity                           324                             0                             3                             7 
+              FEEGasDetEnergy                             9                             0                             0                             0 
+                          GMD                          1002                             0                             0                             0 
+                      EOrbits                             1                             0                             0                             0 
+               EBeam Low Curr                         24680                            34                            97                           388 
+               Camp-0|pnCCD-1                             0                             0                             0                             0  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_09:12:19_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 09:12:19): 
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+ 
+
+                          Run                             -                             -                             - 
+                     Duration                      00:00:15                      00:00:17                      00:00:21 
+                       Events                          1714                          1952                          2447 
+                      Damaged                             4                             3                             4 
+                        Bytes                        3.8 GB                      561.2 MB                        5.5 GB 
+                        EvtSz                        2.3 MB                      294.4 kB                        2.3 MB
+
+                        Evr-1                             0                             0                             0 
+                        Evr-0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0 
+     SxrEndstation-0|USDUSB-0                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             -                             0 
+      SxrEndstation-0|Andor-0                             0                             0                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0 
+                        EBeam                             0                             0                             0 
+                  PhaseCavity                             4                             3                             4 
+              FEEGasDetEnergy                             0                             0                             0 
+                          GMD                             0                             0                             0 
+                      EOrbits                             0                             0                             0 
+               EBeam Low Curr                           100                           109                           140  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_10:29:55_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 10:29:55): 
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+ 
+
+                          Run                             - 
+                     Duration                      00:06:42 
+                       Events                         47745 
+                      Damaged                           128 
+                        Bytes                       94.0 GB 
+                        EvtSz                        2.0 MB
+
+                        Evr-1                             0 
+                        Evr-0                             0 
+               Camp-0|pnCCD-1                             0 
+                  EpicsArch-0                             0 
+                        EBeam                             0 
+                  PhaseCavity                            71 
+              FEEGasDetEnergy                             1 
+                          GMD                            56 
+                      EOrbits                             0 
+               EBeam Low Curr                          5126  
+
+-----/reg/g/pcds/pds/sxr/logfiles/2017/07/08_10:22:41_sxr-daq:control_gui.log 
+----- SXR:0   sxrlq2715  (972)
+----- DAQ release: 9.4.2-p8.7.5
+----- AMI release: ami-8.7.11-p8.7.5
+----- Contributors:
+----- Compression status (2017/07/08 10:22:41): 
+      SxrBeamline-0|Opal1000-1  EXS_OPAL                  (on daq_sxr_cam03):	Compression disabled.
+      SxrEndstation-0|Opal1000-1 OPAL1                     (on daq_sxr_cam01):	Compression disabled.
+      SxrEndstation-0|Opal1000-2 OPAL2                     (on daq_sxr_cam01):	Compression disabled.
+      SxrEndstation-0|Opal1000-3 OPAL3                     (on daq_sxr_cam02):	Compression disabled.
+      SxrBeamline-0|Opal1000-0  TSS_OPAL                  (on daq_sxr_cam02):	Compression disabled.
+ 
+
+                          Run                             -                             -                             - 
+                     Duration                      00:00:49                      00:00:11                      00:00:14 
+                       Events                          5838                          1258                          1671 
+                      Damaged                            66                             2                             2 
+                        Bytes                       13.0 GB                      356.5 MB                        3.7 GB 
+                        EvtSz                        2.3 MB                      290.2 kB                        2.3 MB
+
+                        Evr-1                             0                             0                             0 
+                        Evr-0                             0                             0                             0 
+    SxrEndstation-0|Acqiris-1                             0                             0                             0 
+    SxrEndstation-0|Acqiris-2                             0                             0                             0 
+               Camp-0|pnCCD-1                             0                             -                             0 
+     SxrEndstation-0|USDUSB-1                             0                             0                             0 
+                  EpicsArch-0                             0                             0                             0 
+                        EBeam                             0                             0                             0 
+                  PhaseCavity                            10                             2                             2 
+              FEEGasDetEnergy                             0                             0                             0 
+                          GMD                            56                             0                             0 
+                      EOrbits                             0                             0                             0 
+               EBeam Low Curr                           334                            71                           104  
