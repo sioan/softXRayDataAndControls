@@ -72,8 +72,14 @@ epics-release	#bruces script (has --help or -h)
 (e.g.  lrwxrwxrwx 1 sstubbs  ps-pcds  54 Jun 23 20:21 sxr -> /reg/g/pcds/package/epics/3.14/screens/edm/sxr/R3.1.89)
 (do this before epics-release so an accurate release number can be given)
 
-psana tutorial files
+#psana tutorial files
 /reg/g/psdm/tutorials/examplePython
+
+#psana expert trouble shooting
+https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=225509678
+
+#psana batch submission guidelines
+https://confluence.slac.stanford.edu/display/PCDS/Submitting+Batch+Jobs
 
 #edm files
 svn ls file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk/screens/edm
