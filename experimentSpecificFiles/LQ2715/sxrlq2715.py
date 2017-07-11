@@ -34,6 +34,11 @@ def myDetector(name, detlist = detNames, epics = epicsNames):
 	return (False, Detector(name, accept_missing=True))
 
 dlsDet = myDetector('DLS_encoder')
+# The number of delay stage, in ps per encoder units
+PS_PER_ENC = 1.33426e-4
+# The approximate position of time zero, in encoder units
+TIME_ZERO = -6457700
+
 monoDet = myDetector('MONO_encoder')
 
 pnccdDet = myDetector('pnccd')
@@ -77,8 +82,11 @@ try:
 	with open(CALS + 'run' + runnum + '.cfg', 'rb') as csvfile:
 		binvalues = np.genfromtxt(csvfile, names=True, delimiter=',')
 	binkey = binvalues.dtype.names[0]
+	binvalues = binvalues[binkey]
+	print('Binning data on '+binkey)
 except:
 	binvalues = None
+	binkey = 'delay'
 
 acq02Det = myDetector('Acq02')
 acq01Det = myDetector('Acq01')
@@ -117,9 +125,11 @@ mcp4Sumnb = 0
 sinSum = None
 sinSumnb = 0
 
-binnedpnccd = None
+binnedpnccdP = None
 
-mcp4threshold = -1e8
+mcp4threshold = -1
+magnetthreshold = 0.5
+adu_threshold = 500
 
 eventToStartProcessingAt = 1000
 eventToStopProcessingAt = 2000
@@ -131,8 +141,8 @@ size = comm.Get_size()
 
 for nevt,evt in enumerate(dsource.events()):
 
-	if debug and nevt > 10:
-		print('DEBUG: Break after 10 events')
+	if debug and nevt > 20:
+		print('DEBUG: Break after 20 events')
 		break
 
 	if nevt % 20 == 0:
@@ -144,7 +154,17 @@ for nevt,evt in enumerate(dsource.events()):
 	evtId = evt.get(EventId)
 	timestamp = evtId.time()[0] - timestamp0seconds + 1e-9*evtId.time()[1]
 
-	pnccd = pnccdDet[1].image(evt)
+	#pnccd = pnccdDet[1].image(evt)
+	try:
+		temp = pnccdDet[1].photons(evt, adu_per_photon=adu_threshold)
+	except:
+		continue
+
+	if temp is None:
+		pnccd = None
+	else:
+		pnccd = pnccdDet[1].image(evt, temp)
+
 	andor = andorDet[1].raw(evt)
 	dls = dlsDet[1].get(evt)
 	mono = monoDet[1].get(evt)
@@ -290,27 +310,64 @@ for nevt,evt in enumerate(dsource.events()):
 			pnccdSumImg += pnccd.astype(np.double)
 		pnccdSumImgnb += 1
 
-		if binvalues is not None:
-			# find the proper bin index for this event
-			# the first bin is for laser off
-			if binkey == 'delay':
-				binidx = np.argmin(np.abs(binvalues[binkey] - myDictionary["vitaraPV"])) + 1
+		if binvalues is None:
+			# bin along single delay
+			binvalues = np.array([myDictionary["vitaraPV"]])
+
+		# find the proper bin index for this event
+		# the first bin is for laser off
+		if binkey == 'delay':
+			binidx = np.argmin(np.abs(binvalues - myDictionary["vitaraPV"])) + 1
+		elif binkey == 'laserdelay':
+			binidx = np.argmin(np.abs(binvalues - (myDictionary["dls"] - TIME_ZERO)*PS_PER_ENC)) + 1
+		elif binkey == 'magnet':
+			# for each magnet value we have laser on/ laser off
+			binidx = np.argmin(np.abs(binvalues - myDictionary["magnet"]))
+			if myDictionary["laser"]:
+				binidx = 2*binidx + 1
 			else:
-				binidx = 0
+				binidx = 2*binidx
+		else:
+			binidx = 0
 
-			if not myDictionary["laser"]:
-				binidx = 0
+		if (not myDictionary["laser"]) and (binkey != 'magnet'):
+			binidx = 0
 
-			# allocate bin places
-			if binnedpnccd is None:
-				binnedpnccd = np.zeros((np.shape(binvalues)[0] + 1, np.shape(pnccd)[0], np.shape(pnccd)[1]))
-				binnedcount = np.zeros((np.shape(binvalues)[0] + 1))
-				binnedmcp4 = np.zeros((np.shape(binvalues)[0] + 1))
+		# allocate bin places
+		if binnedpnccdP is None:
+			v = np.shape(binvalues)[0]
+			if binkey == 'magnet':
+				v = 2*v
+			else:
+				v = v + 1
+			binnedpnccdP = np.zeros((v, np.shape(pnccd)[0], np.shape(pnccd)[1]))
+			binnedcountP = np.zeros((v))
+			binnedmcp4P = np.zeros((v))
+			binnedpnccdN = np.zeros((v, np.shape(pnccd)[0], np.shape(pnccd)[1]))
+			binnedcountN = np.zeros((v))
+			binnedmcp4N = np.zeros((v))
+			binnedpnccdZ = np.zeros((v, np.shape(pnccd)[0], np.shape(pnccd)[1]))
+			binnedcountZ = np.zeros((v))
+			binnedmcp4Z = np.zeros((v))
 			
-			if (myDictionary["mcp4"] > mcp4threshold) and vitaraLockedPV:
-				binnedpnccd[binidx,:,:] += pnccd
-				binnedcount[binidx] += 1
-				binnedmcp4[binidx] += myDictionary["mcp4"]
+		if (myDictionary["mcp4"] < mcp4threshold) and vitaraLockedPV:
+			if binkey == 'magnet':
+				binnedpnccdP[binidx,:,:] += pnccd
+				binnedcountP[binidx] += 1
+				binnedmcp4P[binidx] += myDictionary["mcp4"]
+			else:
+				if magnet > magnetthreshold:
+					binnedpnccdP[binidx,:,:] += pnccd
+					binnedcountP[binidx] += 1
+					binnedmcp4P[binidx] += myDictionary["mcp4"]
+				elif magnet < -magnetthreshold:
+					binnedpnccdN[binidx,:,:] += pnccd
+					binnedcountN[binidx] += 1
+					binnedmcp4N[binidx] += myDictionary["mcp4"]
+				else:
+					binnedpnccdZ[binidx,:,:] += pnccd
+					binnedcountZ[binidx] += 1
+					binnedmcp4Z[binidx] += myDictionary["mcp4"]
 
 	smldata.event(myDictionary)
 
@@ -319,12 +376,21 @@ summary = {}
 
 if pnccdDet[0]:
 	summary["pnccdSumImg"] = smldata.sum(pnccdSumImg/pnccdSumImgnb)/size
-	if binvalues is not None:
-		summary["bin/pnccd"] = smldata.sum(binnedpnccd)
-		summary["bin/count"] = smldata.sum(binnedcount)
-		summary["bin/mcp4"] = smldata.sum(binnedmcp4)
-		summary["bin/bins"] = binvalues[binkey]
-		summary["bin/key"] = binkey
+	
+	summary["bin/pnccdP"] = smldata.sum(binnedpnccdP)
+	summary["bin/countP"] = smldata.sum(binnedcountP)
+	summary["bin/mcp4P"] = smldata.sum(binnedmcp4P)
+
+	summary["bin/pnccdN"] = smldata.sum(binnedpnccdN)
+	summary["bin/countN"] = smldata.sum(binnedcountN)
+	summary["bin/mcp4N"] = smldata.sum(binnedmcp4N)
+
+	summary["bin/pnccdZ"] = smldata.sum(binnedpnccdZ)
+	summary["bin/countZ"] = smldata.sum(binnedcountZ)
+	summary["bin/mcp4Z"] = smldata.sum(binnedmcp4Z)
+
+	summary["bin/bins"] = binvalues
+	summary["bin/key"] = binkey
 
 if andorDet[0]:
 	summary["andorSumImg"] = smldata.sum(andorSumImg/andorSumImgnb)/size
