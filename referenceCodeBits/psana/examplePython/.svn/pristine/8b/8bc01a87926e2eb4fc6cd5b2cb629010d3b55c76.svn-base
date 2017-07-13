@@ -1,0 +1,20 @@
+from psana import *
+ds = DataSource('exp=xpptut15:run=59:smd')
+evrFullName = Source('DetInfo(NoDetector.0:Evr.0)')
+evrAliasName = Source('evr0')
+ebeamName =  Source('BldInfo(EBeam)')
+es = ds.env().epicsStore()
+
+for nevent,evt in enumerate(ds.events()):
+    # these next two lines are equivalent (second one uses "alias" name)
+    evr = evt.get(EvrData.DataV4, evrFullName)
+    evr = evt.get(EvrData.DataV4, evrAliasName)
+    # now fetch ebeam BLD ("Beam Line Data")
+    ebeam = evt.get(Bld.BldDataEBeamV7, ebeamName)
+    # now access one of the slower "epics variables"
+    if evr is None or ebeam is None: continue
+    print evr
+    print ebeam
+    print es.value('HX2:DVD:GCC:01:PMON')
+    break
+

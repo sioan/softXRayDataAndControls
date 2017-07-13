@@ -1,0 +1,55 @@
+List and description of files
+=============================
+
+---Helper Classes/modules
+littleData.py			--> define reader & data object for "littleData modules"
+cspad.py			--> wrapper for CsPad geometry & calibration access
+azimuthalAveraging.py		--> class to do azimuthalAveraging (e.g. for CsPad). Includes physics corrections
+utilities.py			--> various helper classes that do not *yet) deserve their own file
+
+
+--- modules to be (possibly) run before your example analysis
+xpp_littleDat.py		--> writes files with "small" data into ftc directory. 
+					Attaches small data object to event to be used later to 
+					isolate naming convention & changes as well as possible 
+					standard pre-analysis (not yet)
+--- modules for example analysis
+xpp_anaRad.py			--> attach CsPad integral & azimuthal Av to event, to be written out 
+					in hdf5 translation step if so desired
+					(not using "littleData" yet)
+xpp_cspadMovie.py		--> save a npy file with cspad images in time bins. Uses little Data
+xpp_findpeak.py			--> not written yet. Idea was to automatize peak finding when 
+					the signal region moves
+xpp_makeDarkMask.py		--> makes npy files with pedestals and masks for "integrated" darks 
+					(using off shots in the run)
+xpp_peak.py			--> look at peak intensity on cs140k / calib; not littleData
+xpp_peak_tt.py			--> look at peak intensity on cs140k tt binned; not littleData
+xpp_sokaras.py			--> code for first sokaras expt.; not littleData
+xpp_sokaras_mpi.py		--> code for first sokaras expt w/ mpi; not littleData
+xpp_step.py
+
+
+---non-standard named modules for full analysis
+AreaDet_OnOffScan.py		--> On v Off histograms of a peak on the cspad 140k
+frame_reco_calib.py
+emission.py			--> von Hamos spectrum on a cspad 140 for xray on shots
+
+
+---various tools, inherited from ixppy (to include better or move out???)
+tools.py
+toolsBeamline.py
+toolsConstsAndConv.py
+toolsDetectors.py
+toolsDistrAndHist.py
+toolsExternalWrapped.py
+toolsFFT.py
+toolsFit.py
+toolsHdf5.py
+toolsImgs.py
+toolsLog.py
+toolsPlot.py
+toolsReciprocalSpace.py
+toolsTiming.py
+toolsVarious.py
+toolsVecAndMat.py
+

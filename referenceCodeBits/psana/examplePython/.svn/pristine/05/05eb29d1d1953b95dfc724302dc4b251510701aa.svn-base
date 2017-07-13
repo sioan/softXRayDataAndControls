@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+# these two lines for example purposes only, to allow user to write
+# calibration information to local directory called "calib"
+# should be deleted for real analysis.
+import psana
+psana.setOption('psana.calib-dir','calib')
+
+from xtcav.GenerateDarkBackground import *
+GDB=GenerateDarkBackground();
+GDB.experiment='xpptut15'
+GDB.runs='102'
+GDB.maxshots=10
+GDB.SetValidityRange(101,125) # delete second run number argument to have the validity range be open-ended ("end")
+GDB.Generate();

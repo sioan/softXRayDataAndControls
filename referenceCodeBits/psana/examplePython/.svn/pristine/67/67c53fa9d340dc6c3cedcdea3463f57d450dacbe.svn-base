@@ -1,0 +1,25 @@
+import psana
+
+# this line is for example purposes only, to allow user to read
+# calibration information from local directory called "calib".
+# should be deleted for real analysis. It also sets a flag
+# ("allow-corrupt-epics") that allows the old example data to be analyzed.
+psana.setOptions({'psana.calib-dir':'calib',
+                  'psana.allow-corrupt-epics':True})
+
+from xtcav.ShotToShotCharacterization import *
+experiment='xpptut15'  #Experiment label
+runs='124'             #Runs
+#Loading the dataset from the "dark" run, this way of working should be compatible with both xtc and hdf5 files
+dataSource=psana.DataSource("exp=%s:run=%s:idx" % (experiment,runs))
+#XTCAV Retrieval (setting the data source is useful to get information such as experiment name)
+XTCAVRetrieval=ShotToShotCharacterization();
+XTCAVRetrieval.SetEnv(dataSource.env())
+for r,run in enumerate(dataSource.runs()):
+    times = run.times()
+    for t in times:
+        evt = run.event(t)
+        if not XTCAVRetrieval.SetCurrentEvent(evt):
+            continue
+        time,power,ok=XTCAVRetrieval.XRayPower()  
+        agreement,ok=XTCAVRetrieval.ReconstructionAgreement()

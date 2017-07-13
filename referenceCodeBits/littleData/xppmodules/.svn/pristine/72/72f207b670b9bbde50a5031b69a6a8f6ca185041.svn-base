@@ -1,0 +1,25 @@
+[psana]
+modules	= xppmodules.xpp_anaRad
+
+[xpp_areaRed]
+# true -> use internal dark from same run, false: use official calibration
+pedRun          = false
+#officialCal means that we have a calibrated cspad in data by running the official module!
+officialCal     = false
+useMask	    	= true
+MaskEdge	= 1
+#this mask will be added to standard mask. If you want no mask at all, then set to ''
+MaskFile  	= /reg/d/psdm/xpp/xppf1615/res/cspad_masks/mask_beamstop_shift3.npy
+#DarkFile  	= xxx
+commonMode      = false
+commonModeArray = true
+gainAv		= 40
+threshold	= 0
+thresholdVal	= 0.1
+
+areaSrc = cs140_rob
+areaROI = 0 50 200 250 0 2
+areaSaveProj = -1
+areaSaveROI = false
+
+debug 		= 0

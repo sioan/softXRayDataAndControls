@@ -1,0 +1,215 @@
+#!/bin/bash
+
+usage()
+{
+cat << EOF
+usage: $0 options
+
+OPTIONS:
+-r run# (NEEDED!)
+-e expname (def: current experiment, example: xppe7815)
+-c cube (json input file)
+-s <size>: rebin image to size x size pixels
+-m apply common mode
+-t <thres in ADU>: hitfinder
+-T <thres in Rms>: hitfinder
+-d directory for output files (default: hdf5/smalldata diretory of specified experiment)
+-o include overflow bins
+-R store raw cspad data (NOT image)
+-j <numJobs>: number of mpi jobs (default: 64)
+-x test (only 5 evts/bin)
+EOF
+}
+
+export LD_LIBRARY_PATH=/reg/common/package/openmpi/openmpi-1.8.6-rhel7-lsf/install/lib/:${LD_LIBRARY_PATH}
+export PATH=/reg/common/package/openmpi/openmpi-1.8.6-rhel7-lsf/install/bin:${PATH}
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/afs/slac/package/lsf/curr/lib/      
+
+export PATH=$PATH:/reg/g/xpp/scripts:/reg/neh/operator/xppopr/bin
+CURREXP=`get_curr_exp`
+
+CM=0
+RUN=-1
+NJOBS=64
+EXP='xxx'
+QUEUE=psanaq
+DIRNAME='xxx'
+CUBE='xxx'
+TEST=0
+IMAGE=1
+DAYSHIFT=0
+REBIN=-1
+THRESADU=-1
+THRESRMS=-1
+QUEUEREQ='xxx'
+ARGSTR=''
+while getopts "e:d:r:b:s:c:q:t:T:j:m:ihxoR" OPTION
+do
+    case $OPTION in
+	h)
+	    usage
+	    exit 1
+	    ;;
+	r) 
+	    RUN=$OPTARG
+	    ;;
+	e)
+	    EXP=$OPTARG
+	    ;;
+	q)
+	    QUEUEREQ=$OPTARG
+	    ;;
+	d)
+	    DIRNAME=$OPTARG
+	    ;;
+	s)
+	    REBIN=$OPTARG
+	    ;;
+	t) 
+	    THRESADU=$OPTARG
+	    ;;
+	T) 
+	    THRESRMS=$OPTARG
+	    ;;
+	x)
+	    TEST=1
+	    ;;
+	R)
+	    IMAGE=0
+	    ;;
+	m)
+	    CM=$OPTARG
+	    ;;
+	j)
+	    NJOBS=$OPTARG
+	    ;;
+	c)
+	    CUBE=$OPTARG
+	    ;;
+	o)
+	    ARGSTR=$ARGSTR' --overflow '
+	    ;;
+	?)
+	    usage
+	    exit
+	    ;;
+	esac
+done
+
+#currently ongoing exp
+if [ $EXP == 'xxx' ]; then
+    QUEUE=psnehprioq
+    HOUR=`date +"%H"`
+    ISDAY=0
+    if [ $HOUR -ge 9 ]; then ISDAY=1; fi
+    if [ $HOUR -ge 21 ]; then ISDAY=0; fi
+    if [ $DAYSHIFT==1 -a $ISDAY==1 ]; then
+	QUEUE=psnehhiprioq
+    fi
+    if [ $DAYSHIFT==0 -a $ISDAY==0 ]; then
+	QUEUE=psnehhiprioq
+    fi
+fi    
+
+if [ $QUEUEREQ != 'xxx' ]; then
+    QUEUE=$QUEUEREQ
+fi
+
+if [ $RUN -le 0 ]; then
+    echo 'we need a run as input, use -r option'
+    exit
+fi
+
+RUN=`echo $RUN |  sed 's/^0*//'`
+RUN=`printf "%0*d\n" 4 $RUN`
+
+echo 'will use queue: ' $QUEUE
+
+if [ $EXP != 'xxx' ]; then
+    ARGSTR=$ARGSTR' --exp '$EXP
+else
+    EXP=$CURREXP
+fi
+
+if [[ $EXP =~ 'xpp' ]]; then
+    HUTCH='xpp'
+else
+    HUTCH='xcs'
+    if [ $QUEUE == 'psnehhiprioq' ]; then
+	QUEUE='psfehhiprioq';
+    fi
+    if [ $QUEUE == 'psnehprioq' ]; then
+	QUEUE='psfehprioq';
+    fi
+fi
+
+LOGDIR=/reg/d/psdm/$HUTCH/$EXP/results/logs
+if [ $DIRNAME != 'xxx' ]; then
+    ARGSTR=$ARGSTR' --dir '$DIRNAME
+    LOGDIR=$DIRNAME/logs
+    if [ ! -d  $DIRNAME ]; then
+	echo 'now we will make ' $DIRNAME
+	mkdir $DIRNAME
+    fi
+fi
+if [ ! -d  $LOGDIR ]; then
+    echo 'now we will make '$LOGDIR
+    mkdir $LOGDIR
+fi
+if [ $CUBE != 'xxx' ]; then
+    ARGSTR=$ARGSTR' --cube '$CUBE
+fi
+if [ $TEST -ne 0 ]; then
+    ARGSTR=$ARGSTR' --test '
+fi
+if [ $THRESADU -ge 0 ]; then
+    ARGSTR=$ARGSTR' --thresADU '$THRESADU
+fi
+if [ $THRESRMS -ge 0 ]; then
+    ARGSTR=$ARGSTR' --thresRms '$THRESRMS
+fi
+if [ $IMAGE -eq 0 ]; then
+    ARGSTR=$ARGSTR' --raw '
+else
+    if [ $REBIN -ge 1 ]; then
+	ARGSTR=$ARGSTR' --rebinTo '$REBIN
+    fi
+fi
+if [ $CM -gt 0 ]; then
+    ARGSTR=$ARGSTR' --cm '$CM
+fi
+
+if [ ! -d  $FNAMEDIR ]; then
+    echo 'now we will make ' $FNAMEDIR
+    mkdir $FNAMEDIR
+fi
+if [ ! -d  /reg/d/psdm/xpp/$EXP/results/logs ]; then
+    echo 'now we will make '$LOGDIR
+    mkdir -p $LOGDIR
+fi
+
+CREATE_TIME=`date '+%m/%d/%Y_%H:%M:%S'`
+echo 'so I will submit a new job for run ' $RUN ' now....' $CREATE_TIME
+if [ $NJOBS -gt 1 ]; then
+    CMD=`echo bsub -n $NJOBS -q $QUEUE -o $LOGDIR/cube_$RUN\_%J.out \
+        mpirun --mca btl ^openib \
+        python ./xppmodules/scripts/Cube.py \
+	$ARGSTR \
+        --run $RUN`
+else
+    CMD=`echo python ./xppmodules/scripts/Cube.py \
+	$ARGSTR --run $RUN`    
+fi
+. /reg/g/psdm/etc/ana_env.sh
+
+if [ -d './xppmodules/scripts/' ]; then
+    LDAP='xppmodules' 
+else
+    echo 'could not find code, please run from /reg/d/psdm/<hutch>/<expname>/res/littleData or your own local setup'
+fi
+source /reg/g/pcds/setup/pathmunge.sh
+pythonpathmunge $LDAP/src
+pythonpathmunge $LDAP/scripts
+
+echo $CMD
+$CMD

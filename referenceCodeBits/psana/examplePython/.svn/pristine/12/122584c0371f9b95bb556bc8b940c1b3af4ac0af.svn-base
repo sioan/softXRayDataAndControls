@@ -1,0 +1,23 @@
+from mpi4py import MPI
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+size = comm.Get_size()
+
+from psmon import publish
+import psmon.plots as psplt
+import h5py
+import numpy as np
+from hitdata import hitdata 
+
+def runmaster(nClients):
+    hd = hitdata()
+    
+    while nClients > 0:
+        # Remove client if the run ended
+        if hd.recv():
+            nClients -= 1
+        else:
+            plot(hd)
+
+def plot(hd):
+    print 'Master received image with shape',hd.myimg.shape

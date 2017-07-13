@@ -1,0 +1,18 @@
+from psana import *
+
+dsource = MPIDataSource('exp=xpptut15:run=54:smd')
+cspaddet = Detector('cspad')
+
+smldata = dsource.small_data('run54.h5',gather_interval=100)
+
+for nevt,evt in enumerate(dsource.events()):
+
+   calib = cspaddet.calib(evt)
+   if calib is None: continue
+   cspad_sum = calib.sum()      # number
+   cspad_roi = calib[0][0][3:5] # array
+
+   smldata.event(cspad_sum=cspad_sum,cspad_roi=cspad_roi)
+   if nevt>3: break
+
+smldata.save()

@@ -1,0 +1,9 @@
+from psana import *
+ds = DataSource('exp=xpptut15:run=54:smd')
+for nevent,evt in enumerate(ds.events()):
+    evr = evt.get(EvrData.DataV4, Source('DetInfo(NoDetector.0:Evr.0)'))
+    if evr is None: continue
+    for fifoEvent in evr.fifoEvents():
+        print fifoEvent.eventCode(),
+    print
+    if nevent==3: break

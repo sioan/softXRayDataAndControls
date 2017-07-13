@@ -1,0 +1,22 @@
+from psana import *
+import numpy as np
+runnum = 54
+ds = DataSource('exp=xpptut15:run=%d:smd'%runnum)
+det = Detector('cspad',ds.env())
+
+mask = np.loadtxt('work/roi_mask_nda.txt')
+othermasks = det.mask(runnum,calib=True,status=True,edges=True,central=True,unbond=True,unbondnbrs=True)
+for nevent,evt in enumerate(ds.events()):
+    calib_array = det.calib(evt)
+    # in future we hope to be able to avoid this next line
+    mask = mask.reshape(calib_array.shape)
+    masked_array = calib_array * mask
+    # make a 2D image (with geometry) out of any correctly-shaped ndarray
+    img = det.image(evt,masked_array)
+    break
+
+import matplotlib.pyplot as plt
+plt.imshow(img,vmin=-2,vmax=2)
+plt.show()
+plt.imshow(det.image(evt,othermasks),vmin=-2,vmax=2)
+plt.show()

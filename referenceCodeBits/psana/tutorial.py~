@@ -1,0 +1,8 @@
+import os
+import pylab 
+import psana
+
+ds = DataSource('exp=xpptut15:run=54')
+
+
+evt = ds.events.next()

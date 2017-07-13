@@ -1,0 +1,21 @@
+import numpy as np
+import psana
+import h5py
+ 
+NUM_EVENTS_TO_WRITE=3
+ 
+ds = psana.DataSource('exp=xpptut15:run=54:smd')
+ 
+h5out = h5py.File("userSmallData.h5", 'w')
+saved = h5out.create_dataset('saved',(0,), dtype='f8', chunks=True, maxshape=(None,))
+ 
+cspad = psana.Detector('cspad', ds.env())
+ 
+for idx, evt in enumerate(ds.events()):
+    if idx > NUM_EVENTS_TO_WRITE: break
+    calib = cspad.calib(evt)
+    if calib is None: continue
+    saved.resize((idx+1,))
+    saved[idx] = np.sum(calib)
+ 
+h5out.close()

@@ -1,0 +1,9 @@
+from psana import *
+ds = DataSource('exp=xpptut15:run=59:smd')
+epics = ds.env().epicsStore()
+for nevent,evt in enumerate(ds.events()):
+    for key in evt.keys(): print key
+    # print epics.names()
+    print 'There are',len(evt.keys()),'detectors in this event and',len(epics.names()),'slower EPICS variables'
+    print 'The first detector is named',evt.keys()[0],'and the first epics variable is named',epics.names()[0]
+    break

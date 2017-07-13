@@ -1,0 +1,6 @@
+#!/bin/bash
+PY_ARGS="$@"
+echo $PY_ARGS
+shift $#
+source /reg/g/psdm/bin/conda_setup
+python $0.py $PY_ARGS

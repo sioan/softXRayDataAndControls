@@ -1,0 +1,14 @@
+from psana import *
+from pypsalg.Histogram import hist1d, hist2d
+ds = DataSource('exp=xpptut15:run=54:smd')
+det = Detector('cspad',ds.env())
+
+hist = hist1d(5,-5.,5.0)
+for nevent,evt in enumerate(ds.events()):
+    if nevent>=4: break
+    calib_array = det.calib(evt)
+    hist.fill(calib_array[0,0,0])
+
+import matplotlib.pyplot as plt
+plt.bar(hist.xaxis.values(),hist.data)
+plt.show()

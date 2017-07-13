@@ -1,0 +1,18 @@
+from psana import *
+from pypsalg.AngularIntegrationM import *
+ds  = DataSource('exp=xpptut15:run=54:smd')
+det = Detector('cspad')
+
+for nevent,evt in enumerate(ds.events()):
+    img = det.image(evt)
+    # create a mask of real pixels in the image (vs. fake pixels between panels)
+    goodPixels = det.image(evt,np.ones_like(det.calib(evt)))
+    ai = AngularIntegratorM()
+    ai.setParameters(img.shape[0],img.shape[1],
+                     mask=goodPixels)
+    bins,intensity = ai.getRadialHistogramArrays(img)
+    break
+
+import matplotlib.pyplot as plt
+plt.plot(bins,intensity)
+plt.show()

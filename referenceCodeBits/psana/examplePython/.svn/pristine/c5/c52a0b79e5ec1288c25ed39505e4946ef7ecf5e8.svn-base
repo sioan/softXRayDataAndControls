@@ -1,0 +1,11 @@
+from psana import *
+ds = DataSource('exp=xpptut15:run=54:smd')
+det = Detector('cspad',ds.env())
+for nevent,evt in enumerate(ds.events()):
+    img = det.image(evt)
+    break
+from psmon.plots import Image
+from psmon import publish
+publish.local = True
+plotimg = Image(0,"CsPad",img)
+publish.send('IMAGE',plotimg)

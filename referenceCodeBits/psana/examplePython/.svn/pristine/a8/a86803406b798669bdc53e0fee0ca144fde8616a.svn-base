@@ -1,0 +1,18 @@
+from psana import *
+ds = DataSource('exp=xpptut15:run=59:smd')
+es = ds.env().epicsStore()
+
+evr = Detector('evr0',ds.env())
+epicsVariable = Detector('HX2:DVD:GCC:01:PMON',ds.env())
+ebeamDet = Detector('EBeam',ds.env())
+
+for nevent,evt in enumerate(ds.events()):
+    ec = evr.eventCodes(evt)
+    # now fetch ebeam BLD ("Beam Line Data")
+    ebeam = ebeamDet.get(evt)
+    # now access one of the slower "epics variables"
+    if ec is None or ebeam is None: continue
+    print evr.eventCodes(evt)
+    print ebeam.ebeamPhotonEnergy()
+    print epicsVariable(evt)
+    break

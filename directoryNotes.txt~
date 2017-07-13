@@ -11,6 +11,12 @@ web browser to digi-sxr-08/
 root
 dbps
 
+#fpga pgp card computer
+lcls-pc83236
+
+#acqiris calibration
+https://confluence.slac.stanford.edu/display/PCDS/Agilent+Acqiris+and+TDC+calibration
+
 #cam viewer
 /reg/g/pcds/pyps/config/amo/camviewer.sh
 /reg/g/pcds/pyps/apps/camviewer/latest
@@ -18,11 +24,17 @@ dbps
 /reg/g/xpp/scripts/camViewer -n P2S
 /reg/g/xpp/scripts/gige
 
+#creating user accounts
+Please follow these instructions to create your UNIX account for LCLS Experiment LQ27. 
+https://www-ssrl.slac.stanford.edu//lcls-resources/user-to-do-list#computers
+Your login on 'User Portal' (  https://userportal.slac.stanford.edu/ )is what you used to  registering as collaborator on the LCLS Proposal, the account name is most likely your e-mail address.
+
 #gige cameras to check if camera is working
 #also can search for below name in netconfig
 ping gige-sxr-cam02
 
-
+#EVR evr for acromag
+mcbrowne/bin/evr_new.sh SXR:USR:EVR
 
 #Damiani's acquiris export
 ~ddamiani/Workarea/psana-scripts/acq/acq_export
@@ -31,6 +43,8 @@ ping gige-sxr-cam02
 
 #calibmanager geometry file location
 CalibManager.GUIAlignment: command: geo -g /reg/d/psdm/sxr/sxrlq7615/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/geometry/0-end.data -i /reg/g/psdm/detector/alignment/cspad/calib-cxi-ds1-2014-03-19/calib/../cspad-ndarr-ave-cxii0114-r0227.dat -L INFO
+
+https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detectoralignmenttool-Runlatestversion
 
 #this directory contains information for correcting pnCCD calibration.  Almost only for imaging detectors
 #includes pedastals, dead pixel, pixel noise levels, etc.. 
@@ -41,8 +55,9 @@ CalibManager.GUIAlignment: command: geo -g /reg/d/psdm/sxr/sxrlq7615/calib/PNCCD
 
 #amo vme high voltage hvs
 /reg/g/pcds/package/epics/3.14/ioc/amo/hv/R1.0.3/db
-
 console ioc-amo-hv2
+
+
 
 #list iocs running (or other processes running on telnet)
 psproc
@@ -59,8 +74,14 @@ epics-release	#bruces script (has --help or -h)
 (e.g.  lrwxrwxrwx 1 sstubbs  ps-pcds  54 Jun 23 20:21 sxr -> /reg/g/pcds/package/epics/3.14/screens/edm/sxr/R3.1.89)
 (do this before epics-release so an accurate release number can be given)
 
-psana tutorial files
+#psana tutorial files
 /reg/g/psdm/tutorials/examplePython
+
+#psana expert trouble shooting
+https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=225509678
+
+#psana batch submission guidelines
+https://confluence.slac.stanford.edu/display/PCDS/Submitting+Batch+Jobs
 
 #edm files
 svn ls file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk/screens/edm
@@ -199,7 +220,10 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 #/reg/d/ffb/sxr/sxrx22915/xtc/	#intermidate this is a lustre file system
 #/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop this is also a lustre file system
 
+#git rogue
+https://github.com/slaclab/rogue
 
+#camera DAQ
 #problem with DAQ cam?  check usb ports with ls usb
 ##################################
 
