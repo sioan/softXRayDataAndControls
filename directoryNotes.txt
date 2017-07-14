@@ -57,7 +57,7 @@ https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detect
 #amo vme high voltage hvs
 /reg/g/pcds/package/epics/3.14/ioc/amo/hv/R1.0.3/db
 console ioc-amo-hv2
-
+iocsh()
 
 
 #list iocs running (or other processes running on telnet)
