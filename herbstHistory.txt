@@ -1,0 +1,156 @@
+1) download rogue
+
+2) insmod /u/lu/sioan/Desktop/rogue/drivers/data_dev/driver/data_dev.ko
+
+3) ./rogue/drivers/data_dev/app/bin/dataPromLoad /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/firmware/targets/AxiPgpCardG3Dev/images/AxiPgpCardG3Dev-0x0000000B-20170511092639-sioan-dirty.mcs
+
+4) reboot -P
+
+5) sudo csh	#got this working for bash
+
+6) source /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/software/setup.sh
+
+#get below working by creating setup.sh
+#set PYTHONPATH=($PYTHONPATH:/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python) #not working. need to cd there.
+#cd /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python #need to add to python path
+
+7) /u/lu/sioan/Desktop/axi-pcie-dev/software/scripts/dataDev.py
+___________________
+
+
+7)source /afs/slac/g/reseng/xilinx/vivado_2016.4/Vivado/2016.4/settings64.sh
+
+8) location of vhd file
+/afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/firmware/common/AxiPgpCardG3/user/rtl
+Application.vhd
+
+
+9) making the mcs file. run make in 
+/afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/firmware/targets/AxiPgpCardG3Dev
+
+
+where does this go?
+source /afs/slac.stanford.edu/g/reseng/vol11/autoconf/2.69/settings.sh
+
+
+_________
+(modify application.vhd to add "two" instead of one)
+then make
+
+then make that "two" above a python modifiable register so it doesn't need to be resynthesised in vhdl to change.
+
+ppa-pc87444 is on Ryan's floor.
+develpc is the one with pcie express card.	 
+
+
+
+
+1) make the AxiPgpCardG3Dev on an rdsrv (using 223.  going through git procedure in link https://docs.google.com/presentation/d/1BXH7QKXmAksVh5FlocjvB289vfJpI4xdWC2DNaPUvvk/edit#slide=id.p)
+
+2) copy make mcs building in AxiPgpCardG3Dev directory to ppa-pc87444:/u1/cob/images (chmod in that path otherwise prom loadable on develpc)
+
+3) login into develpc (have to be on ppa-pc87444)
+
+4) on develpc, cd /mnt/host/rogue/develpc/master/drivers/data_dev/driver/
+
+5) insmod datadev.ko
+
+6) cd /mnt/host/rogue/develpc/master/drivers/data_dev/app/bin
+
+7) ./dataPromLoad /mnt/host/images/AxiPgpCardG3Dev-0x0000000A-20170428153656-rherbst-dirty.mcs
+
+8) wait for it to finish
+
+9) start firefox -no-remote on ppa-pc87444
+
+10) go url ps.slac.stanford.edu and 
+
+11) cd /mnt/host/axi-pcie-dev/software/
+
+12) source setup.csh
+
+13) scripts/dataDev.py
+
+this load the mcs file made by the build system into the prom
+
+This history was on develpc.slac.stanford.edu.  Only accesible from ppa-pc87444
+
+     1	12:23	pwd
+     2	12:23	ls pci
+     3	12:23	ls
+     4	12:23	lspci
+     5	12:25	cd /mnt/host/rogue/develpc/master/drivers/data_dev/driver/
+     6	12:25	ls
+     7	12:26	insmod datadev.ko
+     8	12:26	dmesg
+     9	12:26	cat /proc/datadev_0
+    10	12:26	cat /proc/datadev_0 | less
+    11	12:27	cd /mnt/host/axi-pcie-dev/software/
+    12	12:28	ls
+    13	12:28	cd scripts/
+    14	12:28	ls
+    15	12:28	view dataDev.py
+    16	12:54	vi dataDev.py
+    17	12:55	vi dataDev.py
+    18	13:02	view dataDev.py
+    19	13:09	pwd
+    20	13:09	cd ../
+    21	13:09	view python/DevLib.py
+    22	13:29	ls -l
+    23	13:29	source setup.csh
+    24	13:30	less setup.csh
+    25	13:30	scripts/dataDev.py
+
+this history was on ppa-pc87444
+  850  cd /u1/cob
+  851  ls
+  852  pwd
+  853  pwd
+  854  cd axi-pcie-dev/software/
+  855  vi scripts/dataDev.py
+  856  hostname
+  857  clear
+  858  hostname
+  859  history
+
+this history was on rdusr217.slac.stanford.edu 
+
+pwd
+  850  ls -l
+  851  cd Desktop/axi-pcie-dev/firmware/
+  852  ls
+  853  ls -l build/
+  854  ls -l
+  855  cd targets/
+  856  ls
+  857  cd AxiPgpCardG3Dev/
+  858  ls
+  859  source /afs/slac/g/reseng/xilinx/vivado_2016.4/Vivado/2016.4/settings64.csh
+  860  source /afs/slac/g/reseng/xilinx/vivado_2016.4/Vivado/2016.4/settings64.sh
+  861  ls -l
+  862  history
+  863  pwd
+  864  ls
+  865  make clean
+  866  make &> makeResults.txt
+  867  view makeResults.txt 
+  868  where vivado
+  869  which vivado
+  870  rm -rf ~/.Xilinx/
+  871  make
+  872  make clean
+  873  make &> makeResults.txt
+  874  view makeResults.txt 
+  875  view makeResults.txt 
+  876  vivado ../../build/AxiPgpCardG3Dev/AxiPgpCardG3Dev_project.runs/impl_1/AxiPgpCardG3Dev.dcp 
+  877  pwd
+  878  make gui
+  879  ll 
+  880  ll
+  881  ll ../../submodules/axi-pcie-core/hardware/PgpCardG3/ip/
+  882  ls -l
+  883  git lfs install
+  884  where git
+  885  which git
+  886  history
+

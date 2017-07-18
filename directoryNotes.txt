@@ -63,6 +63,11 @@ iocsh()
 double click while in edit mode where there supposed to go. and then click on 3 dots by menu info
 
 
+#ana machines
+/reg/d/ana11/amo/amolq1415
+hdf5, usr, usrdaq, xtc are on ana11. is this experiment specific
+
+
 #list iocs running (or other processes running on telnet)
 psproc
 
