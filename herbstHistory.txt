@@ -1,6 +1,7 @@
 1) download rogue
+git clone https://github.com/slaclab/rogue.git
 
-2) insmod /u/lu/sioan/Desktop/rogue/drivers/data_dev/driver/data_dev.ko
+2) insmod /u/lu/sioan/Desktop/rogue/drivers/data_dev/driver/datadev.ko	#sudo bash
 
 3) ./rogue/drivers/data_dev/app/bin/dataPromLoad /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/firmware/targets/AxiPgpCardG3Dev/images/AxiPgpCardG3Dev-0x0000000B-20170511092639-sioan-dirty.mcs
 
@@ -8,13 +9,13 @@
 
 5) sudo csh	#got this working for bash
 
-6) source /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/software/setup.sh
+6) source /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/software/setup.sh	#sudo bash
 
 #get below working by creating setup.sh
 #set PYTHONPATH=($PYTHONPATH:/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python) #not working. need to cd there.
 #cd /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python #need to add to python path
 
-7) /u/lu/sioan/Desktop/axi-pcie-dev/software/scripts/dataDev.py
+7) /u/lu/sioan/Desktop/axi-pcie-dev/software/scripts/dataDev.py				#sudo bash
 ___________________
 
 
@@ -42,7 +43,24 @@ then make that "two" above a python modifiable register so it doesn't need to be
 ppa-pc87444 is on Ryan's floor.
 develpc is the one with pcie express card.	 
 
+___________________
 
+ > git clone git@github.com:/slaclab/axi-pcie-dev.git
+ > cd axi-pcie-dev
+ > git submodule init
+ > bit submodule update
+
+> cd firmware/
+ > ln -s /u1/sioan/build .
+
+ > cd targets/axi-pcie-dev/AxiPgpCardG3Dev/
+ > source
+/afs/slac.stanford.edu/g/reseng/xilinx/vivado_2016.4/Vivado/2016.4/settings64.csh
+
+> cd targets/axi-pcie-dev/AxiPgpCardG3Dev/
+ > source
+/afs/slac.stanford.edu/g/reseng/xilinx/vivado_2016.4/Vivado/2016.4/settings64.csh
+___________________
 
 
 1) make the AxiPgpCardG3Dev on an rdsrv (using 223.  going through git procedure in link https://docs.google.com/presentation/d/1BXH7QKXmAksVh5FlocjvB289vfJpI4xdWC2DNaPUvvk/edit#slide=id.p)
