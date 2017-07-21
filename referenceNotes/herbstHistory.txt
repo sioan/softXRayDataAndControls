@@ -11,6 +11,9 @@ git clone https://github.com/slaclab/rogue.git
 
 6) source /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/software/setup.sh	#sudo bash. don't forget this. or can chmod 744 /dev/datadev_0
 
+6) cd /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/software/ 
+7) source setup.sh	#sudo bash. need to be in that directory. can't source remotely
+
 #get below working by creating setup.sh
 export PYTHONPATH="$PYTHONPATH:/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python"
 #set PYTHONPATH=($PYTHONPATH:/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python) #not working. need to cd there.
