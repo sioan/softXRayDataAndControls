@@ -1,7 +1,7 @@
 1) download rogue
 git clone https://github.com/slaclab/rogue.git
 
-2) insmod /u/lu/sioan/Desktop/rogue/drivers/data_dev/driver/datadev.ko	#sudo bash
+2) insmod /u/lu/sioan/Desktop/rogue/drivers/data_dev/driver/datadev.ko	#sudo bash. or chmod /dev/datadev_0
 
 3) ./rogue/drivers/data_dev/app/bin/dataPromLoad /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/firmware/targets/AxiPgpCardG3Dev/images/AxiPgpCardG3Dev-0x0000000B-20170511092639-sioan-dirty.mcs
 
@@ -9,9 +9,10 @@ git clone https://github.com/slaclab/rogue.git
 
 5) sudo csh	#got this working for bash
 
-6) source /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/software/setup.sh	#sudo bash
+6) source /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/software/setup.sh	#sudo bash. don't forget this. or can chmod 744 /dev/datadev_0
 
 #get below working by creating setup.sh
+export PYTHONPATH="$PYTHONPATH:/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python"
 #set PYTHONPATH=($PYTHONPATH:/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python) #not working. need to cd there.
 #cd /afs/slac.stanford.edu/u/lu/sioan/Desktop/axi-pcie-dev/firmware/submodules/surf/python #need to add to python path
 
@@ -44,6 +45,17 @@ ppa-pc87444 is on Ryan's floor.
 develpc is the one with pcie express card.	 
 
 ___________________
+
+
+eval $(ssh-agent)
+You have to add your private key to it:
+
+ssh-add
+This will ask you your passphrase just once, and then you should be allowed to push, provided that you uploaded the public key to Github.
+To save key permanently:
+
+ssh-add -K  
+This will persist it after you close and re-open it by storing it in user's keychain.
 
  > git clone git@github.com:/slaclab/axi-pcie-dev.git
  > cd axi-pcie-dev
