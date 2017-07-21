@@ -15,6 +15,10 @@ dbps
 #fpga pgp card computer
 lcls-pc83236
 
+psana epics show pv names in psana
+psana.DetNames('epics')
+
+
 #acqiris calibration
 https://confluence.slac.stanford.edu/display/PCDS/Agilent+Acqiris+and+TDC+calibration
 
