@@ -1,7 +1,9 @@
 from pylab import *
 import h5py
 import pickle
-f = h5py.File("run60.h5")
+
+runNumber = 79
+f = h5py.File("run"+str(runNumber)+".h5")
 
 #['apd', 'fid', 'gmd', 'timeDelayStage', 'timeNeg', 'timePos']
 myDataSetNames = list(f)
@@ -44,7 +46,7 @@ for i in arange(-3e9,10e10,1e8):
 myApdGmdDict['-0.0'] = 0 
 myApdGmdDictCounter['-0.0'] = 0
 
-for i in arange(0,261777,1):
+for i in arange(0,361777,1):
 	
 	try:
 		thisApdEvent,thisApdValue = next(enumeratedApd)
@@ -56,8 +58,16 @@ for i in arange(0,261777,1):
 		thisTimeToolPositiveEvent,thisTimeToolPositiveValue = next(enumeratedTimeToolPositive)
 	
 		#if any in [thisApdEvent,thisApdValue,thisFidEvent,thisFidValue,thisGmdEvent,thisGmdValue]==None
-		if any([None is k for k in [thisApdEvent,thisApdValue,thisFidEvent,thisFidValue,thisGmdEvent,thisGmdValue]]):
+		tempIndex = str(1e8*round(thisGmdValue/1e8))
+		try:
+
+			if any([None is k for k in [thisApdEvent,thisApdValue,thisFidEvent,thisFidValue,thisGmdEvent,thisGmdValue,myApdGmdDict[tempIndex],myApdGmdDictCounter[tempIndex]]]):
+				print("evt {} is no good".format(i))
+				continue
+		except KeyError:
 			print("evt {} is no good".format(i))
+			continue
+		
 
 		#min and max of time delay stage list are 51.686 and 52.0001. based on previous turnerAnalysis.py, the units must be nanoseconds
 		#myApdList*1.0/myGmdList ranges from 0 to 0.008
@@ -84,13 +94,13 @@ for i in arange(0,261777,1):
 			myTimeToolPositiveList = array([])			
 
 
-		tempIndex = str(1e8*round(thisGmdValue/1e8))
+		
 		myApdGmdDict[tempIndex] += thisApdValue
 		myApdGmdDictCounter[tempIndex] += 1
 
 		#if(thisGmdValue<5e10 and thisGmdValue>1.2e10):
 		#if(thisGmdValue>1.2e9 and thisGmdValue<1.2e10):
-		if(thisGmdValue>1.2e9 and thisGmdValue<5e10):
+		if(thisGmdValue>1.1e9 and thisGmdValue<5e10):
 			#xEdges = arange(49.0,52,0.015)	#timing
 			
 			tempIndex = str(timeStep*round(thisTimeDelayValue/timeStep))
@@ -120,4 +130,4 @@ myHistogramNegativeTimeTotal = myHistogramNegativeTimeTotal + myHistogram
 #H, xedges, yedges = np.histogram2d(y, x, bins=(xedges, yedges))
 #myHistogram, xedges, yedges = np.histogram2d(myTimeDelayList,(myApdList/myGmdList), bins=(xedges, yedges))
 
-pickle.dump(myDict, open( "dictifiedData.pkl", "wb" ) ) #how to write and read the dictionary to pickle
+pickle.dump(myDict, open( "dictifiedDataRun"+str(runNumber)+".pkl", "wb" ) ) #how to write and read the dictionary to pickle
