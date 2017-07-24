@@ -4,8 +4,11 @@ import pickle
 from scipy import interpolate
 from scipy.signal import savgol_filter
 from scipy.stats.stats import pearsonr
+import sys
+from scipy.signal import savgol_filter
 
-myData = pickle.load(open("dictifiedData.pkl","rb"))
+runNumber = sys.argv[1]
+myData = pickle.load(open("dictifiedDataRun"+str(runNumber)+".pkl","rb"))
 
 #calibrate linearity
 x,y=loadtxt("linearityAnalysis.dat")
@@ -14,15 +17,12 @@ x=x[argsort(x)]
 lower,upper = 21,561
 interpolatedCalibrationFunction = interpolate.interp1d(x[lower:upper], savgol_filter(y[lower:upper],31,1))
 
-def linearModel(B,x):
-        return B[0]*x
-linear = Model(linearModel)
-
 #median truncation
-medTrunc = .025
-usedCount = 350
+medTrunc = .020
+medTruncBias = 0.00
+med2Trunc = 200
 
-correlationList = array([])
+myCorrelationList = array([])
 correlationErrorList = array([])
 bruteDivide = array([])
 myTime = array([])
@@ -36,67 +36,81 @@ for thisKey in myData.keys():
 
 	try:
 		x,y = myData[thisKey][1:,:].transpose()
-		x = interpolatedCalibrationFunction(x)*1
 
-		#median truncation along y
-		#x=x[argsort(y)][round(x.shape[0]*medTrunc):-round(x.shape[0]*medTrunc)]
-		#y=y[argsort(y)][round(y.shape[0]*medTrunc):-round(y.shape[0]*medTrunc)]
-
+		x = interpolatedCalibrationFunction(x)*1.0
 
 		#median truncation along x
-		y=y[argsort(x)][round(y.shape[0]*medTrunc):-round(y.shape[0]*medTrunc)]
-		x=x[argsort(x)][round(x.shape[0]*medTrunc):-round(x.shape[0]*medTrunc)]
+		#y=y[argsort(x)][round(y.shape[0]*(medTrunc-medTruncBias)):-round(y.shape[0]*(medTrunc+medTruncBias))]
+		#x=x[argsort(x)][round(x.shape[0]*(medTrunc-medTruncBias)):-round(x.shape[0]*(medTrunc+medTruncBias))]
+		y=y[argsort(x)][round(y.shape[0]/2-med2Trunc):round(y.shape[0]/2+med2Trunc)]
+		x=x[argsort(x)][round(x.shape[0]/2-med2Trunc):round(x.shape[0]/2+med2Trunc)]
+		
+		
+		temp= y/x
+	
+		#x=x[argsort(temp)][round(x.shape[0]*(medTrunc-medTruncBias)):-round(x.shape[0]*(medTrunc+medTruncBias))]
+		#y=y[argsort(temp)][round(y.shape[0]*(medTrunc-medTruncBias)):-round(y.shape[0]*(medTrunc+medTruncBias))]
+		
 
-		#y=y[argsort(x)][round(y.shape[0]/2)-usedCount:round(y.shape[0]/2)+usedCount]
-		#x=x[argsort(x)][round(x.shape[0]/2)-usedCount:round(x.shape[0]/2)+usedCount]
-
-
+		#temp = mean(sort(y*1.0/x)[med2Trunc:-med2Trunc])		
+		#bruteDivide = append(bruteDivide,temp)
+		#totalCounts = append(totalCounts,temp.shape[0]-2*med2Trunc)
+		
 		bruteDivide = append(bruteDivide,mean(y*1.0/x))
 		totalCounts = append(totalCounts,y.shape[0])
 
 		rawX = append(rawX,mean(x))
 		rawY = append(rawY,mean(y))
 
-
-		
-		tempHistogram = histogram(y/x,bins=arange(-1.01,3.01,.01))[0]
-		if(sum(tempHistogram)!=0):
-
-			if(my2dHistogram!=None):
-				my2dHistogram = vstack([my2dHistogram, tempHistogram])
-			else:
-				my2dHistogram =  tempHistogram
-
-
-		y=y-mean(y)
-		x=x-mean(x)
-		
-		dataForODR = RealData(x,y)
-		myODR = ODR(dataForODR, linear, beta0=[0.01])
-		myOdrOutput=myODR.run()
+		myCov = cov(x,y)
+		#pearsonr(y,x)[0]
+		myCorrelation = myCov[0,1]/(myCov[1,1]*myCov[0,0])**0.5
+		#myOffset = 
 	
-		correlationList = append(correlationList,myOdrOutput.beta[0])	
-		#correlationList = append(correlationList,pearsonr(x,y)[1])
-		correlationErrorList = append(correlationErrorList,myOdrOutput.sd_beta[0])
+		myCorrelationList = append(myCorrelationList,myCorrelation)
+		correlationErrorList = append(correlationErrorList,log(pearsonr(y,x)[1]))
 
 		myTime = append(myTime,float(thisKey))
 
+		xLast = 0+x
+		yLast =	0+y	
 
-	except:
+
+	except KeyboardInterrupt:
 		continue
 
+	except IndexError:
+		print("key "+thisKey+" had an error")
+		continue
+
+myTime -= max(myTime)
+myTime*=-2*0.299792458
+sortedIndex = argsort(myTime)
+
+myTime = myTime[sortedIndex]
+bruteDivide = bruteDivide[sortedIndex]
+myCorrelationList = myCorrelationList[sortedIndex]
+totalCounts = totalCounts[sortedIndex]
+rawX=rawX[sortedIndex]
+rawY=rawY[sortedIndex]
+
 subplot(221)
-plot(myTime,bruteDivide,'.')
+plot(myTime,savgol_filter(bruteDivide,11,5),'.')
+#twinx()
+#plot(myTime,totalCounts,'r.')
 
 subplot(222)
-plot(myTime,correlationList,'.')
+plot(myTime,myCorrelationList,'.')
 #ylim(.9,1.2)
 
 subplot(223)
-plot(myTime,totalCounts,'b.')
+plot(myTime,rawY*1.0/rawX,'.')
+#ylim(0.1,0.15)
 
 subplot(224)
-plot(myTime,(correlationErrorList),'.')
-#ylim(0.1,0.15)
+plot(myTime,totalCounts,'r.')
+
+#ylim(400,1300)
+
 
 show()
