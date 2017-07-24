@@ -63,6 +63,9 @@ https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detect
 console ioc-amo-hv2
 iocsh()
 
+#telnet to digi-sxr-04:2105
+#it's in top right corner of ims motor edm screen
+
 #edl edm screens embedded
 double click while in edit mode where there supposed to go. and then click on 3 dots by menu info
 
