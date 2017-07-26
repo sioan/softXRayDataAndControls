@@ -1,0 +1,73 @@
+bottoms up hyper detailed approach to planning for experiments. Let's start small. Just motors (cameras, vacuum, etc.. will come in future)
+
+(if this works, it will reduce our time spent setting up and allow rays techs to do it instead.)
+
+
+1) step by step instructions for technicians to setup motors. (deliverable by end of meeting is a document/binder like those used by accelerator side for the recent FEE upgrade.)
+
+a) motors
+
+b) where do they plug into for up coming experiments? (order of plugging?)
+
+c) where are they in the EDM screen? (we know, but let's put it in a document with screen shots so techs can find it.)
+
+d) where are motors found? (we know, but detailed enough that a technician can find them within < 3 minutes. birds eye map view of NEH with red circle around motor location in setup lab).
+
+e) what needs to be done to prepare them from a software side? (apply config, initialize, test motion.)
+
+f) include in document links to confluence pages. (with reminder that the tech need to login to see them.)
+
+g) pull motor specific information from bills document for Wevnert LP80.
+
+h) testing procedure to ensure motors work.
+_________________________________
+
+
+re-initalize: sets up a new connection between the ioc and the motor controller.
+loadsettings and save settings: these features are deprecated
+Save config: this saves all the parameters in the auxilliary and main expert motor screen and places them in a mySQL database.  sql key is the motor serial number.  The script associated with this button is /reg/g/pcds/pyps/apps/pmgr/R0.1.6/pmgrUtils.sh.  
+
+Apply Config: this loads the parameters determined by the controller and motor serial number. 
+/reg/g/pcds/pyps/apps/pmgr/R0.1.6/pmgrUtils.sh 
+
+
+Apply Config (DM): this loads the parameters determined by the motor serial number for dumb motors. Since the controller is not unique to the motor
+
+if the motor log message reports it can't communicate with the motor.  This is for a number of reasons, such as the motor cables are bad, or the communication parameters aren't set correctly (party mode, echo mode, baud rate (<- if this last one misconfigued, the digi baud rate needs to be set from the digi web interface.  (just the ip in a web browser) )).
+
+Setup new motor: this sets up the motor communication parameters.  the motor then needs to be re-initialized.  (if things are working properly, nothing will be displayed in the log messages for ~ 2 minutes.)
+
+sql files are stored in 
+/reg/g/pcds/pyps/apps/pmgr/R0.1.6/DB
+
+Magenta means there is a communication problem between the IOC and the hardware.
+Yellow means there is a reported error
+Red means a serious error.
+
+There are 2 sets of patch panels (acronym in the software is ppl.  if the motor RJ45 and phoenix contact power cable are in the wrong patch panel, the ioc will not be able to communicate with hardware).  Each patch panel has 16 ports.
+
+The first physical socket in patch panel number 1 maps to  SXR:EXP:MMS:01
+
+The first physical socket in patch panel number 2 maps to  SXR:EXP:MMS:17
+
+
+The labeling between the motor assigned to a patch panel
+
+
+
+
+
+_________________________________
+(tough for technicians
+getting epics started,
+running motors,
+having all motor accesible in sxrhome,
+techs need to be next to the motor while controlling it, (e.g. with laptop. tech may not have laptop. only have surface pro).
+document needs to nag with "Enter" return after enter number in EDM field.)
+accidental pressing of save config in motor menu.
+load config doesn't show any response that it does works.
+apply config take 15 seconds(ws maybe exagerrating.).
+how to calibrate?
+how to set soft limits?
+how validate limit switches?
+how to 
