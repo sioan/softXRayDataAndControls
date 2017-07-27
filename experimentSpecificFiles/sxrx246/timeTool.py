@@ -8,8 +8,8 @@ import os
 
 #import TimeTool
 psana.setOption('psana.calib-dir','/reg//d/psdm/sxr/sxrx24615/calib')
-myDataSource = psana.DataSource("shmem=psana.0:stop=no")
-#myDataSourcepsana.DataSource('exp=sxrlq7615:run=22')
+#myDataSource = psana.DataSource("shmem=psana.0:stop=no")
+myDataSourcepsana.DataSource('exp=sxrx24615:run=22')
 
 #not necessarily online.
 #ttOptions = TimeTool.AnalyzeOptions(get_key='TSS_OPAL',eventcode_nobeam = 162)	#162 event is bykick
