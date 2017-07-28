@@ -18,6 +18,10 @@ lcls-pc83236
 psana epics show pv names in psana
 psana.DetNames('epics')
 
+#evr notation
+#acqiris are used all the time.  have permnanent connection don't go away.
+0,0-9	come from a CPCI master timing crate in host daq-sxr-master. Provides opal, acqiris, and other permanent device triggers
+1,0-11   comes from a pcie express card loaded into daq-sxr-evr01. this is called the slac evr. Provides triggers to pnccd, and other devices that roam between hutches 
 
 #acqiris calibration
 https://confluence.slac.stanford.edu/display/PCDS/Agilent+Acqiris+and+TDC+calibration
