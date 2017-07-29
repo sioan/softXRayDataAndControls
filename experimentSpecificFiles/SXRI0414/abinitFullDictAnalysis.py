@@ -2,7 +2,7 @@ from pylab import *
 import h5py
 import pickle
 
-runNumber = 79
+runNumber = 60
 f = h5py.File("run"+str(runNumber)+".h5")
 
 #['apd', 'fid', 'gmd', 'timeDelayStage', 'timeNeg', 'timePos']

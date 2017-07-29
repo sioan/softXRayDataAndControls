@@ -89,7 +89,7 @@ source sxrenv.sh
 #sxr slow camera script location
 /reg/neh/operator/sxropr/sxr_python/sxr/SlowCam #don't use this. instead use
 sxrpython
-slowcam.takeShotsInteractive
+slowcam.
 
 
 #svn commands

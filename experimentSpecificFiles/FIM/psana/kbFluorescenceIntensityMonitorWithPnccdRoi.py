@@ -5,7 +5,7 @@ import psana
 #Live data during beamtime
 #dsource = psana.MPIDataSource('exp=sxr22915:run=104:smd:dir=/reg/d/ffb/sxr/sxro5916/xtc:live')
 #After beamtime
-dsource = psana.MPIDataSource("exp=sxrx22915:run=104:smd")
+dsource = psana.MPIDataSource("exp=sxrx22915:run=104")
 
 #smldata = dsource.small_data('run104.h5')
 smldata = dsource.small_data('run104c.h5')
@@ -35,8 +35,8 @@ toSaveAcquiris= MCP[timeStart:timeEnd]
 
 myCounter = 0
 for eventNumber,myEvent in enumeratedEvents:
-	#if eventNumber > 790:
-	#	break
+	if eventNumber > 10:
+		break
 	
 	#FEEGasDetEnergy = FEEGasDetEnergyDetector.get(myEvent)
 	#FEEGasDetEnergy_f_11_ENC = FEEGasDetEnergy.f_11_ENRC()
