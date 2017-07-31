@@ -10,6 +10,7 @@ def generateDetectorDictionary(configFileName):
 	f = open(configFileName+'.cfg','r')
 	myDetectorObjectDictionary = {}
 	myDetectorObjectDictionary['analyzer'] = {}
+	#myDetectorObjectDictionary['summarizer'] = {}	
 	
 	for thisDetectorConfig in f:
 		if('#'  not in thisDetectorConfig):
@@ -17,6 +18,9 @@ def generateDetectorDictionary(configFileName):
 			print("found detector object named "+myParsedString[3])
 			myDetectorObjectDictionary[myParsedString[3]] = psana.Detector(myParsedString[0])
 			myDetectorObjectDictionary['analyzer'][myParsedString[3]] = analysisFunctions.__dict__[myParsedString[4]]
+
+			#myDetectorObjectDictionary['summarizer'][myParsedString[3]] = analysisFunctions.__dict__[myParsedString[5]]
+
 		else:
 			continue
 		
@@ -24,6 +28,7 @@ def generateDetectorDictionary(configFileName):
 
 
 def main(exp, run, configFileName,h5FileName,testSample):
+	summaryData = {}
 	print("entering main function")
 
 	try:
@@ -54,17 +59,13 @@ def main(exp, run, configFileName,h5FileName,testSample):
 				break
 		
 		for i in myDetectorObjectDictionary.keys():
-			if (i!='analyzer'):
-				thisValue = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
-				if(thisValue is None):
-					continue
-				myDataDictionary[i] = thisValue
-		
+			if (i!='analyzer' and i!='summarizer'):
+				myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+				#summaryData[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary[i],thisEvent,summaryData[i])
+
 		smldata.event(myDataDictionary)
 		
-	#summary = myDetectorObjectDictionary['names'].copy()
-	#summary.update(myEpicsDetectorObjectDictionary['epics']['names'])
-	#smldata.save(summary)
+	#smldata.save(summaryData)
 
 	print("finished looping over events")
 	print("saving small data")
