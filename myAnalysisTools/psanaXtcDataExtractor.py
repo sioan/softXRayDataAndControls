@@ -55,7 +55,10 @@ def main(exp, run, configFileName,h5FileName,testSample):
 		
 		for i in myDetectorObjectDictionary.keys():
 			if (i!='analyzer'):
-				myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+				thisValue = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+				if(thisValue is None):
+					continue
+				myDataDictionary[i] = thisValue
 		
 		smldata.event(myDataDictionary)
 		

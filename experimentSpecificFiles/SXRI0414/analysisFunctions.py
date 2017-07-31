@@ -23,8 +23,14 @@ def getRaw(detectorObject,thisEvent):
 	return detectorObject(thisEvent)
 
 def getGMD(detectorObject,thisEvent):
+	
 	temp = detectorObject.get(thisEvent)
-	return temp.milliJoulesPerPulse()
+	if(temp is None):
+		print("bad event")
+		return None
+
+	else:
+		return temp.milliJoulesPerPulse()
 
 def getEBeam(detectorObject,thisEvent):
 	temp = detectorObject.get(thisEvent)

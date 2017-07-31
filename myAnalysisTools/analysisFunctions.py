@@ -9,12 +9,9 @@ def getPeak(detectorObject,thisEvent):
 
 	myFit = polyfit(arange(len(myWaveForm))[7500:10000]-8406, myWaveForm[7500:10000],3)
 
-	myDictionary = {}
-	myDictionary['acqirisParameter1'] = myFit[-1]
-	myDictionary['acqirisParameter2'] = myFit[-2]
+	
 
-	#return myFit[-1]
-	return myDictionary
+	return myFit[-1]
 
 def getWaveForm(detectorObject,thisEvent):
 	return detectorObject(thisEvent)[0][0]
@@ -26,8 +23,14 @@ def getRaw(detectorObject,thisEvent):
 	return detectorObject(thisEvent)
 
 def getGMD(detectorObject,thisEvent):
+	
 	temp = detectorObject.get(thisEvent)
-	return temp.milliJoulesPerPulse()
+	if(temp is None):
+		print("bad event")
+		return None
+
+	else:
+		return temp.milliJoulesPerPulse()
 
 def getEBeam(detectorObject,thisEvent):
 	temp = detectorObject.get(thisEvent)
