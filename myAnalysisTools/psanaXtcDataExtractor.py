@@ -1,59 +1,67 @@
+import argparse
+import analysisFunctions
 from pylab import *
 import psana
 import os
 
-os.system("rm mySmallData.h5")
-
-#myDataSource = psana.DataSource("shmem=psana.0:stop=no")
-myDataSource = psana.MPIDataSource("exp=sxri0414:run=79")
-smldata = myDataSource.small_data('mySmallData.h5')
-
-#myDataAnalysisDictionary = {}
-#	myDataAnalysis
-
-myDetectorObjectDictionary = {}
-for i in psana.DetNames():
-	#print i[0]
-	if('image' in dir(psana.Detector(i[0]))):
-		#print i[0]
-		myDetectorObjectDictionary[i[0]] = psana.Detector(i[0]).image
-
-	else: 
-		myDetectorObjectDictionary[i[0]] = psana.Detector(i[0])
-
-myEpicsDetectorObjectDictionary = {}
-for i in psana.DetNames('epics'):
-	myEpicsDetectorObjectDictionary['epics',i[0]] = psana.Detector(i[0])
-
-myEnumeratedEvents = enumerate(myDataSource.events())
-myDataDictionary = {}
-
-#for eventNumber,thisEvent in myEnumeratedEvents:
-while (True):
-
-	eventNumber,thisEvent  = next(myEnumeratedEvents)
-	print eventNumber
-	if(eventNumber > 200):
-		break
-	#for i in myDetectorObjectDictionary.keys():
-		#print i
-	#	try:
-	#		myDataDictionary[i] = myDetectorObjectDictionary[i](thisEvent)
-	#	except:
-	#		continue
+def generateDetectorDictionary(configFileName):
 	
-	for i in myEpicsDetectorObjectDictionary.keys():
-		try:
-				myDataDictionary[i[0]][i[1]] = myEpicsDetectorObjectDictionary[i](thisEvent)
-		except:
-				myDataDictionary[i[0]] = {}
+	f = open(configFileName+'.cfg','r')
+	myDetectorObjectDictionary = {}
+	myDetectorObjectDictionary['analyzer'] = {}
+	
+	for thisDetectorConfig in f:
+		if('#'  not in thisDetectorConfig):
+			myParsedString = thisDetectorConfig.split(',')
+			myDetectorObjectDictionary[myParsedString[3]] = psana.Detector(myParsedString[0])
+			myDetectorObjectDictionary['analyzer'][myParsedString[3]] = analysisFunctions.__dict__[myParsedString[4]]
+		else:
+			continue
+		
+	return myDetectorObjectDictionary
 
-	#smldata.event(myDataDictionary)
-	smldata.event(test=eventNumber)
 
-summary = {}
-summary['test'] = 0
+def main(exp, run, configFileName,h5FileName):
+	try:
+		os.system("rm "+h5FileName+".h5")
+	except:
+		print("nothing to remove")
+	
+	experimentNameAndRun = "exp=%s:run=%d"%(exp, run)
+	myDataSource = psana.MPIDataSource(experimentNameAndRun)
+	smldata = myDataSource.small_data(h5FileName+'.h5')
 
-#smldata.save(summary)
-smldata.save()
-#smldata.close()
+	myDetectorObjectDictionary = generateDetectorDictionary(configFileName)
+	
+	myDataDictionary = {}
+
+	myEnumeratedEvents = enumerate(myDataSource.events())
+	for eventNumber,thisEvent in myEnumeratedEvents:
+		if(eventNumber > 10):
+			break
+		
+		for i in myDetectorObjectDictionary.keys():
+			if (i!='analyzer'):
+				myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+		
+		smldata.event(myDataDictionary)
+		
+	#summary = myDetectorObjectDictionary['names'].copy()
+	#summary.update(myEpicsDetectorObjectDictionary['epics']['names'])
+	#smldata.save(summary)
+	smldata.save()
+	smldata.close()
+
+	return
+
+if __name__ == '__main__':
+	myParser = argparse.ArgumentParser(description='Generating a config file for analysis')
+		
+	myParser.add_argument('-e','--exp', help='the experiment name')
+	myParser.add_argument('-r','--run',type=int,help='the run number to use when running offline')
+	myParser.add_argument('-c','--configFile',help='the config file to write to')
+	myParser.add_argument('-hd5','--hd5File',help='the small data file to write to')
+
+	myArguments = myParser.parse_args()
+
+	main(myArguments.exp,myArguments.run,myArguments.configFile,myArguments.hd5File)
