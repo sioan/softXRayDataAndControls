@@ -1,3 +1,4 @@
+#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
 import argparse
 import analysisFunctions
 from pylab import *
@@ -37,7 +38,7 @@ def main(exp, run, configFileName,h5FileName):
 
 	myEnumeratedEvents = enumerate(myDataSource.events())
 	for eventNumber,thisEvent in myEnumeratedEvents:
-		if(eventNumber > 10):
+		if(eventNumber > 1000):
 			break
 		
 		for i in myDetectorObjectDictionary.keys():
