@@ -184,7 +184,8 @@ bhosts -w psnehfarm	#psana 1501 through 1520, except for psana1508, should all h
 sudo /etc/init.d/lsf start #restart lsf daemons 
 /reg/common/tools/lsf/show_closed_nodes.sh
 
-#psana bash commands
+#psana bsub bash commands
+#https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=225509678
 source /reg/g/psdm/etc/ana_env.sh
 Detnames -e exp=xpptu15:run=59
 bqueues
@@ -192,6 +193,9 @@ bjobs -u sioan -d -w	#this one doesn't work. one above does
 bkill
 bsub
 batchSubmit = os.system("bsub -o /reg/neh/home/sioan/Desktop/psana/%J.log -q psnehhiprioq -n 32 mpirun --mca btl ^openib python kboPowerPostCleaning.py "+str(i)+" $1")
+#command that works
+bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis -hd5 sxri0414
+
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
