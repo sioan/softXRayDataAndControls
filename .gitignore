@@ -1,3 +1,9 @@
+# Files without extensions # 
+############################
+*
+!/**/
+!*.*
+
 # Compiled source #
 ###################
 *.com
@@ -6,6 +12,7 @@
 *.exe
 *.o
 *.so
+*.pyc
 
 # Packages #
 ############
@@ -28,8 +35,10 @@
 *.sqlite
 
 # Data files #
-# ############
+##############
 *.h5
 *.dat
 *.data
 *.pkl
+
+
