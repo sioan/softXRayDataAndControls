@@ -9,9 +9,12 @@ def getPeak(detectorObject,thisEvent):
 
 	myFit = polyfit(arange(len(myWaveForm))[7500:10000]-8406, myWaveForm[7500:10000],3)
 
-	
+	myDictionary = {}
+	myDictionary['acqirisParameter1'] = myFit[-1]
+	myDictionary['acqirisParameter2'] = myFit[-2]
 
-	return myFit[-1]
+	#return myFit[-1]
+	return myDictionary
 
 def getWaveForm(detectorObject,thisEvent):
 	return detectorObject(thisEvent)[0][0]

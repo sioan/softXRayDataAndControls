@@ -75,7 +75,7 @@ def main(exp, run, configFileName,h5FileName,testSample):
 if __name__ == '__main__':
 	
 	print("parsing arguments")
-	myParser = argparse.ArgumentParser(description='Abstracts data analysis into user functions')
+	myParser = argparse.ArgumentParser(description='Generating a config file for analysis')
 		
 	myParser.add_argument('-e','--exp', help='the experiment name')
 	myParser.add_argument('-r','--run',type=int,help='the run number to use when running offline')
