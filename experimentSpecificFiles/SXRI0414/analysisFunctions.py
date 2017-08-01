@@ -7,31 +7,50 @@ def getPeak(detectorObject,thisEvent):
 
 	myWaveForm -= mean(myWaveForm[:2500])
 
-	myFit = polyfit(arange(len(myWaveForm))[7500:10000]-8406, myWaveForm[7500:10000],3)
+	x = arange(len(myWaveForm))[7500:10000]-8406
+	myFit = polyfit(x, myWaveForm[7500:10000],3)
 
-	
+	p = poly1d(myFit)
+	myMax = max(p(x))
 
-	return myFit[-1]
+	#return myFit[-1]	#placing a dictionary here also works
+	return myMax	
+
+def accumulateAverageWave(detectorObject,thisEvent,previousProcessing):
+
+	myWaveForm = -detectorObject(thisEvent)[0][0]
+	myWaveForm -= mean(myWaveForm[:2500])
+
+	return (previousProcessing+myWaveForm)
 
 def getWaveForm(detectorObject,thisEvent):
-	return detectorObject(thisEvent)[0][0]
+	if (None not in [detectorObject(thisEvent)[0][0]]):
+		return detectorObject(thisEvent)[0][0]
+	else:	
+		return 0
 	
 def get(detectorObject,thisEvent):
-	return detectorObject(thisEvent)
+	if (None not in [detectorObject(thisEvent)]):
+		return detectorObject(thisEvent)
+	else:
+		return 0
 
 def getRaw(detectorObject,thisEvent):
-	return detectorObject(thisEvent)
+	if (None not in [detectorObject(thisEvent)]):
+		return detectorObject(thisEvent)
+	else:
+		return 0
 
 def getGMD(detectorObject,thisEvent):
-	
 	temp = detectorObject.get(thisEvent)
-	if(temp is None):
-		print("bad event")
-		return None
-
-	else:
+	if (None not in [temp]):
 		return temp.milliJoulesPerPulse()
+	else: 	
+		return 0
 
 def getEBeam(detectorObject,thisEvent):
 	temp = detectorObject.get(thisEvent)
-	return temp.ebeamPhotonEnergy()
+	if(None not in [temp]):
+		return temp.ebeamPhotonEnergy()
+	else:
+		return 0

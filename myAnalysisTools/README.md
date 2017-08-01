@@ -25,3 +25,12 @@ Since starting in 11/2016, I have written this same portion of code several doze
 example execution
 
  run psanaXtcDataExtractor.py -e sxri0414 -r 79 -c test -hd5 test
+
+
+to do 
+====================
+
+1) add in summarizing data capability.
+2) time tool background 
+3) fix peak finder to actually find peaks.  currently just looking at amplitude at a given spot.  small time jitter will introduce noise.  actually get the max.
+4) make xtc extractor use the correct path
