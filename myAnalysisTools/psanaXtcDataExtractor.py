@@ -4,6 +4,7 @@ import analysisFunctions
 from pylab import *
 import psana
 import os
+import subprocess
 
 def generateDetectorDictionary(configFileName):
 	print("reading config file")
@@ -43,6 +44,8 @@ def renameSummaryKeys(myDict):
 def main(exp, run, configFileName,h5FileName,testSample):
 	
 	print("entering main function")
+	myWorkingDirectory = subprocess.check_output("pwd")
+	print("working directory = ")
 
 	try:
 		print("removing file")
