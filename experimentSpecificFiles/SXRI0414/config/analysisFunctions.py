@@ -54,3 +54,6 @@ def getEBeam(detectorObject,thisEvent):
 		return temp.ebeamPhotonEnergy()
 	else:
 		return 0
+
+
+

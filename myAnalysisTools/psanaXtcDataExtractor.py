@@ -1,20 +1,27 @@
 #!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
 import argparse
-import analysisFunctions
+import os
+import sys
+sys.path.append(os.curdir) 
+from config import analysisFunctions
 from pylab import *
 import psana
-import os
 import subprocess
 import time
 
 def generateDetectorDictionary(configFileName):
+
+	myWorkingDirectory = subprocess.check_output("pwd")[:-1]
+	print("working directory = "+str(myWorkingDirectory))
+
 	print("reading config file")
-	f = open(configFileName,'r')
+	f = open(myWorkingDirectory+"/config/"+configFileName,'r')
 	myDetectorObjectDictionary = {}
 	myDetectorObjectDictionary['analyzer'] = {}
 	myDetectorObjectDictionary['summarizer'] = {}				
 	print("Generating analyzer summarizer and detector objects")
-	
+	#print(str(analysisFunctions.__dict__.keys()))	
+
 	for thisDetectorConfig in f:
 		if('#'  not in thisDetectorConfig):
 			myParsedString = thisDetectorConfig.split(',')
@@ -43,15 +50,16 @@ def renameSummaryKeys(myDict):
 		myDict[i+'Summarized'] = myDict.pop(i)
 
 def main(exp, run, configFileName,h5FileName,testSample):
-	
+	global smldata,	summaryDataDictionary
+
 	startTime = time.time()
 	print("entering main function")
-	myWorkingDirectory = subprocess.check_output("pwd")
-	print("working directory = ")
-
+	
+	h5FileName = exp+'run'+str(run)+'.h5'
+	
 	try:
 		print("removing file")
-		os.system("rm "+h5FileName+".h5")
+		os.system("rm "+h5FileName)
 	except:
 		print("nothing to remove")
 	
@@ -60,7 +68,7 @@ def main(exp, run, configFileName,h5FileName,testSample):
 	myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")
 
 	print("defining small data")
-	smldata = myDataSource.small_data(h5FileName+'.h5')
+	smldata = myDataSource.small_data(h5FileName)
 
 	print("loading detector object dictionary")
 	myDetectorObjectDictionary = generateDetectorDictionary(configFileName)
@@ -70,6 +78,7 @@ def main(exp, run, configFileName,h5FileName,testSample):
 	myDataDictionary,summaryDataDictionary = initializeDataDictionaries(myDetectorObjectDictionary)
 	
 	print("iterating over enumerated events")
+	
 	myEnumeratedEvents = enumerate(myDataSource.events())
 	for eventNumber,thisEvent in myEnumeratedEvents:
 		if(eventNumber %1000 == 1):

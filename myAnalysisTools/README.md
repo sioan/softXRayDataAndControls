@@ -30,7 +30,7 @@ example execution
 to do 
 ====================
 
-1) add in summarizing data capability.
-2) time tool background 
-3) fix peak finder to actually find peaks.  currently just looking at amplitude at a given spot.  small time jitter will introduce noise.  actually get the max.
-4) make xtc extractor use the correct path
+1) (got started.) add in summarizing data capability. may not work with dict since it's initialized to zero
+2) time tool background (for the opal images on the by kick)
+3) (check) fix peak finder to actually find peaks.  currently just looking at amplitude at a given spot.  small time jitter will introduce noise.  actually get the max.
+4) (minor progress: added some syntax to check working directory )make xtc extractor use the correct path

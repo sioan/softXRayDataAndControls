@@ -1,3 +1,4 @@
+#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
 #from pylab import *
 import argparse
 import psana
