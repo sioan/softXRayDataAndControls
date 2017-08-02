@@ -5,6 +5,7 @@ from pylab import *
 import psana
 import os
 import subprocess
+import time
 
 def generateDetectorDictionary(configFileName):
 	print("reading config file")
@@ -43,6 +44,7 @@ def renameSummaryKeys(myDict):
 
 def main(exp, run, configFileName,h5FileName,testSample):
 	
+	startTime = time.time()
 	print("entering main function")
 	myWorkingDirectory = subprocess.check_output("pwd")
 	print("working directory = ")
@@ -71,7 +73,7 @@ def main(exp, run, configFileName,h5FileName,testSample):
 	myEnumeratedEvents = enumerate(myDataSource.events())
 	for eventNumber,thisEvent in myEnumeratedEvents:
 		if(eventNumber %1000 == 1):
-			print("iterating over enumerated events.  Event number = "+str(eventNumber))
+			print("iterating over enumerated events.  Event number = "+str(eventNumber)+" Elapsed Time (s) = "+str(time.time()-startTime))
 		if(testSample):
 			if(eventNumber > 200):
 				break

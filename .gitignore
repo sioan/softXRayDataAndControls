@@ -41,4 +41,7 @@
 *.data
 *.pkl
 
+# temporary #
+#############
+*.py~
 
