@@ -30,7 +30,11 @@ example execution
 to do 
 ====================
 
-1) (got started.) add in summarizing data capability. may not work with dict since it's initialized to zero
+1) (finished 7/31/2017.) add in summarizing data capability. may not work with dict since it's initialized to zero
 2) time tool background (for the opal images on the by kick)
-3) (check) fix peak finder to actually find peaks.  currently just looking at amplitude at a given spot.  small time jitter will introduce noise.  actually get the max.
-4) (minor progress: added some syntax to check working directory )make xtc extractor use the correct path
+3) (finished) fix peak finder to actually find peaks.  currently just looking at amplitude at a given spot.  small time jitter will introduce noise.  actually get the max.
+4) (finished added some syntax to check working directory )make xtc extractor use the correct path. Initial package structure for importing analysisFunctions.py for local working directory and not python path using __init__.py
+
+5) small data doesn't work with data source. Slow Andor breaks MPI data source.  This will need to be solved for this and upcoming Andor experiments.
+
+6) have the config file generator create this __init__.py and conig file system.

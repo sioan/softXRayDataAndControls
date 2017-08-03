@@ -1,16 +1,25 @@
 #!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
 #from pylab import *
+import sys
+import os
+sys.path.append(os.curdir) 
 import argparse
 import psana
-import os
+
 
 
 def main(exp, run, configFileName):
 
 	experimentNameAndRun = "exp=%s:run=%d"%(exp, run)
+	try:
+		os.system('mkdir config')
+	except:
+		print("won't throw an exceptoin even if it exists")
+
+	os.system('./config/touch __init__.py')
 
 	myDataSource = psana.MPIDataSource(experimentNameAndRun)
-	f = open(configFileName+'.cfg','w')
+	f = open('./config/'configFileName+'.cfg','w')
 
 	f.write('##########################\n')
 	f.write('#######DAQ DEVICES########\n')
