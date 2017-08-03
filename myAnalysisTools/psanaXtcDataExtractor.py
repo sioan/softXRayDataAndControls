@@ -9,6 +9,26 @@ import psana
 import subprocess
 import time
 
+#this small data wrapper is to swap out small data implementations 
+#depending whether MPIDataSouce or plain data source is used
+
+def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,MPI):
+
+	if(MPI==False):
+		print("loading experiment data using MPI ")
+		myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
+
+		print("defining small data")
+		smldata = myDataSource.small_data(h5FileName)
+	else:
+		print("loading experiment data NOT using MPI ")
+		myDataSource = psana.DataSource(experimentNameAndRun)	#this needs to be merged
+
+		print("defining small data. hook in place")
+		smldata = myDataSource.small_data(h5FileName)
+
+	return (myDataSource,smldata)
+
 def generateDetectorDictionary(configFileName):
 
 	myWorkingDirectory = subprocess.check_output("pwd")[:-1]
@@ -41,15 +61,15 @@ def initializeDataDictionaries(myDetectorObjectDictionary):
 
 	myDataDictionary = {}
 	summaryDataDictionary={}
-	for i in myDetectorObjectDictionary['summarizer'].keys():
+	for i in myDetectorObjectDictionary['summarizer']:
 		summaryDataDictionary[i] = 0
 
 	return[myDataDictionary,summaryDataDictionary]
 def renameSummaryKeys(myDict):
-	for i in myDict.keys():
+	for i in myDict:
 		myDict[i+'Summarized'] = myDict.pop(i)
 
-def main(exp, run, configFileName,h5FileName,testSample):
+def main(exp, run, configFileName,h5FileName,testSample,MPI):
 	global smldata,	summaryDataDictionary
 
 	startTime = time.time()
@@ -63,12 +83,14 @@ def main(exp, run, configFileName,h5FileName,testSample):
 	except:
 		print("nothing to remove")
 	
-	print("loading experiment")
 	experimentNameAndRun = "exp=%s:run=%d"%(exp, run)
-	myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")
+	#print("loading experiment")
+	#myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
 
-	print("defining small data")
-	smldata = myDataSource.small_data(h5FileName)
+	#print("defining small data")
+	#smldata = myDataSource.small_data(h5FileName)
+
+	myDataSource, smldata = makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,MPI)
 
 	print("loading detector object dictionary")
 	myDetectorObjectDictionary = generateDetectorDictionary(configFileName)
@@ -76,20 +98,22 @@ def main(exp, run, configFileName,h5FileName,testSample):
 	
 	print("initializing data dictionaries")
 	myDataDictionary,summaryDataDictionary = initializeDataDictionaries(myDetectorObjectDictionary)
+
+	messageFeedBackRate = 20+980*int(testSample==False)
 	
 	print("iterating over enumerated events")
 	
 	myEnumeratedEvents = enumerate(myDataSource.events())
 	for eventNumber,thisEvent in myEnumeratedEvents:
-		if(eventNumber %1000 == 1):
+		if(eventNumber %messageFeedBackRate == 1):
 			print("iterating over enumerated events.  Event number = "+str(eventNumber)+" Elapsed Time (s) = "+str(time.time()-startTime))
 		if(testSample):
 			if(eventNumber > 200):
 				break
 		
-		for i in myDetectorObjectDictionary['analyzer'].keys():
+		for i in myDetectorObjectDictionary['analyzer']:
 			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
-		for i in myDetectorObjectDictionary['summarizer'].keys():
+		for i in myDetectorObjectDictionary['summarizer']:
 				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary[i],thisEvent,summaryDataDictionary[i])
 
 		smldata.event(myDataDictionary)
@@ -118,8 +142,15 @@ if __name__ == '__main__':
 	myParser.add_argument('-c','--configFile',help='the config file to write to')
 	myParser.add_argument('-hd5','--hd5File',help='the small data file to write to')
 	myParser.add_argument('-t','--testSample',action='store_true',help='only take a small set of data for testing')
+	myParser.add_argument('-nom','--MPI',action='store_true',help='does not use mpi ')
 
 	myArguments = myParser.parse_args()
 	print("arguments parsed")
 
-	main(myArguments.exp,myArguments.run,myArguments.configFile,myArguments.hd5File,myArguments.testSample)
+	main(
+		myArguments.exp,
+		myArguments.run,
+		myArguments.configFile,
+		myArguments.hd5File,
+		myArguments.testSample,
+		myArguments.MPI)
