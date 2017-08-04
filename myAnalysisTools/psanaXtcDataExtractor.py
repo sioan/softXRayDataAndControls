@@ -8,9 +8,36 @@ from pylab import *
 import psana
 import subprocess
 import time
+import h5py
 
 #this small data wrapper is to swap out small data implementations 
 #depending whether MPIDataSouce or plain data source is used
+
+class SmallData():
+	def __init__(self,h5FileName):
+		self.h5FileObject = h5py.File(h5FileName, 'w')
+		self.eventNumber = 1
+		
+	def event(self,dataDictionary,eventNumber):
+		for i in dataDictionary:
+			if(eventNumber != 0 ):
+				self.h5FileObject[i].resize((eventNumber+1,))
+				self.h5FileObject[i][eventNumber] = dataDictionary[i]
+				#print("succeded")
+
+			else:
+				#print("failed")
+				#print(dataDictionary[i])
+				self.h5FileObject.create_dataset(i,(0,),dtype='f8',maxshape=(None,))
+				self.h5FileObject[i].resize((self,eventNumber,))
+				self.h5FileObject[i][0] = dataDictionary[i]
+
+	def save(self,summaryDictionaryData):
+		for i in summaryDictionaryData:
+			self.h5FileObject[i] = summaryDictionaryData[i]
+
+	def close(self):
+		self.h5FileObject.close()
 
 def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,MPI):
 
@@ -22,10 +49,11 @@ def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,MPI):
 		smldata = myDataSource.small_data(h5FileName)
 	else:
 		print("loading experiment data NOT using MPI ")
-		myDataSource = psana.DataSource(experimentNameAndRun)	#this needs to be merged
+		myDataSource = psana.MPIDataSource(experimentNameAndRun)	#this is hook for non mpi
 
-		print("defining small data. hook in place")
-		smldata = myDataSource.small_data(h5FileName)
+		print("defining small data. hook in place ")
+		smldata = SmallData(h5FileName)
+
 
 	return (myDataSource,smldata)
 
@@ -70,7 +98,7 @@ def renameSummaryKeys(myDict):
 		myDict[i+'Summarized'] = myDict.pop(i)
 
 def main(exp, run, configFileName,h5FileName,testSample,MPI):
-	global smldata,	summaryDataDictionary
+	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents
 
 	startTime = time.time()
 	print("entering main function")
@@ -127,7 +155,7 @@ def main(exp, run, configFileName,h5FileName,testSample,MPI):
 	smldata.save(summaryDataDictionary)
 	#smldata.save()
 	print("small data file saved")
-	smldata.close()
+	#smldata.close()
 	print("small data file closed")
 
 	return
@@ -142,7 +170,7 @@ if __name__ == '__main__':
 	myParser.add_argument('-c','--configFile',help='the config file to write to')
 	myParser.add_argument('-hd5','--hd5File',help='the small data file to write to')
 	myParser.add_argument('-t','--testSample',action='store_true',help='only take a small set of data for testing')
-	myParser.add_argument('-nom','--MPI',action='store_true',help='does not use mpi ')
+	myParser.add_argument('-m','--MPI',action='store_true',help='does not use mpi ')
 
 	myArguments = myParser.parse_args()
 	print("arguments parsed")
