@@ -18,20 +18,24 @@ class SmallData():
 		self.h5FileObject = h5py.File(h5FileName, 'w')
 		self.eventNumber = 1
 		
-	def event(self,dataDictionary,eventNumber):
-		for i in dataDictionary:
-			if(eventNumber != 0 ):
-				self.h5FileObject[i].resize((eventNumber+1,))
-				self.h5FileObject[i][eventNumber] = dataDictionary[i]
+	def event(self,dataDictionary):
+		if(self.eventNumber != 1 ):
+			for i in dataDictionary:
+				self.h5FileObject[i].resize((self.eventNumber+1,))
+				self.h5FileObject[i][self.eventNumber] = dataDictionary[i]
 				#print("succeded")
+				
 
-			else:
+		else:
+			for i in dataDictionary:
 				#print("failed")
 				#print(dataDictionary[i])
 				self.h5FileObject.create_dataset(i,(0,),dtype='f8',maxshape=(None,))
-				self.h5FileObject[i].resize((self,eventNumber,))
+				self.h5FileObject[i].resize((self.eventNumber,))
 				self.h5FileObject[i][0] = dataDictionary[i]
 
+		self.eventNumber = self.eventNumber + 1
+		
 	def save(self,summaryDictionaryData):
 		for i in summaryDictionaryData:
 			self.h5FileObject[i] = summaryDictionaryData[i]
