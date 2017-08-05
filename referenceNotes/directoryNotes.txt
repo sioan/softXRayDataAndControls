@@ -11,6 +11,16 @@ web browser to digi-sxr-08/
 root
 dbps
 
+#digi login 
+in url put 
+digi-sxr-04/
+root / dbps
+
+
+#view ports communicating on host
+netstat -n | less
+then search for ports.
+
 #office desk linux machine
 #fpga pgp card computer
 lcls-pc83236
@@ -76,6 +86,17 @@ iocsh()
 
 #telnet to digi-sxr-04:2105
 #it's in top right corner of ims motor edm screen
+
+#dehong motor record untemplated is located here
+/reg/g/pcds/epics/ioc/common/ims/R2.2.0 (this current version is bad)
+
+#tcpdump on all computers in amo and sxr now.  tcpick is only on psusr112
+sudo tcpdump port 56471 -w sxrMotor2113.txt
+tcpick -r tcpDump.txt -yP | less
+
+
+#ioc log files
+/reg/d/iocData
 
 #edl edm screens embedded
 double click while in edit mode where there supposed to go. and then click on 3 dots by menu info

@@ -35,6 +35,10 @@ to do
 3) (finished) fix peak finder to actually find peaks.  currently just looking at amplitude at a given spot.  small time jitter will introduce noise.  actually get the max.
 4) (finished added some syntax to check working directory )make xtc extractor use the correct path. Initial package structure for importing analysisFunctions.py for local working directory and not python path using __init__.py
 
-5) small data doesn't work with data source. Slow Andor breaks MPI data source.  This will need to be solved for this and upcoming Andor experiments.
+5) (fixed. created mimic smalldata class.  Doesn't handle nested dictionaries as nicely as silke's and chris's small data). small data doesn't work with data source. Slow Andor breaks MPI data source.  This will need to be solved for this and upcoming Andor experiments.
 
-6) have the config file generator create this __init__.py and conig file system.
+6) (done) have the config file generator create this __init__.py and conig file system.
+
+7) h5name extension isn't working properly. may over write good data during test.
+
+8) start adding friendly error messages that don't spam the screen.
