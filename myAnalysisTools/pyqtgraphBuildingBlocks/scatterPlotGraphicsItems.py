@@ -18,6 +18,7 @@ def clicked(plot, points):
     global lastClicked
     for p in lastClicked:
         p.resetPen()
+		#print("test")
     #print("clicked points", points)
 
     for p in points:
@@ -64,45 +65,69 @@ s1.sigClicked.connect(clicked)
 ##################################################
 ################add ROI###########################
 
-r3a = pg.ROI([-1e-5,-1e-5], [1e-5,1e-5])
-w1.addItem(r3a)
+r1a = pg.ROI([-1e-5,-1e-5], [1e-5,1e-5])
+w1.addItem(r1a)
 ## handles scaling horizontally around center
-r3a.addScaleHandle([1, 0.5], [0.5, 0.5])
-r3a.addScaleHandle([0, 0.5], [0.5, 0.5])
+r1a.addScaleHandle([1, 0.5], [0.5, 0.5])
+r1a.addScaleHandle([0, 0.5], [0.5, 0.5])
 
 ## handles scaling vertically from opposite edge
-r3a.addScaleHandle([0.5, 0], [0.5, 1])
-r3a.addScaleHandle([0.5, 1], [0.5, 0])
+r1a.addScaleHandle([0.5, 0], [0.5, 1])
+r1a.addScaleHandle([0.5, 1], [0.5, 0])
 
 ## handles scaling both vertically and horizontally
-r3a.addScaleHandle([1, 1], [0, 0])
-r3a.addScaleHandle([0, 0], [1, 1])
+r1a.addScaleHandle([1, 1], [0, 0])
+r1a.addScaleHandle([0, 0], [1, 1])
 
 def updateROI(roi):
+    global lastClicked
+    for p in lastClicked:
+        p.resetPen()
+
     #print("[{},{}],[{},{}]".format(roi.x(),roi.y(),(roi.size()).x(),(roi.size()).y()))
     #r = np.array([roi.x(),roi.y()],[(roi.size()).x(),(roi.size()).y()])
     rLim = np.array([[roi.x(),roi.y()],[(roi.size()).x(),(roi.size()).y()]])
     r = np.array([[i.viewPos().x(),i.viewPos().y()] for i in s1.points()])
 
-    myMask = np.array([(i>rLim[0][0])for i in r[:,0]])
-    r = r[myMask] 
+    #myMask = np.array([(i>rLim[0][0])for i in r[:,0]])
+    #r = r[myMask] 
 
-    myMask = np.array([(i>rLim[0][1])for i in r[:,1]])
-    r = r[myMask] 
+    #myMask = np.array([(i>rLim[0][1])for i in r[:,1]])
+    #r = r[myMask] 
 
-    myMask = np.array([(i<rLim[0][0]+rLim[1][0])for i in r[:,0]])
-    r = r[myMask] 
+    #myMask = np.array([(i<rLim[0][0]+rLim[1][0])for i in r[:,0]])
+    #r = r[myMask] 
 
-    myMask = np.array([(i<rLim[1][0]+rLim[1][1])for i in r[:,1]])
-    r = r[myMask] 
+    #myMask = np.array([(i<rLim[0][1]+rLim[1][1])for i in r[:,1]])
+    #r = r[myMask] 
 
+    r=np.array([0,0])
+    lastClicked = []
+    for i in s1.points():
+        x = i.viewPos().x()
+        y = i.viewPos().y()
+        if (x>rLim[0][0] and x <(rLim[0][0]+rLim[1][0])):
+            if (y>rLim[0][1] and y <(rLim[0][1]+rLim[1][1])):
+                r = np.vstack([r,[x,y]])
+                i.setPen('b', width=2)
+                lastClicked.append(i)
 
     print(r.shape)
 
 
+ 		#print("test")
+    #print("clicked points", points)
+
+#    for p in points:
+#       p.setPen('b', width=2)
+#       print(p.viewPos())
+
+    #lastClicked = s1.points
+
+
     return 
 
-r3a.sigRegionChanged.connect(updateROI)
+r1a.sigRegionChangeFinished.connect(updateROI)
 
 ###################################################
 

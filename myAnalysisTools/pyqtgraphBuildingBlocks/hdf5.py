@@ -134,12 +134,12 @@ else:
         if not ok:
             sys.exit(0)
         else:
-			QtGui.QErrorMessage.showMessage("test")
-            #createFile(int(size*1e9))
+			#QtGui.QErrorMessage.showMessage("test")
+            createFile(int(size*1e9))
 			
         #raise Exception("No suitable HDF5 file found. Use createFile() to generate an example file.")
 
-fileName = '/reg/neh/home/sioan/softXRayDataAndControls/experimentSpecificFiles/SXRI0414/sxri0414.h5'
+fileName = '/reg/neh/home/sioan/softXRayDataAndControls/experimentSpecificFiles/SXRI0414/sxri0414run60.h5'
 f = h5py.File(fileName, 'r')
 curve = HDF5Plot()
 #curve.setHDF5(f['data'])
