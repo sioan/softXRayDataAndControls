@@ -114,7 +114,7 @@ def updateROI(roi):
 
     print(r.shape)
 
-
+#
  		#print("test")
     #print("clicked points", points)
 
