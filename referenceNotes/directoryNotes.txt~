@@ -11,6 +11,16 @@ web browser to digi-sxr-08/
 root
 dbps
 
+#digi login 
+in url put 
+digi-sxr-04/
+root / dbps
+
+
+#view ports communicating on host
+netstat -n | less
+then search for ports.
+
 #office desk linux machine
 #fpga pgp card computer
 lcls-pc83236
@@ -18,13 +28,20 @@ lcls-pc83236
 psana epics show pv names in psana
 psana.DetNames('epics')
 
+#jana log daq reporting 
+https://docs.google.com/a/stanford.edu/spreadsheets/d/1ZpijKpIWWeDac7XivMc12Afigps4I4eqwL3GC7wcQxk/edit?usp=sharing
+
 #evr notation
 #acqiris are used all the time.  have permnanent connection don't go away.
 0,0-9	come from a CPCI master timing crate in host daq-sxr-master. Provides opal, acqiris, and other permanent device triggers
-1,0-11   comes from a pcie express card loaded into daq-sxr-evr01. this is called the slac evr. Provides triggers to pnccd, and other devices that roam between hutches 
+1,0-11   comes from a pcie express card loaded into daq-sxr-evr01. this is called the slac evr. Provides triggers to pnccd, and other devices that roam between hutches. made by herbst
 
 #acqiris calibration
 https://confluence.slac.stanford.edu/display/PCDS/Agilent+Acqiris+and+TDC+calibration
+
+#evr notes. slac evr was made by herbst
+https://docs.google.com/spreadsheets/d/1MyMAGuYJJ0AGoULfX9lPcOwCPxFacBG38ftY1AFaSbA/edit#gid=0
+https://docs.google.com/spreadsheets/d/1bl9-c2aEoCufKXFNtL0ums51pb57XzaWi8E8gZ49akA/edit#gid=0
 
 #cam viewer
 /reg/g/pcds/pyps/config/amo/camviewer.sh
@@ -70,6 +87,19 @@ iocsh()
 #telnet to digi-sxr-04:2105
 #it's in top right corner of ims motor edm screen
 
+#dehong motor record untemplated is located here
+/reg/g/pcds/epics/ioc/common/ims/R2.2.0 (this current version is bad)
+
+#tcpdump on all computers in amo and sxr now.  tcpick is only on psusr112
+sudo tcpdump port 56471 -w sxrMotor2113.txt
+tcpick -r tcpDump.txt -yP | less
+#associate processes with ports
+sudo netstat -lpn | less ### This provides psproc information, but for all processes
+
+
+#ioc log files
+/reg/d/iocData
+
 #edl edm screens embedded
 double click while in edit mode where there supposed to go. and then click on 3 dots by menu info
 
@@ -88,8 +118,8 @@ source sxrenv.sh
 
 #sxr slow camera script location
 /reg/neh/operator/sxropr/sxr_python/sxr/SlowCam #don't use this. instead use
-sxrpython
-slowcam.
+python princeton.py
+slowcam.takeShotsInteractive
 
 
 #svn commands
@@ -184,7 +214,8 @@ bhosts -w psnehfarm	#psana 1501 through 1520, except for psana1508, should all h
 sudo /etc/init.d/lsf start #restart lsf daemons 
 /reg/common/tools/lsf/show_closed_nodes.sh
 
-#psana bash commands
+#psana bsub bash commands
+#https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=225509678
 source /reg/g/psdm/etc/ana_env.sh
 Detnames -e exp=xpptu15:run=59
 bqueues
@@ -192,6 +223,9 @@ bjobs -u sioan -d -w	#this one doesn't work. one above does
 bkill
 bsub
 batchSubmit = os.system("bsub -o /reg/neh/home/sioan/Desktop/psana/%J.log -q psnehhiprioq -n 32 mpirun --mca btl ^openib python kboPowerPostCleaning.py "+str(i)+" $1")
+#command that works
+bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis -hd5 sxri0414
+
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
@@ -246,9 +280,15 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 #problem with pnccd ioc, call mike browne
 
 #location of xtc files
-#/u2/pcds/pds/			#first stop after DAQ. physically on the dss node. if breaks, then remove node from daq in cnf file #and report to IT. i.e. ssh to the dss node and check this file space
+#/u2/pcds/pds/			#only viewable from dss node. first stop after DAQ. physically on the dss node.
+# if breaks, then remove node from daq in cnf file #and report to IT. i.e. ssh to the dss node and check this file space
+# if xtc files appear here but not in directory below, then it's a data mover problem. call wilko
 #/reg/d/ffb/sxr/sxrx22915/xtc/	#intermidate this is a lustre file system
 #/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop this is also a lustre file system
+#instructions for restarting the data mover
+https://confluence.slac.stanford.edu/display/PCDS/HTF:+data+mover#mvr-showprocs-1806847601
+
+
 
 #git rogue
 https://github.com/slaclab/rogue

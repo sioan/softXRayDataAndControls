@@ -92,7 +92,9 @@ iocsh()
 
 #tcpdump on all computers in amo and sxr now.  tcpick is only on psusr112
 sudo tcpdump port 56471 -w sxrMotor2113.txt
-tcpick -r tcpDump.txt -yP | less
+tcpick -r tcpDump.txt -yP | less	#currently only on psusr112 
+#associate processes with ports
+sudo netstat -lpn | less ### This provides psproc information, but for all processes
 
 
 #ioc log files

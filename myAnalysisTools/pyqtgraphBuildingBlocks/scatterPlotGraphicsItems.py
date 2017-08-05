@@ -6,11 +6,28 @@ Example demonstrating a variety of scatter plot features.
 
 
 ## Add path to library (just for examples; you do not need this)
-import initExample
+#import initExample
 
 from pyqtgraph.Qt import QtGui, QtCore
 import pyqtgraph as pg
 import numpy as np
+
+## Make all plots clickable
+lastClicked = []
+def clicked(plot, points):
+    global lastClicked
+    for p in lastClicked:
+        p.resetPen()
+    #print("clicked points", points)
+
+    for p in points:
+        p.setPen('b', width=2)
+        print(p.viewPos())
+
+    lastClicked = points
+
+
+
 
 app = QtGui.QApplication([])
 mw = QtGui.QMainWindow()
@@ -42,20 +59,52 @@ pos = np.random.normal(size=(2,n), scale=1e-5)
 spots = [{'pos': pos[:,i], 'data': 1} for i in range(n)] + [{'pos': [0,0], 'data': 1}]
 s1.addPoints(spots)
 w1.addItem(s1)
-
-## Make all plots clickable
-lastClicked = []
-def clicked(plot, points):
-    global lastClicked
-    for p in lastClicked:
-        p.resetPen()
-    print("clicked points", points)
-    for p in points:
-        p.setPen('b', width=2)
-    lastClicked = points
 s1.sigClicked.connect(clicked)
 
+##################################################
+################add ROI###########################
 
+r3a = pg.ROI([-1e-5,-1e-5], [1e-5,1e-5])
+w1.addItem(r3a)
+## handles scaling horizontally around center
+r3a.addScaleHandle([1, 0.5], [0.5, 0.5])
+r3a.addScaleHandle([0, 0.5], [0.5, 0.5])
+
+## handles scaling vertically from opposite edge
+r3a.addScaleHandle([0.5, 0], [0.5, 1])
+r3a.addScaleHandle([0.5, 1], [0.5, 0])
+
+## handles scaling both vertically and horizontally
+r3a.addScaleHandle([1, 1], [0, 0])
+r3a.addScaleHandle([0, 0], [1, 1])
+
+def updateROI(roi):
+    #print("[{},{}],[{},{}]".format(roi.x(),roi.y(),(roi.size()).x(),(roi.size()).y()))
+    #r = np.array([roi.x(),roi.y()],[(roi.size()).x(),(roi.size()).y()])
+    rLim = np.array([[roi.x(),roi.y()],[(roi.size()).x(),(roi.size()).y()]])
+    r = np.array([[i.viewPos().x(),i.viewPos().y()] for i in s1.points()])
+
+    myMask = np.array([(i>rLim[0][0])for i in r[:,0]])
+    r = r[myMask] 
+
+    myMask = np.array([(i>rLim[0][1])for i in r[:,1]])
+    r = r[myMask] 
+
+    myMask = np.array([(i<rLim[0][0]+rLim[1][0])for i in r[:,0]])
+    r = r[myMask] 
+
+    myMask = np.array([(i<rLim[1][0]+rLim[1][1])for i in r[:,1]])
+    r = r[myMask] 
+
+
+    print(r.shape)
+
+
+    return 
+
+r3a.sigRegionChanged.connect(updateROI)
+
+###################################################
 
 ## 2) Spots are transform-invariant, but not identical (top-right plot). 
 ## In this case, drawing is almsot as fast as 1), but there is more startup 
