@@ -12,7 +12,8 @@ from pyqtgraph.Qt import QtGui, QtCore
 import pyqtgraph as pg
 import numpy as np
 
-## Make all plots clickable
+## Make all plots clickable  This is relying on global variables.  Makes code order matter.
+## need to find way to suppress this.
 lastClicked = []
 def clicked(plot, points):
     global lastClicked
