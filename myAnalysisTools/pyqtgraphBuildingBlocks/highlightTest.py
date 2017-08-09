@@ -17,3 +17,5 @@ mw.setCentralWidget(view)
 mw.show()
 mw.setWindowTitle('pyqtgraph example: ScatterPlot')
 
+#this bit of code show a position in history of last clicked.
+#view.lastClicked[0].viewPos()

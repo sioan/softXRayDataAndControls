@@ -16,6 +16,10 @@ in url put
 digi-sxr-04/
 root / dbps
 
+#place to compile epics IOC's
+ssh psbuild-rhel5
+
+
 
 #view ports communicating on host
 netstat -n | less
@@ -124,6 +128,9 @@ slowcam.takeShotsInteractive
 
 #svn commands
 svn checkout (co)
+svn checkout --depth immediates file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk/modules/
+
+
 svn up #(short update)
 svn up --set-depth infinity
 svn status

@@ -1,6 +1,12 @@
 from pylab import *
 import psana
 
+def genericReturn(detectorObject,thisEvent):
+	return detectorObject(thisEvent)
+
+def myZeroReturn(detectorObject,thisEvent,previousProcessing):
+	return 0
+
 def getPeak(detectorObject,thisEvent):
 
 	myWaveForm = -detectorObject(thisEvent)[0][0]

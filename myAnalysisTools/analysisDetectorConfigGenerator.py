@@ -19,7 +19,7 @@ def main(exp, run, configFileName):
 	os.system('./config/touch __init__.py')
 
 	myDataSource = psana.MPIDataSource(experimentNameAndRun)
-	f = open('./config/'configFileName+'.cfg','w')
+	f = open('./config/'+configFileName+'.cfg','w')
 
 	f.write('##########################\n')
 	f.write('#######DAQ DEVICES########\n')

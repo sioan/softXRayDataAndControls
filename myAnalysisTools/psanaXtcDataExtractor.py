@@ -19,10 +19,12 @@ class SmallData():
 		self.eventNumber = 1
 		
 	def event(self,dataDictionary):
-		if(self.eventNumber != 1 ):
-			for i in dataDictionary:
-				self.h5FileObject[i].resize((self.eventNumber+1,))
-				self.h5FileObject[i][self.eventNumber] = dataDictionary[i]
+		#if(self.eventNumber != 1 ):
+		if(True==False):
+			x=1
+			#for i in dataDictionary:
+				#self.h5FileObject[i].resize((self.eventNumber+1,))
+				#self.h5FileObject[i][self.eventNumber] = dataDictionary[i]
 				#print("succeded")
 				
 
@@ -30,9 +32,14 @@ class SmallData():
 			for i in dataDictionary:
 				#print("failed")
 				#print(dataDictionary[i])
-				self.h5FileObject.create_dataset(i,(0,),dtype='f8',maxshape=(None,))
-				self.h5FileObject[i].resize((self.eventNumber,))
-				self.h5FileObject[i][0] = dataDictionary[i]
+				#self.h5FileObject.create_dataset(i,(0,),dtype='f8',maxshape=(None,))
+				#self.h5FileObject[i].resize((self.eventNumber,))
+				#self.h5FileObject[i][0] = dataDictionary[i]
+				if(dataDictionary[i] is not None):
+					self.h5FileObject.create_dataset(str(i+'/'+str(self.eventNumber)),data=dataDictionary[i])
+				else:
+					continue
+				
 
 		self.eventNumber = self.eventNumber + 1
 		
@@ -98,11 +105,12 @@ def initializeDataDictionaries(myDetectorObjectDictionary):
 
 	return[myDataDictionary,summaryDataDictionary]
 def renameSummaryKeys(myDict):
-	for i in myDict:
+	tempKeys = myDict.keys()
+	for i in tempKeys:
 		myDict[i+'Summarized'] = myDict.pop(i)
 
-def main(exp, run, configFileName,h5FileName,testSample,MPI):
-	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents
+def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
+	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary
 
 	startTime = time.time()
 	print("entering main function")
@@ -139,6 +147,8 @@ def main(exp, run, configFileName,h5FileName,testSample,MPI):
 	for eventNumber,thisEvent in myEnumeratedEvents:
 		if(eventNumber %messageFeedBackRate == 1):
 			print("iterating over enumerated events.  Event number = "+str(eventNumber)+" Elapsed Time (s) = "+str(time.time()-startTime))
+		if(eventNumber<startEvent):
+			continue
 		if(testSample):
 			if(eventNumber > 200):
 				break
@@ -175,6 +185,7 @@ if __name__ == '__main__':
 	myParser.add_argument('-hd5','--hd5File',help='the small data file to write to')
 	myParser.add_argument('-t','--testSample',action='store_true',help='only take a small set of data for testing')
 	myParser.add_argument('-m','--MPI',action='store_true',help='does not use mpi ')
+	myParser.add_argument('-s','--start',type=int,help='skips until starting event reached', default=-1)
 
 	myArguments = myParser.parse_args()
 	print("arguments parsed")
@@ -185,4 +196,5 @@ if __name__ == '__main__':
 		myArguments.configFile,
 		myArguments.hd5File,
 		myArguments.testSample,
-		myArguments.MPI)
+		myArguments.MPI,
+		myArguments.start)
