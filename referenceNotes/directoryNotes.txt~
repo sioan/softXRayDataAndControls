@@ -16,6 +16,15 @@ in url put
 digi-sxr-04/
 root / dbps
 
+#place to compile epics IOC's
+ssh psbuild-rhel5
+
+#calendar pcds scheduling
+https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=123314644
+#for hutch scheduling.  need to be logged in as zohar.sioan
+https://calendar.google.com/calendar/render?pli=1#main_7%7Cweek-2+24333+24339+24337 
+
+
 
 #view ports communicating on host
 netstat -n | less
@@ -130,12 +139,18 @@ svn checkout --depth immediates file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trun
 svn up #(short update)
 svn up --set-depth infinity
 svn status
-svn commit (ci)
+svn commit (ci) -m
 epics-release	#bruces script (has --help or -h)
 (IOCs need to be updated in the IOC manager to the most recent)
 (only edm needs the soft link update in /reg/g/pcds/package/screens/edm)
 (e.g.  lrwxrwxrwx 1 sstubbs  ps-pcds  54 Jun 23 20:21 sxr -> /reg/g/pcds/package/epics/3.14/screens/edm/sxr/R3.1.89)
 (do this before epics-release so an accurate release number can be given)
+
+#something in here is needed for edm.  lost edm with recent change to bashrc that designates control package
+source /reg/g/pcds/setup/epicsenv-cur.sh &> /dev/null
+
+epics-release -r R1.9.1 -m "using new acqiris...."
+epics-release -x -r R1.9.2 -m "using new acqiris...""
 
 #psana tutorial files
 /reg/g/psdm/tutorials/examplePython
@@ -219,7 +234,7 @@ sudo /etc/init.d/lsf start #restart lsf daemons
 
 #psana bsub bash commands
 #https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=225509678
-source /reg/g/psdm/etc/ana_env.sh
+source /reg/g/psdm/etc/ana_env.sh	#this has been deprecated
 Detnames -e exp=xpptu15:run=59
 bqueues
 bjobs -u sioan -d -w	#this one doesn't work. one above does
