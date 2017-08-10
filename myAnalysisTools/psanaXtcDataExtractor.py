@@ -29,16 +29,19 @@ class SmallData():
 				
 
 		else:
-			for i in dataDictionary:
+			if any([None is dataDictionary[k] for k in dataDictionary]):
+				return
+			else:
+			#for i in dataDictionary:
+			#	if(dataDictionary[i] is None):
+			#		return
 				#print("failed")
 				#print(dataDictionary[i])
 				#self.h5FileObject.create_dataset(i,(0,),dtype='f8',maxshape=(None,))
 				#self.h5FileObject[i].resize((self.eventNumber,))
 				#self.h5FileObject[i][0] = dataDictionary[i]
-				if(dataDictionary[i] is not None):
+				for i in dataDictionary:
 					self.h5FileObject.create_dataset(str(i+'/'+str(self.eventNumber)),data=dataDictionary[i])
-				else:
-					continue
 				
 
 		self.eventNumber = self.eventNumber + 1
