@@ -1,0 +1,85 @@
+  261  git lfs install
+  262  where git
+  263  which git
+  281  git pull
+  283  history | grep git
+  284  git update submodules
+  285  git update-ref
+  288  git submodules init
+  289  git submodule init
+  290  git submodule update
+  291  git submodule update --r
+  292  git submodule update --recursive
+  296  git status
+  298  git pull
+  299  git submodules update -recursive
+  300  git submodules update --recursive
+  301  git submodule update --recursive
+  333  history | grep git | grep clone
+  334  git clone git@github.com:/slaclab/axi-pcie-dev.git
+  338  git submodule init
+  339  git submodule update
+  360  git status
+  424  echo $PATH | grep git
+  425  env | grep git
+  426  env | grep -i git
+  427  echo $PATH | grep -i git
+  442  echo $PATH | grep git
+  448  echo $PATH | grep git
+  449  alias git
+  450  type git
+  451  ls /afs/slac/g/reseng/git/git/bin
+  452  /usr/bin/git
+  454  type git
+  458  type git
+  464  type git
+  468  type git
+  472  rm .gitconfig 
+  473  cp ~bareese/.gitconfig ~
+  474  cp ~bareese/.gitexcludes ~
+  475  git config --global "Sioan"
+  476  git config --global user.name "Sioan"
+  477  git config --global user.email "sioan@slac.stanford.edu"
+  478  git config --global core.excludesfile ~/.gitexcludes
+  479  git lfs install
+  481  history | grep git | grep config
+  482  git config --global user.email "zohar.sioan@gmail.com"
+  483  git lfs install
+  508  type git
+  512  rm .gitconfig 
+  513  cp ~bareese/.gitconfig ~
+  514  cp ~bareese/.gitexcludes ~
+  515  git config --global "Sioan"
+  516  git config --global user.name "Sioan"
+  517  git config --global user.email "sioan@slac.stanford.edu"
+  518  git config --global core.excludesfile ~/.gitexcludes
+  519  git lfs install
+  521  history | grep git | grep config
+  522  git config --global user.email "zohar.sioan@gmail.com"
+  523  git lfs install
+  531  git clone git@github.com:/slaclab/axi-pcie-dev.git
+  535  git submodule init
+  536  history | grep git
+  537  history | grep git | less
+  538  history | grep git | less
+  539  git submodule update --recursive
+  540  git submodule update --recursive
+  541  git submodule init
+  542  git submodule update --recursive
+  543  git pull
+  544  git submodule init
+  545  git submodule update --recursive
+  550  history | grep git | grep pull
+  552  git clone git@github.com:/slaclab/axi-pcie-dev.git
+  554  git submodule init --recursive
+  555  git submodule init
+  556  git submodule update --recursive
+  911  history | grep git
+  918  history | grep git
+  919  git submodule init
+  921  git submodule update --recursive
+  922  git submodule update
+  923  git update
+  924  git status
+ 1001  history | grep git
+ 1002  history | grep git > gitCommands.txt
