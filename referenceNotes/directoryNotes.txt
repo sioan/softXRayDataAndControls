@@ -317,9 +317,54 @@ https://github.com/slaclab/rogue
 #problem with DAQ cam?  check usb ports with ls usb
 ##################################
 
+##################################
+pnccd stuff
+
+cd ~detopr a
+./pnccdHome.sh -h
+./pnccdHome.sh expert front 
+./pnccdHome.sh expert back
+./pnccdHome.sh expert #(does both)
+
+#this will take a few minutes after the physical racks are moved in
+#to place and the switch is hooked up for the network to 
+
+ssh ioc-det-pnccd01 #from psdev to front
+ssh ioc-det-pnccd02 #from psdev to back
+
+ping daq-det-pnccd01
+ping daq-det-pnccd02
+
+if doesn't find then power cycle machines.
+cyle ipmi cycle ping ioc-det-pnccd01
+cyle ipmi cycle ping ioc-det-pnccd02
+cyle ipmi cycle ping daq-det-pnccd01
+cyle ipmi cycle ping daq-det-pnccd02
+
+#netconfig search amo-monitor
+#(no need to commit turning on ioc.)
+
+ssh psrelay to get their from 
+ssh ioc-det-pnccd01 #from psdev to front
+ssh ioc-det-pnccd02 #from psdev to back
+
+#run detector ioc manager from following
+/reg/g/pcds/pyps/config/det/iocmanager.sh	#note the detector have to be on ioc-det-pnccd01 
+
+turn on every ioc that runs on a pnccd host
+
+
+error from RhodeSchwartz's
+/reg/g/pcds/pyps/config/det/iocmanager/startProc: /reg/g/pcds/package/epics/3.14/ioc/common/RohdeSchwartzNGPS/R1.0.4/children/build/iocBoot/ioc-det-pnccd-front-rsngps02/st.cmd: ../../bin/linux-x86_64/rsngps: bad interpreter: No such file or directory
+
+#ioc template dereferencing hell.  this is the st.cmd file that get's actually run
+/reg/g/pcds/package/epics/3.14/ioc/common/RohdeSchwartzNGPS/R1.0.4/children/build/iocBoot/ioc-det-pnccd-front-rsngps01
+
+running wrong ioc version.  switched from 1.04 to 1.06.  1.04 looks in wrong place for iocShell defined st.cmd shebang
 
 
 
+###########################
 #event codes evr
 #162 is by kick
 #140 is beam and 120 Hz.  40  is independent of beam

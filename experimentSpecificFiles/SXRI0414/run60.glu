@@ -1,0 +1,4088 @@
+{
+  "/EBeam": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/EBeam"
+  },
+  "/GMD": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/GMD"
+  },
+  "/acqiris2": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/acqiris2"
+  },
+  "/delayStage": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/delayStage"
+  },
+  "/ebeam/L3_energy": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/ebeam/L3_energy"
+  },
+  "/ebeam/charge": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/ebeam/charge"
+  },
+  "/ebeam/dump_charge": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/ebeam/dump_charge"
+  },
+  "/ebeam/photon_energy": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/ebeam/photon_energy"
+  },
+  "/ebeam/pk_curr_bc2": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/ebeam/pk_curr_bc2"
+  },
+  "/event_time": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/event_time"
+  },
+  "/evr/code_140": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_140"
+  },
+  "/evr/code_141": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_141"
+  },
+  "/evr/code_142": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_142"
+  },
+  "/evr/code_162": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_162"
+  },
+  "/evr/code_75": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_75"
+  },
+  "/evr/code_76": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_76"
+  },
+  "/evr/code_77": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_77"
+  },
+  "/evr/code_78": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_78"
+  },
+  "/evr/code_79": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_79"
+  },
+  "/evr/code_80": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_80"
+  },
+  "/evr/code_81": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/evr/code_81"
+  },
+  "/fiducials": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/fiducials"
+  },
+  "/gas_detector/f_11_ENRC": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/gas_detector/f_11_ENRC"
+  },
+  "/gas_detector/f_12_ENRC": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/gas_detector/f_12_ENRC"
+  },
+  "/gas_detector/f_21_ENRC": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/gas_detector/f_21_ENRC"
+  },
+  "/gas_detector/f_22_ENRC": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/gas_detector/f_22_ENRC"
+  },
+  "/gas_detector/f_63_ENRC": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/gas_detector/f_63_ENRC"
+  },
+  "/gas_detector/f_64_ENRC": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/gas_detector/f_64_ENRC"
+  },
+  "/phase_cav/charge1": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/phase_cav/charge1"
+  },
+  "/phase_cav/charge2": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/phase_cav/charge2"
+  },
+  "/phase_cav/fit_time_1": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/phase_cav/fit_time_1"
+  },
+  "/phase_cav/fit_time_2": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": false,
+    "label": "/phase_cav/fit_time_2"
+  },
+  "AndState": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "AndState_2",
+    "state2": "InvertState"
+  },
+  "AndState_0": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "AndState_3",
+    "state2": "InvertState_0"
+  },
+  "AndState_1": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "AndState_4",
+    "state2": "InvertState_1"
+  },
+  "AndState_2": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "InvertState_2",
+    "state2": "InvertState_3"
+  },
+  "AndState_3": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "AndState_5",
+    "state2": "InvertState_4"
+  },
+  "AndState_4": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "AndState_6",
+    "state2": "InvertState_5"
+  },
+  "AndState_5": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "AndState_7",
+    "state2": "InvertState_6"
+  },
+  "AndState_6": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "AndState_8",
+    "state2": "InvertState_7"
+  },
+  "AndState_7": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "AndState_9",
+    "state2": "InvertState_8"
+  },
+  "AndState_8": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "InvertState_9",
+    "state2": "InvertState_10"
+  },
+  "AndState_9": {
+    "_type": "glue.core.subset.AndState",
+    "state1": "InvertState_11",
+    "state2": "InvertState_12"
+  },
+  "Component": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 0
+  },
+  "Component_0": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 3
+  },
+  "Component_1": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 6
+  },
+  "Component_10": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 36
+  },
+  "Component_11": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 39
+  },
+  "Component_12": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 42
+  },
+  "Component_13": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 45
+  },
+  "Component_14": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 48
+  },
+  "Component_15": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 51
+  },
+  "Component_16": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 54
+  },
+  "Component_17": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 57
+  },
+  "Component_18": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 60
+  },
+  "Component_19": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 63
+  },
+  "Component_2": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 12
+  },
+  "Component_20": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 66
+  },
+  "Component_21": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 69
+  },
+  "Component_22": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 72
+  },
+  "Component_23": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 75
+  },
+  "Component_24": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 78
+  },
+  "Component_25": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 81
+  },
+  "Component_26": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 84
+  },
+  "Component_27": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 87
+  },
+  "Component_28": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 90
+  },
+  "Component_29": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 93
+  },
+  "Component_3": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 15
+  },
+  "Component_30": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 96
+  },
+  "Component_4": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 18
+  },
+  "Component_5": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 21
+  },
+  "Component_6": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 24
+  },
+  "Component_7": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 27
+  },
+  "Component_8": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 30
+  },
+  "Component_9": {
+    "_type": "glue.core.component.Component",
+    "log": "LoadLog",
+    "log_item": 33
+  },
+  "CoordinateComponent": {
+    "_type": "glue.core.component.CoordinateComponent",
+    "axis": 0,
+    "world": false
+  },
+  "CoordinateComponentLink": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_0",
+    "frm": [
+      "World 0_0"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_0"
+    ]
+  },
+  "CoordinateComponentLink_0": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_1",
+    "frm": [
+      "World 0_1"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_1"
+    ]
+  },
+  "CoordinateComponentLink_1": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_2",
+    "frm": [
+      "World 0_2"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_2"
+    ]
+  },
+  "CoordinateComponentLink_10": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_7",
+    "frm": [
+      "Pixel Axis 0 [x]_7"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_7"
+    ]
+  },
+  "CoordinateComponentLink_11": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_6",
+    "frm": [
+      "World 0_6"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_6"
+    ]
+  },
+  "CoordinateComponentLink_12": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_7",
+    "frm": [
+      "World 0_7"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_7"
+    ]
+  },
+  "CoordinateComponentLink_13": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_8",
+    "frm": [
+      "Pixel Axis 0 [x]_8"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_8"
+    ]
+  },
+  "CoordinateComponentLink_14": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates",
+    "frm": [
+      "Pixel Axis 0 [x]_9"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_9"
+    ]
+  },
+  "CoordinateComponentLink_15": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_8",
+    "frm": [
+      "World 0_8"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_8"
+    ]
+  },
+  "CoordinateComponentLink_16": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_9",
+    "frm": [
+      "Pixel Axis 0 [x]_10"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_10"
+    ]
+  },
+  "CoordinateComponentLink_17": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_10",
+    "frm": [
+      "Pixel Axis 0 [x]_11"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_11"
+    ]
+  },
+  "CoordinateComponentLink_18": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_11",
+    "frm": [
+      "Pixel Axis 0 [x]_12"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_12"
+    ]
+  },
+  "CoordinateComponentLink_19": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_12",
+    "frm": [
+      "Pixel Axis 0 [x]_13"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_13"
+    ]
+  },
+  "CoordinateComponentLink_2": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates",
+    "frm": [
+      "World 0"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]"
+    ]
+  },
+  "CoordinateComponentLink_20": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_9",
+    "frm": [
+      "World 0_10"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_10"
+    ]
+  },
+  "CoordinateComponentLink_21": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_13",
+    "frm": [
+      "Pixel Axis 0 [x]_14"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_14"
+    ]
+  },
+  "CoordinateComponentLink_22": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_13",
+    "frm": [
+      "World 0_14"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_14"
+    ]
+  },
+  "CoordinateComponentLink_23": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_14",
+    "frm": [
+      "Pixel Axis 0 [x]_15"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_15"
+    ]
+  },
+  "CoordinateComponentLink_24": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_15",
+    "frm": [
+      "Pixel Axis 0 [x]_16"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_16"
+    ]
+  },
+  "CoordinateComponentLink_25": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_14",
+    "frm": [
+      "World 0_15"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_15"
+    ]
+  },
+  "CoordinateComponentLink_26": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_15",
+    "frm": [
+      "World 0_16"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_16"
+    ]
+  },
+  "CoordinateComponentLink_27": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_11",
+    "frm": [
+      "World 0_12"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_12"
+    ]
+  },
+  "CoordinateComponentLink_28": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_5",
+    "frm": [
+      "World 0_5"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_5"
+    ]
+  },
+  "CoordinateComponentLink_29": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_16",
+    "frm": [
+      "Pixel Axis 0 [x]_17"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_17"
+    ]
+  },
+  "CoordinateComponentLink_3": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates",
+    "frm": [
+      "Pixel Axis 0 [x]"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0"
+    ]
+  },
+  "CoordinateComponentLink_30": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_17",
+    "frm": [
+      "Pixel Axis 0 [x]_18"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_18"
+    ]
+  },
+  "CoordinateComponentLink_31": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_17",
+    "frm": [
+      "World 0_18"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_18"
+    ]
+  },
+  "CoordinateComponentLink_32": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_12",
+    "frm": [
+      "World 0_13"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_13"
+    ]
+  },
+  "CoordinateComponentLink_33": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_16",
+    "frm": [
+      "World 0_17"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_17"
+    ]
+  },
+  "CoordinateComponentLink_34": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_18",
+    "frm": [
+      "Pixel Axis 0 [x]_19"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_19"
+    ]
+  },
+  "CoordinateComponentLink_35": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_18",
+    "frm": [
+      "World 0_19"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_19"
+    ]
+  },
+  "CoordinateComponentLink_36": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_19",
+    "frm": [
+      "Pixel Axis 0 [x]_20"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_20"
+    ]
+  },
+  "CoordinateComponentLink_37": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_20",
+    "frm": [
+      "Pixel Axis 0 [x]_21"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_21"
+    ]
+  },
+  "CoordinateComponentLink_38": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_21",
+    "frm": [
+      "Pixel Axis 0 [x]_22"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_22"
+    ]
+  },
+  "CoordinateComponentLink_39": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_22",
+    "frm": [
+      "Pixel Axis 0 [x]_23"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_23"
+    ]
+  },
+  "CoordinateComponentLink_4": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_3",
+    "frm": [
+      "Pixel Axis 0 [x]_3"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_3"
+    ]
+  },
+  "CoordinateComponentLink_40": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_1",
+    "frm": [
+      "Pixel Axis 0 [x]_1"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_1"
+    ]
+  },
+  "CoordinateComponentLink_41": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_23",
+    "frm": [
+      "Pixel Axis 0 [x]_24"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_24"
+    ]
+  },
+  "CoordinateComponentLink_42": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_19",
+    "frm": [
+      "World 0_20"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_20"
+    ]
+  },
+  "CoordinateComponentLink_43": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_24",
+    "frm": [
+      "Pixel Axis 0 [x]_25"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_25"
+    ]
+  },
+  "CoordinateComponentLink_44": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_24",
+    "frm": [
+      "World 0_25"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_25"
+    ]
+  },
+  "CoordinateComponentLink_45": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_25",
+    "frm": [
+      "World 0_26"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_26"
+    ]
+  },
+  "CoordinateComponentLink_46": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_21",
+    "frm": [
+      "World 0_22"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_22"
+    ]
+  },
+  "CoordinateComponentLink_47": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_20",
+    "frm": [
+      "World 0_21"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_21"
+    ]
+  },
+  "CoordinateComponentLink_48": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_26",
+    "frm": [
+      "Pixel Axis 0 [x]_27"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_27"
+    ]
+  },
+  "CoordinateComponentLink_49": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_27",
+    "frm": [
+      "Pixel Axis 0 [x]_28"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_28"
+    ]
+  },
+  "CoordinateComponentLink_5": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_4",
+    "frm": [
+      "Pixel Axis 0 [x]_4"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_4"
+    ]
+  },
+  "CoordinateComponentLink_50": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_27",
+    "frm": [
+      "World 0_28"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_28"
+    ]
+  },
+  "CoordinateComponentLink_51": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_26",
+    "frm": [
+      "World 0_27"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_27"
+    ]
+  },
+  "CoordinateComponentLink_52": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_22",
+    "frm": [
+      "World 0_23"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_23"
+    ]
+  },
+  "CoordinateComponentLink_53": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_23",
+    "frm": [
+      "World 0_24"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_24"
+    ]
+  },
+  "CoordinateComponentLink_54": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates",
+    "frm": [
+      "World 0_9"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_9"
+    ]
+  },
+  "CoordinateComponentLink_55": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_28",
+    "frm": [
+      "Pixel Axis 0 [x]_29"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_29"
+    ]
+  },
+  "CoordinateComponentLink_56": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_29",
+    "frm": [
+      "Pixel Axis 0 [x]_30"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_30"
+    ]
+  },
+  "CoordinateComponentLink_57": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_28",
+    "frm": [
+      "World 0_29"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_29"
+    ]
+  },
+  "CoordinateComponentLink_58": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_30",
+    "frm": [
+      "Pixel Axis 0 [x]_31"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_31"
+    ]
+  },
+  "CoordinateComponentLink_59": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_29",
+    "frm": [
+      "World 0_30"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_30"
+    ]
+  },
+  "CoordinateComponentLink_6": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_3",
+    "frm": [
+      "World 0_3"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_3"
+    ]
+  },
+  "CoordinateComponentLink_60": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_30",
+    "frm": [
+      "World 0_31"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_31"
+    ]
+  },
+  "CoordinateComponentLink_61": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_31",
+    "frm": [
+      "Pixel Axis 0 [x]_32"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_32"
+    ]
+  },
+  "CoordinateComponentLink_62": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_25",
+    "frm": [
+      "Pixel Axis 0 [x]_26"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_26"
+    ]
+  },
+  "CoordinateComponentLink_63": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_31",
+    "frm": [
+      "World 0_32"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_32"
+    ]
+  },
+  "CoordinateComponentLink_64": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_2",
+    "frm": [
+      "Pixel Axis 0 [x]_2"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_2"
+    ]
+  },
+  "CoordinateComponentLink_65": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_10",
+    "frm": [
+      "World 0_11"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_11"
+    ]
+  },
+  "CoordinateComponentLink_66": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_0",
+    "frm": [
+      "Pixel Axis 0 [x]_0"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_0"
+    ]
+  },
+  "CoordinateComponentLink_7": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_4",
+    "frm": [
+      "World 0_4"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_4"
+    ]
+  },
+  "CoordinateComponentLink_8": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_5",
+    "frm": [
+      "Pixel Axis 0 [x]_5"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_5"
+    ]
+  },
+  "CoordinateComponentLink_9": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_6",
+    "frm": [
+      "Pixel Axis 0 [x]_6"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_6"
+    ]
+  },
+  "CoordinateComponent_0": {
+    "_type": "glue.core.component.CoordinateComponent",
+    "axis": 0,
+    "world": true
+  },
+  "Coordinates": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_0": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_1": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_10": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_11": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_12": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_13": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_14": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_15": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_16": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_17": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_18": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_19": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_2": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_20": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_21": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_22": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_23": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_24": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_25": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_26": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_27": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_28": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_29": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_3": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_30": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_31": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_4": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_5": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_6": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_7": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_8": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "Coordinates_9": {
+    "_type": "glue.core.coordinates.Coordinates"
+  },
+  "DataCollection": {
+    "_protocol": 3,
+    "_type": "glue.core.data_collection.DataCollection",
+    "cids": [
+      "/EBeam",
+      "Pixel Axis 0 [x]",
+      "World 0",
+      "/GMD",
+      "/acqiris2",
+      "/delayStage",
+      "/ebeam/L3_energy",
+      "/ebeam/charge",
+      "/ebeam/dump_charge",
+      "/ebeam/photon_energy",
+      "/ebeam/pk_curr_bc2",
+      "/event_time",
+      "/evr/code_140",
+      "/evr/code_141",
+      "/evr/code_142",
+      "/evr/code_162",
+      "/evr/code_75",
+      "/evr/code_76",
+      "/evr/code_77",
+      "/evr/code_78",
+      "/evr/code_79",
+      "/evr/code_80",
+      "/evr/code_81",
+      "/fiducials",
+      "/gas_detector/f_11_ENRC",
+      "/gas_detector/f_12_ENRC",
+      "/gas_detector/f_21_ENRC",
+      "/gas_detector/f_22_ENRC",
+      "/gas_detector/f_63_ENRC",
+      "/gas_detector/f_64_ENRC",
+      "/phase_cav/charge1",
+      "/phase_cav/charge2",
+      "/phase_cav/fit_time_1",
+      "/phase_cav/fit_time_2"
+    ],
+    "components": [
+      "Component",
+      "CoordinateComponent",
+      "CoordinateComponent_0",
+      "Component_0",
+      "Component_1",
+      "Component_2",
+      "Component_3",
+      "Component_4",
+      "Component_5",
+      "Component_6",
+      "Component_7",
+      "Component_8",
+      "Component_9",
+      "Component_10",
+      "Component_11",
+      "Component_12",
+      "Component_13",
+      "Component_14",
+      "Component_15",
+      "Component_16",
+      "Component_17",
+      "Component_18",
+      "Component_19",
+      "Component_20",
+      "Component_21",
+      "Component_22",
+      "Component_23",
+      "Component_24",
+      "Component_25",
+      "Component_26",
+      "Component_27",
+      "Component_28",
+      "Component_29",
+      "Component_30"
+    ],
+    "data": [
+      "sxri0414run60[/EBeam]"
+    ],
+    "groups": [
+      "Subset 1_0",
+      "Subset 3_0",
+      "Subset 4_0"
+    ],
+    "links": [
+      "CoordinateComponentLink",
+      "CoordinateComponentLink_0",
+      "CoordinateComponentLink_1",
+      "CoordinateComponentLink_2",
+      "CoordinateComponentLink_3",
+      "CoordinateComponentLink_4",
+      "CoordinateComponentLink_5",
+      "CoordinateComponentLink_6",
+      "CoordinateComponentLink_7",
+      "CoordinateComponentLink_8",
+      "CoordinateComponentLink_9",
+      "CoordinateComponentLink_10",
+      "CoordinateComponentLink_11",
+      "CoordinateComponentLink_12",
+      "CoordinateComponentLink_13",
+      "CoordinateComponentLink_14",
+      "CoordinateComponentLink_15",
+      "CoordinateComponentLink_16",
+      "CoordinateComponentLink_17",
+      "CoordinateComponentLink_18",
+      "CoordinateComponentLink_19",
+      "CoordinateComponentLink_20",
+      "CoordinateComponentLink_21",
+      "CoordinateComponentLink_22",
+      "CoordinateComponentLink_23",
+      "CoordinateComponentLink_24",
+      "CoordinateComponentLink_25",
+      "CoordinateComponentLink_26",
+      "CoordinateComponentLink_27",
+      "CoordinateComponentLink_28",
+      "CoordinateComponentLink_29",
+      "CoordinateComponentLink_30",
+      "CoordinateComponentLink_31",
+      "CoordinateComponentLink_32",
+      "CoordinateComponentLink_33",
+      "CoordinateComponentLink_34",
+      "CoordinateComponentLink_35",
+      "CoordinateComponentLink_36",
+      "CoordinateComponentLink_37",
+      "CoordinateComponentLink_38",
+      "CoordinateComponentLink_39",
+      "CoordinateComponentLink_40",
+      "CoordinateComponentLink_41",
+      "CoordinateComponentLink_42",
+      "CoordinateComponentLink_43",
+      "CoordinateComponentLink_44",
+      "CoordinateComponentLink_45",
+      "CoordinateComponentLink_46",
+      "CoordinateComponentLink_47",
+      "CoordinateComponentLink_48",
+      "CoordinateComponentLink_49",
+      "CoordinateComponentLink_50",
+      "CoordinateComponentLink_51",
+      "CoordinateComponentLink_52",
+      "CoordinateComponentLink_53",
+      "CoordinateComponentLink_54",
+      "CoordinateComponentLink_55",
+      "CoordinateComponentLink_56",
+      "CoordinateComponentLink_57",
+      "CoordinateComponentLink_58",
+      "CoordinateComponentLink_59",
+      "CoordinateComponentLink_60",
+      "CoordinateComponentLink_61",
+      "CoordinateComponentLink_62",
+      "CoordinateComponentLink_63",
+      "CoordinateComponentLink_64",
+      "CoordinateComponentLink_65",
+      "CoordinateComponentLink_66"
+    ],
+    "subset_group_count": 4
+  },
+  "HistogramWidget": {
+    "_type": "glue.viewers.histogram.qt.viewer_widget.HistogramWidget",
+    "layers": [
+      {
+        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
+        "hi": 1.9545810144883973,
+        "layer": "sxri0414run60[/EBeam]",
+        "lo": 0.01756865804279073,
+        "nbins": 100.0,
+        "visible": false,
+        "xlog": false,
+        "zorder": 1
+      },
+      {
+        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
+        "hi": 1.9545810144883973,
+        "layer": "Subset 1",
+        "lo": 0.01756865804279073,
+        "nbins": 100.0,
+        "visible": true,
+        "xlog": false,
+        "zorder": 2
+      },
+      {
+        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
+        "hi": 1.9545810144883973,
+        "layer": "Subset 3",
+        "lo": 0.01756865804279073,
+        "nbins": 100.0,
+        "visible": true,
+        "xlog": false,
+        "zorder": 3
+      },
+      {
+        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
+        "hi": 1.9545810144883973,
+        "layer": "Subset 4",
+        "lo": 0.01756865804279073,
+        "nbins": 100.0,
+        "visible": true,
+        "xlog": false,
+        "zorder": 4
+      }
+    ],
+    "pos": [
+      11,
+      621
+    ],
+    "properties": {
+      "autoscale": true,
+      "component": "/gas_detector/f_11_ENRC",
+      "cumulative": false,
+      "nbins": 100.0,
+      "normed": false,
+      "xlog": false,
+      "xmax": 1.95458,
+      "xmin": 0.0175687,
+      "ylog": false
+    },
+    "session": "Session",
+    "size": [
+      600,
+      400
+    ]
+  },
+  "HistogramWidget_0": {
+    "_type": "glue.viewers.histogram.qt.viewer_widget.HistogramWidget",
+    "layers": [
+      {
+        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
+        "hi": 956.4364500137273,
+        "layer": "sxri0414run60[/EBeam]",
+        "lo": 877.2896785723849,
+        "nbins": 100.0,
+        "visible": false,
+        "xlog": false,
+        "zorder": 1
+      },
+      {
+        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
+        "hi": 956.4364500137273,
+        "layer": "Subset 1",
+        "lo": 877.2896785723849,
+        "nbins": 100.0,
+        "visible": true,
+        "xlog": false,
+        "zorder": 2
+      },
+      {
+        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
+        "hi": 956.4364500137273,
+        "layer": "Subset 3",
+        "lo": 877.2896785723849,
+        "nbins": 100.0,
+        "visible": true,
+        "xlog": false,
+        "zorder": 3
+      },
+      {
+        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
+        "hi": 956.4364500137273,
+        "layer": "Subset 4",
+        "lo": 877.2896785723849,
+        "nbins": 100.0,
+        "visible": true,
+        "xlog": false,
+        "zorder": 4
+      }
+    ],
+    "pos": [
+      606,
+      622
+    ],
+    "properties": {
+      "autoscale": true,
+      "component": "/EBeam",
+      "cumulative": false,
+      "nbins": 100.0,
+      "normed": false,
+      "xlog": false,
+      "xmax": 956.436,
+      "xmin": 877.29,
+      "ylog": false
+    },
+    "session": "Session",
+    "size": [
+      600,
+      400
+    ]
+  },
+  "InvertState": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RoiSubsetState",
+    "state2": null
+  },
+  "InvertState_0": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RangeSubsetState",
+    "state2": null
+  },
+  "InvertState_1": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RangeSubsetState_0",
+    "state2": null
+  },
+  "InvertState_10": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RoiSubsetState_5",
+    "state2": null
+  },
+  "InvertState_11": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "OrState_4",
+    "state2": null
+  },
+  "InvertState_12": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RoiSubsetState_7",
+    "state2": null
+  },
+  "InvertState_2": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "OrState",
+    "state2": null
+  },
+  "InvertState_3": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RoiSubsetState_0",
+    "state2": null
+  },
+  "InvertState_4": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RangeSubsetState_1",
+    "state2": null
+  },
+  "InvertState_5": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RangeSubsetState_2",
+    "state2": null
+  },
+  "InvertState_6": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RangeSubsetState_3",
+    "state2": null
+  },
+  "InvertState_7": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RoiSubsetState_2",
+    "state2": null
+  },
+  "InvertState_8": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "RoiSubsetState_4",
+    "state2": null
+  },
+  "InvertState_9": {
+    "_type": "glue.core.subset.InvertState",
+    "state1": "OrState_2",
+    "state2": null
+  },
+  "LoadLog": {
+    "_type": "glue.core.data_factories.helpers.LoadLog",
+    "factory": {
+      "_type": "types.FunctionType",
+      "function": "glue.core.data_factories.helpers.auto_data"
+    },
+    "kwargs": [
+      []
+    ],
+    "path": "/reg/neh/home5/sioan/Desktop/softXRayDataAndControls/experimentSpecificFiles/SXRI0414/sxri0414run60.h5"
+  },
+  "OrState": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_1",
+    "state2": "OrState_0"
+  },
+  "OrState_0": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_3",
+    "state2": "OrState_1"
+  },
+  "OrState_1": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_6",
+    "state2": "OrState_3"
+  },
+  "OrState_10": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_16",
+    "state2": "OrState_13"
+  },
+  "OrState_11": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_17",
+    "state2": "OrState_14"
+  },
+  "OrState_12": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_18",
+    "state2": "OrState_15"
+  },
+  "OrState_13": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_19",
+    "state2": "OrState_16"
+  },
+  "OrState_14": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_20",
+    "state2": "OrState_17"
+  },
+  "OrState_15": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_21",
+    "state2": "OrState_18"
+  },
+  "OrState_16": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_22",
+    "state2": "OrState_19"
+  },
+  "OrState_17": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_23",
+    "state2": "OrState_20"
+  },
+  "OrState_18": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_24",
+    "state2": "OrState_21"
+  },
+  "OrState_19": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_25",
+    "state2": "OrState_22"
+  },
+  "OrState_2": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_8",
+    "state2": "OrState_5"
+  },
+  "OrState_20": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_26",
+    "state2": "OrState_23"
+  },
+  "OrState_21": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_27",
+    "state2": "OrState_24"
+  },
+  "OrState_22": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_28",
+    "state2": "OrState_25"
+  },
+  "OrState_23": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_29",
+    "state2": "OrState_26"
+  },
+  "OrState_24": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_30",
+    "state2": "OrState_27"
+  },
+  "OrState_25": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_31",
+    "state2": "OrState_28"
+  },
+  "OrState_26": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_32",
+    "state2": "OrState_29"
+  },
+  "OrState_27": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_33",
+    "state2": "OrState_30"
+  },
+  "OrState_28": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_34",
+    "state2": "OrState_31"
+  },
+  "OrState_29": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_35",
+    "state2": "OrState_32"
+  },
+  "OrState_3": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_9",
+    "state2": "OrState_6"
+  },
+  "OrState_30": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_36",
+    "state2": "OrState_33"
+  },
+  "OrState_31": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_37",
+    "state2": "OrState_34"
+  },
+  "OrState_32": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_38",
+    "state2": "OrState_35"
+  },
+  "OrState_33": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_39",
+    "state2": "OrState_36"
+  },
+  "OrState_34": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_40",
+    "state2": "OrState_37"
+  },
+  "OrState_35": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_41",
+    "state2": "OrState_38"
+  },
+  "OrState_36": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_42",
+    "state2": "OrState_39"
+  },
+  "OrState_37": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_43",
+    "state2": "OrState_40"
+  },
+  "OrState_38": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_44",
+    "state2": "OrState_41"
+  },
+  "OrState_39": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_45",
+    "state2": "OrState_42"
+  },
+  "OrState_4": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_10",
+    "state2": "OrState_7"
+  },
+  "OrState_40": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_46",
+    "state2": "OrState_43"
+  },
+  "OrState_41": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_47",
+    "state2": "OrState_44"
+  },
+  "OrState_42": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_48",
+    "state2": "OrState_45"
+  },
+  "OrState_43": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_49",
+    "state2": "OrState_46"
+  },
+  "OrState_44": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_50",
+    "state2": "OrState_47"
+  },
+  "OrState_45": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_51",
+    "state2": "OrState_48"
+  },
+  "OrState_46": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_52",
+    "state2": "OrState_49"
+  },
+  "OrState_47": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_53",
+    "state2": "OrState_50"
+  },
+  "OrState_48": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_54",
+    "state2": "OrState_51"
+  },
+  "OrState_49": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_55",
+    "state2": "OrState_52"
+  },
+  "OrState_5": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_11",
+    "state2": "OrState_8"
+  },
+  "OrState_50": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_56",
+    "state2": "OrState_53"
+  },
+  "OrState_51": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_57",
+    "state2": "OrState_54"
+  },
+  "OrState_52": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_58",
+    "state2": "OrState_55"
+  },
+  "OrState_53": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_59",
+    "state2": "OrState_56"
+  },
+  "OrState_54": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_60",
+    "state2": "OrState_57"
+  },
+  "OrState_55": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_61",
+    "state2": "OrState_58"
+  },
+  "OrState_56": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_62",
+    "state2": "OrState_59"
+  },
+  "OrState_57": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_63",
+    "state2": "OrState_60"
+  },
+  "OrState_58": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_64",
+    "state2": "OrState_61"
+  },
+  "OrState_59": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_65",
+    "state2": "OrState_62"
+  },
+  "OrState_6": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_12",
+    "state2": "OrState_9"
+  },
+  "OrState_60": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_66",
+    "state2": "OrState_63"
+  },
+  "OrState_61": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_67",
+    "state2": "OrState_64"
+  },
+  "OrState_62": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_68",
+    "state2": "OrState_65"
+  },
+  "OrState_63": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_69",
+    "state2": "OrState_66"
+  },
+  "OrState_64": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_70",
+    "state2": "OrState_67"
+  },
+  "OrState_65": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_71",
+    "state2": "OrState_68"
+  },
+  "OrState_66": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_4",
+    "state2": "OrState_69"
+  },
+  "OrState_67": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_72",
+    "state2": "OrState_70"
+  },
+  "OrState_68": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_73",
+    "state2": "OrState_71"
+  },
+  "OrState_69": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_5",
+    "state2": "OrState_72"
+  },
+  "OrState_7": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_13",
+    "state2": "OrState_10"
+  },
+  "OrState_70": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_74",
+    "state2": "OrState_73"
+  },
+  "OrState_71": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_75",
+    "state2": "OrState_74"
+  },
+  "OrState_72": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_6",
+    "state2": "OrState_75"
+  },
+  "OrState_73": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_76",
+    "state2": "OrState_76"
+  },
+  "OrState_74": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_7",
+    "state2": "OrState_77"
+  },
+  "OrState_75": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_8",
+    "state2": "OrState_78"
+  },
+  "OrState_76": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_9",
+    "state2": "OrState_79"
+  },
+  "OrState_77": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_10",
+    "state2": "OrState_80"
+  },
+  "OrState_78": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_11",
+    "state2": "OrState_81"
+  },
+  "OrState_79": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_12",
+    "state2": "OrState_82"
+  },
+  "OrState_8": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_14",
+    "state2": "OrState_11"
+  },
+  "OrState_80": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_13",
+    "state2": "OrState_83"
+  },
+  "OrState_81": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_14",
+    "state2": "OrState_84"
+  },
+  "OrState_82": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_15",
+    "state2": "OrState_85"
+  },
+  "OrState_83": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_16",
+    "state2": "OrState_86"
+  },
+  "OrState_84": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_17",
+    "state2": "RangeSubsetState_18"
+  },
+  "OrState_85": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_19",
+    "state2": "OrState_87"
+  },
+  "OrState_86": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_20",
+    "state2": "OrState_88"
+  },
+  "OrState_87": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_21",
+    "state2": "OrState_89"
+  },
+  "OrState_88": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_22",
+    "state2": "OrState_90"
+  },
+  "OrState_89": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_23",
+    "state2": "OrState_91"
+  },
+  "OrState_9": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RoiSubsetState_15",
+    "state2": "OrState_12"
+  },
+  "OrState_90": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_24",
+    "state2": "RangeSubsetState_25"
+  },
+  "OrState_91": {
+    "_type": "glue.core.subset.OrState",
+    "state1": "RangeSubsetState_26",
+    "state2": "RangeSubsetState_27"
+  },
+  "Pixel Axis 0 [x]": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_0": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_1": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_10": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_11": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_12": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_13": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_14": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_15": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_16": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_17": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_18": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_19": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_2": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_20": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_21": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_22": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_23": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_24": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_25": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_26": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_27": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_28": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_29": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_3": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_30": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_31": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_32": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_4": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_5": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_6": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_7": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_8": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "Pixel Axis 0 [x]_9": {
+    "_type": "glue.core.component_id.PixelComponentID",
+    "axis": 0,
+    "hidden": true,
+    "label": "Pixel Axis 0 [x]"
+  },
+  "PolygonalROI": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.023020936803182956,
+      0.04854818956107737,
+      0.04854818956107737,
+      0.023020936803182956,
+      0.023020936803182956
+    ],
+    "vy": [
+      0.0004179788916491564,
+      0.0004179788916491564,
+      0.0006059900684381796,
+      0.0006059900684381796,
+      0.0004179788916491564
+    ]
+  },
+  "PolygonalROI_0": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.2704389250720058,
+      0.3902206495513565,
+      0.3902206495513565,
+      0.2704389250720058,
+      0.2704389250720058
+    ],
+    "vy": [
+      -4.350308774208242e-05,
+      -4.350308774208242e-05,
+      2.4864612908471464e-05,
+      2.4864612908471464e-05,
+      -4.350308774208242e-05
+    ]
+  },
+  "PolygonalROI_1": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.02694820645824364,
+      0.07407544231897178,
+      0.07407544231897178,
+      0.02694820645824364,
+      0.02694820645824364
+    ],
+    "vy": [
+      0.00033251926583596406,
+      0.00033251926583596406,
+      0.00042937350842424876,
+      0.00042937350842424876,
+      0.00033251926583596406
+    ]
+  },
+  "PolygonalROI_10": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      -0.014288124919893508,
+      0.023020936803182956,
+      0.023020936803182956,
+      -0.014288124919893508,
+      -0.014288124919893508
+    ],
+    "vy": [
+      0.00013881078065939467,
+      0.00013881078065939467,
+      0.0007541200865143799,
+      0.0007541200865143799,
+      0.00013881078065939467
+    ]
+  },
+  "PolygonalROI_11": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.005348223355409909,
+      0.1251299478347606,
+      0.1251299478347606,
+      0.005348223355409909,
+      0.005348223355409909
+    ],
+    "vy": [
+      0.0005034385174623487,
+      0.0005034385174623487,
+      0.0011700235988052494,
+      0.0011700235988052494,
+      0.0005034385174623487
+    ]
+  },
+  "PolygonalROI_12": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.1526208354201854,
+      0.2076026105910349,
+      0.2076026105910349,
+      0.1526208354201854,
+      0.1526208354201854
+    ],
+    "vy": [
+      -4.350308774208242e-05,
+      -4.350308774208242e-05,
+      3.056192129601763e-05,
+      3.056192129601763e-05,
+      -4.350308774208242e-05
+    ]
+  },
+  "PolygonalROI_13": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.64156590747524,
+      0.733856744369166,
+      0.733856744369166,
+      0.64156590747524,
+      0.64156590747524
+    ],
+    "vy": [
+      0.0002470596400227717,
+      0.0002470596400227717,
+      0.00045216274197443343,
+      0.00045216274197443343,
+      0.0002470596400227717
+    ]
+  },
+  "PolygonalROI_14": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.5394568964436623,
+      0.6926204129910288,
+      0.6926204129910288,
+      0.5394568964436623,
+      0.5394568964436623
+    ],
+    "vy": [
+      0.00022427040647258703,
+      0.00022427040647258703,
+      0.00035530849938614873,
+      0.00035530849938614873,
+      0.00022427040647258703
+    ]
+  },
+  "PolygonalROI_15": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.4609115033424488,
+      0.6788749691983165,
+      0.6788749691983165,
+      0.4609115033424488,
+      0.4609115033424488
+    ],
+    "vy": [
+      0.00017299463098467162,
+      0.00017299463098467162,
+      0.0002527569484103178,
+      0.0002527569484103178,
+      0.00017299463098467162
+    ]
+  },
+  "PolygonalROI_16": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.21349351507362596,
+      0.2625843857618844,
+      0.2625843857618844,
+      0.21349351507362596,
+      0.21349351507362596
+    ],
+    "vy": [
+      -3.780577935453625e-05,
+      -3.780577935453625e-05,
+      7.044308000884076e-05,
+      7.044308000884076e-05,
+      -3.780577935453625e-05
+    ]
+  },
+  "PolygonalROI_17": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.25865711610682374,
+      0.30774798679508225,
+      0.30774798679508225,
+      0.25865711610682374,
+      0.25865711610682374
+    ],
+    "vy": [
+      -2.641116257944394e-05,
+      -2.641116257944394e-05,
+      0.00011032423872166388,
+      0.00011032423872166388,
+      -2.641116257944394e-05
+    ]
+  },
+  "PolygonalROI_18": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.2940025430023699,
+      0.3666570316209925,
+      0.3666570316209925,
+      0.2940025430023699,
+      0.2940025430023699
+    ],
+    "vy": [
+      1.916730452092535e-05,
+      1.916730452092535e-05,
+      0.00011602154710921005,
+      0.00011602154710921005,
+      1.916730452092535e-05
+    ]
+  },
+  "PolygonalROI_19": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.3961115540339476,
+      0.618002289544876,
+      0.618002289544876,
+      0.3961115540339476,
+      0.3961115540339476
+    ],
+    "vy": [
+      -2.641116257944394e-05,
+      -2.641116257944394e-05,
+      8.753500517147926e-05,
+      8.753500517147926e-05,
+      -2.641116257944394e-05
+    ]
+  },
+  "PolygonalROI_2": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.05051182438860771,
+      0.1172754085246393,
+      0.1172754085246393,
+      0.05051182438860771,
+      0.05051182438860771
+    ],
+    "vy": [
+      0.00046355735874952577,
+      0.00046355735874952577,
+      0.0005945954516630874,
+      0.0005945954516630874,
+      0.00046355735874952577
+    ]
+  },
+  "PolygonalROI_20": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.34112977886309803,
+      0.43342061575702406,
+      0.43342061575702406,
+      0.34112977886309803,
+      0.34112977886309803
+    ],
+    "vy": [
+      -1.5016545804351605e-05,
+      -1.5016545804351605e-05,
+      0.00014450808904694083,
+      0.00014450808904694083,
+      -1.5016545804351605e-05
+    ]
+  },
+  "PolygonalROI_21": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.5630205143740264,
+      0.7927657891950762,
+      0.7927657891950762,
+      0.5630205143740264,
+      0.5630205143740264
+    ],
+    "vy": [
+      -3.780577935453625e-05,
+      -3.780577935453625e-05,
+      0.00012741616388430233,
+      0.00012741616388430233,
+      -3.780577935453625e-05
+    ]
+  },
+  "PolygonalROI_22": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.40396609334406897,
+      0.5296387223060106,
+      0.5296387223060106,
+      0.40396609334406897,
+      0.40396609334406897
+    ],
+    "vy": [
+      3.056192129601763e-05,
+      3.056192129601763e-05,
+      0.0001786919393722178,
+      0.0001786919393722178,
+      3.056192129601763e-05
+    ]
+  },
+  "PolygonalROI_23": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.25276621162423274,
+      0.8732748171238203,
+      0.8732748171238203,
+      0.25276621162423274,
+      0.25276621162423274
+    ],
+    "vy": [
+      -3.780577935453625e-05,
+      -3.780577935453625e-05,
+      2.0753793582868455e-06,
+      2.0753793582868455e-06,
+      -3.780577935453625e-05
+    ]
+  },
+  "PolygonalROI_24": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.4825114864452825,
+      0.8850566260890023,
+      0.8850566260890023,
+      0.4825114864452825,
+      0.4825114864452825
+    ],
+    "vy": [
+      1.3469996133379182e-05,
+      1.3469996133379182e-05,
+      0.00022427040647258703,
+      0.00022427040647258703,
+      1.3469996133379182e-05
+    ]
+  },
+  "PolygonalROI_3": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.10745723438698757,
+      0.1545844702477157,
+      0.1545844702477157,
+      0.10745723438698757,
+      0.10745723438698757
+    ],
+    "vy": [
+      0.0005262277510125334,
+      0.0005262277510125334,
+      0.0006914496942513721,
+      0.0006914496942513721,
+      0.0005262277510125334
+    ]
+  },
+  "PolygonalROI_4": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.09567542542180552,
+      0.19582080162585286,
+      0.19582080162585286,
+      0.09567542542180552,
+      0.09567542542180552
+    ],
+    "vy": [
+      0.0007028443110264643,
+      0.0007028443110264643,
+      0.0007028443110264643,
+      0.0007028443110264643,
+      0.0007028443110264643
+    ]
+  },
+  "PolygonalROI_5": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.18011172300561018,
+      0.22723895886633833,
+      0.22723895886633833,
+      0.18011172300561018,
+      0.18011172300561018
+    ],
+    "vy": [
+      0.0007142389278015568,
+      0.0007142389278015568,
+      0.0010218935807290493,
+      0.0010218935807290493,
+      0.0007142389278015568
+    ]
+  },
+  "PolygonalROI_6": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      -0.004469950782241799,
+      0.04069365025095603,
+      0.04069365025095603,
+      -0.004469950782241799,
+      -0.004469950782241799
+    ],
+    "vy": [
+      0.00022996771486013325,
+      0.00022996771486013325,
+      0.0011016558981546956,
+      0.0011016558981546956,
+      0.00022996771486013325
+    ]
+  },
+  "PolygonalROI_7": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.04854818956107737,
+      0.08782088611168418,
+      0.08782088611168418,
+      0.04854818956107737,
+      0.04854818956107737
+    ],
+    "vy": [
+      0.0003780977329363333,
+      0.0003780977329363333,
+      0.001192812832355434,
+      0.001192812832355434,
+      0.0003780977329363333
+    ]
+  },
+  "PolygonalROI_8": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.03676638059589535,
+      0.18600262748820118,
+      0.18600262748820118,
+      0.03676638059589535,
+      0.03676638059589535
+    ],
+    "vy": [
+      0.0006059900684381796,
+      0.0006059900684381796,
+      0.0011643262904177034,
+      0.0011643262904177034,
+      0.0006059900684381796
+    ]
+  },
+  "PolygonalROI_9": {
+    "_type": "glue.core.roi.PolygonalROI",
+    "vx": [
+      0.09763906024933589,
+      0.2940025430023699,
+      0.2940025430023699,
+      0.09763906024933589,
+      0.09763906024933589
+    ],
+    "vy": [
+      0.0008623689458777568,
+      0.0008623689458777568,
+      0.001152931673642611,
+      0.001152931673642611,
+      0.0008623689458777568
+    ]
+  },
+  "RangeSubsetState": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/event_time",
+    "hi": 6.07485257097919e+18,
+    "lo": 6.074851988356234e+18
+  },
+  "RangeSubsetState_0": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/event_time",
+    "hi": 6.07486686237755e+18,
+    "lo": 6.074853530593467e+18
+  },
+  "RangeSubsetState_1": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/event_time",
+    "hi": 6.07486710228112e+18,
+    "lo": 6.074851988356234e+18
+  },
+  "RangeSubsetState_10": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 956.4364500137273,
+    "lo": 924.7777414371903
+  },
+  "RangeSubsetState_11": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 897.6898383760207,
+    "lo": 875.7067431435579
+  },
+  "RangeSubsetState_12": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 956.4364500137273,
+    "lo": 924.7777414371903
+  },
+  "RangeSubsetState_13": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 907.365451720095,
+    "lo": 877.2896785723849
+  },
+  "RangeSubsetState_14": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 957.1929532909576,
+    "lo": 929.5901194276397
+  },
+  "RangeSubsetState_15": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 907.365451720095,
+    "lo": 877.2896785723849
+  },
+  "RangeSubsetState_16": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/gas_detector/f_11_ENRC",
+    "hi": 0.3468607586385438,
+    "lo": 0.01756865804279073
+  },
+  "RangeSubsetState_17": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 955.0442296968072,
+    "lo": 932.2347023127479
+  },
+  "RangeSubsetState_18": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/evr/code_162",
+    "hi": 1.0,
+    "lo": 0.97
+  },
+  "RangeSubsetState_19": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/gas_detector/f_11_ENRC",
+    "hi": 0.3468607586385438,
+    "lo": 0.01756865804279073
+  },
+  "RangeSubsetState_2": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/event_time",
+    "hi": 6.074851988356234e+18,
+    "lo": 6.074850103399617e+18
+  },
+  "RangeSubsetState_20": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 897.6898383760207,
+    "lo": 875.7067431435579
+  },
+  "RangeSubsetState_21": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 897.6898383760207,
+    "lo": 875.7067431435579
+  },
+  "RangeSubsetState_22": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 957.1929532909576,
+    "lo": 929.5901194276397
+  },
+  "RangeSubsetState_23": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 957.1929532909576,
+    "lo": 929.5901194276397
+  },
+  "RangeSubsetState_24": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 955.0442296968072,
+    "lo": 932.2347023127479
+  },
+  "RangeSubsetState_25": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/evr/code_162",
+    "hi": 1.0,
+    "lo": 0.97
+  },
+  "RangeSubsetState_26": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 955.0442296968072,
+    "lo": 932.2347023127479
+  },
+  "RangeSubsetState_27": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/evr/code_162",
+    "hi": 1.0,
+    "lo": 0.97
+  },
+  "RangeSubsetState_3": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/delayStage",
+    "hi": 52.024426465116285,
+    "lo": 52.01233062015504
+  },
+  "RangeSubsetState_4": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/gas_detector/f_11_ENRC",
+    "hi": 0.8892242184433137,
+    "lo": 0.01756865804279073
+  },
+  "RangeSubsetState_5": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 956.4364500137273,
+    "lo": 924.7777414371903
+  },
+  "RangeSubsetState_6": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/EBeam",
+    "hi": 907.365451720095,
+    "lo": 877.2896785723849
+  },
+  "RangeSubsetState_7": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/gas_detector/f_11_ENRC",
+    "hi": 0.8892242184433137,
+    "lo": 0.01756865804279073
+  },
+  "RangeSubsetState_8": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/gas_detector/f_11_ENRC",
+    "hi": 0.3468607586385438,
+    "lo": 0.01756865804279073
+  },
+  "RangeSubsetState_9": {
+    "_type": "glue.core.subset.RangeSubsetState",
+    "att": "/gas_detector/f_11_ENRC",
+    "hi": 0.8892242184433137,
+    "lo": 0.01756865804279073
+  },
+  "RoiSubsetState": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_0": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_0",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_1": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_1",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_10": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_1",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_11": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_2",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_12": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_5",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_13": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_2",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_14": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_3",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_15": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_6",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_16": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_3",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_17": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_4",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_18": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_7",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_19": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_4",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_2": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_20": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_5",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_21": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_8",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_22": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_5",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_23": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_6",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_24": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_9",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_25": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_6",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_26": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_7",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_27": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_10",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_28": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_7",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_29": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_8",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_3": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_2",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_30": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_11",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_31": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_8",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_32": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_9",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_33": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_12",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_34": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_9",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_35": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_10",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_36": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_13",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_37": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_10",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_38": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_11",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_39": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_14",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_4": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_40": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_11",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_41": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_12",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_42": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_15",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_43": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_12",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_44": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_13",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_45": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_16",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_46": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_13",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_47": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_14",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_48": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_17",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_49": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_14",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_5": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_0",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_50": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_15",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_51": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_18",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_52": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_15",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_53": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_16",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_54": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_19",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_55": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_16",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_56": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_17",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_57": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_20",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_58": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_17",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_59": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_18",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_6": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_3",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_60": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_21",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_61": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_18",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_62": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_19",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_63": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_22",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_64": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_19",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_65": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_20",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_66": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_23",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_67": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_20",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_68": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_21",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_69": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_24",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_7": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_0",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_70": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_21",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_71": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_22",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_72": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_22",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_73": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_23",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_74": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_23",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_75": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_24",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_76": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_24",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_8": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_1",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "RoiSubsetState_9": {
+    "_type": "glue.core.subset.RoiSubsetState",
+    "roi": "PolygonalROI_4",
+    "xatt": "/acqiris2",
+    "yatt": "/GMD"
+  },
+  "ScatterWidget": {
+    "_type": "glue.viewers.scatter.qt.viewer_widget.ScatterWidget",
+    "layers": [
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "sxri0414run60[/EBeam]",
+        "visible": false,
+        "xatt": "/event_time",
+        "yatt": "/delayStage",
+        "zorder": 1
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 1",
+        "visible": true,
+        "xatt": "/event_time",
+        "yatt": "/delayStage",
+        "zorder": 2
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 3",
+        "visible": true,
+        "xatt": "/event_time",
+        "yatt": "/delayStage",
+        "zorder": 3
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 4",
+        "visible": true,
+        "xatt": "/event_time",
+        "yatt": "/delayStage",
+        "zorder": 4
+      }
+    ],
+    "pos": [
+      0,
+      0
+    ],
+    "properties": {
+      "hidden": false,
+      "xatt": "/event_time",
+      "xflip": false,
+      "xlog": false,
+      "xmax": 6.07487e+18,
+      "xmin": 6.07485e+18,
+      "yatt": "/delayStage",
+      "yflip": false,
+      "ylog": false,
+      "ymax": 52.0607,
+      "ymin": 48.94
+    },
+    "session": "Session",
+    "size": [
+      600,
+      400
+    ]
+  },
+  "ScatterWidget_0": {
+    "_type": "glue.viewers.scatter.qt.viewer_widget.ScatterWidget",
+    "layers": [
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "sxri0414run60[/EBeam]",
+        "visible": false,
+        "xatt": "/acqiris2",
+        "yatt": "/GMD",
+        "zorder": 1
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 1",
+        "visible": false,
+        "xatt": "/acqiris2",
+        "yatt": "/GMD",
+        "zorder": 2
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 3",
+        "visible": true,
+        "xatt": "/acqiris2",
+        "yatt": "/GMD",
+        "zorder": 3
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 4",
+        "visible": true,
+        "xatt": "/acqiris2",
+        "yatt": "/GMD",
+        "zorder": 4
+      }
+    ],
+    "pos": [
+      600,
+      0
+    ],
+    "properties": {
+      "hidden": false,
+      "xatt": "/acqiris2",
+      "xflip": false,
+      "xlog": false,
+      "xmax": 0.957711,
+      "xmin": -0.020179,
+      "yatt": "/GMD",
+      "yflip": false,
+      "ylog": false,
+      "ymax": 0.00141501,
+      "ymin": -5.48977e-05
+    },
+    "session": "Session",
+    "size": [
+      600,
+      400
+    ]
+  },
+  "ScatterWidget_1": {
+    "_type": "glue.viewers.scatter.qt.viewer_widget.ScatterWidget",
+    "layers": [
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "sxri0414run60[/EBeam]",
+        "visible": false,
+        "xatt": "/EBeam",
+        "yatt": "/acqiris2",
+        "zorder": 1
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 1",
+        "visible": false,
+        "xatt": "/EBeam",
+        "yatt": "/acqiris2",
+        "zorder": 2
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 3",
+        "visible": true,
+        "xatt": "/EBeam",
+        "yatt": "/acqiris2",
+        "zorder": 3
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 4",
+        "visible": true,
+        "xatt": "/EBeam",
+        "yatt": "/acqiris2",
+        "zorder": 4
+      }
+    ],
+    "pos": [
+      1046,
+      624
+    ],
+    "properties": {
+      "hidden": false,
+      "xatt": "/EBeam",
+      "xflip": false,
+      "xlog": false,
+      "xmax": 958.019,
+      "xmin": 875.707,
+      "yatt": "/acqiris2",
+      "yflip": false,
+      "ylog": false,
+      "ymax": 0.957711,
+      "ymin": -0.020179
+    },
+    "session": "Session",
+    "size": [
+      600,
+      400
+    ]
+  },
+  "Session": {
+    "_type": "glue.core.session.Session"
+  },
+  "Subset 1": {
+    "_type": "glue.core.subset_group.GroupedSubset",
+    "group": "Subset 1_0",
+    "style": {
+      "_type": "glue.core.visual.VisualAttributes",
+      "alpha": 0.5,
+      "color": "#e31a1c",
+      "linestyle": "solid",
+      "linewidth": 1,
+      "marker": "o",
+      "markersize": 7
+    }
+  },
+  "Subset 1_0": {
+    "_type": "glue.core.subset_group.SubsetGroup",
+    "label": "Subset 1",
+    "state": "AndState",
+    "style": {
+      "_type": "glue.core.visual.VisualAttributes",
+      "alpha": 0.5,
+      "color": "#e31a1c",
+      "linestyle": "solid",
+      "linewidth": 1,
+      "marker": "o",
+      "markersize": 7
+    },
+    "subsets": [
+      "Subset 1"
+    ]
+  },
+  "Subset 3": {
+    "_type": "glue.core.subset_group.GroupedSubset",
+    "group": "Subset 3_0",
+    "style": {
+      "_type": "glue.core.visual.VisualAttributes",
+      "alpha": 0.5,
+      "color": "#1f78b4",
+      "linestyle": "solid",
+      "linewidth": 1,
+      "marker": "o",
+      "markersize": 7
+    }
+  },
+  "Subset 3_0": {
+    "_type": "glue.core.subset_group.SubsetGroup",
+    "label": "Subset 3",
+    "state": "AndState_0",
+    "style": {
+      "_type": "glue.core.visual.VisualAttributes",
+      "alpha": 0.5,
+      "color": "#1f78b4",
+      "linestyle": "solid",
+      "linewidth": 1,
+      "marker": "o",
+      "markersize": 7
+    },
+    "subsets": [
+      "Subset 3"
+    ]
+  },
+  "Subset 4": {
+    "_type": "glue.core.subset_group.GroupedSubset",
+    "group": "Subset 4_0",
+    "style": {
+      "_type": "glue.core.visual.VisualAttributes",
+      "alpha": 0.5,
+      "color": "#8c510a",
+      "linestyle": "solid",
+      "linewidth": 1,
+      "marker": "o",
+      "markersize": 7
+    }
+  },
+  "Subset 4_0": {
+    "_type": "glue.core.subset_group.SubsetGroup",
+    "label": "Subset 4",
+    "state": "AndState_1",
+    "style": {
+      "_type": "glue.core.visual.VisualAttributes",
+      "alpha": 0.5,
+      "color": "#8c510a",
+      "linestyle": "solid",
+      "linewidth": 1,
+      "marker": "o",
+      "markersize": 7
+    },
+    "subsets": [
+      "Subset 4"
+    ]
+  },
+  "World 0": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_0": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_1": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_10": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_11": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_12": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_13": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_14": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_15": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_16": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_17": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_18": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_19": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_2": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_20": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_21": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_22": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_23": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_24": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_25": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_26": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_27": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_28": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_29": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_3": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_30": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_31": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_32": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_4": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_5": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_6": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_7": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_8": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "World 0_9": {
+    "_type": "glue.core.component_id.ComponentID",
+    "hidden": true,
+    "label": "World 0"
+  },
+  "__main__": {
+    "_type": "glue.app.qt.application.GlueApplication",
+    "data": "DataCollection",
+    "plugins": [
+      "glue.viewers.image",
+      "glue_vispy_viewers.volume",
+      "glue.viewers.table",
+      "glue_vispy_viewers.scatter",
+      "glue.plugins.export_d3po",
+      "glue.plugins.exporters.plotly",
+      "glue.viewers.histogram",
+      "glue.plugins.tools.spectrum_tool",
+      "glue.core.data_exporters",
+      "glue.plugins.coordinate_helpers",
+      "glue.viewers.scatter",
+      "glue.plugins.tools.pv_slicer"
+    ],
+    "session": "Session",
+    "tab_names": [
+      "Tab 1"
+    ],
+    "viewers": [
+      [
+        "ScatterWidget",
+        "ScatterWidget_0",
+        "HistogramWidget",
+        "HistogramWidget_0",
+        "ScatterWidget_1"
+      ]
+    ]
+  },
+  "sxri0414run60[/EBeam]": {
+    "_key_joins": [],
+    "_protocol": 5,
+    "_type": "glue.core.data.Data",
+    "components": [
+      [
+        "/EBeam",
+        "Component"
+      ],
+      [
+        "Pixel Axis 0 [x]",
+        "CoordinateComponent"
+      ],
+      [
+        "World 0",
+        "CoordinateComponent_0"
+      ],
+      [
+        "/GMD",
+        "Component_0"
+      ],
+      [
+        "/acqiris2",
+        "Component_1"
+      ],
+      [
+        "/delayStage",
+        "Component_2"
+      ],
+      [
+        "/ebeam/L3_energy",
+        "Component_3"
+      ],
+      [
+        "/ebeam/charge",
+        "Component_4"
+      ],
+      [
+        "/ebeam/dump_charge",
+        "Component_5"
+      ],
+      [
+        "/ebeam/photon_energy",
+        "Component_6"
+      ],
+      [
+        "/ebeam/pk_curr_bc2",
+        "Component_7"
+      ],
+      [
+        "/event_time",
+        "Component_8"
+      ],
+      [
+        "/evr/code_140",
+        "Component_9"
+      ],
+      [
+        "/evr/code_141",
+        "Component_10"
+      ],
+      [
+        "/evr/code_142",
+        "Component_11"
+      ],
+      [
+        "/evr/code_162",
+        "Component_12"
+      ],
+      [
+        "/evr/code_75",
+        "Component_13"
+      ],
+      [
+        "/evr/code_76",
+        "Component_14"
+      ],
+      [
+        "/evr/code_77",
+        "Component_15"
+      ],
+      [
+        "/evr/code_78",
+        "Component_16"
+      ],
+      [
+        "/evr/code_79",
+        "Component_17"
+      ],
+      [
+        "/evr/code_80",
+        "Component_18"
+      ],
+      [
+        "/evr/code_81",
+        "Component_19"
+      ],
+      [
+        "/fiducials",
+        "Component_20"
+      ],
+      [
+        "/gas_detector/f_11_ENRC",
+        "Component_21"
+      ],
+      [
+        "/gas_detector/f_12_ENRC",
+        "Component_22"
+      ],
+      [
+        "/gas_detector/f_21_ENRC",
+        "Component_23"
+      ],
+      [
+        "/gas_detector/f_22_ENRC",
+        "Component_24"
+      ],
+      [
+        "/gas_detector/f_63_ENRC",
+        "Component_25"
+      ],
+      [
+        "/gas_detector/f_64_ENRC",
+        "Component_26"
+      ],
+      [
+        "/phase_cav/charge1",
+        "Component_27"
+      ],
+      [
+        "/phase_cav/charge2",
+        "Component_28"
+      ],
+      [
+        "/phase_cav/fit_time_1",
+        "Component_29"
+      ],
+      [
+        "/phase_cav/fit_time_2",
+        "Component_30"
+      ]
+    ],
+    "coords": "Coordinates",
+    "label": "sxri0414run60[/EBeam]",
+    "primary_owner": [
+      "/EBeam",
+      "Pixel Axis 0 [x]",
+      "World 0",
+      "/GMD",
+      "/acqiris2",
+      "/delayStage",
+      "/ebeam/L3_energy",
+      "/ebeam/charge",
+      "/ebeam/dump_charge",
+      "/ebeam/photon_energy",
+      "/ebeam/pk_curr_bc2",
+      "/event_time",
+      "/evr/code_140",
+      "/evr/code_141",
+      "/evr/code_142",
+      "/evr/code_162",
+      "/evr/code_75",
+      "/evr/code_76",
+      "/evr/code_77",
+      "/evr/code_78",
+      "/evr/code_79",
+      "/evr/code_80",
+      "/evr/code_81",
+      "/fiducials",
+      "/gas_detector/f_11_ENRC",
+      "/gas_detector/f_12_ENRC",
+      "/gas_detector/f_21_ENRC",
+      "/gas_detector/f_22_ENRC",
+      "/gas_detector/f_63_ENRC",
+      "/gas_detector/f_64_ENRC",
+      "/phase_cav/charge1",
+      "/phase_cav/charge2",
+      "/phase_cav/fit_time_1",
+      "/phase_cav/fit_time_2"
+    ],
+    "style": {
+      "_type": "glue.core.visual.VisualAttributes",
+      "alpha": 0.8,
+      "color": "#595959",
+      "linestyle": "solid",
+      "linewidth": 1,
+      "marker": "o",
+      "markersize": 3
+    },
+    "subsets": [
+      "Subset 1",
+      "Subset 3",
+      "Subset 4"
+    ],
+    "uuid": "9d5919aa-4fcb-49b9-9cf7-52aafebbab09"
+  }
+}
