@@ -95,6 +95,12 @@ https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detect
 console ioc-amo-hv2
 iocsh()
 
+
+#epics and edm development area
+/reg/g/pcds/package/epics/3.14-dev
+
+
+
 #telnet to digi-sxr-04:2105
 #it's in top right corner of ims motor edm screen
 

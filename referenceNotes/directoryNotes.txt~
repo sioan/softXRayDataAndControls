@@ -360,6 +360,8 @@ error from RhodeSchwartz's
 #ioc template dereferencing hell.  this is the st.cmd file that get's actually run
 /reg/g/pcds/package/epics/3.14/ioc/common/RohdeSchwartzNGPS/R1.0.4/children/build/iocBoot/ioc-det-pnccd-front-rsngps01
 
+running wrong ioc version.  switched from 1.04 to 1.06.  1.04 looks in wrong place for iocShell defined st.cmd shebang
+
 
 
 ###########################
@@ -386,7 +388,8 @@ error from RhodeSchwartz's
 
 
 
-
+#Ankush GMD notes
+https://drive.google.com/drive/folders/0B1-OMNjEHAACfjFMUWNwNHluYlNobkZGNEZmajA4bXJlQWh1XzdSQ3E5d0lQT2w0eWVmS3c
 
 
 

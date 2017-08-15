@@ -1,6 +1,7 @@
 from pylab import *
 import psana
-
+#############################################
+############standard intro###################
 
 #Live data during beamtime
 #dsource = psana.MPIDataSource('exp=sxr22915:run=104:smd:dir=/reg/d/ffb/sxr/sxro5916/xtc:live')
@@ -12,10 +13,17 @@ smldata = dsource.small_data('run104c.h5')
 f = open("manualWriteRun104.dat","w")
 psana.DetNames()
 
-kbFluorescenceMontior=psana.Detector("Acq02")
+#############################################
+############defining detector objects########
+
+
+kbFluorescenceMontior=psana.Detector("Acq02")		
 imagingDetectorObject = psana.Detector("pnccd")
 
 #xSampleAxis = psana.Detector("SXR:RCI:MZM:SMP:x.RBV")
+
+#############################################
+############enumerating events###############
 
 enumeratedEvents = enumerate(dsource.events())
 eventNumber,myEvent = next(enumeratedEvents)
@@ -33,6 +41,9 @@ myFiducials = myEvent.get(psana.EventId).fiducials()
 toSave = array([pulseArea,referenceRoiIntensity])
 toSaveAcquiris= MCP[timeStart:timeEnd]
 
+#############################################
+############iterating over events############
+
 myCounter = 0
 for eventNumber,myEvent in enumeratedEvents:
 	if eventNumber > 10:
@@ -47,6 +58,9 @@ for eventNumber,myEvent in enumeratedEvents:
 	myImage = imagingDetectorObject.image(myEvent)
 	MCP = kbFluorescenceMontior(myEvent)[0][3]
 
+#############################################
+############dreaded none check###############
+
 	if any([None is k for k in [kbFluorescenceMontior(myEvent),myImage]]):
 		print '*** bad event',nevt
 		continue
@@ -58,10 +72,16 @@ for eventNumber,myEvent in enumeratedEvents:
 	pulseArea = sum(MCP[timeStart:timeEnd]-mean(MCP[:1100]))
 	myFiducials = myEvent.get(psana.EventId).fiducials()
 
+##############################################
+########potential scientific analysis#########
+
 	
 	referenceRoiIntensity = np.sum(myImage[420:560,1030:1185])	#could be these values [420:560,80:230] instead 
 
 	myCounter = myCounter + 1
+
+##############################################
+########storing data in staging dictionary####
 
 	myDictionary = {}
 	myDictionary["pulseArea"] = pulseArea
@@ -69,6 +89,10 @@ for eventNumber,myEvent in enumeratedEvents:
 	myDictionary["referenceRoiIntensity"] = referenceRoiIntensity
 	#myDictionary["testCounter"] = myCounter
 	#myDictionary["eventNumber"] = eventNumber
+
+##############################################
+########invoking small data###################
+
 
 	smldata.event(myDictionary)
 	if (eventNumber%100 == 0):
@@ -82,6 +106,9 @@ for eventNumber,myEvent in enumeratedEvents:
 	#toSave = vstack([toSave,temp])
 	#toSaveAcquiris=vstack([toSaveAcquiris,MCP[timeStart:timeEnd]])
 	#toSaveAcquirisi0=vstack([toSaveAcquirisi0,i0mcp[timeStart:timeEnd]])
+
+##############################################
+#################final save###################
 
 
 smldata.save()
