@@ -161,58 +161,23 @@
   },
   "AndState": {
     "_type": "glue.core.subset.AndState",
-    "state1": "AndState_2",
-    "state2": "InvertState"
+    "state1": "AndState_0",
+    "state2": "InvertState_0"
   },
   "AndState_0": {
     "_type": "glue.core.subset.AndState",
-    "state1": "AndState_3",
-    "state2": "InvertState_0"
+    "state1": "InvertState_1",
+    "state2": "InvertState_2"
   },
   "AndState_1": {
     "_type": "glue.core.subset.AndState",
-    "state1": "AndState_4",
-    "state2": "InvertState_1"
+    "state1": "AndState_2",
+    "state2": "InvertState_3"
   },
   "AndState_2": {
     "_type": "glue.core.subset.AndState",
-    "state1": "InvertState_2",
-    "state2": "InvertState_3"
-  },
-  "AndState_3": {
-    "_type": "glue.core.subset.AndState",
-    "state1": "AndState_5",
-    "state2": "InvertState_4"
-  },
-  "AndState_4": {
-    "_type": "glue.core.subset.AndState",
-    "state1": "AndState_6",
+    "state1": "InvertState_4",
     "state2": "InvertState_5"
-  },
-  "AndState_5": {
-    "_type": "glue.core.subset.AndState",
-    "state1": "AndState_7",
-    "state2": "InvertState_6"
-  },
-  "AndState_6": {
-    "_type": "glue.core.subset.AndState",
-    "state1": "AndState_8",
-    "state2": "InvertState_7"
-  },
-  "AndState_7": {
-    "_type": "glue.core.subset.AndState",
-    "state1": "AndState_9",
-    "state2": "InvertState_8"
-  },
-  "AndState_8": {
-    "_type": "glue.core.subset.AndState",
-    "state1": "InvertState_9",
-    "state2": "InvertState_10"
-  },
-  "AndState_9": {
-    "_type": "glue.core.subset.AndState",
-    "state1": "InvertState_11",
-    "state2": "InvertState_12"
   },
   "Component": {
     "_type": "glue.core.component.Component",
@@ -395,39 +360,27 @@
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_1",
     "frm": [
-      "World 0_1"
+      "Pixel Axis 0 [x]_1"
     ],
     "index": 0,
-    "pix2world": false,
+    "pix2world": true,
     "to": [
-      "Pixel Axis 0 [x]_1"
+      "World 0_1"
     ]
   },
   "CoordinateComponentLink_1": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_2",
     "frm": [
-      "World 0_2"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
       "Pixel Axis 0 [x]_2"
-    ]
-  },
-  "CoordinateComponentLink_10": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_7",
-    "frm": [
-      "Pixel Axis 0 [x]_7"
     ],
     "index": 0,
     "pix2world": true,
     "to": [
-      "World 0_7"
+      "World 0_2"
     ]
   },
-  "CoordinateComponentLink_11": {
+  "CoordinateComponentLink_10": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_6",
     "frm": [
@@ -437,6 +390,18 @@
     "pix2world": false,
     "to": [
       "Pixel Axis 0 [x]_6"
+    ]
+  },
+  "CoordinateComponentLink_11": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates",
+    "frm": [
+      "World 0_8"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_8"
     ]
   },
   "CoordinateComponentLink_12": {
@@ -453,19 +418,31 @@
   },
   "CoordinateComponentLink_13": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_8",
+    "coords": "Coordinates_2",
     "frm": [
-      "Pixel Axis 0 [x]_8"
+      "World 0_2"
     ],
     "index": 0,
-    "pix2world": true,
+    "pix2world": false,
     "to": [
-      "World 0_8"
+      "Pixel Axis 0 [x]_2"
     ]
   },
   "CoordinateComponentLink_14": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates",
+    "coords": "Coordinates_4",
+    "frm": [
+      "World 0_4"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_4"
+    ]
+  },
+  "CoordinateComponentLink_15": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_8",
     "frm": [
       "Pixel Axis 0 [x]_9"
     ],
@@ -473,18 +450,6 @@
     "pix2world": true,
     "to": [
       "World 0_9"
-    ]
-  },
-  "CoordinateComponentLink_15": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_8",
-    "frm": [
-      "World 0_8"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_8"
     ]
   },
   "CoordinateComponentLink_16": {
@@ -513,30 +478,6 @@
   },
   "CoordinateComponentLink_18": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_11",
-    "frm": [
-      "Pixel Axis 0 [x]_12"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_12"
-    ]
-  },
-  "CoordinateComponentLink_19": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_12",
-    "frm": [
-      "Pixel Axis 0 [x]_13"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_13"
-    ]
-  },
-  "CoordinateComponentLink_2": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates",
     "frm": [
       "World 0"
@@ -545,6 +486,30 @@
     "pix2world": false,
     "to": [
       "Pixel Axis 0 [x]"
+    ]
+  },
+  "CoordinateComponentLink_19": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_8",
+    "frm": [
+      "World 0_9"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_9"
+    ]
+  },
+  "CoordinateComponentLink_2": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_3",
+    "frm": [
+      "Pixel Axis 0 [x]_3"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_3"
     ]
   },
   "CoordinateComponentLink_20": {
@@ -561,77 +526,53 @@
   },
   "CoordinateComponentLink_21": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_13",
+    "coords": "Coordinates_10",
     "frm": [
-      "Pixel Axis 0 [x]_14"
+      "World 0_11"
     ],
     "index": 0,
-    "pix2world": true,
+    "pix2world": false,
     "to": [
-      "World 0_14"
+      "Pixel Axis 0 [x]_11"
     ]
   },
   "CoordinateComponentLink_22": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_13",
+    "coords": "Coordinates_11",
     "frm": [
-      "World 0_14"
+      "Pixel Axis 0 [x]_12"
     ],
     "index": 0,
-    "pix2world": false,
+    "pix2world": true,
     "to": [
-      "Pixel Axis 0 [x]_14"
+      "World 0_12"
     ]
   },
   "CoordinateComponentLink_23": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_14",
+    "coords": "Coordinates_12",
     "frm": [
-      "Pixel Axis 0 [x]_15"
+      "Pixel Axis 0 [x]_13"
     ],
     "index": 0,
     "pix2world": true,
     "to": [
-      "World 0_15"
+      "World 0_13"
     ]
   },
   "CoordinateComponentLink_24": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_15",
+    "coords": "Coordinates_13",
     "frm": [
-      "Pixel Axis 0 [x]_16"
+      "Pixel Axis 0 [x]_14"
     ],
     "index": 0,
     "pix2world": true,
     "to": [
-      "World 0_16"
+      "World 0_14"
     ]
   },
   "CoordinateComponentLink_25": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_14",
-    "frm": [
-      "World 0_15"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_15"
-    ]
-  },
-  "CoordinateComponentLink_26": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_15",
-    "frm": [
-      "World 0_16"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_16"
-    ]
-  },
-  "CoordinateComponentLink_27": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_11",
     "frm": [
@@ -643,19 +584,67 @@
       "Pixel Axis 0 [x]_12"
     ]
   },
-  "CoordinateComponentLink_28": {
+  "CoordinateComponentLink_26": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_5",
+    "coords": "Coordinates_14",
     "frm": [
-      "World 0_5"
+      "Pixel Axis 0 [x]_15"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_15"
+    ]
+  },
+  "CoordinateComponentLink_27": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_12",
+    "frm": [
+      "World 0_13"
     ],
     "index": 0,
     "pix2world": false,
     "to": [
-      "Pixel Axis 0 [x]_5"
+      "Pixel Axis 0 [x]_13"
+    ]
+  },
+  "CoordinateComponentLink_28": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_15",
+    "frm": [
+      "Pixel Axis 0 [x]_16"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_16"
     ]
   },
   "CoordinateComponentLink_29": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_15",
+    "frm": [
+      "World 0_16"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_16"
+    ]
+  },
+  "CoordinateComponentLink_3": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_4",
+    "frm": [
+      "Pixel Axis 0 [x]_4"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_4"
+    ]
+  },
+  "CoordinateComponentLink_30": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_16",
     "frm": [
@@ -667,52 +656,28 @@
       "World 0_17"
     ]
   },
-  "CoordinateComponentLink_3": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates",
-    "frm": [
-      "Pixel Axis 0 [x]"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0"
-    ]
-  },
-  "CoordinateComponentLink_30": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_17",
-    "frm": [
-      "Pixel Axis 0 [x]_18"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_18"
-    ]
-  },
   "CoordinateComponentLink_31": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_17",
     "frm": [
-      "World 0_18"
+      "Pixel Axis 0 [x]_18"
     ],
     "index": 0,
-    "pix2world": false,
+    "pix2world": true,
     "to": [
-      "Pixel Axis 0 [x]_18"
+      "World 0_18"
     ]
   },
   "CoordinateComponentLink_32": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_12",
+    "coords": "Coordinates_18",
     "frm": [
-      "World 0_13"
+      "Pixel Axis 0 [x]_19"
     ],
     "index": 0,
-    "pix2world": false,
+    "pix2world": true,
     "to": [
-      "Pixel Axis 0 [x]_13"
+      "World 0_19"
     ]
   },
   "CoordinateComponentLink_33": {
@@ -729,14 +694,14 @@
   },
   "CoordinateComponentLink_34": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_18",
+    "coords": "Coordinates_17",
     "frm": [
-      "Pixel Axis 0 [x]_19"
+      "World 0_18"
     ],
     "index": 0,
-    "pix2world": true,
+    "pix2world": false,
     "to": [
-      "World 0_19"
+      "Pixel Axis 0 [x]_18"
     ]
   },
   "CoordinateComponentLink_35": {
@@ -753,6 +718,30 @@
   },
   "CoordinateComponentLink_36": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_13",
+    "frm": [
+      "World 0_14"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_14"
+    ]
+  },
+  "CoordinateComponentLink_37": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_14",
+    "frm": [
+      "World 0_15"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_15"
+    ]
+  },
+  "CoordinateComponentLink_38": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_19",
     "frm": [
       "Pixel Axis 0 [x]_20"
@@ -763,7 +752,31 @@
       "World 0_20"
     ]
   },
-  "CoordinateComponentLink_37": {
+  "CoordinateComponentLink_39": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates",
+    "frm": [
+      "Pixel Axis 0 [x]_8"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_8"
+    ]
+  },
+  "CoordinateComponentLink_4": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_1",
+    "frm": [
+      "World 0_1"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_1"
+    ]
+  },
+  "CoordinateComponentLink_40": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_20",
     "frm": [
@@ -775,67 +788,7 @@
       "World 0_21"
     ]
   },
-  "CoordinateComponentLink_38": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_21",
-    "frm": [
-      "Pixel Axis 0 [x]_22"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_22"
-    ]
-  },
-  "CoordinateComponentLink_39": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_22",
-    "frm": [
-      "Pixel Axis 0 [x]_23"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_23"
-    ]
-  },
-  "CoordinateComponentLink_4": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_3",
-    "frm": [
-      "Pixel Axis 0 [x]_3"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_3"
-    ]
-  },
-  "CoordinateComponentLink_40": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_1",
-    "frm": [
-      "Pixel Axis 0 [x]_1"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_1"
-    ]
-  },
   "CoordinateComponentLink_41": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_23",
-    "frm": [
-      "Pixel Axis 0 [x]_24"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_24"
-    ]
-  },
-  "CoordinateComponentLink_42": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_19",
     "frm": [
@@ -847,7 +800,91 @@
       "Pixel Axis 0 [x]_20"
     ]
   },
+  "CoordinateComponentLink_42": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_20",
+    "frm": [
+      "World 0_21"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_21"
+    ]
+  },
   "CoordinateComponentLink_43": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_21",
+    "frm": [
+      "Pixel Axis 0 [x]_22"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_22"
+    ]
+  },
+  "CoordinateComponentLink_44": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_21",
+    "frm": [
+      "World 0_22"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_22"
+    ]
+  },
+  "CoordinateComponentLink_45": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_22",
+    "frm": [
+      "Pixel Axis 0 [x]_23"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_23"
+    ]
+  },
+  "CoordinateComponentLink_46": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_23",
+    "frm": [
+      "Pixel Axis 0 [x]_24"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_24"
+    ]
+  },
+  "CoordinateComponentLink_47": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_22",
+    "frm": [
+      "World 0_23"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_23"
+    ]
+  },
+  "CoordinateComponentLink_48": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_23",
+    "frm": [
+      "World 0_24"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_24"
+    ]
+  },
+  "CoordinateComponentLink_49": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_24",
     "frm": [
@@ -859,7 +896,19 @@
       "World 0_25"
     ]
   },
-  "CoordinateComponentLink_44": {
+  "CoordinateComponentLink_5": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_5",
+    "frm": [
+      "Pixel Axis 0 [x]_5"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_5"
+    ]
+  },
+  "CoordinateComponentLink_50": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_24",
     "frm": [
@@ -871,7 +920,19 @@
       "Pixel Axis 0 [x]_25"
     ]
   },
-  "CoordinateComponentLink_45": {
+  "CoordinateComponentLink_51": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_25",
+    "frm": [
+      "Pixel Axis 0 [x]_26"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_26"
+    ]
+  },
+  "CoordinateComponentLink_52": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_25",
     "frm": [
@@ -883,154 +944,106 @@
       "Pixel Axis 0 [x]_26"
     ]
   },
-  "CoordinateComponentLink_46": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_21",
-    "frm": [
-      "World 0_22"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_22"
-    ]
-  },
-  "CoordinateComponentLink_47": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_20",
-    "frm": [
-      "World 0_21"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_21"
-    ]
-  },
-  "CoordinateComponentLink_48": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_26",
-    "frm": [
-      "Pixel Axis 0 [x]_27"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_27"
-    ]
-  },
-  "CoordinateComponentLink_49": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_27",
-    "frm": [
-      "Pixel Axis 0 [x]_28"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_28"
-    ]
-  },
-  "CoordinateComponentLink_5": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_4",
-    "frm": [
-      "Pixel Axis 0 [x]_4"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_4"
-    ]
-  },
-  "CoordinateComponentLink_50": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_27",
-    "frm": [
-      "World 0_28"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_28"
-    ]
-  },
-  "CoordinateComponentLink_51": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_26",
-    "frm": [
-      "World 0_27"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_27"
-    ]
-  },
-  "CoordinateComponentLink_52": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_22",
-    "frm": [
-      "World 0_23"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_23"
-    ]
-  },
   "CoordinateComponentLink_53": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_23",
+    "coords": "Coordinates_26",
     "frm": [
-      "World 0_24"
+      "Pixel Axis 0 [x]_27"
     ],
     "index": 0,
-    "pix2world": false,
+    "pix2world": true,
     "to": [
-      "Pixel Axis 0 [x]_24"
+      "World 0_27"
     ]
   },
   "CoordinateComponentLink_54": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates",
+    "coords": "Coordinates_27",
     "frm": [
-      "World 0_9"
+      "Pixel Axis 0 [x]_28"
     ],
     "index": 0,
-    "pix2world": false,
+    "pix2world": true,
     "to": [
-      "Pixel Axis 0 [x]_9"
+      "World 0_28"
     ]
   },
   "CoordinateComponentLink_55": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_28",
+    "coords": "Coordinates_26",
     "frm": [
-      "Pixel Axis 0 [x]_29"
+      "World 0_27"
     ],
     "index": 0,
-    "pix2world": true,
+    "pix2world": false,
     "to": [
-      "World 0_29"
+      "Pixel Axis 0 [x]_27"
     ]
   },
   "CoordinateComponentLink_56": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_29",
+    "coords": "Coordinates",
     "frm": [
-      "Pixel Axis 0 [x]_30"
+      "Pixel Axis 0 [x]"
     ],
     "index": 0,
     "pix2world": true,
     "to": [
-      "World 0_30"
+      "World 0"
     ]
   },
   "CoordinateComponentLink_57": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_28",
     "frm": [
+      "Pixel Axis 0 [x]_29"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_29"
+    ]
+  },
+  "CoordinateComponentLink_58": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_29",
+    "frm": [
+      "Pixel Axis 0 [x]_30"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_30"
+    ]
+  },
+  "CoordinateComponentLink_59": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_27",
+    "frm": [
+      "World 0_28"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_28"
+    ]
+  },
+  "CoordinateComponentLink_6": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_5",
+    "frm": [
+      "World 0_5"
+    ],
+    "index": 0,
+    "pix2world": false,
+    "to": [
+      "Pixel Axis 0 [x]_5"
+    ]
+  },
+  "CoordinateComponentLink_60": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_28",
+    "frm": [
       "World 0_29"
     ],
     "index": 0,
@@ -1039,7 +1052,7 @@
       "Pixel Axis 0 [x]_29"
     ]
   },
-  "CoordinateComponentLink_58": {
+  "CoordinateComponentLink_61": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_30",
     "frm": [
@@ -1051,7 +1064,19 @@
       "World 0_31"
     ]
   },
-  "CoordinateComponentLink_59": {
+  "CoordinateComponentLink_62": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_31",
+    "frm": [
+      "Pixel Axis 0 [x]_32"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_32"
+    ]
+  },
+  "CoordinateComponentLink_63": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_29",
     "frm": [
@@ -1063,19 +1088,7 @@
       "Pixel Axis 0 [x]_30"
     ]
   },
-  "CoordinateComponentLink_6": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_3",
-    "frm": [
-      "World 0_3"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_3"
-    ]
-  },
-  "CoordinateComponentLink_60": {
+  "CoordinateComponentLink_64": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_30",
     "frm": [
@@ -1087,64 +1100,16 @@
       "Pixel Axis 0 [x]_31"
     ]
   },
-  "CoordinateComponentLink_61": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_31",
-    "frm": [
-      "Pixel Axis 0 [x]_32"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_32"
-    ]
-  },
-  "CoordinateComponentLink_62": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_25",
-    "frm": [
-      "Pixel Axis 0 [x]_26"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_26"
-    ]
-  },
-  "CoordinateComponentLink_63": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_31",
-    "frm": [
-      "World 0_32"
-    ],
-    "index": 0,
-    "pix2world": false,
-    "to": [
-      "Pixel Axis 0 [x]_32"
-    ]
-  },
-  "CoordinateComponentLink_64": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_2",
-    "frm": [
-      "Pixel Axis 0 [x]_2"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_2"
-    ]
-  },
   "CoordinateComponentLink_65": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_10",
+    "coords": "Coordinates_31",
     "frm": [
-      "World 0_11"
+      "World 0_32"
     ],
     "index": 0,
     "pix2world": false,
     "to": [
-      "Pixel Axis 0 [x]_11"
+      "Pixel Axis 0 [x]_32"
     ]
   },
   "CoordinateComponentLink_66": {
@@ -1161,29 +1126,17 @@
   },
   "CoordinateComponentLink_7": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_4",
+    "coords": "Coordinates_3",
     "frm": [
-      "World 0_4"
+      "World 0_3"
     ],
     "index": 0,
     "pix2world": false,
     "to": [
-      "Pixel Axis 0 [x]_4"
+      "Pixel Axis 0 [x]_3"
     ]
   },
   "CoordinateComponentLink_8": {
-    "_type": "glue.core.component_link.CoordinateComponentLink",
-    "coords": "Coordinates_5",
-    "frm": [
-      "Pixel Axis 0 [x]_5"
-    ],
-    "index": 0,
-    "pix2world": true,
-    "to": [
-      "World 0_5"
-    ]
-  },
-  "CoordinateComponentLink_9": {
     "_type": "glue.core.component_link.CoordinateComponentLink",
     "coords": "Coordinates_6",
     "frm": [
@@ -1193,6 +1146,18 @@
     "pix2world": true,
     "to": [
       "World 0_6"
+    ]
+  },
+  "CoordinateComponentLink_9": {
+    "_type": "glue.core.component_link.CoordinateComponentLink",
+    "coords": "Coordinates_7",
+    "frm": [
+      "Pixel Axis 0 [x]_7"
+    ],
+    "index": 0,
+    "pix2world": true,
+    "to": [
+      "World 0_7"
     ]
   },
   "CoordinateComponent_0": {
@@ -1379,8 +1344,7 @@
     ],
     "groups": [
       "Subset 1_0",
-      "Subset 3_0",
-      "Subset 4_0"
+      "Subset 5_0"
     ],
     "links": [
       "CoordinateComponentLink",
@@ -1452,26 +1416,26 @@
       "CoordinateComponentLink_65",
       "CoordinateComponentLink_66"
     ],
-    "subset_group_count": 4
+    "subset_group_count": 5
   },
   "HistogramWidget": {
     "_type": "glue.viewers.histogram.qt.viewer_widget.HistogramWidget",
     "layers": [
       {
         "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
-        "hi": 1.9545810144883973,
+        "hi": 0.9389055350131998,
         "layer": "sxri0414run60[/EBeam]",
-        "lo": 0.01756865804279073,
+        "lo": -0.001373449708059308,
         "nbins": 100.0,
-        "visible": false,
+        "visible": true,
         "xlog": false,
         "zorder": 1
       },
       {
         "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
-        "hi": 1.9545810144883973,
+        "hi": 0.9389055350131998,
         "layer": "Subset 1",
-        "lo": 0.01756865804279073,
+        "lo": -0.001373449708059308,
         "nbins": 100.0,
         "visible": true,
         "xlog": false,
@@ -1479,38 +1443,28 @@
       },
       {
         "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
-        "hi": 1.9545810144883973,
-        "layer": "Subset 3",
-        "lo": 0.01756865804279073,
+        "hi": 0.9389055350131998,
+        "layer": "Subset 5",
+        "lo": -0.001373449708059308,
         "nbins": 100.0,
         "visible": true,
         "xlog": false,
         "zorder": 3
-      },
-      {
-        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
-        "hi": 1.9545810144883973,
-        "layer": "Subset 4",
-        "lo": 0.01756865804279073,
-        "nbins": 100.0,
-        "visible": true,
-        "xlog": false,
-        "zorder": 4
       }
     ],
     "pos": [
-      11,
-      621
+      43,
+      449
     ],
     "properties": {
       "autoscale": true,
-      "component": "/gas_detector/f_11_ENRC",
+      "component": "/acqiris2",
       "cumulative": false,
       "nbins": 100.0,
       "normed": false,
       "xlog": false,
-      "xmax": 1.95458,
-      "xmin": 0.0175687,
+      "xmax": 0.938906,
+      "xmin": -0.00137345,
       "ylog": false
     },
     "session": "Session",
@@ -1524,19 +1478,19 @@
     "layers": [
       {
         "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
-        "hi": 956.4364500137273,
+        "hi": 0.0013867404447776785,
         "layer": "sxri0414run60[/EBeam]",
-        "lo": 877.2896785723849,
+        "lo": -2.663028982511878e-05,
         "nbins": 100.0,
-        "visible": false,
+        "visible": true,
         "xlog": false,
         "zorder": 1
       },
       {
         "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
-        "hi": 956.4364500137273,
+        "hi": 0.0013867404447776785,
         "layer": "Subset 1",
-        "lo": 877.2896785723849,
+        "lo": -2.663028982511878e-05,
         "nbins": 100.0,
         "visible": true,
         "xlog": false,
@@ -1544,38 +1498,28 @@
       },
       {
         "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
-        "hi": 956.4364500137273,
-        "layer": "Subset 3",
-        "lo": 877.2896785723849,
+        "hi": 0.0013867404447776785,
+        "layer": "Subset 5",
+        "lo": -2.663028982511878e-05,
         "nbins": 100.0,
         "visible": true,
         "xlog": false,
         "zorder": 3
-      },
-      {
-        "_type": "glue.viewers.histogram.layer_artist.HistogramLayerArtist",
-        "hi": 956.4364500137273,
-        "layer": "Subset 4",
-        "lo": 877.2896785723849,
-        "nbins": 100.0,
-        "visible": true,
-        "xlog": false,
-        "zorder": 4
       }
     ],
     "pos": [
-      606,
-      622
+      649,
+      446
     ],
     "properties": {
       "autoscale": true,
-      "component": "/EBeam",
+      "component": "/GMD",
       "cumulative": false,
       "nbins": 100.0,
       "normed": false,
       "xlog": false,
-      "xmax": 956.436,
-      "xmin": 877.29,
+      "xmax": 0.00138674,
+      "xmin": -2.66303e-05,
       "ylog": false
     },
     "session": "Session",
@@ -1586,7 +1530,7 @@
   },
   "InvertState": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "RoiSubsetState",
+    "state1": "AndState_1",
     "state2": null
   },
   "InvertState_0": {
@@ -1596,62 +1540,47 @@
   },
   "InvertState_1": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "RangeSubsetState_0",
-    "state2": null
-  },
-  "InvertState_10": {
-    "_type": "glue.core.subset.InvertState",
-    "state1": "RoiSubsetState_5",
-    "state2": null
-  },
-  "InvertState_11": {
-    "_type": "glue.core.subset.InvertState",
-    "state1": "OrState_4",
-    "state2": null
-  },
-  "InvertState_12": {
-    "_type": "glue.core.subset.InvertState",
-    "state1": "RoiSubsetState_7",
+    "state1": "OrState",
     "state2": null
   },
   "InvertState_2": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "OrState",
+    "state1": "RoiSubsetState",
     "state2": null
   },
   "InvertState_3": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "RoiSubsetState_0",
+    "state1": "RangeSubsetState_0",
     "state2": null
   },
   "InvertState_4": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "RangeSubsetState_1",
+    "state1": "OrState_1",
     "state2": null
   },
   "InvertState_5": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "RangeSubsetState_2",
+    "state1": "RoiSubsetState_0",
     "state2": null
   },
   "InvertState_6": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "RangeSubsetState_3",
+    "state1": "InvertState_7",
     "state2": null
   },
   "InvertState_7": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "RoiSubsetState_2",
+    "state1": "OrState_9",
     "state2": null
   },
   "InvertState_8": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "RoiSubsetState_4",
+    "state1": "InvertState_9",
     "state2": null
   },
   "InvertState_9": {
     "_type": "glue.core.subset.InvertState",
-    "state1": "OrState_2",
+    "state1": "OrState_11",
     "state2": null
   },
   "LoadLog": {
@@ -1667,468 +1596,113 @@
   },
   "OrState": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_1",
+    "state1": "RangeSubsetState_1",
     "state2": "OrState_0"
   },
   "OrState_0": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_3",
-    "state2": "OrState_1"
+    "state1": "RangeSubsetState_2",
+    "state2": "OrState_2"
   },
   "OrState_1": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_6",
+    "state1": "RangeSubsetState_3",
     "state2": "OrState_3"
   },
   "OrState_10": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_16",
-    "state2": "OrState_13"
+    "state1": "RoiSubsetState_4",
+    "state2": "OrState_12"
   },
   "OrState_11": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_17",
-    "state2": "OrState_14"
+    "state1": "RoiSubsetState_5",
+    "state2": "OrState_13"
   },
   "OrState_12": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_18",
-    "state2": "OrState_15"
+    "state1": "RoiSubsetState_6",
+    "state2": "OrState_14"
   },
   "OrState_13": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_19",
-    "state2": "OrState_16"
+    "state1": "RoiSubsetState_7",
+    "state2": "OrState_15"
   },
   "OrState_14": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_20",
-    "state2": "OrState_17"
+    "state1": "RoiSubsetState_8",
+    "state2": "OrState_16"
   },
   "OrState_15": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_21",
-    "state2": "OrState_18"
+    "state1": "RoiSubsetState_9",
+    "state2": "OrState_17"
   },
   "OrState_16": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_22",
-    "state2": "OrState_19"
+    "state1": "RoiSubsetState_10",
+    "state2": "OrState_18"
   },
   "OrState_17": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_23",
-    "state2": "OrState_20"
+    "state1": "RoiSubsetState_11",
+    "state2": "OrState_19"
   },
   "OrState_18": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_24",
-    "state2": "OrState_21"
+    "state1": "RoiSubsetState_12",
+    "state2": "RangeSubsetState_9"
   },
   "OrState_19": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_25",
-    "state2": "OrState_22"
+    "state1": "RoiSubsetState_13",
+    "state2": "OrState_20"
   },
   "OrState_2": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_8",
-    "state2": "OrState_5"
+    "state1": "RangeSubsetState_4",
+    "state2": "OrState_4"
   },
   "OrState_20": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_26",
-    "state2": "OrState_23"
-  },
-  "OrState_21": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_27",
-    "state2": "OrState_24"
-  },
-  "OrState_22": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_28",
-    "state2": "OrState_25"
-  },
-  "OrState_23": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_29",
-    "state2": "OrState_26"
-  },
-  "OrState_24": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_30",
-    "state2": "OrState_27"
-  },
-  "OrState_25": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_31",
-    "state2": "OrState_28"
-  },
-  "OrState_26": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_32",
-    "state2": "OrState_29"
-  },
-  "OrState_27": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_33",
-    "state2": "OrState_30"
-  },
-  "OrState_28": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_34",
-    "state2": "OrState_31"
-  },
-  "OrState_29": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_35",
-    "state2": "OrState_32"
+    "state1": "RoiSubsetState_14",
+    "state2": "RangeSubsetState_10"
   },
   "OrState_3": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_9",
-    "state2": "OrState_6"
-  },
-  "OrState_30": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_36",
-    "state2": "OrState_33"
-  },
-  "OrState_31": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_37",
-    "state2": "OrState_34"
-  },
-  "OrState_32": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_38",
-    "state2": "OrState_35"
-  },
-  "OrState_33": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_39",
-    "state2": "OrState_36"
-  },
-  "OrState_34": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_40",
-    "state2": "OrState_37"
-  },
-  "OrState_35": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_41",
-    "state2": "OrState_38"
-  },
-  "OrState_36": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_42",
-    "state2": "OrState_39"
-  },
-  "OrState_37": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_43",
-    "state2": "OrState_40"
-  },
-  "OrState_38": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_44",
-    "state2": "OrState_41"
-  },
-  "OrState_39": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_45",
-    "state2": "OrState_42"
+    "state1": "RangeSubsetState_5",
+    "state2": "OrState_5"
   },
   "OrState_4": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_10",
-    "state2": "OrState_7"
-  },
-  "OrState_40": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_46",
-    "state2": "OrState_43"
-  },
-  "OrState_41": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_47",
-    "state2": "OrState_44"
-  },
-  "OrState_42": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_48",
-    "state2": "OrState_45"
-  },
-  "OrState_43": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_49",
-    "state2": "OrState_46"
-  },
-  "OrState_44": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_50",
-    "state2": "OrState_47"
-  },
-  "OrState_45": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_51",
-    "state2": "OrState_48"
-  },
-  "OrState_46": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_52",
-    "state2": "OrState_49"
-  },
-  "OrState_47": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_53",
-    "state2": "OrState_50"
-  },
-  "OrState_48": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_54",
-    "state2": "OrState_51"
-  },
-  "OrState_49": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_55",
-    "state2": "OrState_52"
+    "state1": "RangeSubsetState_6",
+    "state2": "OrState_6"
   },
   "OrState_5": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_11",
-    "state2": "OrState_8"
-  },
-  "OrState_50": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_56",
-    "state2": "OrState_53"
-  },
-  "OrState_51": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_57",
-    "state2": "OrState_54"
-  },
-  "OrState_52": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_58",
-    "state2": "OrState_55"
-  },
-  "OrState_53": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_59",
-    "state2": "OrState_56"
-  },
-  "OrState_54": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_60",
-    "state2": "OrState_57"
-  },
-  "OrState_55": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_61",
-    "state2": "OrState_58"
-  },
-  "OrState_56": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_62",
-    "state2": "OrState_59"
-  },
-  "OrState_57": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_63",
-    "state2": "OrState_60"
-  },
-  "OrState_58": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_64",
-    "state2": "OrState_61"
-  },
-  "OrState_59": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_65",
-    "state2": "OrState_62"
+    "state1": "RangeSubsetState_7",
+    "state2": "OrState_7"
   },
   "OrState_6": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_12",
-    "state2": "OrState_9"
-  },
-  "OrState_60": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_66",
-    "state2": "OrState_63"
-  },
-  "OrState_61": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_67",
-    "state2": "OrState_64"
-  },
-  "OrState_62": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_68",
-    "state2": "OrState_65"
-  },
-  "OrState_63": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_69",
-    "state2": "OrState_66"
-  },
-  "OrState_64": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_70",
-    "state2": "OrState_67"
-  },
-  "OrState_65": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_71",
-    "state2": "OrState_68"
-  },
-  "OrState_66": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_4",
-    "state2": "OrState_69"
-  },
-  "OrState_67": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_72",
-    "state2": "OrState_70"
-  },
-  "OrState_68": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_73",
-    "state2": "OrState_71"
-  },
-  "OrState_69": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_5",
-    "state2": "OrState_72"
+    "state1": "RoiSubsetState_1",
+    "state2": "InvertState_6"
   },
   "OrState_7": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_13",
-    "state2": "OrState_10"
-  },
-  "OrState_70": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_74",
-    "state2": "OrState_73"
-  },
-  "OrState_71": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_75",
-    "state2": "OrState_74"
-  },
-  "OrState_72": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_6",
-    "state2": "OrState_75"
-  },
-  "OrState_73": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_76",
-    "state2": "OrState_76"
-  },
-  "OrState_74": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_7",
-    "state2": "OrState_77"
-  },
-  "OrState_75": {
-    "_type": "glue.core.subset.OrState",
     "state1": "RangeSubsetState_8",
-    "state2": "OrState_78"
-  },
-  "OrState_76": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_9",
-    "state2": "OrState_79"
-  },
-  "OrState_77": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_10",
-    "state2": "OrState_80"
-  },
-  "OrState_78": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_11",
-    "state2": "OrState_81"
-  },
-  "OrState_79": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_12",
-    "state2": "OrState_82"
+    "state2": "OrState_8"
   },
   "OrState_8": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_14",
-    "state2": "OrState_11"
-  },
-  "OrState_80": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_13",
-    "state2": "OrState_83"
-  },
-  "OrState_81": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_14",
-    "state2": "OrState_84"
-  },
-  "OrState_82": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_15",
-    "state2": "OrState_85"
-  },
-  "OrState_83": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_16",
-    "state2": "OrState_86"
-  },
-  "OrState_84": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_17",
-    "state2": "RangeSubsetState_18"
-  },
-  "OrState_85": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_19",
-    "state2": "OrState_87"
-  },
-  "OrState_86": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_20",
-    "state2": "OrState_88"
-  },
-  "OrState_87": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_21",
-    "state2": "OrState_89"
-  },
-  "OrState_88": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_22",
-    "state2": "OrState_90"
-  },
-  "OrState_89": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_23",
-    "state2": "OrState_91"
+    "state1": "RoiSubsetState_2",
+    "state2": "InvertState_8"
   },
   "OrState_9": {
     "_type": "glue.core.subset.OrState",
-    "state1": "RoiSubsetState_15",
-    "state2": "OrState_12"
-  },
-  "OrState_90": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_24",
-    "state2": "RangeSubsetState_25"
-  },
-  "OrState_91": {
-    "_type": "glue.core.subset.OrState",
-    "state1": "RangeSubsetState_26",
-    "state2": "RangeSubsetState_27"
+    "state1": "RoiSubsetState_3",
+    "state2": "OrState_10"
   },
   "Pixel Axis 0 [x]": {
     "_type": "glue.core.component_id.PixelComponentID",
@@ -2337,1086 +1911,2484 @@
   "PolygonalROI": {
     "_type": "glue.core.roi.PolygonalROI",
     "vx": [
-      0.023020936803182956,
-      0.04854818956107737,
-      0.04854818956107737,
-      0.023020936803182956,
-      0.023020936803182956
+      -5.638736096525717e-05,
+      -5.4641505483884534e-05,
+      -5.1149794521139155e-05,
+      -4.416637259564845e-05,
+      -3.369123970741242e-05,
+      -2.4961962300549027e-05,
+      -1.7978540375058322e-05,
+      -1.0995118449567617e-05,
+      1.225869920041102e-06,
+      6.463436364159117e-06,
+      1.3446858289649821e-05,
+      1.868442473376789e-05,
+      2.2176135696513216e-05,
+      2.5667846659258595e-05,
+      2.915955762200392e-05,
+      3.090541310337661e-05,
+      3.7888835028867314e-05,
+      4.487225695435802e-05,
+      5.1855678879848723e-05,
+      6.0584956286712064e-05,
+      6.407666724945744e-05,
+      6.931423369357546e-05,
+      7.455180013769347e-05,
+      8.153522206318423e-05,
+      8.50269330259295e-05,
+      8.851864398867488e-05,
+      9.37562104327929e-05,
+      9.899377687691091e-05,
+      0.00010073963235828366,
+      0.00010073963235828366,
+      0.00010073963235828366,
+      0.00010248548783965629,
+      0.00010248548783965629,
+      0.00010248548783965629,
+      0.00010248548783965629,
+      9.899377687691091e-05,
+      9.550206591416564e-05,
+      8.851864398867488e-05,
+      7.978936658181149e-05,
+      6.756837821220277e-05,
+      5.883910080533943e-05,
+      4.8363967917103344e-05,
+      3.963469051023995e-05,
+      2.741370214063123e-05,
+      2.0430280215140526e-05,
+      1.1701002808277186e-05,
+      4.717580882786481e-06,
+      -4.011696524076913e-06,
+      -1.2740973930940307e-05,
+      -1.972439585643101e-05,
+      -2.3216106819176337e-05,
+      -3.194538422603973e-05,
+      -4.0674661632903125e-05,
+      -4.765808355839383e-05,
+      -5.638736096525717e-05,
+      -6.860834933486594e-05,
+      -7.733762674172928e-05,
+      -8.25751931858473e-05,
+      -8.606690414859268e-05,
+      -8.9558615111338e-05,
+      -9.130447059271069e-05,
+      -9.305032607408338e-05,
+      -9.479618155545607e-05,
+      -9.654203703682871e-05,
+      -9.82878925182014e-05,
+      -0.00010003374799957409,
+      -0.00010177960348094678,
+      -0.00010352545896231941,
+      -0.0001052713144436921,
+      -0.00010701716992506479
     ],
     "vy": [
-      0.0004179788916491564,
-      0.0004179788916491564,
-      0.0006059900684381796,
-      0.0006059900684381796,
-      0.0004179788916491564
+      0.13050714349050235,
+      0.13050714349050235,
+      0.12908858315757704,
+      0.1248329021588011,
+      0.11915866082709992,
+      0.11490297982832398,
+      0.11206585916247336,
+      0.10781017816369748,
+      0.10355449716492154,
+      0.10071737649907092,
+      0.09788025583322035,
+      0.09504313516736973,
+      0.0922060145015191,
+      0.0907874541685938,
+      0.08936889383566854,
+      0.08936889383566854,
+      0.08369465250396729,
+      0.07943897150519136,
+      0.07376473017349017,
+      0.06809048884178892,
+      0.06667192850886366,
+      0.05957912684423711,
+      0.05674200617838654,
+      0.052486325179610605,
+      0.05106776484668529,
+      0.04681208384790936,
+      0.039719282183282856,
+      0.03688216151743226,
+      0.031207920185731042,
+      0.02411511852110451,
+      0.018440877189403293,
+      0.012766635857702074,
+      0.0042552738601502604,
+      -0.0028375278044762697,
+      -0.008511769136177488,
+      -0.014186010467878707,
+      -0.019860251799579925,
+      -0.02837161379713174,
+      -0.032627294795907646,
+      -0.03972009646053418,
+      -0.04255721712638477,
+      -0.045394337792235395,
+      -0.0496500187910113,
+      -0.051068579123936614,
+      -0.0524871394568619,
+      -0.05390569978978721,
+      -0.05532426012271252,
+      -0.05532426012271252,
+      -0.05532426012271252,
+      -0.05674282045563783,
+      -0.05674282045563783,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116,
+      -0.058161380788563116
     ]
   },
   "PolygonalROI_0": {
     "_type": "glue.core.roi.PolygonalROI",
     "vx": [
-      0.2704389250720058,
-      0.3902206495513565,
-      0.3902206495513565,
-      0.2704389250720058,
-      0.2704389250720058
+      -0.03293016298667795,
+      1.012039980987524,
+      1.012039980987524,
+      -0.03293016298667795,
+      -0.03293016298667795
     ],
     "vy": [
-      -4.350308774208242e-05,
-      -4.350308774208242e-05,
-      2.4864612908471464e-05,
-      2.4864612908471464e-05,
-      -4.350308774208242e-05
+      -0.1277186681958432,
+      -0.1277186681958432,
+      0.14712070044447834,
+      0.14712070044447834,
+      -0.1277186681958432
     ]
   },
   "PolygonalROI_1": {
     "_type": "glue.core.roi.PolygonalROI",
     "vx": [
-      0.02694820645824364,
-      0.07407544231897178,
-      0.07407544231897178,
-      0.02694820645824364,
-      0.02694820645824364
+      0.00047639346318893694,
+      0.0004793450807873042,
+      0.0004852483159840388,
+      0.0004911515511807733,
+      0.0005000064039758752,
+      0.0005147644919677117,
+      0.0005236193447628135,
+      0.0005324741975579154,
+      0.0005413290503530172,
+      0.0005442806679513845,
+      0.0005501839031481191,
+      0.0005560871383448537,
+      0.0005649419911399555,
+      0.0005708452263366901,
+      0.0005737968439350574,
+      0.000579700079131792,
+      0.0005856033143285265,
+      0.0005915065495252611,
+      0.0005944581671236284,
+      0.000600361402320363,
+      0.0006033130199187303,
+      0.0006062646375170975,
+      0.0006092162551154649,
+      0.0006121678727138321,
+      0.0006151194903121994,
+      0.000621022725508934,
+      0.0006239743431073013,
+      0.0006298775783040359,
+      0.0006328291959024031,
+      0.0006357808135007704,
+      0.0006387324310991378,
+      0.0006475872838942395,
+      0.0006505389014926069,
+      0.0006564421366893414,
+      0.0006564421366893414,
+      0.0006593937542877088,
+      0.0006593937542877088,
+      0.0006564421366893414,
+      0.0006564421366893414,
+      0.0006564421366893414,
+      0.0006564421366893414,
+      0.0006534905190909741,
+      0.0006505389014926069,
+      0.0006505389014926069,
+      0.0006505389014926069,
+      0.0006475872838942395,
+      0.0006446356662958723,
+      0.0006446356662958723,
+      0.000641684048697505,
+      0.0006387324310991378,
+      0.0006357808135007704,
+      0.0006328291959024031,
+      0.0006298775783040359,
+      0.0006269259607056685,
+      0.0006239743431073013,
+      0.0006180711079105668,
+      0.0006151194903121994,
+      0.0006121678727138321,
+      0.0006092162551154649,
+      0.0006092162551154649,
+      0.0006062646375170975,
+      0.0006033130199187303,
+      0.000600361402320363,
+      0.0005974097847219957,
+      0.0005944581671236284,
+      0.0005915065495252611,
+      0.0005856033143285265,
+      0.0005826516967301592,
+      0.000579700079131792,
+      0.0005737968439350574,
+      0.0005678936087383229,
+      0.0005649419911399555,
+      0.0005619903735415882,
+      0.000559038755943221,
+      0.0005560871383448537,
+      0.0005531355207464864,
+      0.0005501839031481191,
+      0.0005501839031481191,
+      0.0005472322855497518,
+      0.0005442806679513845,
+      0.0005413290503530172,
+      0.0005413290503530172,
+      0.0005442806679513845,
+      0.0005472322855497518,
+      0.0005501839031481191,
+      0.0005531355207464864,
+      0.0005560871383448537,
+      0.000559038755943221
     ],
     "vy": [
-      0.00033251926583596406,
-      0.00033251926583596406,
-      0.00042937350842424876,
-      0.00042937350842424876,
-      0.00033251926583596406
-    ]
-  },
-  "PolygonalROI_10": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      -0.014288124919893508,
-      0.023020936803182956,
-      0.023020936803182956,
-      -0.014288124919893508,
-      -0.014288124919893508
-    ],
-    "vy": [
-      0.00013881078065939467,
-      0.00013881078065939467,
-      0.0007541200865143799,
-      0.0007541200865143799,
-      0.00013881078065939467
-    ]
-  },
-  "PolygonalROI_11": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.005348223355409909,
-      0.1251299478347606,
-      0.1251299478347606,
-      0.005348223355409909,
-      0.005348223355409909
-    ],
-    "vy": [
-      0.0005034385174623487,
-      0.0005034385174623487,
-      0.0011700235988052494,
-      0.0011700235988052494,
-      0.0005034385174623487
-    ]
-  },
-  "PolygonalROI_12": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.1526208354201854,
-      0.2076026105910349,
-      0.2076026105910349,
-      0.1526208354201854,
-      0.1526208354201854
-    ],
-    "vy": [
-      -4.350308774208242e-05,
-      -4.350308774208242e-05,
-      3.056192129601763e-05,
-      3.056192129601763e-05,
-      -4.350308774208242e-05
-    ]
-  },
-  "PolygonalROI_13": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.64156590747524,
-      0.733856744369166,
-      0.733856744369166,
-      0.64156590747524,
-      0.64156590747524
-    ],
-    "vy": [
-      0.0002470596400227717,
-      0.0002470596400227717,
-      0.00045216274197443343,
-      0.00045216274197443343,
-      0.0002470596400227717
-    ]
-  },
-  "PolygonalROI_14": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.5394568964436623,
-      0.6926204129910288,
-      0.6926204129910288,
-      0.5394568964436623,
-      0.5394568964436623
-    ],
-    "vy": [
-      0.00022427040647258703,
-      0.00022427040647258703,
-      0.00035530849938614873,
-      0.00035530849938614873,
-      0.00022427040647258703
-    ]
-  },
-  "PolygonalROI_15": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.4609115033424488,
-      0.6788749691983165,
-      0.6788749691983165,
-      0.4609115033424488,
-      0.4609115033424488
-    ],
-    "vy": [
-      0.00017299463098467162,
-      0.00017299463098467162,
-      0.0002527569484103178,
-      0.0002527569484103178,
-      0.00017299463098467162
-    ]
-  },
-  "PolygonalROI_16": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.21349351507362596,
-      0.2625843857618844,
-      0.2625843857618844,
-      0.21349351507362596,
-      0.21349351507362596
-    ],
-    "vy": [
-      -3.780577935453625e-05,
-      -3.780577935453625e-05,
-      7.044308000884076e-05,
-      7.044308000884076e-05,
-      -3.780577935453625e-05
-    ]
-  },
-  "PolygonalROI_17": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.25865711610682374,
-      0.30774798679508225,
-      0.30774798679508225,
-      0.25865711610682374,
-      0.25865711610682374
-    ],
-    "vy": [
-      -2.641116257944394e-05,
-      -2.641116257944394e-05,
-      0.00011032423872166388,
-      0.00011032423872166388,
-      -2.641116257944394e-05
-    ]
-  },
-  "PolygonalROI_18": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.2940025430023699,
-      0.3666570316209925,
-      0.3666570316209925,
-      0.2940025430023699,
-      0.2940025430023699
-    ],
-    "vy": [
-      1.916730452092535e-05,
-      1.916730452092535e-05,
-      0.00011602154710921005,
-      0.00011602154710921005,
-      1.916730452092535e-05
-    ]
-  },
-  "PolygonalROI_19": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.3961115540339476,
-      0.618002289544876,
-      0.618002289544876,
-      0.3961115540339476,
-      0.3961115540339476
-    ],
-    "vy": [
-      -2.641116257944394e-05,
-      -2.641116257944394e-05,
-      8.753500517147926e-05,
-      8.753500517147926e-05,
-      -2.641116257944394e-05
+      0.1326163056147201,
+      0.1326163056147201,
+      0.1326163056147201,
+      0.1326163056147201,
+      0.1326163056147201,
+      0.1326163056147201,
+      0.1364361889901502,
+      0.1402560723655803,
+      0.14407595574101045,
+      0.14789583911644055,
+      0.15171572249187065,
+      0.15553560586730075,
+      0.1593554892427309,
+      0.163175372618161,
+      0.163175372618161,
+      0.163175372618161,
+      0.1669952559935911,
+      0.1669952559935911,
+      0.17081513936902126,
+      0.17081513936902126,
+      0.17463502274445136,
+      0.17463502274445136,
+      0.17845490611988146,
+      0.17845490611988146,
+      0.17845490611988146,
+      0.17845490611988146,
+      0.18227478949531156,
+      0.18609467287074172,
+      0.18609467287074172,
+      0.18609467287074172,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.19373443962160192,
+      0.19755432299703202,
+      0.19755432299703202,
+      0.20137420637246217,
+      0.20519408974789227,
+      0.20901397312332237,
+      0.21283385649875253,
+      0.21665373987418263,
+      0.21665373987418263,
+      0.21665373987418263,
+      0.22047362324961273,
+      0.21665373987418263,
+      0.21665373987418263,
+      0.21665373987418263,
+      0.21283385649875253,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20901397312332237,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20519408974789227,
+      0.20137420637246217,
+      0.19755432299703202,
+      0.19755432299703202,
+      0.19755432299703202,
+      0.19755432299703202,
+      0.19755432299703202,
+      0.19755432299703202,
+      0.19755432299703202,
+      0.19373443962160192,
+      0.19373443962160192,
+      0.19373443962160192,
+      0.19373443962160192,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182
     ]
   },
   "PolygonalROI_2": {
     "_type": "glue.core.roi.PolygonalROI",
     "vx": [
-      0.05051182438860771,
-      0.1172754085246393,
-      0.1172754085246393,
-      0.05051182438860771,
-      0.05051182438860771
+      0.00044097405200852944,
+      0.00044687728720526406,
+      0.0004527805224019987,
+      0.0004586837575987332,
+      0.0004645869927954678,
+      0.0004852483159840388,
+      0.0005000064039758752,
+      0.0005324741975579154,
+      0.000559038755943221,
+      0.000579700079131792,
+      0.0006033130199187303,
+      0.0006269259607056685,
+      0.0006475872838942395,
+      0.0006889099302713815,
+      0.0007066196358615853,
+      0.0007302325766485236,
+      0.0007420390470419928,
+      0.0007567971350338292,
+      0.0007567971350338292,
+      0.0007597487526321966,
+      0.0007627003702305637,
+      0.0007627003702305637,
+      0.0007656519878289311,
+      0.0007686036054272984,
+      0.0007774584582224001,
+      0.0007833616934191348,
+      0.0007922165462142367,
+      0.0007981197814109712,
+      0.0008069746342060731,
+      0.0008099262518044405,
+      0.000815829487001175,
+      0.0008187811045995421,
+      0.0008246843397962768,
+      0.0008305875749930114,
+      0.0008453456629848477,
+      0.0008512488981815825,
+      0.000857152133378317,
+      0.0008660069861734189,
+      0.0008719102213701534,
+      0.0008778134565668879,
+      0.0008807650741652553,
+      0.0008896199269603571,
+      0.0008925715445587245,
+      0.0008955231621570916,
+      0.000898474779755459,
+      0.0009014263973538262,
+      0.000910281250148928,
+      0.0009161844853456628,
+      0.0009220877205423973,
+      0.0009279909557391318,
+      0.0009338941909358665,
+      0.0009368458085342337,
+      0.000939797426132601,
+      0.0009427490437309682,
+      0.0009457006613293355,
+      0.00095160389652607,
+      0.0009604587493211719,
+      0.0009663619845179067,
+      0.0009722652197146412,
+      0.0009752168373130085,
+      0.0009781684549113757,
+      0.000981120072509743,
+      0.0009840716901081102,
+      0.0009870233077064776,
+      0.0009870233077064776,
+      0.000989974925304845,
+      0.000992926542903212,
+      0.0009958781605015794,
+      0.0009988297780999468,
+      0.001001781395698314,
+      0.0010047330132966813,
+      0.0010076846308950487,
+      0.0010135878660917832,
+      0.0010165394836901505,
+      0.001022442718886885,
+      0.0010283459540836196,
+      0.001034249189280354,
+      0.0010401524244770888,
+      0.0010519588948705578,
+      0.0010578621300672926,
+      0.001063765365264027,
+      0.0010667169828623942,
+      0.001075571835657496,
+      0.0010785234532558635,
+      0.0010814750708542308,
+      0.001084426688452598,
+      0.0010873783060509653,
+      0.0010873783060509653,
+      0.0010903299236493327,
+      0.0010903299236493327,
+      0.0010991847764444346,
+      0.0011021363940428017,
+      0.0011109912468379036,
+      0.001113942864436271,
+      0.0011168944820346381,
+      0.0011198460996330055,
+      0.0011198460996330055,
+      0.0011227977172313728,
+      0.00112574933482974,
+      0.0011287009524281074,
+      0.0011316525700264747,
+      0.0011316525700264747,
+      0.0011346041876248419,
+      0.0011346041876248419,
+      0.0011375558052232092,
+      0.0011405074228215766,
+      0.0011405074228215766,
+      0.0011405074228215766,
+      0.0011405074228215766,
+      0.0011434590404199437,
+      0.0011434590404199437,
+      0.0011434590404199437,
+      0.0011464106580183111,
+      0.0011464106580183111,
+      0.0011493622756166783,
+      0.0011523138932150456,
+      0.001155265510813413,
+      0.001155265510813413,
+      0.0011582171284117801,
+      0.0011582171284117801,
+      0.0011611687460101475,
+      0.0011611687460101475,
+      0.0011611687460101475,
+      0.0011641203636085149,
+      0.001167071981206882,
+      0.001167071981206882,
+      0.001167071981206882,
+      0.0011700235988052494,
+      0.0011700235988052494,
+      0.0011700235988052494
     ],
     "vy": [
-      0.00046355735874952577,
-      0.00046355735874952577,
-      0.0005945954516630874,
-      0.0005945954516630874,
-      0.00046355735874952577
-    ]
-  },
-  "PolygonalROI_20": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.34112977886309803,
-      0.43342061575702406,
-      0.43342061575702406,
-      0.34112977886309803,
-      0.34112977886309803
-    ],
-    "vy": [
-      -1.5016545804351605e-05,
-      -1.5016545804351605e-05,
-      0.00014450808904694083,
-      0.00014450808904694083,
-      -1.5016545804351605e-05
-    ]
-  },
-  "PolygonalROI_21": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.5630205143740264,
-      0.7927657891950762,
-      0.7927657891950762,
-      0.5630205143740264,
-      0.5630205143740264
-    ],
-    "vy": [
-      -3.780577935453625e-05,
-      -3.780577935453625e-05,
-      0.00012741616388430233,
-      0.00012741616388430233,
-      -3.780577935453625e-05
-    ]
-  },
-  "PolygonalROI_22": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.40396609334406897,
-      0.5296387223060106,
-      0.5296387223060106,
-      0.40396609334406897,
-      0.40396609334406897
-    ],
-    "vy": [
-      3.056192129601763e-05,
-      3.056192129601763e-05,
-      0.0001786919393722178,
-      0.0001786919393722178,
-      3.056192129601763e-05
-    ]
-  },
-  "PolygonalROI_23": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.25276621162423274,
-      0.8732748171238203,
-      0.8732748171238203,
-      0.25276621162423274,
-      0.25276621162423274
-    ],
-    "vy": [
-      -3.780577935453625e-05,
-      -3.780577935453625e-05,
-      2.0753793582868455e-06,
-      2.0753793582868455e-06,
-      -3.780577935453625e-05
-    ]
-  },
-  "PolygonalROI_24": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.4825114864452825,
-      0.8850566260890023,
-      0.8850566260890023,
-      0.4825114864452825,
-      0.4825114864452825
-    ],
-    "vy": [
-      1.3469996133379182e-05,
-      1.3469996133379182e-05,
-      0.00022427040647258703,
-      0.00022427040647258703,
-      1.3469996133379182e-05
+      0.0867777051095587,
+      0.09059758848498883,
+      0.09059758848498883,
+      0.09823735523584903,
+      0.10205723861127919,
+      0.11351688873756949,
+      0.12115665548842974,
+      0.1364361889901502,
+      0.14789583911644055,
+      0.163175372618161,
+      0.17845490611988146,
+      0.19373443962160192,
+      0.20901397312332237,
+      0.24339292350219344,
+      0.2586724570039139,
+      0.28159175725649455,
+      0.2892315240073548,
+      0.2930514073827849,
+      0.29687129075821506,
+      0.29687129075821506,
+      0.29687129075821506,
+      0.30069117413364516,
+      0.30069117413364516,
+      0.30069117413364516,
+      0.30069117413364516,
+      0.30069117413364516,
+      0.30069117413364516,
+      0.30451105750907526,
+      0.30833094088450536,
+      0.30833094088450536,
+      0.30833094088450536,
+      0.30833094088450536,
+      0.3121508242599355,
+      0.3159707076353656,
+      0.3197905910107957,
+      0.3236104743862258,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.3236104743862258,
+      0.3236104743862258,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.33125024113708607,
+      0.33125024113708607,
+      0.33125024113708607,
+      0.33125024113708607,
+      0.33125024113708607,
+      0.33125024113708607,
+      0.33125024113708607,
+      0.33125024113708607,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.32743035776165597,
+      0.3236104743862258,
+      0.3236104743862258,
+      0.3236104743862258,
+      0.3236104743862258,
+      0.3159707076353656,
+      0.3121508242599355,
+      0.30833094088450536,
+      0.30069117413364516,
+      0.30069117413364516,
+      0.29687129075821506,
+      0.28159175725649455,
+      0.28159175725649455,
+      0.27395199050563435,
+      0.27013210713020425,
+      0.2663122237547741,
+      0.262492340379344,
+      0.2586724570039139,
+      0.2548525736284838,
+      0.25103269025305364,
+      0.24721280687762354,
+      0.24339292350219344,
+      0.23957304012676328,
+      0.22811339000047298,
+      0.22429350662504283,
+      0.21665373987418263,
+      0.21283385649875253,
+      0.20901397312332237,
+      0.20519408974789227,
+      0.20137420637246217,
+      0.19755432299703202,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18609467287074172,
+      0.18227478949531156,
+      0.17845490611988146,
+      0.17081513936902126,
+      0.1669952559935911,
+      0.163175372618161,
+      0.1593554892427309,
+      0.15553560586730075,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.14789583911644055,
+      0.14407595574101045,
+      0.1402560723655803,
+      0.1364361889901502,
+      0.1326163056147201,
+      0.12879642223929,
+      0.12497653886385984,
+      0.12115665548842974,
+      0.12115665548842974,
+      0.11733677211299964,
+      0.11733677211299964,
+      0.11351688873756949,
+      0.10969700536213939,
+      0.10587712198670929,
+      0.10205723861127919,
+      0.09441747186041893,
+      0.09059758848498883,
+      0.08295782173412858,
+      0.07913793835869848,
+      0.07531805498326835
     ]
   },
   "PolygonalROI_3": {
     "_type": "glue.core.roi.PolygonalROI",
     "vx": [
-      0.10745723438698757,
-      0.1545844702477157,
-      0.1545844702477157,
-      0.10745723438698757,
-      0.10745723438698757
+      8.677994020445503e-05,
+      8.973155780282234e-05,
+      8.973155780282234e-05,
+      8.973155780282234e-05,
+      9.268317540118965e-05,
+      9.858641059792421e-05,
+      0.00011924773378649522,
+      0.00013105420417996435,
+      0.00015466714496690267,
+      0.0001664736153603718,
+      0.0001959897913440447,
+      0.0002136994969342484,
+      0.0002373124377211867,
+      0.00024911890811465584,
+      0.0002727318489015941,
+      0.00027863508409832873,
+      0.00029044155449179786,
+      0.0002933931720901651,
+      0.0002963447896885324,
+      0.00029929640728689974,
+      0.00029929640728689974,
+      0.000302248024885267,
+      0.000302248024885267,
+      0.00030519964248363425,
+      0.00031110287768036887,
+      0.0003140544952787361,
+      0.00031995773047547075,
+      0.000322909348073838,
+      0.0003317642008689399,
+      0.0003376674360656744,
+      0.00034947390645914363,
+      0.00034947390645914363,
+      0.0003524255240575109,
+      0.00035537714165587814,
+      0.0003583287592542454,
+      0.00036128037685261277,
+      0.00036128037685261277,
+      0.00036128037685261277,
+      0.00036128037685261277,
+      0.00036128037685261277,
+      0.00036128037685261277,
+      0.0003583287592542454,
+      0.0003583287592542454,
+      0.0003583287592542454,
+      0.00035537714165587814,
+      0.00035537714165587814,
+      0.0003524255240575109,
+      0.0003524255240575109,
+      0.0003524255240575109,
+      0.00034947390645914363,
+      0.00034947390645914363,
+      0.00034947390645914363,
+      0.00034061905366404176,
+      0.0003376674360656744,
+      0.00033471581846730714,
+      0.0003317642008689399,
+      0.0003288125832705726,
+      0.00032586096567220526,
+      0.00031995773047547075,
+      0.0003170061128771034,
+      0.00031110287768036887,
+      0.00030519964248363425,
+      0.00029929640728689974,
+      0.0002933931720901651,
+      0.00028453831929506324,
+      0.00027863508409832873,
+      0.00026978023130322685,
+      0.00026387699610649223,
+      0.0002520705257130231,
+      0.0002461672905162886,
+      0.0002314092025244521,
+      0.00022550596732771758,
+      0.00021074787933588108,
+      0.00020484464413914651,
+      0.00019008655614731007,
+      0.00018713493854894282,
+      0.00017828008575384094,
+      0.00016942523295873906,
+      0.0001635219977620045,
+      0.00015171552736853536,
+      0.0001458122921718008,
+      0.00013695743937669892,
+      0.00013400582177833166,
+      0.00013105420417996435,
+      0.00012810258658159704,
+      0.0001251509689832298,
+      0.00012219935138486248,
+      0.00011924773378649522,
+      0.00011924773378649522,
+      0.00011629611618812791,
+      0.00011334449858976066,
+      0.00010744126339302603,
+      0.00010448964579465878,
+      9.858641059792421e-05,
+      9.56347929995569e-05,
+      8.677994020445503e-05,
+      8.382832260608777e-05,
+      8.087670500772046e-05,
+      7.497346981098589e-05,
+      6.611861701588402e-05,
+      6.316699941751676e-05,
+      5.4312146622414884e-05
     ],
     "vy": [
-      0.0005262277510125334,
-      0.0005262277510125334,
-      0.0006914496942513721,
-      0.0006914496942513721,
-      0.0005262277510125334
+      0.30069117413364516,
+      0.30451105750907526,
+      0.30833094088450536,
+      0.3159707076353656,
+      0.3236104743862258,
+      0.33125024113708607,
+      0.3579894247650969,
+      0.3732689582668174,
+      0.41528767539654865,
+      0.4343870922736992,
+      0.4802256927788605,
+      0.5031449930314412,
+      0.5451637101611725,
+      0.564263127038323,
+      0.5833625439154737,
+      0.5986420774171941,
+      0.6215613776697748,
+      0.6368409111714952,
+      0.6406607945469254,
+      0.6406607945469254,
+      0.6483005612977856,
+      0.6483005612977856,
+      0.6559403280486459,
+      0.6597602114240759,
+      0.6673999781749362,
+      0.6712198615503663,
+      0.6750397449257964,
+      0.6788596283012265,
+      0.6826795116766566,
+      0.6864993950520868,
+      0.694139161802947,
+      0.6979590451783771,
+      0.6979590451783771,
+      0.7017789285538072,
+      0.7055988119292373,
+      0.7055988119292373,
+      0.7094186953046675,
+      0.7132385786800975,
+      0.7170584620555277,
+      0.7208783454309577,
+      0.7246982288063879,
+      0.7246982288063879,
+      0.7285181121818181,
+      0.7323379955572481,
+      0.7361578789326783,
+      0.7399777623081084,
+      0.7437976456835385,
+      0.7476175290589686,
+      0.7514374124343988,
+      0.7514374124343988,
+      0.7552572958098288,
+      0.759077179185259,
+      0.762897062560689,
+      0.7667169459361192,
+      0.7705368293115493,
+      0.7743567126869794,
+      0.7781765960624095,
+      0.7781765960624095,
+      0.7858163628132697,
+      0.7896362461886999,
+      0.7896362461886999,
+      0.79345612956413,
+      0.7972760129395601,
+      0.8010958963149902,
+      0.8049157796904203,
+      0.8087356630658504,
+      0.8163754298167106,
+      0.8163754298167106,
+      0.8201953131921408,
+      0.8201953131921408,
+      0.8201953131921408,
+      0.8201953131921408,
+      0.8240151965675709,
+      0.8240151965675709,
+      0.8240151965675709,
+      0.8240151965675709,
+      0.827835079943001,
+      0.827835079943001,
+      0.827835079943001,
+      0.8316549633184311,
+      0.8316549633184311,
+      0.8316549633184311,
+      0.8316549633184311,
+      0.8316549633184311,
+      0.8354748466938613,
+      0.8354748466938613,
+      0.8354748466938613,
+      0.8354748466938613,
+      0.8392947300692913,
+      0.8392947300692913,
+      0.8431146134447214,
+      0.8431146134447214,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8507543801955817,
+      0.8507543801955817,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118
     ]
   },
   "PolygonalROI_4": {
     "_type": "glue.core.roi.PolygonalROI",
     "vx": [
-      0.09567542542180552,
-      0.19582080162585286,
-      0.19582080162585286,
-      0.09567542542180552,
-      0.09567542542180552
+      -1.357505814003271e-05,
+      -7.671822943298144e-06,
+      -4.720205344930833e-06,
+      -1.7685877465635773e-06,
+      4.134647450170989e-06,
+      1.2989500245272866e-05,
+      1.8892735442007432e-05,
+      3.069920583547662e-05,
+      3.6602441032211185e-05,
+      4.250567622894575e-05,
+      4.545729382731301e-05,
+      5.136052902404763e-05,
+      5.4312146622414884e-05,
+      5.7263764220782194e-05,
+      5.7263764220782194e-05,
+      6.021538181914945e-05,
+      6.316699941751676e-05,
+      6.907023461425133e-05,
+      7.202185221261864e-05,
+      7.497346981098589e-05,
+      8.087670500772046e-05,
+      8.382832260608777e-05,
+      8.382832260608777e-05,
+      8.382832260608777e-05,
+      8.677994020445503e-05,
+      8.973155780282234e-05,
+      9.268317540118965e-05,
+      9.56347929995569e-05,
+      9.858641059792421e-05,
+      0.00010448964579465878,
+      0.00011039288099139335,
+      0.00011334449858976066,
+      0.00011924773378649522,
+      0.00012219935138486248,
+      0.0001251509689832298,
+      0.0001251509689832298,
+      0.00012810258658159704,
+      0.00013105420417996435,
+      0.00013695743937669892,
+      0.00013990905697506623,
+      0.0001458122921718008,
+      0.00014876390977016805,
+      0.00015466714496690267,
+      0.00015761876256526993,
+      0.00016057038016363724,
+      0.0001635219977620045,
+      0.00016942523295873906,
+      0.00016942523295873906,
+      0.00017237685055710637,
+      0.00018123170335220825,
+      0.0001841833209505755,
+      0.00019008655614731007,
+      0.00019303817374567738,
+      0.00019894140894241195,
+      0.00020189302654077926,
+      0.00021074787933588108,
+      0.00021074787933588108,
+      0.0002166511145326157,
+      0.0002225543497293502,
+      0.00022845758492608483,
+      0.00023436082012281935,
+      0.0002373124377211867,
+      0.00024321567291792122,
+      0.0002461672905162886,
+      0.0002461672905162886,
+      0.0002520705257130231,
+      0.0002520705257130231,
+      0.00025502214331139036,
+      0.00025502214331139036,
+      0.00025502214331139036,
+      0.0002579737609097577,
+      0.000260925378508125,
+      0.000260925378508125,
+      0.00026387699610649223,
+      0.00026387699610649223,
+      0.00026387699610649223,
+      0.00026387699610649223,
+      0.00026387699610649223,
+      0.00026387699610649223,
+      0.00026387699610649223,
+      0.00026387699610649223,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.0002668286137048596,
+      0.000260925378508125,
+      0.0002579737609097577,
+      0.00025502214331139036,
+      0.00025502214331139036,
+      0.00025502214331139036,
+      0.00024911890811465584,
+      0.00024911890811465584,
+      0.00024321567291792122,
+      0.0002373124377211867,
+      0.00023436082012281935,
+      0.00023436082012281935,
+      0.00022845758492608483,
+      0.0002225543497293502,
+      0.0002136994969342484,
+      0.00021074787933588108,
+      0.00019894140894241195,
+      0.00019303817374567738,
+      0.00019008655614731007,
+      0.00017828008575384094,
+      0.00017532846815547368,
+      0.00016942523295873906,
+      0.0001664736153603718,
+      0.00015761876256526993,
+      0.00015171552736853536,
+      0.00014876390977016805,
+      0.0001458122921718008,
+      0.00013400582177833166,
+      0.00012810258658159704,
+      0.0001251509689832298,
+      0.00011924773378649522,
+      0.00011629611618812791,
+      0.00011334449858976066,
+      0.00011039288099139335,
+      0.00010744126339302603,
+      0.00010448964579465878,
+      0.00010153802819629147,
+      0.00010153802819629147,
+      9.858641059792421e-05,
+      9.858641059792421e-05,
+      9.858641059792421e-05,
+      9.56347929995569e-05,
+      9.56347929995569e-05,
+      9.268317540118965e-05,
+      9.268317540118965e-05,
+      9.268317540118965e-05,
+      9.268317540118965e-05,
+      9.268317540118965e-05,
+      9.268317540118965e-05,
+      9.268317540118965e-05,
+      9.268317540118965e-05,
+      8.973155780282234e-05,
+      8.973155780282234e-05,
+      8.973155780282234e-05,
+      8.677994020445503e-05,
+      8.677994020445503e-05,
+      8.382832260608777e-05,
+      8.382832260608777e-05,
+      8.382832260608777e-05,
+      8.382832260608777e-05,
+      8.087670500772046e-05,
+      7.79250874093532e-05,
+      7.497346981098589e-05,
+      7.202185221261864e-05,
+      6.907023461425133e-05,
+      6.316699941751676e-05,
+      6.021538181914945e-05,
+      5.7263764220782194e-05,
+      5.4312146622414884e-05,
+      5.136052902404763e-05,
+      4.840891142568032e-05,
+      4.545729382731301e-05,
+      4.250567622894575e-05,
+      3.955405863057844e-05,
+      3.6602441032211185e-05,
+      3.3650823433843875e-05,
+      2.774758823710931e-05,
+      2.1844353040374742e-05,
+      1.8892735442007432e-05,
+      1.5941117843640176e-05,
+      1.003788264690561e-05,
+      4.134647450170989e-06,
+      1.183029851803733e-06,
+      -1.7685877465635773e-06,
+      -4.720205344930833e-06,
+      -7.671822943298144e-06,
+      -1.06234405416654e-05,
+      -1.357505814003271e-05,
+      -1.652667573840002e-05,
+      -1.9478293336767276e-05,
+      -2.2429910935134586e-05
     ],
     "vy": [
-      0.0007028443110264643,
-      0.0007028443110264643,
-      0.0007028443110264643,
-      0.0007028443110264643,
-      0.0007028443110264643
+      0.07149817160783825,
+      0.07913793835869848,
+      0.0867777051095587,
+      0.09441747186041893,
+      0.10587712198670929,
+      0.12115665548842974,
+      0.12879642223929,
+      0.14789583911644055,
+      0.15553560586730075,
+      0.1669952559935911,
+      0.17463502274445136,
+      0.18991455624617182,
+      0.19373443962160192,
+      0.20901397312332237,
+      0.21665373987418263,
+      0.22811339000047298,
+      0.23193327337590308,
+      0.24339292350219344,
+      0.25103269025305364,
+      0.262492340379344,
+      0.2663122237547741,
+      0.27013210713020425,
+      0.27777187388106445,
+      0.28159175725649455,
+      0.2854116406319247,
+      0.2930514073827849,
+      0.29687129075821506,
+      0.30451105750907526,
+      0.3159707076353656,
+      0.3236104743862258,
+      0.33507012451251617,
+      0.3388900078879463,
+      0.3503496580142367,
+      0.3579894247650969,
+      0.36180930814052703,
+      0.3656291915159571,
+      0.36944907489138723,
+      0.37708884164224743,
+      0.3885484917685378,
+      0.396188258519398,
+      0.40000814189482814,
+      0.40764790864568834,
+      0.41528767539654865,
+      0.4191075587719787,
+      0.42292744214740885,
+      0.42292744214740885,
+      0.43056720889826905,
+      0.4343870922736992,
+      0.43820697564912925,
+      0.4420268590245594,
+      0.44584674239998956,
+      0.44584674239998956,
+      0.44584674239998956,
+      0.45348650915084976,
+      0.4573063925262799,
+      0.46112627590170996,
+      0.4649461592771401,
+      0.46876604265257016,
+      0.4725859260280003,
+      0.4725859260280003,
+      0.4802256927788605,
+      0.4802256927788605,
+      0.48404557615429067,
+      0.4878654595297208,
+      0.49168534290515087,
+      0.49168534290515087,
+      0.495505226280581,
+      0.495505226280581,
+      0.4993251096560112,
+      0.5031449930314412,
+      0.5031449930314412,
+      0.5031449930314412,
+      0.5107847597823014,
+      0.5146046431577316,
+      0.5184245265331617,
+      0.5222444099085918,
+      0.5260642932840219,
+      0.5298841766594521,
+      0.5337040600348821,
+      0.5375239434103123,
+      0.5489835935366026,
+      0.5528034769120327,
+      0.5680830104137532,
+      0.5719028937891834,
+      0.5757227771646134,
+      0.5833625439154737,
+      0.5871824272909038,
+      0.5910023106663339,
+      0.5986420774171941,
+      0.6024619607926243,
+      0.6062818441680543,
+      0.6177414942943447,
+      0.6215613776697748,
+      0.6215613776697748,
+      0.629201144420635,
+      0.6330210277960652,
+      0.6406607945469254,
+      0.6444806779223555,
+      0.6521204446732157,
+      0.6521204446732157,
+      0.6597602114240759,
+      0.6635800947995061,
+      0.6712198615503663,
+      0.6750397449257964,
+      0.6788596283012265,
+      0.6788596283012265,
+      0.6826795116766566,
+      0.6864993950520868,
+      0.6903192784275168,
+      0.6979590451783771,
+      0.6979590451783771,
+      0.6979590451783771,
+      0.7017789285538072,
+      0.7017789285538072,
+      0.7017789285538072,
+      0.7055988119292373,
+      0.7094186953046675,
+      0.7094186953046675,
+      0.7094186953046675,
+      0.7132385786800975,
+      0.7170584620555277,
+      0.7208783454309577,
+      0.7246982288063879,
+      0.7246982288063879,
+      0.7285181121818181,
+      0.7285181121818181,
+      0.7323379955572481,
+      0.7361578789326783,
+      0.7399777623081084,
+      0.7437976456835385,
+      0.7476175290589686,
+      0.7476175290589686,
+      0.7514374124343988,
+      0.7552572958098288,
+      0.759077179185259,
+      0.762897062560689,
+      0.7667169459361192,
+      0.7705368293115493,
+      0.7743567126869794,
+      0.7781765960624095,
+      0.7819964794378397,
+      0.7858163628132697,
+      0.7896362461886999,
+      0.79345612956413,
+      0.8010958963149902,
+      0.8049157796904203,
+      0.8087356630658504,
+      0.8125555464412806,
+      0.8163754298167106,
+      0.8201953131921408,
+      0.8240151965675709,
+      0.827835079943001,
+      0.8316549633184311,
+      0.8316549633184311,
+      0.8392947300692913,
+      0.8392947300692913,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8469344968201515,
+      0.8507543801955817,
+      0.8507543801955817,
+      0.8507543801955817,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118,
+      0.8545742635710118
     ]
   },
   "PolygonalROI_5": {
     "_type": "glue.core.roi.PolygonalROI",
     "vx": [
-      0.18011172300561018,
-      0.22723895886633833,
-      0.22723895886633833,
-      0.18011172300561018,
-      0.18011172300561018
+      -2.8333146131869153e-05,
+      -2.2429910935134586e-05,
+      -1.652667573840002e-05,
+      -1.06234405416654e-05,
+      1.183029851803733e-06,
+      3.069920583547662e-05,
+      5.136052902404763e-05,
+      7.202185221261864e-05,
+      9.56347929995569e-05,
+      0.00011629611618812791,
+      0.00013990905697506623,
+      0.00015761876256526993,
+      0.00019008655614731007,
+      0.00020779626173751382,
+      0.00024026405531955397,
+      0.0002579737609097577,
+      0.0002933931720901651,
+      0.00030519964248363425,
+      0.0003288125832705726,
+      0.0003376674360656744,
+      0.0003524255240575109,
+      0.0003583287592542454,
+      0.00036423199445098,
+      0.0003730868472460819,
+      0.00038489331763955103,
+      0.0003937481704346529,
+      0.00041145787602485666,
+      0.00042031272881995843,
+      0.00043211919921342767,
+      0.0004350708168117949,
+      0.0004380224344101622,
+      0.00044097405200852944,
+      0.0004439256696068968,
+      0.00044687728720526406,
+      0.0004498289048036313,
+      0.0004527805224019987,
+      0.00045573214000036593,
+      0.0004586837575987332,
+      0.00046163537519710045,
+      0.0004645869927954678,
+      0.00046753861039383507,
+      0.0004704902279922023,
+      0.0004734418455905697,
+      0.0004793450807873042,
+      0.0004852483159840388,
+      0.0004911515511807733,
+      0.0004941031687791407,
+      0.0005029580215742425,
+      0.0005059096391726098,
+      0.0005147644919677117,
+      0.0005236193447628135,
+      0.0005265709623611808,
+      0.0005324741975579154,
+      0.0005354258151562827,
+      0.0005413290503530172,
+      0.0005501839031481191,
+      0.0005531355207464864,
+      0.0005560871383448537,
+      0.000559038755943221,
+      0.0005619903735415882,
+      0.0005649419911399555,
+      0.0005708452263366901,
+      0.0005737968439350574,
+      0.000579700079131792,
+      0.0005826516967301592,
+      0.0005885549319268939,
+      0.0005944581671236284,
+      0.000600361402320363,
+      0.0006062646375170975,
+      0.0006092162551154649,
+      0.0006151194903121994,
+      0.0006180711079105668,
+      0.0006269259607056685,
+      0.0006298775783040359,
+      0.000641684048697505,
+      0.0006505389014926069,
+      0.0006652969894844433,
+      0.0006712002246811779,
+      0.0006771034598779124,
+      0.000683006695074647,
+      0.0006977647830664834,
+      0.000703668018263218,
+      0.0007125228710583198,
+      0.0007184261062550545,
+      0.0007272809590501564,
+      0.0007331841942468909,
+      0.0007361358118452581,
+      0.0007420390470419928,
+      0.0007508938998370947,
+      0.0007538455174354618,
+      0.0007627003702305637,
+      0.0007686036054272984,
+      0.0007804100758207675,
+      0.000786313311017502,
+      0.0007922165462142367,
+      0.0007951681638126038,
+      0.0008010713990093386,
+      0.0008069746342060731,
+      0.0008099262518044405,
+      0.0008217327221979095,
+      0.0008246843397962768,
+      0.0008335391925913787,
+      0.0008394424277881132,
+      0.0008423940453864806,
+      0.0008453456629848477,
+      0.000857152133378317,
+      0.0008630553685750515,
+      0.0008748618389685207,
+      0.0008778134565668879,
+      0.0008866683093619898,
+      0.0008896199269603571,
+      0.0008955231621570916,
+      0.000898474779755459,
+      0.0009073296325505609,
+      0.0009132328677472954,
+      0.0009191361029440299,
+      0.0009279909557391318,
+      0.0009427490437309682,
+      0.0009457006613293355,
+      0.0009545555141244374,
+      0.0009575071317228048,
+      0.0009634103669195393,
+      0.0009663619845179067,
+      0.0009693136021162738,
+      0.0009781684549113757,
+      0.000981120072509743,
+      0.0009870233077064776,
+      0.000989974925304845,
+      0.0009988297780999468,
+      0.001001781395698314,
+      0.0010047330132966813,
+      0.0010106362484934158,
+      0.0010135878660917832,
+      0.0010165394836901505,
+      0.001022442718886885,
+      0.0010283459540836196,
+      0.001034249189280354,
+      0.0010460556596738233,
+      0.0010519588948705578,
+      0.0010549105124689252,
+      0.0010608137476656597,
+      0.0010696686004607616,
+      0.001072620218059129,
+      0.001084426688452598,
+      0.0010903299236493327,
+      0.0010962331588460672,
+      0.001105088011641169,
+      0.0011109912468379036,
+      0.001113942864436271,
+      0.0011227977172313728,
+      0.00112574933482974,
+      0.0011405074228215766,
+      0.0011493622756166783,
+      0.001167071981206882,
+      0.0011759268340019839,
+      0.0011936365395921876,
+      0.0011995397747889222,
+      0.0012054430099856569,
+      0.0012142978627807588,
+      0.0012231527155758606,
+      0.0012261043331742278,
+      0.0012320075683709623,
+      0.0012320075683709623,
+      0.0012349591859693297,
+      0.001237910803567697,
+      0.001237910803567697,
+      0.001237910803567697,
+      0.0012408624211660642,
+      0.0012438140387644315,
+      0.0012438140387644315,
+      0.0012438140387644315,
+      0.0012438140387644315,
+      0.0012438140387644315,
+      0.0012438140387644315,
+      0.0012438140387644315,
+      0.001246765656362799,
+      0.001249717273961166,
+      0.001249717273961166,
+      0.0012526688915595334,
+      0.0012526688915595334,
+      0.0012526688915595334,
+      0.0012556205091579008,
+      0.0012556205091579008,
+      0.001258572126756268,
+      0.001258572126756268,
+      0.001258572126756268,
+      0.001258572126756268,
+      0.001258572126756268,
+      0.001258572126756268,
+      0.001258572126756268
     ],
     "vy": [
-      0.0007142389278015568,
-      0.0007142389278015568,
-      0.0010218935807290493,
-      0.0010218935807290493,
-      0.0007142389278015568
+      0.002740270850096177,
+      0.002740270850096177,
+      0.002740270850096177,
+      0.002740270850096177,
+      0.0065601542255263046,
+      0.0065601542255263046,
+      0.010380037600956404,
+      0.018019804351816632,
+      0.018019804351816632,
+      0.02565957110267686,
+      0.02565957110267686,
+      0.02565957110267686,
+      0.029479454478106987,
+      0.037119221228967214,
+      0.04857887135525757,
+      0.056218638106117796,
+      0.07149817160783825,
+      0.07913793835869848,
+      0.09059758848498883,
+      0.09441747186041893,
+      0.09823735523584903,
+      0.10205723861127919,
+      0.10587712198670929,
+      0.10969700536213939,
+      0.12115665548842974,
+      0.12497653886385984,
+      0.1364361889901502,
+      0.1402560723655803,
+      0.14789583911644055,
+      0.14789583911644055,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15171572249187065,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.15553560586730075,
+      0.1593554892427309,
+      0.1593554892427309,
+      0.1593554892427309,
+      0.1593554892427309,
+      0.1593554892427309,
+      0.1593554892427309,
+      0.163175372618161,
+      0.163175372618161,
+      0.163175372618161,
+      0.163175372618161,
+      0.163175372618161,
+      0.163175372618161,
+      0.163175372618161,
+      0.163175372618161,
+      0.1669952559935911,
+      0.1669952559935911,
+      0.1669952559935911,
+      0.1669952559935911,
+      0.17081513936902126,
+      0.17081513936902126,
+      0.17081513936902126,
+      0.17463502274445136,
+      0.17463502274445136,
+      0.17845490611988146,
+      0.17845490611988146,
+      0.18227478949531156,
+      0.18609467287074172,
+      0.18609467287074172,
+      0.18609467287074172,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.18991455624617182,
+      0.19373443962160192,
+      0.19755432299703202,
+      0.19755432299703202,
+      0.20137420637246217,
+      0.20137420637246217,
+      0.20519408974789227,
+      0.20901397312332237,
+      0.21283385649875253,
+      0.21665373987418263,
+      0.22047362324961273,
+      0.22047362324961273,
+      0.22429350662504283,
+      0.22811339000047298,
+      0.23957304012676328,
+      0.24339292350219344,
+      0.2548525736284838,
+      0.262492340379344,
+      0.27013210713020425,
+      0.27013210713020425,
+      0.27395199050563435,
+      0.27395199050563435,
+      0.27395199050563435,
+      0.27395199050563435,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27777187388106445,
+      0.27013210713020425,
+      0.27013210713020425,
+      0.262492340379344,
+      0.2586724570039139,
+      0.24339292350219344,
+      0.23193327337590308,
+      0.21665373987418263,
+      0.20901397312332237,
+      0.19373443962160192,
+      0.18609467287074172,
+      0.18227478949531156,
+      0.17463502274445136,
+      0.163175372618161,
+      0.15553560586730075,
+      0.15171572249187065,
+      0.14789583911644055,
+      0.14407595574101045,
+      0.1364361889901502,
+      0.1326163056147201,
+      0.12497653886385984,
+      0.12115665548842974,
+      0.10587712198670929,
+      0.09823735523584903,
+      0.0867777051095587,
+      0.08295782173412858,
+      0.07913793835869848,
+      0.07149817160783825,
+      0.056218638106117796,
+      0.04857887135525757,
+      0.037119221228967214,
+      0.029479454478106987,
+      0.02565957110267686,
+      0.02183968772724676,
+      0.018019804351816632,
+      0.014199920976386532,
+      0.010380037600956404,
+      0.010380037600956404,
+      0.0065601542255263046,
+      -0.0010796125253339506,
+      -0.00489949590076405,
+      -0.008719379276194178,
+      -0.012539262651624278,
+      -0.016359146027054405
     ]
   },
   "PolygonalROI_6": {
     "_type": "glue.core.roi.PolygonalROI",
     "vx": [
-      -0.004469950782241799,
-      0.04069365025095603,
-      0.04069365025095603,
-      -0.004469950782241799,
-      -0.004469950782241799
+      895.2158523286314,
+      895.273271108642,
+      895.3306898886525,
+      895.388108668663,
+      895.4455274486735,
+      895.502946228684,
+      895.5603650086945,
+      895.617783788705,
+      895.6752025687155,
+      895.6752025687155,
+      895.7326213487261,
+      895.7326213487261,
+      895.8474589087471,
+      895.9048776887576,
+      895.962296468768,
+      896.0197152487785,
+      896.077134028789,
+      896.1345528087996,
+      896.3068091488311,
+      896.4216467088521,
+      896.6513218288942,
+      896.7087406089047,
+      896.8235781689257,
+      896.8809969489362,
+      896.9384157289467,
+      896.9958345089573,
+      897.0532532889678,
+      897.1106720689783,
+      897.1680908489888,
+      897.2255096289992,
+      897.2829284090097,
+      897.3403471890202,
+      897.4551847490413,
+      897.5126035290518,
+      897.5700223090623,
+      897.6274410890728,
+      897.6848598690833,
+      897.7422786490938,
+      897.7996974291044,
+      897.9145349891254,
+      897.9719537691359,
+      898.0867913291569,
+      898.1442101091674,
+      898.2590476691885,
+      898.316466449199,
+      898.4887227892305,
+      898.546141569241,
+      898.7183979092725,
+      898.775816689283,
+      898.890654249304,
+      898.9480730293145,
+      899.005491809325,
+      899.1777481493566,
+      899.3500044893881,
+      899.5796796094302,
+      899.7519359494617,
+      899.9816110695037,
+      900.0390298495142,
+      900.1538674095352,
+      900.2112861895457,
+      900.2687049695562,
+      900.3261237495668,
+      900.3835425295773,
+      900.4409613095878,
+      900.4983800895983,
+      900.5557988696088,
+      900.6132176496193,
+      900.6706364296298,
+      900.7854739896509,
+      900.8428927696614,
+      900.9003115496719,
+      900.9577303296824,
+      901.0725678897034,
+      901.1299866697138,
+      901.244824229735,
+      901.3022430097454,
+      901.4170805697664,
+      901.4744993497769,
+      901.5319181297874,
+      901.5319181297874,
+      901.589336909798,
+      901.589336909798,
+      901.6467556898085,
+      901.6467556898085,
+      901.704174469819,
+      901.704174469819,
+      901.704174469819,
+      901.704174469819,
+      901.7615932498295,
+      901.7615932498295,
+      901.7615932498295,
+      901.7615932498295,
+      901.81901202984,
+      901.81901202984,
+      901.8764308098505,
+      901.933849589861,
+      901.9912683698715,
+      902.0486871498821,
+      902.1061059298926,
+      902.1635247099031,
+      902.1635247099031,
+      902.2209434899136,
+      902.2783622699241,
+      902.3357810499346,
+      902.393199829945,
+      902.4506186099557,
+      902.6802937299976,
+      902.9099688500397,
+      903.0822251900712,
+      903.1970627500922,
+      903.3119003101133,
+      903.4267378701343,
+      903.5415754301553,
+      903.5989942101658,
+      903.7138317701869,
+      903.7712505501974,
+      903.8860881102183,
+      903.9435068902288,
+      904.0583444502498,
+      904.1731820102709,
+      904.2306007902814,
+      904.3454383503024,
+      904.4028571303129,
+      904.5176946903339,
+      904.5176946903339,
+      904.632532250355,
+      904.8047885903865,
+      904.862207370397,
+      905.0344637104286,
+      905.091882490439,
+      905.1493012704495,
+      905.20672005046,
+      905.20672005046,
+      905.2641388304705,
+      905.321557610481,
+      905.4363951705021,
+      905.4938139505126,
+      905.4938139505126,
+      905.5512327305231,
+      905.7234890705546,
+      905.7809078505652,
+      905.8383266305757,
+      905.8957454105862,
+      905.9531641905967,
+      905.9531641905967,
+      906.0680017506177,
+      906.1254205306282,
+      906.1828393106387,
+      906.2402580906493,
+      906.2976768706598,
+      906.4125144306807,
+      906.4699332106912,
+      906.5273519907017,
+      906.5273519907017,
+      906.5847707707122,
+      906.6421895507228,
+      906.6996083307333,
+      906.7570271107438,
+      906.8144458907543,
+      906.8718646707648,
+      906.9867022307858,
+      907.0441210107963,
+      907.1015397908069,
+      907.1589585708174,
+      907.2163773508279,
+      907.2737961308384,
+      907.3312149108489,
+      907.3886336908594,
+      907.5034712508805,
+      907.560890030891,
+      907.6183088109015,
+      907.675727590912,
+      907.7905651509329,
+      907.905402710954,
+      908.0776590509855,
+      908.135077830996,
+      908.3073341710276,
+      908.4221717310486,
+      908.5370092910696,
+      908.5944280710801,
+      908.7092656311011,
+      908.7666844111117,
+      908.8241031911222,
+      908.8815219711327,
+      908.9963595311536,
+      909.0537783111641,
+      909.1686158711852,
+      909.2260346511957,
+      909.3408722112167,
+      909.3982909912272,
+      909.6279661112693,
+      909.7428036712903,
+      909.9150600113218,
+      910.0298975713429,
+      910.1447351313639,
+      910.2595726913848,
+      910.4318290314164,
+      910.4892478114269,
+      910.5466665914374,
+      910.6040853714479,
+      910.7189229314689,
+      910.83376049149,
+      910.948598051511,
+      911.0060168315215,
+      911.1208543915425,
+      911.178273171553,
+      911.2931107315741,
+      911.4079482915951,
+      911.522785851616,
+      911.5802046316265,
+      911.6950421916476,
+      911.7524609716581,
+      911.8672985316791,
+      911.9821360917001,
+      912.0395548717106,
+      912.1543924317317,
+      912.2118112117422,
+      912.2692299917527,
+      912.3266487717632,
+      912.3266487717632,
+      912.3840675517737,
+      912.4989051117947,
+      912.5563238918053,
+      912.7285802318368,
+      912.7859990118473,
+      912.9582553518788,
+      913.0156741318893,
+      913.1305116919103,
+      913.1879304719208,
+      913.3027680319418,
+      913.3601868119524,
+      913.4750243719734,
+      913.5324431519839,
+      913.5898619319944,
+      913.6472807120049,
+      913.7046994920154,
+      913.7621182720259,
+      913.8195370520365,
+      913.9343746120575,
+      914.0492121720785,
+      914.106630952089,
+      914.1640497320994,
+      914.2788872921205,
+      914.336306072131,
+      914.451143632152,
+      914.565981192173,
+      914.6233999721835,
+      914.7382375322046,
+      914.8530750922256,
+      914.9679126522466,
+      915.1401689922782,
+      915.3124253323097,
+      915.5421004523517,
+      915.6569380123727,
+      915.8291943524042,
+      916.0014506924358,
+      916.2311258124778,
+      916.4033821525094,
+      916.5756384925409,
+      916.7478948325725,
+      916.8627323925934,
+      917.0349887326249,
+      917.0924075126354,
+      917.1498262926459,
+      917.1498262926459,
+      917.1498262926459,
+      917.1498262926459,
+      917.0924075126354,
+      917.0349887326249,
+      916.9201511726039,
+      916.805313612583,
+      916.5756384925409,
+      916.4033821525094,
+      916.2311258124778,
+      916.0014506924358,
+      915.5995192323622,
+      915.3698441123202,
+      914.9104938722361,
+      914.6808187521941,
+      913.8195370520365,
+      913.1879304719208,
+      912.4989051117947,
+      911.8672985316791,
+      910.5466665914374,
+      909.8576412313113,
+      908.4221717310486,
+      907.675727590912,
+      906.3550956506703,
+      905.7234890705546,
+      904.4602759103234,
+      903.8286693302078,
+      902.7951312900186,
+      902.4506186099557,
+      901.704174469819,
+      901.3596617897559,
+      901.0725678897034,
+      900.9003115496719,
+      900.4983800895983,
+      900.2687049695562,
+      899.9816110695037,
+      899.8667735094826,
+      899.6945171694512,
+      899.6370983894407,
+      899.4648420494091,
+      899.3500044893881,
+      899.0629105893356,
+      898.775816689283,
+      898.6035603492514,
+      898.316466449199,
+      898.2016288891779,
+      898.0867913291569,
+      898.0293725491464,
+      897.9145349891254,
+      897.8571162091149,
+      897.7422786490938,
+      897.6848598690833,
+      897.6274410890728,
+      897.5700223090623,
+      897.3977659690308,
+      897.2829284090097,
+      897.0532532889678,
+      896.9384157289467,
+      896.7661593889152,
+      896.7087406089047,
+      896.7087406089047,
+      896.6513218288942,
+      896.5939030488837,
+      896.5939030488837,
+      896.4790654888626,
+      896.3642279288416,
+      896.3068091488311,
+      896.2493903688206,
+      896.1919715888101,
+      896.1345528087996,
+      896.077134028789,
+      895.962296468768,
+      895.962296468768,
+      895.962296468768,
+      895.9048776887576,
+      895.8474589087471,
+      895.8474589087471,
+      895.7900401287366,
+      895.6752025687155,
+      895.617783788705,
+      895.617783788705,
+      895.5603650086945,
+      895.502946228684,
+      895.502946228684,
+      895.4455274486735,
+      895.4455274486735,
+      895.388108668663,
+      895.388108668663,
+      895.3306898886525,
+      895.273271108642,
+      895.273271108642,
+      895.273271108642,
+      895.2158523286314,
+      895.1584335486209,
+      895.1584335486209,
+      895.1010147686104,
+      895.0435959885999,
+      895.0435959885999,
+      894.9861772085894
     ],
     "vy": [
-      0.00022996771486013325,
-      0.00022996771486013325,
-      0.0011016558981546956,
-      0.0011016558981546956,
-      0.00022996771486013325
-    ]
-  },
-  "PolygonalROI_7": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.04854818956107737,
-      0.08782088611168418,
-      0.08782088611168418,
-      0.04854818956107737,
-      0.04854818956107737
-    ],
-    "vy": [
-      0.0003780977329363333,
-      0.0003780977329363333,
-      0.001192812832355434,
-      0.001192812832355434,
-      0.0003780977329363333
-    ]
-  },
-  "PolygonalROI_8": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.03676638059589535,
-      0.18600262748820118,
-      0.18600262748820118,
-      0.03676638059589535,
-      0.03676638059589535
-    ],
-    "vy": [
-      0.0006059900684381796,
-      0.0006059900684381796,
-      0.0011643262904177034,
-      0.0011643262904177034,
-      0.0006059900684381796
-    ]
-  },
-  "PolygonalROI_9": {
-    "_type": "glue.core.roi.PolygonalROI",
-    "vx": [
-      0.09763906024933589,
-      0.2940025430023699,
-      0.2940025430023699,
-      0.09763906024933589,
-      0.09763906024933589
-    ],
-    "vy": [
-      0.0008623689458777568,
-      0.0008623689458777568,
-      0.001152931673642611,
-      0.001152931673642611,
-      0.0008623689458777568
+      4550.278658405553,
+      4550.278658405553,
+      4550.278658405553,
+      4550.278658405553,
+      4550.278658405553,
+      4550.278658405553,
+      4549.895254916777,
+      4549.895254916777,
+      4549.895254916777,
+      4549.511851428,
+      4549.511851428,
+      4549.128447939224,
+      4549.128447939224,
+      4549.128447939224,
+      4548.3616409616725,
+      4548.3616409616725,
+      4548.3616409616725,
+      4548.3616409616725,
+      4548.3616409616725,
+      4547.59483398412,
+      4547.211430495344,
+      4547.211430495344,
+      4546.828027006568,
+      4546.828027006568,
+      4546.444623517792,
+      4546.061220029016,
+      4546.061220029016,
+      4546.061220029016,
+      4546.061220029016,
+      4545.677816540239,
+      4545.294413051463,
+      4545.294413051463,
+      4544.9110095626875,
+      4544.527606073912,
+      4544.527606073912,
+      4544.527606073912,
+      4543.760799096359,
+      4543.760799096359,
+      4543.760799096359,
+      4543.760799096359,
+      4543.377395607583,
+      4543.377395607583,
+      4543.377395607583,
+      4543.377395607583,
+      4543.377395607583,
+      4543.377395607583,
+      4543.377395607583,
+      4543.377395607583,
+      4543.377395607583,
+      4542.993992118807,
+      4542.993992118807,
+      4542.993992118807,
+      4542.610588630031,
+      4542.227185141254,
+      4542.227185141254,
+      4542.227185141254,
+      4541.843781652478,
+      4541.843781652478,
+      4541.460378163702,
+      4541.460378163702,
+      4541.460378163702,
+      4541.0769746749265,
+      4541.0769746749265,
+      4541.0769746749265,
+      4540.693571186151,
+      4540.693571186151,
+      4540.693571186151,
+      4540.310167697374,
+      4540.310167697374,
+      4539.926764208598,
+      4539.543360719822,
+      4539.543360719822,
+      4539.159957231046,
+      4538.77655374227,
+      4538.77655374227,
+      4538.77655374227,
+      4538.393150253493,
+      4538.009746764717,
+      4538.009746764717,
+      4537.6263432759415,
+      4537.6263432759415,
+      4537.242939787166,
+      4537.242939787166,
+      4536.859536298389,
+      4536.859536298389,
+      4536.476132809613,
+      4536.092729320837,
+      4535.709325832061,
+      4535.709325832061,
+      4535.325922343285,
+      4534.559115365732,
+      4534.1757118769565,
+      4533.792308388181,
+      4533.408904899405,
+      4533.025501410628,
+      4532.642097921852,
+      4531.8752909443,
+      4531.108483966747,
+      4530.7250804779715,
+      4530.341676989196,
+      4529.95827350042,
+      4529.574870011643,
+      4529.574870011643,
+      4529.574870011643,
+      4529.574870011643,
+      4529.191466522867,
+      4529.191466522867,
+      4528.808063034091,
+      4528.808063034091,
+      4528.808063034091,
+      4528.424659545315,
+      4528.424659545315,
+      4528.424659545315,
+      4528.424659545315,
+      4528.424659545315,
+      4528.424659545315,
+      4528.424659545315,
+      4528.424659545315,
+      4528.041256056539,
+      4528.041256056539,
+      4528.041256056539,
+      4527.657852567762,
+      4527.657852567762,
+      4527.657852567762,
+      4527.274449078986,
+      4527.274449078986,
+      4527.274449078986,
+      4527.274449078986,
+      4526.8910455902105,
+      4526.8910455902105,
+      4526.8910455902105,
+      4526.8910455902105,
+      4526.507642101435,
+      4526.507642101435,
+      4526.507642101435,
+      4526.507642101435,
+      4526.507642101435,
+      4526.124238612659,
+      4526.124238612659,
+      4525.740835123882,
+      4525.357431635106,
+      4524.97402814633,
+      4524.97402814633,
+      4524.590624657554,
+      4524.207221168777,
+      4523.823817680001,
+      4523.823817680001,
+      4523.4404141912255,
+      4523.05701070245,
+      4523.05701070245,
+      4522.673607213674,
+      4522.290203724897,
+      4522.290203724897,
+      4521.906800236121,
+      4521.906800236121,
+      4521.906800236121,
+      4521.906800236121,
+      4521.906800236121,
+      4521.906800236121,
+      4521.906800236121,
+      4521.906800236121,
+      4521.523396747345,
+      4521.523396747345,
+      4521.523396747345,
+      4521.523396747345,
+      4521.523396747345,
+      4521.523396747345,
+      4521.523396747345,
+      4521.139993258569,
+      4521.139993258569,
+      4520.756589769793,
+      4520.373186281016,
+      4519.9897827922405,
+      4519.606379303465,
+      4518.839572325913,
+      4518.456168837136,
+      4518.456168837136,
+      4517.689361859584,
+      4517.305958370808,
+      4516.922554882032,
+      4516.539151393255,
+      4515.772344415704,
+      4515.388940926928,
+      4515.005537438151,
+      4515.005537438151,
+      4514.622133949375,
+      4514.238730460599,
+      4514.238730460599,
+      4513.855326971823,
+      4513.855326971823,
+      4513.471923483047,
+      4513.08851999427,
+      4512.7051165054945,
+      4512.7051165054945,
+      4512.321713016719,
+      4511.938309527943,
+      4511.17150255039,
+      4510.788099061614,
+      4510.404695572838,
+      4510.021292084062,
+      4510.021292084062,
+      4509.637888595285,
+      4509.2544851065095,
+      4508.871081617734,
+      4508.871081617734,
+      4508.104274640182,
+      4508.104274640182,
+      4507.720871151405,
+      4507.337467662629,
+      4506.954064173853,
+      4506.954064173853,
+      4506.570660685077,
+      4506.570660685077,
+      4506.187257196301,
+      4506.187257196301,
+      4506.187257196301,
+      4506.187257196301,
+      4506.187257196301,
+      4506.187257196301,
+      4505.8038537075245,
+      4505.8038537075245,
+      4505.8038537075245,
+      4505.8038537075245,
+      4505.420450218749,
+      4505.037046729973,
+      4505.037046729973,
+      4504.653643241197,
+      4504.653643241197,
+      4504.270239752421,
+      4504.270239752421,
+      4504.270239752421,
+      4504.270239752421,
+      4504.270239752421,
+      4503.886836263644,
+      4503.886836263644,
+      4503.886836263644,
+      4503.886836263644,
+      4503.503432774868,
+      4503.120029286092,
+      4503.120029286092,
+      4502.736625797316,
+      4502.736625797316,
+      4502.353222308539,
+      4502.353222308539,
+      4501.586415330988,
+      4501.203011842212,
+      4500.819608353436,
+      4500.436204864659,
+      4499.669397887107,
+      4499.285994398331,
+      4498.5191874207785,
+      4497.752380443227,
+      4497.368976954451,
+      4496.602169976898,
+      4496.602169976898,
+      4496.218766488122,
+      4495.45195951057,
+      4495.0685560217935,
+      4494.301749044242,
+      4493.918345555466,
+      4492.768135089137,
+      4491.234521134033,
+      4490.851117645257,
+      4490.084310667705,
+      4489.700907178929,
+      4489.317503690152,
+      4488.934100201376,
+      4488.167293223824,
+      4487.7838897350475,
+      4487.017082757496,
+      4486.63367926872,
+      4486.63367926872,
+      4486.250275779944,
+      4485.866872291167,
+      4485.866872291167,
+      4485.483468802391,
+      4485.483468802391,
+      4485.483468802391,
+      4485.483468802391,
+      4485.483468802391,
+      4485.483468802391,
+      4485.483468802391,
+      4485.866872291167,
+      4485.866872291167,
+      4485.866872291167,
+      4486.63367926872,
+      4487.400486246272,
+      4487.400486246272,
+      4488.167293223824,
+      4489.317503690152,
+      4489.317503690152,
+      4490.084310667705,
+      4490.851117645257,
+      4490.851117645257,
+      4491.617924622809,
+      4491.617924622809,
+      4492.001328111585,
+      4493.151538577913,
+      4493.53494206669,
+      4494.301749044242,
+      4494.685152533018,
+      4495.0685560217935,
+      4495.45195951057,
+      4495.45195951057,
+      4495.45195951057,
+      4496.218766488122,
+      4496.985573465675,
+      4497.368976954451,
+      4497.752380443227,
+      4498.135783932003,
+      4498.5191874207785,
+      4498.5191874207785,
+      4499.285994398331,
+      4499.669397887107,
+      4500.052801375883,
+      4500.436204864659,
+      4500.819608353436,
+      4500.819608353436,
+      4501.9698188197635,
+      4502.736625797316,
+      4503.886836263644,
+      4504.270239752421,
+      4505.420450218749,
+      4505.8038537075245,
+      4506.187257196301,
+      4506.187257196301,
+      4506.570660685077,
+      4506.954064173853,
+      4507.720871151405,
+      4508.104274640182,
+      4508.871081617734,
+      4509.2544851065095,
+      4510.404695572838,
+      4510.404695572838,
+      4511.17150255039,
+      4511.938309527943,
+      4512.321713016719,
+      4512.7051165054945,
+      4512.7051165054945,
+      4513.855326971823,
+      4514.622133949375,
+      4515.388940926928,
+      4515.772344415704,
+      4515.772344415704,
+      4516.539151393255,
+      4517.305958370808,
+      4518.07276534836,
+      4518.456168837136,
+      4519.606379303465,
+      4519.9897827922405,
+      4521.139993258569,
+      4521.523396747345,
+      4522.673607213674,
+      4522.673607213674,
+      4523.05701070245,
+      4523.4404141912255,
+      4523.823817680001,
+      4523.823817680001,
+      4524.207221168777,
+      4524.590624657554,
+      4524.590624657554,
+      4524.97402814633,
+      4524.97402814633
     ]
   },
   "RangeSubsetState": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/event_time",
-    "hi": 6.07485257097919e+18,
-    "lo": 6.074851988356234e+18
+    "att": "/GMD",
+    "hi": -5.274428715254043e-06,
+    "lo": -2.8843814223971742e-05
   },
   "RangeSubsetState_0": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/event_time",
-    "hi": 6.07486686237755e+18,
-    "lo": 6.074853530593467e+18
+    "att": "/GMD",
+    "hi": -5.274428715254043e-06,
+    "lo": -2.8843814223971742e-05
   },
   "RangeSubsetState_1": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/event_time",
-    "hi": 6.07486710228112e+18,
-    "lo": 6.074851988356234e+18
+    "att": "/EBeam",
+    "hi": 897.1939790850629,
+    "lo": 876.0373160041964
   },
   "RangeSubsetState_10": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 956.4364500137273,
-    "lo": 924.7777414371903
-  },
-  "RangeSubsetState_11": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 897.6898383760207,
-    "lo": 875.7067431435579
-  },
-  "RangeSubsetState_12": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 956.4364500137273,
-    "lo": 924.7777414371903
-  },
-  "RangeSubsetState_13": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 907.365451720095,
-    "lo": 877.2896785723849
-  },
-  "RangeSubsetState_14": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 957.1929532909576,
-    "lo": 929.5901194276397
-  },
-  "RangeSubsetState_15": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 907.365451720095,
-    "lo": 877.2896785723849
-  },
-  "RangeSubsetState_16": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/gas_detector/f_11_ENRC",
-    "hi": 0.3468607586385438,
-    "lo": 0.01756865804279073
-  },
-  "RangeSubsetState_17": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 955.0442296968072,
-    "lo": 932.2347023127479
-  },
-  "RangeSubsetState_18": {
-    "_type": "glue.core.subset.RangeSubsetState",
     "att": "/evr/code_162",
     "hi": 1.0,
-    "lo": 0.97
-  },
-  "RangeSubsetState_19": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/gas_detector/f_11_ENRC",
-    "hi": 0.3468607586385438,
-    "lo": 0.01756865804279073
+    "lo": 0.87
   },
   "RangeSubsetState_2": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/event_time",
-    "hi": 6.074851988356234e+18,
-    "lo": 6.074850103399617e+18
-  },
-  "RangeSubsetState_20": {
-    "_type": "glue.core.subset.RangeSubsetState",
     "att": "/EBeam",
-    "hi": 897.6898383760207,
-    "lo": 875.7067431435579
-  },
-  "RangeSubsetState_21": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 897.6898383760207,
-    "lo": 875.7067431435579
-  },
-  "RangeSubsetState_22": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 957.1929532909576,
-    "lo": 929.5901194276397
-  },
-  "RangeSubsetState_23": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 957.1929532909576,
-    "lo": 929.5901194276397
-  },
-  "RangeSubsetState_24": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 955.0442296968072,
-    "lo": 932.2347023127479
-  },
-  "RangeSubsetState_25": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/evr/code_162",
-    "hi": 1.0,
-    "lo": 0.97
-  },
-  "RangeSubsetState_26": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 955.0442296968072,
-    "lo": 932.2347023127479
-  },
-  "RangeSubsetState_27": {
-    "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/evr/code_162",
-    "hi": 1.0,
-    "lo": 0.97
+    "hi": 958.019385442554,
+    "lo": 931.2429837308323
   },
   "RangeSubsetState_3": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/delayStage",
-    "hi": 52.024426465116285,
-    "lo": 52.01233062015504
+    "att": "/EBeam",
+    "hi": 897.1939790850629,
+    "lo": 876.0373160041964
   },
   "RangeSubsetState_4": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/gas_detector/f_11_ENRC",
-    "hi": 0.8892242184433137,
-    "lo": 0.01756865804279073
+    "att": "/evr/code_162",
+    "hi": 1.168228469433288,
+    "lo": 0.91
   },
   "RangeSubsetState_5": {
     "_type": "glue.core.subset.RangeSubsetState",
     "att": "/EBeam",
-    "hi": 956.4364500137273,
-    "lo": 924.7777414371903
+    "hi": 958.019385442554,
+    "lo": 931.2429837308323
   },
   "RangeSubsetState_6": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/EBeam",
-    "hi": 907.365451720095,
-    "lo": 877.2896785723849
+    "att": "/evr/code_162",
+    "hi": 1.0,
+    "lo": 0.86
   },
   "RangeSubsetState_7": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/gas_detector/f_11_ENRC",
-    "hi": 0.8892242184433137,
-    "lo": 0.01756865804279073
+    "att": "/evr/code_162",
+    "hi": 1.168228469433288,
+    "lo": 0.91
   },
   "RangeSubsetState_8": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/gas_detector/f_11_ENRC",
-    "hi": 0.3468607586385438,
-    "lo": 0.01756865804279073
+    "att": "/evr/code_162",
+    "hi": 1.0,
+    "lo": 0.86
   },
   "RangeSubsetState_9": {
     "_type": "glue.core.subset.RangeSubsetState",
-    "att": "/gas_detector/f_11_ENRC",
-    "hi": 0.8892242184433137,
-    "lo": 0.01756865804279073
+    "att": "/evr/code_162",
+    "hi": 1.0,
+    "lo": 0.87
   },
   "RoiSubsetState": {
     "_type": "glue.core.subset.RoiSubsetState",
     "roi": "PolygonalROI",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_0": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_0",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_1": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_1",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_0",
+    "xatt": "/gas_detector/f_12_ENRC",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_10": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_1",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_5",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_11": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_2",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_4",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_12": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_5",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_6",
+    "xatt": "/EBeam",
+    "yatt": "/ebeam/L3_energy"
   },
   "RoiSubsetState_13": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_2",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_5",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_14": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_3",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_15": {
-    "_type": "glue.core.subset.RoiSubsetState",
     "roi": "PolygonalROI_6",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_16": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_3",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_17": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_4",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_18": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_7",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_19": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_4",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "xatt": "/EBeam",
+    "yatt": "/ebeam/L3_energy"
   },
   "RoiSubsetState_2": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_20": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_5",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_21": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_8",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_22": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_5",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_23": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_6",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_24": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_9",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_25": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_6",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_26": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_7",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_27": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_10",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_28": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_7",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_29": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_8",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_0",
+    "xatt": "/gas_detector/f_12_ENRC",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_3": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_2",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_30": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_11",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_31": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_8",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_32": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_9",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_33": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_12",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_34": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_9",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_35": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_10",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_36": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_13",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_37": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_10",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_38": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_11",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_39": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_14",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_1",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_4": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_40": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_11",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_41": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_12",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_42": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_15",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_43": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_12",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_44": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_13",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_45": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_16",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_46": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_13",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_47": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_14",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_48": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_17",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_49": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_14",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_2",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_5": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_0",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_50": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_15",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_51": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_18",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_52": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_15",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_53": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_16",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_54": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_19",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_55": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_16",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_56": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_17",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_57": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_20",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_58": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_17",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_59": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_18",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_1",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_6": {
     "_type": "glue.core.subset.RoiSubsetState",
     "roi": "PolygonalROI_3",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_60": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_21",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_61": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_18",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_62": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_19",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_63": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_22",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_64": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_19",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_65": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_20",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_66": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_23",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_67": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_20",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_68": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_21",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_69": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_24",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_7": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_0",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_70": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_21",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_71": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_22",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_72": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_22",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_73": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_23",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_74": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_23",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_75": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_24",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
-  },
-  "RoiSubsetState_76": {
-    "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_24",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_2",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_8": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_1",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_4",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "RoiSubsetState_9": {
     "_type": "glue.core.subset.RoiSubsetState",
-    "roi": "PolygonalROI_4",
-    "xatt": "/acqiris2",
-    "yatt": "/GMD"
+    "roi": "PolygonalROI_3",
+    "xatt": "/GMD",
+    "yatt": "/acqiris2"
   },
   "ScatterWidget": {
     "_type": "glue.viewers.scatter.qt.viewer_widget.ScatterWidget",
@@ -3424,157 +4396,31 @@
       {
         "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
         "layer": "sxri0414run60[/EBeam]",
-        "visible": false,
-        "xatt": "/event_time",
-        "yatt": "/delayStage",
+        "visible": true,
+        "xatt": "/EBeam",
+        "yatt": "/acqiris2",
         "zorder": 1
       },
       {
         "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
         "layer": "Subset 1",
         "visible": true,
-        "xatt": "/event_time",
-        "yatt": "/delayStage",
+        "xatt": "/EBeam",
+        "yatt": "/acqiris2",
         "zorder": 2
       },
       {
         "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "Subset 3",
+        "layer": "Subset 5",
         "visible": true,
-        "xatt": "/event_time",
-        "yatt": "/delayStage",
+        "xatt": "/EBeam",
+        "yatt": "/acqiris2",
         "zorder": 3
-      },
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "Subset 4",
-        "visible": true,
-        "xatt": "/event_time",
-        "yatt": "/delayStage",
-        "zorder": 4
       }
     ],
     "pos": [
       0,
       0
-    ],
-    "properties": {
-      "hidden": false,
-      "xatt": "/event_time",
-      "xflip": false,
-      "xlog": false,
-      "xmax": 6.07487e+18,
-      "xmin": 6.07485e+18,
-      "yatt": "/delayStage",
-      "yflip": false,
-      "ylog": false,
-      "ymax": 52.0607,
-      "ymin": 48.94
-    },
-    "session": "Session",
-    "size": [
-      600,
-      400
-    ]
-  },
-  "ScatterWidget_0": {
-    "_type": "glue.viewers.scatter.qt.viewer_widget.ScatterWidget",
-    "layers": [
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "sxri0414run60[/EBeam]",
-        "visible": false,
-        "xatt": "/acqiris2",
-        "yatt": "/GMD",
-        "zorder": 1
-      },
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "Subset 1",
-        "visible": false,
-        "xatt": "/acqiris2",
-        "yatt": "/GMD",
-        "zorder": 2
-      },
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "Subset 3",
-        "visible": true,
-        "xatt": "/acqiris2",
-        "yatt": "/GMD",
-        "zorder": 3
-      },
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "Subset 4",
-        "visible": true,
-        "xatt": "/acqiris2",
-        "yatt": "/GMD",
-        "zorder": 4
-      }
-    ],
-    "pos": [
-      600,
-      0
-    ],
-    "properties": {
-      "hidden": false,
-      "xatt": "/acqiris2",
-      "xflip": false,
-      "xlog": false,
-      "xmax": 0.957711,
-      "xmin": -0.020179,
-      "yatt": "/GMD",
-      "yflip": false,
-      "ylog": false,
-      "ymax": 0.00141501,
-      "ymin": -5.48977e-05
-    },
-    "session": "Session",
-    "size": [
-      600,
-      400
-    ]
-  },
-  "ScatterWidget_1": {
-    "_type": "glue.viewers.scatter.qt.viewer_widget.ScatterWidget",
-    "layers": [
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "sxri0414run60[/EBeam]",
-        "visible": false,
-        "xatt": "/EBeam",
-        "yatt": "/acqiris2",
-        "zorder": 1
-      },
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "Subset 1",
-        "visible": false,
-        "xatt": "/EBeam",
-        "yatt": "/acqiris2",
-        "zorder": 2
-      },
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "Subset 3",
-        "visible": true,
-        "xatt": "/EBeam",
-        "yatt": "/acqiris2",
-        "zorder": 3
-      },
-      {
-        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
-        "layer": "Subset 4",
-        "visible": true,
-        "xatt": "/EBeam",
-        "yatt": "/acqiris2",
-        "zorder": 4
-      }
-    ],
-    "pos": [
-      1046,
-      624
     ],
     "properties": {
       "hidden": false,
@@ -3588,6 +4434,57 @@
       "ylog": false,
       "ymax": 0.957711,
       "ymin": -0.020179
+    },
+    "session": "Session",
+    "size": [
+      600,
+      400
+    ]
+  },
+  "ScatterWidget_0": {
+    "_type": "glue.viewers.scatter.qt.viewer_widget.ScatterWidget",
+    "layers": [
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "sxri0414run60[/EBeam]",
+        "visible": true,
+        "xatt": "/GMD",
+        "yatt": "/acqiris2",
+        "zorder": 1
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 1",
+        "visible": true,
+        "xatt": "/GMD",
+        "yatt": "/acqiris2",
+        "zorder": 2
+      },
+      {
+        "_type": "glue.viewers.scatter.layer_artist.ScatterLayerArtist",
+        "layer": "Subset 5",
+        "visible": true,
+        "xatt": "/GMD",
+        "yatt": "/acqiris2",
+        "zorder": 3
+      }
+    ],
+    "pos": [
+      603,
+      4
+    ],
+    "properties": {
+      "hidden": false,
+      "xatt": "/GMD",
+      "xflip": false,
+      "xlog": false,
+      "xmax": 0.00143835,
+      "xmin": -2.88438e-05,
+      "yatt": "/acqiris2",
+      "yflip": false,
+      "ylog": false,
+      "ymax": 1.02348,
+      "ymin": -0.218507
     },
     "session": "Session",
     "size": [
@@ -3628,64 +4525,34 @@
       "Subset 1"
     ]
   },
-  "Subset 3": {
+  "Subset 5": {
     "_type": "glue.core.subset_group.GroupedSubset",
-    "group": "Subset 3_0",
+    "group": "Subset 5_0",
     "style": {
       "_type": "glue.core.visual.VisualAttributes",
       "alpha": 0.5,
-      "color": "#1f78b4",
+      "color": "#ff7f00",
       "linestyle": "solid",
       "linewidth": 1,
       "marker": "o",
       "markersize": 7
     }
   },
-  "Subset 3_0": {
+  "Subset 5_0": {
     "_type": "glue.core.subset_group.SubsetGroup",
-    "label": "Subset 3",
-    "state": "AndState_0",
+    "label": "Subset 5",
+    "state": "InvertState",
     "style": {
       "_type": "glue.core.visual.VisualAttributes",
       "alpha": 0.5,
-      "color": "#1f78b4",
+      "color": "#ff7f00",
       "linestyle": "solid",
       "linewidth": 1,
       "marker": "o",
       "markersize": 7
     },
     "subsets": [
-      "Subset 3"
-    ]
-  },
-  "Subset 4": {
-    "_type": "glue.core.subset_group.GroupedSubset",
-    "group": "Subset 4_0",
-    "style": {
-      "_type": "glue.core.visual.VisualAttributes",
-      "alpha": 0.5,
-      "color": "#8c510a",
-      "linestyle": "solid",
-      "linewidth": 1,
-      "marker": "o",
-      "markersize": 7
-    }
-  },
-  "Subset 4_0": {
-    "_type": "glue.core.subset_group.SubsetGroup",
-    "label": "Subset 4",
-    "state": "AndState_1",
-    "style": {
-      "_type": "glue.core.visual.VisualAttributes",
-      "alpha": 0.5,
-      "color": "#8c510a",
-      "linestyle": "solid",
-      "linewidth": 1,
-      "marker": "o",
-      "markersize": 7
-    },
-    "subsets": [
-      "Subset 4"
+      "Subset 5"
     ]
   },
   "World 0": {
@@ -3862,18 +4729,18 @@
     "_type": "glue.app.qt.application.GlueApplication",
     "data": "DataCollection",
     "plugins": [
-      "glue.viewers.image",
-      "glue_vispy_viewers.volume",
       "glue.viewers.table",
-      "glue_vispy_viewers.scatter",
+      "glue.viewers.scatter",
       "glue.plugins.export_d3po",
-      "glue.plugins.exporters.plotly",
       "glue.viewers.histogram",
+      "glue.viewers.image",
+      "glue.plugins.coordinate_helpers",
+      "glue_vispy_viewers.volume",
       "glue.plugins.tools.spectrum_tool",
       "glue.core.data_exporters",
-      "glue.plugins.coordinate_helpers",
-      "glue.viewers.scatter",
-      "glue.plugins.tools.pv_slicer"
+      "glue.plugins.exporters.plotly",
+      "glue.plugins.tools.pv_slicer",
+      "glue_vispy_viewers.scatter"
     ],
     "session": "Session",
     "tab_names": [
@@ -3884,8 +4751,7 @@
         "ScatterWidget",
         "ScatterWidget_0",
         "HistogramWidget",
-        "HistogramWidget_0",
-        "ScatterWidget_1"
+        "HistogramWidget_0"
       ]
     ]
   },
@@ -4072,7 +4938,7 @@
     "style": {
       "_type": "glue.core.visual.VisualAttributes",
       "alpha": 0.8,
-      "color": "#595959",
+      "color": "0.35",
       "linestyle": "solid",
       "linewidth": 1,
       "marker": "o",
@@ -4080,9 +4946,8 @@
     },
     "subsets": [
       "Subset 1",
-      "Subset 3",
-      "Subset 4"
+      "Subset 5"
     ],
-    "uuid": "9d5919aa-4fcb-49b9-9cf7-52aafebbab09"
+    "uuid": "cc08ccd3-c211-4a5f-aff2-c545c36eb400"
   }
 }

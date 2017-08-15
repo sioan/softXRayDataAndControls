@@ -388,7 +388,8 @@ running wrong ioc version.  switched from 1.04 to 1.06.  1.04 looks in wrong pla
 
 
 
-
+#Ankush GMD notes
+https://drive.google.com/drive/folders/0B1-OMNjEHAACfjFMUWNwNHluYlNobkZGNEZmajA4bXJlQWh1XzdSQ3E5d0lQT2w0eWVmS3c
 
 
 
