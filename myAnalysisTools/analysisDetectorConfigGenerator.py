@@ -6,6 +6,23 @@ sys.path.append(os.curdir)
 import argparse
 import psana
 
+#--------------------------------------------------------------------------
+# File and Version Information:
+#  $Id: README  2017-08-06 18:54:12Z sioan@SLAC.STANFORD.EDU $
+#
+# Description:
+#  README file for data analysis
+#------------------------------------------------------------------------
+
+#Package author: Sioan Zohar
+
+#Brief description:
+#==================
+#This generates the config file used for the psanaXtcDataExtractor.py
+#
+#==================
+#to do: figure out why touching __init__.py doesn't create file
+
 
 
 def main(exp, run, configFileName):
@@ -14,7 +31,7 @@ def main(exp, run, configFileName):
 	try:
 		os.system('mkdir config')
 	except:
-		print("won't throw an exceptoin even if it exists")
+		print("won't throw an exception even if it exists")
 
 	os.system('./config/touch __init__.py')
 

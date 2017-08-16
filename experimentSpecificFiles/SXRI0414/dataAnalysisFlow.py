@@ -80,10 +80,28 @@ if __name__ == '__main__':
 	#remove stuff not meaningful
 	#filter on by kicks
 	
-	t = myDict['fiducials']
-	a = myDict['GMD']
+	myMask = loadtxt("myMask.dat")
+	myMask = myMask.astype(bool)
 
-	x,y = nonContinuousFt(a,t,360,.1,175,1)
+
+	scanRanges = [24845,49568,74291,99013,123736,148459,173182,197905,222627,247350]
+	startScan = 0
+	scanStack = []
+	for endScan in scanRanges:
+		scanRangeMask = zeros(len(myMask))
+		scanRangeMask[startScan,endScan] = 1
+		tempMask = (0+myMask*scanRangeMask).astype(bool)
+
+		t = myDict['fiducials'][tempMask]
+		myGMD = myDict['GMD'][tempMask]
+		myAcqiris = myDict['acqiris2'][tempMask]
+		myDelayStage = myDict['delayStage'][tempMask]
+
+		if(len(scanStack)==0):
+			myScanStack = reBin(myDelayStage,myAcqiris/myGMD,bins)
+		else:
+			myScanStack = vstack([myScanStack,reBin(myDelayStage,myAcqiris/myGMD,bins)])
+	#x,y = nonContinuousFt(myGMD,t,360,.1,175,1)
 
 	#linked graphics
 	#hist(array(f['GMD']),bins=400) #not fine enough near zero to filter on

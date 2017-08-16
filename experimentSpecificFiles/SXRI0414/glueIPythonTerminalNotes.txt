@@ -1,0 +1,11 @@
+####################################
+######making a subset mask##########
+
+from glue.core import DataCollection
+myData = dc[0]
+myData.subsets
+
+mySubset=myData.subsets[1]
+
+mySubset.to_mask()
+

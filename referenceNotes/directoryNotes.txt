@@ -250,7 +250,9 @@ bkill
 bsub
 batchSubmit = os.system("bsub -o /reg/neh/home/sioan/Desktop/psana/%J.log -q psnehhiprioq -n 32 mpirun --mca btl ^openib python kboPowerPostCleaning.py "+str(i)+" $1")
 #command that works
-bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis -hd5 sxri0414
+bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis.cfg -hd5 b -t
+
+
 
 
 #link for contact lists
@@ -443,7 +445,9 @@ https://drive.google.com/drive/folders/0B1-OMNjEHAACfjFMUWNwNHluYlNobkZGNEZmajA4
 # pulse_energy = 0.5*(fee_gas.f_21_ENRC() + fee_gas.f_22_ENRC())
 
 
-
+In case you need it, the documentation for plugging in the portable spectrometer should be with the rack, but it's also here:
+https://confluence.slac.stanford.edu/display/PCDS/SXD+Portable+Spectrometer+Vacuum+System
+The only real trick I need to mention is the Andor camera still needs an AC adapter to work.  Feel free to call or text if there are any issues.
 
 
 
