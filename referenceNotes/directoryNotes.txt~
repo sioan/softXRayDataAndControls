@@ -95,6 +95,12 @@ https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detect
 console ioc-amo-hv2
 iocsh()
 
+
+#epics and edm development area
+/reg/g/pcds/package/epics/3.14-dev
+
+
+
 #telnet to digi-sxr-04:2105
 #it's in top right corner of ims motor edm screen
 
@@ -385,6 +391,12 @@ running wrong ioc version.  switched from 1.04 to 1.06.  1.04 looks in wrong pla
 
 
 
+Troubleshooting, Sumitomo, DAQ, etc...
+https://docs.google.com/a/stanford.edu/document/d/1JX8XkwckhPuJoms46sp_Cb8MJqfA1VO4G5bKjszp7Ac/edit?usp=sharing
+
+DAQ
+“platform unavailable” or “unable to allocate” error in process:
+Using ‘ip addr’, check netmask settings on both pnCCD DAQ host (daq-det-pnccd01 or 02) and DSS host running source process, currently this is daq-amo-dss02 or daq-sxr-dss02.  They should both be 172.21.20.x/20, or 255.255.240.0.
 
 
 
