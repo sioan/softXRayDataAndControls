@@ -450,5 +450,8 @@ https://confluence.slac.stanford.edu/display/PCDS/SXD+Portable+Spectrometer+Vacu
 The only real trick I need to mention is the Andor camera still needs an AC adapter to work.  Feel free to call or text if there are any issues.
 
 
+sxr patch panel ethernet
+https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG5r0/edit#gid=2074785331
+
 
 
