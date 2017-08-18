@@ -76,7 +76,8 @@ def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,MPI):
 
 	if(MPI==False):
 		print("loading experiment data using standard small data")
-		myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
+		#myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
+		myDataSource = psana.MPIDataSource(experimentNameAndRun)	#this needs to be merged
 
 		print("defining small data")
 		smldata = myDataSource.small_data(h5FileName)
@@ -132,7 +133,7 @@ def renameSummaryKeys(myDict):
 		myDict[i+'Summarized'] = myDict.pop(i)
 
 def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
-	#global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary
+	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary
 
 	startTime = time.time()
 	print("entering main function")
@@ -177,20 +178,20 @@ def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
 				break
 		
 		for i in myDetectorObjectDictionary['analyzer']:
-			#myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
-			temp = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
-			if(temp is not None):
-				myDataDictionary[i]=0
-				#print(str(myDataDictionary.keys()))
+			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+	
+
 		for i in myDetectorObjectDictionary['summarizer']:
 				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary[i],thisEvent,summaryDataDictionary[i])
 
-		#for i in myDataDictionary
+		#for i in myDataDictionary:
+		if any([None is myDataDictionary[k] for k in myDataDictionary]):
+			continue
+		#	if (None is myDataDictionary[i]):
+		#		del myDataDictionary[i]
 
 		smldata.event(myDataDictionary)
-		#testDict = {}
-		#testDict['test'] = 0
-		#smldata.event(testDict)
+
 
 	print("finished looping over events")
 	print("saving small data")

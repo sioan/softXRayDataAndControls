@@ -2,12 +2,14 @@ from pylab import *
 import psana
 
 def getAndorImage(detectorObject,thisEvent):
+	
 	return detectorObject.image(thisEvent)
 	#tempImage = detectorObject.image(thisEvent)
 	#if(tempImage is not None):
 	#	return tempImage
 	#return zeros([512,2048])
-	#return 0
+	#else:
+	#	return array([[0,0],[0,0]])
 
 def getAndorImageSum(detectorObject,thisEvent,previousProcessing):
 	return 0

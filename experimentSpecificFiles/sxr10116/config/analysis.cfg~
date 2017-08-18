@@ -2,9 +2,9 @@
 #######DAQ DEVICES########
 ##########################
 #0 Beamline name,1 short hand name, 2 empty space, 3 empty space, 4 psana dictionary key name, 5 analysis function
-#NoDetector.0:Evr.0, evr0, ,evr0,getEvr,getEvrSummary,
+NoDetector.0:Evr.0, evr0, ,evr0,getEvr,getEvrSummary,
 #NoDetector.0:Evr.1, evr1, , 
-SxrEndstation.0:Andor.0, andor, ,andor,getAndorImage,getAndorImageSum,
+#SxrEndstation.0:Andor.0, andor, ,andorB,getAndorImage,getAndorImageSum,
 #ControlData, , , 
 ##########################
 #######EPICS PVs##########

@@ -12,7 +12,8 @@ runNum = "38"
 #ds = psana.MPIDataSource('exp=sxrlq7615:run='+runNum+':smd')
 #ds = psana.MPIDataSource('exp=sxrlq7615:run='+runNum+':smd')
 #ds = psana.MPIDataSource('exp=xpptut15:run='+str(runNum))
-myDataSource = psana.MPIDataSource('exp=sxrk3016:run=118:smd')
+#myDataSource = psana.MPIDataSource('exp=sxrk3016:run=118:smd')
+myDataSource = psana.MPIDataSource('exp=sxr10116:run=73:smd')
 
 #psana.DetNames()
 acqirisDetectorObject = psana.Detector("Acq02")
