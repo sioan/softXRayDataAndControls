@@ -1,7 +1,9 @@
 from pylab import *
+from scipy.interpolate import interp1d
 import h5py
 
-
+def projectionCalibration(x,y,calibrationFunction):
+	
 
 def hdf5_to_dict(myhdf5Object):
 	replacementDictionary = {}
@@ -73,8 +75,15 @@ def nonContinuousFt(xBlank,y,fMinRequested,fMaxRequested,fStep):
 
 if __name__ == '__main__':
 
+
+	#####################
+	###load file#########
+
 	f = h5py.File("sxri0414run60.h5",'r')
 	array(f)
+
+	###########################
+	###convert to dict#########
 	myDict = hdf5_to_dict(f)
 	#filter master with graphical interactive tool
 	#remove stuff not meaningful
@@ -83,7 +92,47 @@ if __name__ == '__main__':
 	myMask = loadtxt("myMask.dat")
 	myMask = myMask.astype(bool)
 
+	nAcqirisBins = 150
+	acqMax = 0.65
+	acqirisEdges = arange(0,acqMax,acqMax/nAcqirisBins)
+	
+	nGmdBins = 100	
+	gmdEdges = arange(0,.0014,.0014/nGmdBins)
+	my2dHist = histogram2d(myDict['acqiris2'],myDict['GMD'],bins=[acqirisEdges,gmdEdges])
 
+	#imshow(my2dHist[0][::-1,:],cmap='magma',clim=(0,500))
+
+	########################################
+	######generate calibration curve########
+
+	acqirisHistMax = array([acqirisEdges[argmax(i)] for i in my2dHist[0].transpose()])
+	acqirisHistMean = array([mean(i*acqirisEdges[:-1])/mean(i) for i in my2dHist[0].transpose()])
+
+	#################################################
+	######polynomial fit of calibration curve########
+	
+
+	myFit = polyfit(acqirisHistMean[:-24],gmdEdges[:-25],4)
+	myPolyFunction = poly1d(myFit)
+	myInterpolationFunction = interp1d(myPolyFunction(nan_to_num(acqirisHistMean)),nan_to_num(acqirisHistMean),fill_value='extrapolate')
+
+	#################################################
+	#########plotting comparison#####################
+	plot(gmdEdges[:-1],myInterpolationFunction(gmdEdges[:-1]))
+	plot(gmdEdges[:-1],acqirisHistMean,'bo') 			#up to here works ok
+
+	myCov = cov(gmdEdges[:20],acqirisHistMean[:20])
+	normalizedAcqiris = (myInterpolationFunction(myDict['GMD'])*1.0/myDict['GMD'])*1.0/myDict['acqiris2']
+	#normalizedGMD = myDict['acqiris2']
+
+
+
+
+
+
+
+
+"""normalizedAcqiris = myDict['acqiris2']*(myInterpolationFunction(myDict['GMD'])/myDict['GMD'])
 	scanRanges = [24845,49568,74291,99013,123736,148459,173182,197905,222627,247350]
 	startScan = 0
 	scanStack = []
@@ -100,7 +149,7 @@ if __name__ == '__main__':
 		if(len(scanStack)==0):
 			myScanStack = reBin(myDelayStage,myAcqiris/myGMD,bins)
 		else:
-			myScanStack = vstack([myScanStack,reBin(myDelayStage,myAcqiris/myGMD,bins)])
+			myScanStack = vstack([myScanStack,reBin(myDelayStage,myAcqiris/myGMD,bins)])"""
 	#x,y = nonContinuousFt(myGMD,t,360,.1,175,1)
 
 	#linked graphics

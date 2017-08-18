@@ -19,6 +19,8 @@ acqirisDetectorObject = psana.Detector("Acq02")
 
 andorDetectorObject = psana.Detector('andor')
 
+pnccdDetectorObject = psana.Detector('pnccdFront')
+
 myEnumeratedEvents = enumerate(myDataSource.events())
 
 eventNumber,thisEvent = next(myEnumeratedEvents)
@@ -27,3 +29,11 @@ myWaveform = acqirisDetectorObject(thisEvent)
 
 myImage = andorDetectorObject.image(thisEvent)
 
+##################################################
+###############making a photon image#############
+myImage = pnccdDetectorObject.image(thisEvent)
+
+#or 
+photonImage = pnccdDetectorObject.photons(thisEvent,adu_per_photon=600)
+
+photonImage = pnccdDetectorObject.image(thisEvent,photonImage)
