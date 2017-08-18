@@ -1,4 +1,23 @@
 #!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
+
+#--------------------------------------------------------------------------
+# File and Version Information:
+#  $Id: README 2017-08-06 18:54:12Z sioan@SLAC.STANFORD.EDU $
+#
+# Description:
+#  README file for data analysis
+#------------------------------------------------------------------------
+
+#Package author: Sioan Zohar
+
+#Brief description:
+#==================
+#Abstracts away details of psana, small data, and allows users to focus on developing scientific analysis #code.
+#
+#==================
+
+
+
 import argparse
 import os
 import sys
@@ -118,7 +137,7 @@ def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
 	startTime = time.time()
 	print("entering main function")
 	
-	h5FileName = exp+'run'+str(run)+'.h5'
+	h5FileName = exp+'run'+str(run)+str(h5FileName)+'.h5'
 	
 	try:
 		print("removing file")
@@ -184,8 +203,8 @@ if __name__ == '__main__':
 		
 	myParser.add_argument('-e','--exp', help='the experiment name')
 	myParser.add_argument('-r','--run',type=int,help='the run number to use when running offline')
-	myParser.add_argument('-c','--configFile',help='the config file to write to')
-	myParser.add_argument('-hd5','--hd5File',help='the small data file to write to')
+	myParser.add_argument('-c','--configFile',help='the config file to read from',default='analysis.cfg')
+	myParser.add_argument('-hd5','--hd5File',help='extension of the small data file to write to. typically a,b or c',default="")
 	myParser.add_argument('-t','--testSample',action='store_true',help='only take a small set of data for testing')
 	myParser.add_argument('-m','--MPI',action='store_true',help='does not use mpi ')
 	myParser.add_argument('-s','--start',type=int,help='skips until starting event reached', default=-1)

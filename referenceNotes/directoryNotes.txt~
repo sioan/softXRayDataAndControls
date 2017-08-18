@@ -250,7 +250,9 @@ bkill
 bsub
 batchSubmit = os.system("bsub -o /reg/neh/home/sioan/Desktop/psana/%J.log -q psnehhiprioq -n 32 mpirun --mca btl ^openib python kboPowerPostCleaning.py "+str(i)+" $1")
 #command that works
-bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis -hd5 sxri0414
+bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis.cfg -hd5 b -t
+
+
 
 
 #link for contact lists
@@ -398,6 +400,35 @@ DAQ
 “platform unavailable” or “unable to allocate” error in process:
 Using ‘ip addr’, check netmask settings on both pnCCD DAQ host (daq-det-pnccd01 or 02) and DSS host running source process, currently this is daq-amo-dss02 or daq-sxr-dss02.  They should both be 172.21.20.x/20, or 255.255.240.0.
 
+EOFE_ERROR: 
+The symptoms of this problem is the DAQ showing damage on every event for the pnccd and mentions of EOFE_ERROR in the segment levels log files. One method for clearing this problem is to run the pnccdwidget on the node with the pgp card being used by the pnccd which is included with the daq release. The steps need are as follows:
+Have the DAQ running with the pnccd removed from the partition.
+Kill the pnccd segment level process, so the pnccdwidget can claim the pgpcard.
+Run the pnccdwidget on the machine with the pgpcard. Example: pnccdwidget -P 0xf0 -R -o 12 where -P is the channel and card index use (in this case all four channels of pgpcard 0), -R is read until interrupted, and -o is the number of bytes of the output to print.
+Let this run for a minute or two then kill the widget with ctrl-c. When you interrupt the widget it should print EOFE_ERROR many times
+If you are paranoid run the pnccdwidget again and then kill it after it had read at least a few frames. Now if you kill the widget and you see no mention of EOFE_ERROR then you should be good to go.
+Finally restart the DAQ, and the pnccd back into the partition, and see if the pnccd can be read out successfully.
+An alternative, less-invasive method proposed by Jack for clearing the EOFE errors (this should work, but we haven’t tested this yet):
+Have the DAQ running with the pnccd removed from the partition.
+Watch the pnccd and make sure it is being triggered and sending frames.
+After letting the DAQ run for a minute or so, stop the daq and put the pnccd back in the system.
+
+GPIB
+Make sure to have brought up the R&S first, then GPIB, then restart the IOC.
+GPIB died again in back rack in April 2017.
+To swap, change the netconfig entry then "telnet ioc-det-pnccd02 30001" and type ^T to turn on auto restart, and do the same for 30002.
+Rohde/Schwarz interface is still flaky as of 16 May 2017.  This is evident when trying to enable the R&S from the GUI: the on button will stay yellow instead of turning gray.  If this happens, one can telnet ioc-det-pnccd02 30001 (and 2), ctrl-t, ctrl-x, turn off the GPIB, power-cycle the R&S, turn on the GPIB, ctrl-t (with this procedure one doesn’t need to reboot the IOC from the R&S screen).
+Note: currently just rebooting the GPIB
+
+Wacky pedestals
+Powered down
+Checked bottom-to-top cable
+Rebooted sequencer, resynced
+
+
+Sequencer won’t sync
+	If pnCCD sequencer won’t sync to DAQ, go into self-trigger, or all counts show -1, then try rebooting daq-det-pnccd01 (or 02).  
+
 
 
 #Ankush GMD notes
@@ -405,10 +436,22 @@ https://drive.google.com/drive/folders/0B1-OMNjEHAACfjFMUWNwNHluYlNobkZGNEZmajA4
 
 
 
+# the total photon flux is measured in the FEE gas detector. This detector
+# measures the pulse energy in mJ on a shot-to-shot basis. The detector is
+# upstream of any of the beamline optics and therefore does not account
+# for x-ray optics and beamline transmission loss.
+# there are two independent measurements of the pulse energy so take the
+# average of the two.
+# pulse_energy = 0.5*(fee_gas.f_21_ENRC() + fee_gas.f_22_ENRC())
 
 
+In case you need it, the documentation for plugging in the portable spectrometer should be with the rack, but it's also here:
+https://confluence.slac.stanford.edu/display/PCDS/SXD+Portable+Spectrometer+Vacuum+System
+The only real trick I need to mention is the Andor camera still needs an AC adapter to work.  Feel free to call or text if there are any issues.
 
 
+sxr patch panel ethernet
+https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG5r0/edit#gid=2074785331
 
-
-
+#
+daq-sxd-spec couldn't boot.  using wrong redhat from diskless boot.

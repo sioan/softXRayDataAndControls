@@ -24,8 +24,7 @@ Since starting in 11/2016, I have written this same portion of code several doze
 
 example execution
 
-psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis.cfg -hd5 b -t
-
+ run psanaXtcDataExtractor.py -e sxri0414 -r 79 -c test -hd5 test
 
 
 to do 
