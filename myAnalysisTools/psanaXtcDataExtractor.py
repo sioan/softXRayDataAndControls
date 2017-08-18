@@ -75,13 +75,13 @@ class SmallData():
 def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,MPI):
 
 	if(MPI==False):
-		print("loading experiment data using MPI ")
+		print("loading experiment data using standard small data")
 		myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
 
 		print("defining small data")
 		smldata = myDataSource.small_data(h5FileName)
 	else:
-		print("loading experiment data NOT using MPI ")
+		print("loading experiment using custom small data")
 		myDataSource = psana.MPIDataSource(experimentNameAndRun)	#this is hook for non mpi
 
 		print("defining small data. hook in place ")
@@ -132,7 +132,7 @@ def renameSummaryKeys(myDict):
 		myDict[i+'Summarized'] = myDict.pop(i)
 
 def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
-	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary
+	#global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary
 
 	startTime = time.time()
 	print("entering main function")
@@ -169,6 +169,7 @@ def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
 	for eventNumber,thisEvent in myEnumeratedEvents:
 		if(eventNumber %messageFeedBackRate == 1):
 			print("iterating over enumerated events.  Event number = "+str(eventNumber)+" Elapsed Time (s) = "+str(time.time()-startTime))
+			
 		if(eventNumber<startEvent):
 			continue
 		if(testSample):
@@ -176,13 +177,20 @@ def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
 				break
 		
 		for i in myDetectorObjectDictionary['analyzer']:
-			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+			#myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+			temp = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+			if(temp is not None):
+				myDataDictionary[i]=0
+				#print(str(myDataDictionary.keys()))
 		for i in myDetectorObjectDictionary['summarizer']:
 				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary[i],thisEvent,summaryDataDictionary[i])
 
+		#for i in myDataDictionary
+
 		smldata.event(myDataDictionary)
-		
-	
+		#testDict = {}
+		#testDict['test'] = 0
+		#smldata.event(testDict)
 
 	print("finished looping over events")
 	print("saving small data")

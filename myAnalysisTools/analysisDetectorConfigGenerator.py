@@ -21,22 +21,22 @@ import psana
 #This generates the config file used for the psanaXtcDataExtractor.py
 #
 #==================
-#to do: figure out why touching __init__.py doesn't create file
+#to do: figure out why touching __init__.py doesn't create file.  Solved.  White space before __init__.py
 
 
 
 def main(exp, run, configFileName):
 
 	experimentNameAndRun = "exp=%s:run=%d"%(exp, run)
-	try:
-		os.system('mkdir config')
-	except:
-		print("won't throw an exception even if it exists")
+	print("current working directory"+str(os.curdir))	
+	os.system('mkdir config')
+	print("creating libraries")
+	os.system('touch config/__init__.py')
 
-	os.system('./config/touch __init__.py')
-
+	print("initializing")
 	myDataSource = psana.MPIDataSource(experimentNameAndRun)
 	f = open('./config/'+configFileName+'.cfg','w')
+	print("writing libraries")
 
 	f.write('##########################\n')
 	f.write('#######DAQ DEVICES########\n')
