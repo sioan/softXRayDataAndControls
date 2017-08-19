@@ -1,0 +1,6 @@
+#!/bin/bash
+
+isGreppedWord=$1
+myFile=/reg/neh/home/sioan/softXRayDataAndControls/referenceNotes/herbstHistory.txt
+
+grep -A3 -B3 -i $isGreppedWord $myFile

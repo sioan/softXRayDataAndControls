@@ -1,0 +1,200 @@
+from psana import *
+import sys
+import datetime
+import numpy as np
+
+runnum = sys.argv[1]
+if len(sys.argv) > 2:
+	debug = True
+else:
+	debug = False
+
+#Live data during beamtime
+#dsource = MPIDataSource('exp=sxr22915:run='+runnum+':smd:dir=/reg/d/ffb/sxr/sxro5916/xtc:live')
+#After beamtime
+dsource = MPIDataSource('exp=sxrx22915:run='+runnum+':smd')
+
+dlsDet = Detector('DLS_encoder')
+monoDet = Detector('MONO_encoder')
+
+pnccdDet = Detector('pnccd')
+# Path to the file with parameters of the experiment:
+CALS = '/reg/d/psdm/sxr/sxrx22915/scratch/cals/limits.csv'
+# Get integration limits from cals file
+with open(CALS, 'rb') as csvfile:
+	in_data = np.genfromtxt(csvfile, names=True, delimiter=',')
+
+run_start_col = in_data['run_start']
+run_end_col = in_data['run_end']
+
+# Find the specified run number calibrations as the row which has a starting
+# number less than or equal to the run number of interest and a ending
+# number greater than or equal to the run number of interest (assumes that a
+# given run will not fulfill [and should not fulfill!] these conditions for
+# more than one row) - see original code "abs_XTC2HDF.py", line 81
+rows_greater_or_equal = int(runnum) >= run_start_col
+rows_less_or_equal = int(runnum) <= run_end_col
+row_num_want = rows_greater_or_equal & rows_less_or_equal
+run_cals = in_data[row_num_want]
+
+mcp_limits = [run_cals['mcp_int_start'],run_cals['mcp_int_end'],run_cals['mcp_dead_start'],run_cals['mcp_dead_end']]
+mcp4_limits = [run_cals['mcp4_int_start'],run_cals['mcp4_int_end'],run_cals['mcp4_dead_start'],run_cals['mcp4_dead_end']]
+yag_limits = [run_cals['yag_int_start'],run_cals['yag_int_end'],run_cals['yag_dead_start'],run_cals['yag_dead_end']]
+x1Start, x1End, y1Start, y1End = [run_cals['x1Start'],run_cals['x1End'],run_cals['y1Start'],run_cals['y1End']]
+x2Start, x2End, y2Start, y2End = [run_cals['x2Start'],run_cals['x2End'],run_cals['y2Start'],run_cals['y2End']]
+x3Start, x3End, y3Start, y3End = [run_cals['x3Start'],run_cals['x3End'],run_cals['y3Start'],run_cals['y3End']]
+
+def acqiris_int(traces, int_limit):
+	'Integration function for acqiris'
+
+	subTrace_int = traces[int(int_limit[0]):int(int_limit[1])]
+	subTrace_dead = traces[int(int_limit[2]):int(int_limit[3])]
+
+	return np.sum(subTrace_int.astype(np.float64) - np.mean(subTrace_dead.astype(np.float64)))
+
+acq02Det = Detector('Acq02')
+acq01Det = Detector('Acq01')
+#magnetDet = Detector('rci_magnet_voltage')
+phasecavDet = Detector('PhaseCavity')
+delayStgDet = Detector('SXR:LAS:MCN1:06.RBV')
+vitaraDet = Detector('LAS:FS2:VIT:FS_TGT_TIME')
+monoPVDet = Detector('SXR:MON:MMS:06.RBV')
+evrDet = Detector('evr0')
+GasDet = Detector('FEEGasDetEnergy')
+
+# to use these check that tt_fltpos() is not None (only need to check 1)
+#tt_fltpos_Det = Detector('TTSPEC:FLTPOS')
+#tt_fltpos_psDet = Detector('TTSPEC:FLTPOS_PS')
+#tt_fltposfwhmDet = Detector('TTSPEC:FLTPOSFWHM')
+#tt_refamplDet = Detector('TTSPEC:REFAMPL')
+#tt_amplnxtDet = Detector('TTSPEC:TTSPEC:AMPLNXT')
+#tt_amplDet = Detector('TTSPEC:AMPL')
+
+smldata = dsource.small_data('run'+runnum+'.h5',gather_interval=1000)
+
+timestamp0seconds = (datetime.datetime(2017,06,21,20,34) - datetime.datetime(1970,1,1)).total_seconds()
+
+from mpi4py import MPI
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+size = comm.Get_size()
+ 
+img = None
+
+for nevt,evt in enumerate(dsource.events()):
+
+	if debug and nevt > 10:
+		print('DEBUG: Break after 10 events')
+		break
+
+	evtId = evt.get(EventId)
+	timestamp = evtId.time()[0] - timestamp0seconds + 1e-9*evtId.time()[1]
+
+	pnccd = pnccdDet.image(evt)
+	dls = dlsDet.get(evt)
+	mono = monoDet.get(evt)
+	acq02 = acq02Det.waveform(evt)
+	acq01 = acq01Det.waveform(evt)
+	#magnet = magnetDet()
+	phasecav = phasecavDet.get(evt)
+	delayStgPV = delayStgDet()
+	vitaraPV = vitaraDet()
+	monoPV = monoPVDet()
+	evr = evrDet.eventCodes(evt)
+	gde = GasDet.get(evt)
+
+	#tt_px = tt_fltpos_Det()
+	#tt_ps = tt_fltpos_psDet()
+	#tt_fwhm = tt_fltposfwhmDet()
+	#tt_amp = tt_amplDet()
+
+	#from IPython import embed
+	#embed()
+
+	if any([None is k for k in [
+		mono,
+		dls,
+		pnccd,
+		acq02,
+		#magnetDet,
+		delayStgPV,
+		phasecav,
+		#tt_fltpos_psDet,
+		gde,
+		evr
+		]]):
+		#print '*** bad event',nevt
+		continue
+
+	if 76 in evr:
+		code = 76
+	elif 77 in evr:
+		code = 77
+	else:
+		code = 0
+
+	if 162 in evr:
+		bykick = 1
+	else:
+		bykick = 0
+
+	#if nevt%size!=rank: continue # different ranks look at different events
+	if img is None:
+		img = pnccd.astype(np.double)
+	else:
+		img += pnccd.astype(np.double)
+
+	signal = np.sum(pnccd[int(y1Start):int(y1End),int(x1Start):int(x1End)])
+	reference = np.sum(pnccd[int(y2Start):int(y2End),int(x2Start):int(x2End)])
+	dark = np.sum(pnccd[int(y3Start):int(y3End),int(x3Start):int(x3End)])
+
+	myDictionary = {}
+	myDictionary["signal"]= signal
+	myDictionary["reference"]= reference
+	myDictionary["dark"]= dark
+	myDictionary["timestamp"]= timestamp
+
+	myDictionary["mcp"]= acqiris_int(acq02[0], mcp_limits)
+	myDictionary["mcp4"]= acqiris_int(acq01[2], mcp4_limits)
+	myDictionary["YAGTrans"]= acqiris_int(acq02[2], yag_limits)
+
+	myDictionary["dls"] = dls.encoder_count()[0]
+	myDictionary["mono"] = mono.encoder_count()
+	myDictionary["phasecav"] = phasecav.fitTime2()
+
+	myDictionary["delayStgPV"] = delayStgPV
+	myDictionary["monoPV"] = monoPV
+	myDictionary["code"] = code
+	myDictionary["bykick"] = bykick
+	myDictionary["vitaraPV"] = vitaraPV
+
+	enrc = 0.5*(gde.f_21_ENRC() + gde.f_22_ENRC())
+	myDictionary["gde"] = enrc
+
+	smldata.event(myDictionary)
+	#smldata.event(
+			#dls=dls.encoder_count()[0],
+			#signal=signal, reference=reference, dark=dark,
+			#mono=mono.encoder_count(),
+			#mcp=acq02[0][:3000], mcp4=acq02[3][:3000], YAGTrans=acq02[2][:3000],
+			#magnet=magnet,
+			#phasecav = phasecav.fitTime2(),
+			#delayStgPV=delayStgPV, monoPV = monoPV, evr=code, bykick=bykick,
+			#tt_px=tt_px, tt_ps=tt_ps, tt_fwhm=tt_fwhm, tt_amp=tt_amp,
+			#vitaraPV=vitaraPV,
+			#gde=enrc, #missing in 72 ... 89,90
+			#timestamp=timestamp) # ADD here the outputs
+
+# save HDF5 file, including summary data
+smldata.save()
+smldata.close()
+
+pnccdsumimg = np.empty_like(img)
+comm.Reduce(img,pnccdsumimg) # sum the image across all ranks
+
+# Path to the file with parameters of the LH16 experiment:
+SUMIMG = '/reg/d/psdm/sxr/sxrx22915/hdf5/smalldata/'
+if rank==0:
+	np.save(SUMIMG + 'Sumpnccd-run' + runnum + '.npy', pnccdsumimg)
+ 
+#MPI.Finalize()

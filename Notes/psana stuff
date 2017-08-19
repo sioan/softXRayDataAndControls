@@ -1,0 +1,3 @@
+
+#way to start interactive python terminal on nodes.  output is sent to log file with delay.  maybe some way to echo output back to terminal?
+bsub -Is -o %J.log -q psanaq -n 2 mpirun --mca btl ^openib python -i testPrint.py $1

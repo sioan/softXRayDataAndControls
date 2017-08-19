@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# Setup EPICS development environment
+
+# EPICS variables  -- Default to 3.14
+export EPICS_SITE_TOP=/reg/g/pcds/package/epics/3.14
+export EPICS_SITE_CONFIG=$EPICS_SITE_TOP/RELEASE_SITE
+
+echo "EPICS_SITE_TOP: " $EPICS_SITE_TOP
+
+# EPICS SVN repository path
+export REPO=file:///afs/slac/g/pcds/vol2/svn/pcds
+export EPICS=file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk
+
+# Set SVN editor to vim
+export SVN_EDITOR='vim'
+
+# Add EPICS top directory, /reg/common/tools/bin, and ~/bin/
+source /reg/g/pcds/setup/pathmunge.sh
+pathmunge $EPICS_SITE_TOP
+pathmunge /reg/common/tools/bin
+#pathmunge $HOME/bin
+
+# Run standard EPICS & PCDS startup scripts
+epicssetup=/reg/g/pcds/setup/epicsenv-3.14.12.sh
+pcds_shortcuts=/reg/g/pcds/setup/pcds_shortcuts.sh
+
+echo "Running $epicssetup"
+source $epicssetup
+
+echo "Running $pcds_shortcuts"
+source $pcds_shortcuts
+
+echo "Set up pyca for PYTHON 2.7.2"
+source /reg/g/pcds/setup/pyca27.sh
+
+# Add PSPKG_ROOT for ps_make
+export PSPKG_ROOT=/reg/common/package
+
+
+#echo "Set up ROOT"
+#export ROOTSYS=/reg/common/package/root/5.30.06-python2.7/x86_64-rhel5-gcc41-opt
+#export PSPKG_ROOT=$ROOTSYS
+#pathmunge $ROOTSYS/bin
+#ldpathmunge $ROOTSYS/lib
+#pythonpathmunge $ROOTSYS/lib
