@@ -2,17 +2,23 @@ from pylab import *
 from scipy.interpolate import interp1d
 import h5py
 
+def histogramAndFit(x,y,calibrationFunction):
+
+	myHistogram = histogram(x,y)
+
+	return 0
+
 def projectionCalibration(x,y,calibrationFunction):
 
 	sortedIndex = argsort(x)
 	mySize = len(x)
-	x = x[sortedIndex][int(mySize*0.05):int(mySize*0.95)]
-	y = y[sortedIndex][int(mySize*0.05):int(mySize*0.95)]
+	x = x[sortedIndex][int(mySize*0.00):int(mySize*1.00)]
+	y = y[sortedIndex][int(mySize*0.00):int(mySize*1.00)]
 
 	sortedIndex = argsort(y)
 	mySize = len(x)
-	x = x[sortedIndex][int(mySize*0.05):int(mySize*0.95)]
-	y = y[sortedIndex][int(mySize*0.05):int(mySize*0.95)]
+	x = x[sortedIndex][int(mySize*0.0):int(mySize*1.00)]
+	y = y[sortedIndex][int(mySize*0.0):int(mySize*1.00)]
 
 
 	yEstimated = calibrationFunction(x)
@@ -161,46 +167,64 @@ if __name__ == '__main__':
 
 	delayScanRange = arange(myMin,myMax,delayScanStep)
 
-	fullSize = len(array(f['fiducials']) )
-
 	#######
-	scanRanges = [0,24845,49568,74291,99013,123736,148459,173182,197905,222627,247350,fullSize]
-	for q in arange(len(scanRanges)-1):
-		myMask = loadtxt("myMask.dat")
-		myMask = myMask.astype(bool)
+	#scanRanges = [24845,49568,74291,99013,123736,148459,173182,197905,222627,247350]
 
-		isEven=1
-		isOdd = 0
-		tempMask = array([bool(j%2+isEven) for j in array(f['fiducials']) ])
-		myMask=myMask*tempMask
-		
-		tempMask = zeros(fullSize)
-		tempMask[scanRanges[q]:scanRanges[q+1]]=1
-		tempMask=tempMask.astype(bool)
-		myMask=myMask*tempMask
+	myMask = loadtxt("myMask.dat")
+	myMask = myMask.astype(bool)
 
-		mySize = len(f['acqiris2'][myMask])
-		mySubset = array([f['acqiris2'][myMask],f['GMD'][myMask],f['delayStage'][myMask]])
+	isEven=0
+	tempMask = array([bool(j%2+isEven) for j in array(f['fiducials']) ])
+	myMask=myMask*tempMask
+	#myMask[:49568]=False
+	#myMask[74291:]=False
+
+	mySize = len(f['acqiris2'][myMask])
+	mySubset = array([f['acqiris2'][myMask],f['GMD'][myMask],f['delayStage'][myMask]])
 	
-		myData = [0,0,0]
+	myData = [0,0,0]
 
-		for i in delayScanRange:
-			print(str(i))
-			y = array([mySubset[0,j] for j in arange(mySize) if ((mySubset[2][j] < i+delayScanStep) and (mySubset[2][j] > i))])
-			x = array([mySubset[1,j] for j in arange(mySize) if ((mySubset[2][j] < i+delayScanStep) and (mySubset[2][j] > i))])
-			#x = array([j for j in arange(mySize) if ((mySubset[2][j] < i+delayScanStep) and (mySubset[2][j] > i))])
-			#x = array([j for j in arange(mySize) if ((mySubset[2][j] < 50) and (mySubset[2][j] > 49.8))])
-			projection,error = projectionCalibration(x,y,myInterpolationFunction)		
-			myData = vstack([myData,[i,projection,error]])
+	for i in delayScanRange:
+		print(str(i))
+		y = array([mySubset[0,j] for j in arange(mySize) if ((mySubset[2][j] < i+delayScanStep) and (mySubset[2][j] > i))])
+		x = array([mySubset[1,j] for j in arange(mySize) if ((mySubset[2][j] < i+delayScanStep) and (mySubset[2][j] > i))])
+		#x = array([j for j in arange(mySize) if ((mySubset[2][j] < i+delayScanStep) and (mySubset[2][j] > i))])
+		#x = array([j for j in arange(mySize) if ((mySubset[2][j] < 50) and (mySubset[2][j] > 49.8))])
+		projection,error = projectionCalibration(x,y,myInterpolationFunction)		
+		myData = vstack([myData,[i,projection,error]])
 
-		myData=myData[1:]
-		myData[:,0]=myData[::-1,0]
+	myData=myData[1:]
+	myData[:,0]=myData[::-1,0]
 
-		fileName = "dataEvenScanRange"+str(scanRanges[q])+"_"+str(scanRanges[q+1])+".dat"
-		savetxt(fileName,myData)
+	#savetxt()
 
 	#plot(myData[:,0],myData[:,1])
 	#errorbar(myData[:,0],myData[:,1],myData[:,2])
+"""normalizedAcqiris = myDict['acqiris2']*(myInterpolationFunction(myDict['GMD'])/myDict['GMD'])
+	scanRanges = [24845,49568,74291,99013,123736,148459,173182,197905,222627,247350]
+	startScan = 0
+	scanStack = []
+	for endScan in scanRanges:
+		scanRangeMask = zeros(len(myMask))
+		scanRangeMask[startScan,endScan] = 1
+		tempMask = (0+myMask*scanRangeMask).astype(bool)
+
+		t = myDict['fiducials'][tempMask]
+		myGMD = myDict['GMD'][tempMask]
+		myAcqiris = myDict['acqiris2'][tempMask]
+		myDelayStage = myDict['delayStage'][tempMask]
+
+		if(len(scanStack)==0):
+			myScanStack = reBin(myDelayStage,myAcqiris/myGMD,bins)
+		else:
+			myScanStack = vstack([myScanStack,reBin(myDelayStage,myAcqiris/myGMD,bins)])"""
+	#x,y = nonContinuousFt(myGMD,t,360,.1,175,1)
+
+	#linked graphics
+	#hist(array(f['GMD']),bins=400) #not fine enough near zero to filter on
+	#hist(array(f['acqiris2']),bins=400)
+	#hist(nan_to_num(array(f['gas_detector']['f_11_ENRC'])),bins=200)	#also on f_22_ENRC and
+	#permutation of 12
 
 """
 	#event codes 
