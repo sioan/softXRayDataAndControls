@@ -1,6 +1,0 @@
-#!/bin/bash
-
-isGreppedWord=$1
-myFile=/reg/neh/home/sioan/softXRayDataAndControls/experimentSpecificFiles
-
-grep -A3 -B3 -i $isGreppedWord $myFile

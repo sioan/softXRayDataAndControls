@@ -1,8 +1,0 @@
-# Archive file for PYIOC:EXAMPLE
-PYIOC:EXAMPLE:ECHO:CHAMBER         86400    monitor
-PYIOC:EXAMPLE:LOOK:AT:MY:COLONS    86400    monitor
-PYIOC:EXAMPLE:PV:FLOAT             86400    monitor
-PYIOC:EXAMPLE:PV:FUNC:INT:SQR      86400    monitor
-PYIOC:EXAMPLE:PV:GROW              86400    monitor
-PYIOC:EXAMPLE:PV:INT               86400    monitor
-PYIOC:EXAMPLE:PV:STRING            86400    monitor
