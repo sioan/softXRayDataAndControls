@@ -12,7 +12,7 @@
 
 #Brief description:
 #==================
-#Abstracts away details of psana, small data, and allows users to focus on developing scientific analysis #code.
+#Abstracts away details of psana, small data, and allows users to focus on developing scientific analysis code.
 #
 #==================
 

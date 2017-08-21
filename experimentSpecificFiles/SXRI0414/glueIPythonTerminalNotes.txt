@@ -20,4 +20,11 @@ myData.components
 myRatio = myData['/acqiris2']/myData['/GMD']
 myData.add_component(myRatio,'normalizedAcqiris2')
 
+###################################
+#######getting components##########
+myData = dc[0]
+myData.subsets
 
+mySubset=myData.subsets[2]
+mySubset=myData.subsets[1]
+mySubset['\delayStage']
