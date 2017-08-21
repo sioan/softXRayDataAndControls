@@ -17,14 +17,20 @@ import h5py
 #==================
 #takes an hdf5 files turns it into applies a mask, turns it into dictionary, and bins it according to a config file or parameters
 #the idea is to iterate this same code on different data sets using one config file or to test out analysis approaches by evaluating one data set and
-#many config files iterating over different config files 
+#many config files iterating over different config files.  Testing different analysis techniques (that are abstracted into different configurations of identical code)
+#is important for understanding why somes analysis techniques gives the expected result and some give unexpceted results.
+
+#In depth description
+#====================
 
 #this is being abstracted from previous attempts to analyze SXRI0414.  how to abstract the approaches taken so far. they are
-#1) the brute force standard deviation and mean.  
-#2) the elegant filtering using glue to get rid of zero.   
-#3) parsing the different scans
-#4) binning acqiris/gmd for different delay stages (this is important. close to brute force)/. result is 2d. gonaa fit this data. want to understand maths of 
-#fitting binned data.
+#1) the brute force standard deviation and mean.  (original provided by h5 file by pi.  gives the slow oscillation without much effort.)
+#2) the elegant filtering using glue to get rid of zeros.
+#3) and projection onto calibration curve gave nice oscillations.
+#4) parsing the different scans.  didn't give oscillations. nice scans. but fiducials odd vs even may not correspond to 
+
+#4) binning acqiris/gmd for different delay stages (this is important. close to brute force)/. result is 2d. gona fit this data. want to understand maths of 
+#fitting binned data.  This wasn't brute, but projection onto acqiris vs gmd calibration using calibration i0 as errorless x. not correct. but total least squares has fudge factor for weighting different detectors.
 #5) making stage of acqiris vs gmd images for different delays. result is 3d data set.  too sparse in this case... yes?.  Used image j dynamic z_profiler to get delay axis. not intended result since each pixel is a count, not a normalized acqiris/gmd
 
 #6) filtered on odd/even fiducials. should be the same event code as 141.  (the time tool bimodal distribution becomes a single mode when filtering on).  
@@ -33,6 +39,10 @@ import h5py
 
 #how to 3d and 2d data sets, abstracting is almost intuitive, but still needs some thought.  parsing each delay stage scan. the result is.... that's binned... into big time buckets. roughly equal length. so it's a 3d data set? yes. acqiris/gmd, delay stage, and big time buckets that correspond to human experienced time needed to finish one of the scans.  that becomes a 3d cube. if broken up into acqiris, gmd, delay stage, and scan #, that becomes a 4d cube.
   
+
+#histogramdd. that should bin is as desired.  but how to get it into a format other programs like glue or imagej can use?  how to 
+
+#which way to plot? Which way to sum? Which slice or projection?  along which axis?
 
 
 #==================
