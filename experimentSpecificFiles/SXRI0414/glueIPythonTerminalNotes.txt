@@ -21,7 +21,7 @@ myData.components
 myRatio = myData['/acqiris2']/myData['/GMD']
 myData.add_component(myRatio,'normalizedAcqiris2')
 
-#FEE position.  Shows monochromator bandwidth when plotting GMD vs FEE_Position.
+#FEE position.  Shows monochromator bandwidth when plotting GMD vs FEE_Position.  Moeller this premise is not true.
 myData = dc[0]
 myData.components
 myRatio = (myData['/gas_detector/f_11_ENRC']-myData['/gas_detector/f_12_ENRC'])/(myData['/gas_detector/f_11_ENRC']+myData['/gas_detector/f_12_ENRC'])
