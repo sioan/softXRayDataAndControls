@@ -252,7 +252,8 @@ batchSubmit = os.system("bsub -o /reg/neh/home/sioan/Desktop/psana/%J.log -q psn
 #command that works
 #mpirun is a command in and of itself
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis.cfg -hd5 b -t
-
+#with time tools
+psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
 
 
