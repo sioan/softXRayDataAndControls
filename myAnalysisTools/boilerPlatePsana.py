@@ -2,6 +2,11 @@ from pylab import *
 import psana
 from ImgAlgos.PyAlgos import photons
 from scipy.signal import convolve2d
+import TimeTool
+
+
+ttOptions = TimeTool.AnalyzeOptions(get_key='TSS_OPAL',eventcode_nobeam = 162)
+ttAnalyze = TimeTool.PyAnalyze(ttOptions)
 
 #runNum = sys.argv[1]
 runNum = "38"
@@ -13,7 +18,9 @@ runNum = "38"
 #ds = psana.MPIDataSource('exp=sxrlq7615:run='+runNum+':smd')
 #ds = psana.MPIDataSource('exp=xpptut15:run='+str(runNum))
 #myDataSource = psana.MPIDataSource('exp=sxrk3016:run=118:smd')
-myDataSource = psana.MPIDataSource('exp=sxr10116:run=73:smd')
+#myDataSource = psana.MPIDataSource('exp=sxr10116:run=73:smd')
+myDataSource = psana.MPIDataSource('exp=sxri0414:run=60:smd',module=ttAnalyze)
+
 
 #psana.DetNames()
 acqirisDetectorObject = psana.Detector("Acq02")
@@ -22,6 +29,8 @@ andorDetectorObject = psana.Detector('andor')
 
 pnccdDetectorObject = psana.Detector('pnccdFront')
 
+tssOpalDetectorObject = psana.Detector('TSS_OPAL')
+
 myEnumeratedEvents = enumerate(myDataSource.events())
 
 eventNumber,thisEvent = next(myEnumeratedEvents)
@@ -29,6 +38,8 @@ eventNumber,thisEvent = next(myEnumeratedEvents)
 myWaveform = acqirisDetectorObject(thisEvent)
 
 myImage = andorDetectorObject.image(thisEvent)
+
+ttResults = ttAnalyze.process(evt))
 
 ##################################################
 ###############making a photon image#############

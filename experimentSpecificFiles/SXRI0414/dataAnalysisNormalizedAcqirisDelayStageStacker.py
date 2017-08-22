@@ -227,6 +227,10 @@ if __name__ == '__main__':
 	#permutation of 12
 
 """
+
+	x-value (time in ps) = x-value (position of stage in mm) * 2 / c0
+	where c0 should be 0.299792458 (speed of light in mm/ps)
+
 	#event codes 
 	#162 is by kick
 	byKickMask = [bool((i+1)%2) for i in array(f['evr']['code_162'])]

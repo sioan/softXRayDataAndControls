@@ -7,6 +7,9 @@ def genericReturn(detectorObject,thisEvent):
 def myZeroReturn(detectorObject,thisEvent,previousProcessing):
 	return 0
 
+def getTimeToolData(detectorObject,thisEvent):
+	ttData = ttAnalyze.process(thisEvent)
+
 def getPeak(detectorObject,thisEvent):
 
 	myWaveForm = -detectorObject(thisEvent)[0][0]

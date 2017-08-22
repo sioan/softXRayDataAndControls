@@ -44,6 +44,13 @@ import h5py
 
 #which way to plot? Which way to sum? Which slice or projection?  along which axis?
 
+#turner normalize on event by event. silke normalizes averaged over several events.
+#tim subtracts laser off shots
+#filter on bad time tool amplitudes.
+
+#notes from josh for sxri. doesn't belong here, needs to find a home.
+#x-value (time in ps) = x-value (position of stage in mm) * 2 / c0
+#where c0 should be 0.299792458 (speed of light in mm/ps)
 
 #==================
 

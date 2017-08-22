@@ -1,0 +1,29 @@
+#examples for MPI run command line.
+
+
+###################################
+########location of files##########
+#/reg/neh/operator/amoopr/2016/amon0816
+
+
+###################################
+#####commands for mpi run##########
+
+
+amoi0214-k_t_jitter.py:# /reg/g/psdm/sw/releases/ana-current/arch/x86_64-rhel5-gcc41-opt/bin/mpirun -n 24 --host daq-amo-mon02,daq-amo-mon03,daq-amo-mon04 amoi0214-mpi.csh
+amon0816-offline.py:# mpirun -n 40 --host daq-amo-mon02,daq-amo-mon03,daq-amo-mon04,daq-amo-mon05,daq-amo-mon06 amon0816.sh
+amon0816-offline.py:# bsub -n 24 -q psnehhiprioq -o /reg/data/ana13/amo/amon0816/results/mbucher/%J.log mpirun python /reg/neh/operator/amoopr/2016/amon0816/amon0816-offline.py
+amon0816-offline.py:# bsub -n 32 -q psanaq -o /reg/data/ana13/amo/amon0816/results/alhaddad/%J.log mpirun python /reg/neh/operator/amoopr/2016/amon0816/amon0816-offline.py 213
+amon0816-offline.py~:# mpirun -n 40 --host daq-amo-mon02,daq-amo-mon03,daq-amo-mon04,daq-amo-mon05,daq-amo-mon06 amon0816.sh
+amon0816-offline.py~:# bsub -n 288 -q psnehhiprioq -o /reg/data/ana13/amo/amon0816/results/mbucher/%J.log mpirun python /reg/neh/operator/amoopr/2016/amon0816/amon0816-offline.py
+amon0816.py:# mpirun -n 40 --host daq-amo-mon02,daq-amo-mon03,daq-amo-mon04,daq-amo-mon05,daq-amo-mon06 amon0816.sh
+
+###################################
+#####contents of shell script######
+
+
+#!/bin/bash
+#source /reg/g/psdm/etc/ana_env.sh
+#python amon0816.py
+
+
