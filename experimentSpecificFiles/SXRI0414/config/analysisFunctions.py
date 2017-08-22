@@ -4,11 +4,27 @@ import psana
 def genericReturn(detectorObject,thisEvent):
 	return detectorObject(thisEvent)
 
+def genericSummaryZero(detectorObject,thisEvent,previousProcessing):
+	return 0
+
 def myZeroReturn(detectorObject,thisEvent,previousProcessing):
 	return 0
 
 def getTimeToolData(detectorObject,thisEvent):
-	ttData = ttAnalyze.process(thisEvent)
+	ttData = detectorObject.process(thisEvent)
+	myDict = {}	
+	if(ttData is None):
+		
+		myDict['amplitude'] = -99999
+		myDict['pixelTime'] = -99999
+
+
+	else:
+
+		myDict['amplitude'] = ttData.amplitude()
+		myDict['pixelTime'] = ttData.position_time()
+
+	return myDict
 
 def getPeak(detectorObject,thisEvent):
 

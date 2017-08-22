@@ -28,70 +28,40 @@ import psana
 import subprocess
 import time
 import h5py
+import TimeTool
 
 #this small data wrapper is to swap out small data implementations 
 #depending whether MPIDataSouce or plain data source is used
+ttAnalyze = None
 
-class SmallData():
-	def __init__(self,h5FileName):
-		self.h5FileObject = h5py.File(h5FileName, 'w')
-		self.eventNumber = 1
-		
-	def event(self,dataDictionary):
-		#if(self.eventNumber != 1 ):
-		if(True==False):
-			x=1
-			#for i in dataDictionary:
-				#self.h5FileObject[i].resize((self.eventNumber+1,))
-				#self.h5FileObject[i][self.eventNumber] = dataDictionary[i]
-				#print("succeded")
-				
+def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode):
+	global ttAnalyze
 
-		else:
-			if any([None is dataDictionary[k] for k in dataDictionary]):
-				return
-			else:
-			#for i in dataDictionary:
-			#	if(dataDictionary[i] is None):
-			#		return
-				#print("failed")
-				#print(dataDictionary[i])
-				#self.h5FileObject.create_dataset(i,(0,),dtype='f8',maxshape=(None,))
-				#self.h5FileObject[i].resize((self.eventNumber,))
-				#self.h5FileObject[i][0] = dataDictionary[i]
-				for i in dataDictionary:
-					self.h5FileObject.create_dataset(str(i+'/'+str(self.eventNumber)),data=dataDictionary[i])
-				
+	if(ttDevice is not None ):
 
-		self.eventNumber = self.eventNumber + 1
-		
-	def save(self,summaryDictionaryData):
-		for i in summaryDictionaryData:
-			self.h5FileObject[i] = summaryDictionaryData[i]
-
-	def close(self):
-		self.h5FileObject.close()
-
-def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,MPI):
-
-	if(MPI==False):
+		print("setting up time tool.") 
+		print("Device = "+ttDevice)
+		print("bykick code = "+str(ttCode)) 
+		ttOptions = TimeTool.AnalyzeOptions(get_key=ttDevice,eventcode_nobeam = ttCode)
+		ttAnalyze = TimeTool.PyAnalyze(ttOptions)
+	
 		print("loading experiment data using standard small data")
-		#myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
-		myDataSource = psana.MPIDataSource(experimentNameAndRun)	#this needs to be merged
+		myDataSource = psana.MPIDataSource(experimentNameAndRun,module=ttAnalyze)	
 
 		print("defining small data")
 		smldata = myDataSource.small_data(h5FileName)
 	else:
 		print("loading experiment using custom small data")
-		myDataSource = psana.MPIDataSource(experimentNameAndRun)	#this is hook for non mpi
+		myDataSource = psana.MPIDataSource(experimentNameAndRun)
 
 		print("defining small data. hook in place ")
-		smldata = SmallData(h5FileName)
+		smldata = myDataSource.small_data(h5FileName)
 
 
 	return (myDataSource,smldata)
 
 def generateDetectorDictionary(configFileName):
+	global ttAnalyze
 
 	myWorkingDirectory = subprocess.check_output("pwd")[:-1]
 	print("working directory = "+str(myWorkingDirectory))
@@ -116,6 +86,12 @@ def generateDetectorDictionary(configFileName):
 
 		else:
 			continue
+
+		if(ttAnalyze is not None):
+			print("casting time tool as detector object")
+			myDetectorObjectDictionary['TSS_OPAL'] = ttAnalyze
+			myDetectorObjectDictionary['analyzer']['TSS_OPAL'] = analysisFunctions.__dict__['getTimeToolData']
+			myDetectorObjectDictionary['summarizer']['TSS_OPAL'] = analysisFunctions.__dict__['genericSummaryZero']
 		
 	return myDetectorObjectDictionary
 
@@ -132,7 +108,7 @@ def renameSummaryKeys(myDict):
 	for i in tempKeys:
 		myDict[i+'Summarized'] = myDict.pop(i)
 
-def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
+def main(exp, run, configFileName,h5FileName,testSample,ttDevice,ttCode,startEvent):
 	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary
 
 	startTime = time.time()
@@ -146,14 +122,14 @@ def main(exp, run, configFileName,h5FileName,testSample,MPI,startEvent):
 	except:
 		print("nothing to remove")
 	
-	experimentNameAndRun = "exp=%s:run=%d"%(exp, run)
+	experimentNameAndRun = "exp=%s:run=%d:smd"%(exp, run)
 	#print("loading experiment")
 	#myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
 
 	#print("defining small data")
 	#smldata = myDataSource.small_data(h5FileName)
 
-	myDataSource, smldata = makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,MPI)
+	myDataSource, smldata = makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode)
 
 	print("loading detector object dictionary")
 	myDetectorObjectDictionary = generateDetectorDictionary(configFileName)
@@ -215,7 +191,9 @@ if __name__ == '__main__':
 	myParser.add_argument('-c','--configFile',help='the config file to read from',default='analysis.cfg')
 	myParser.add_argument('-hd5','--hd5File',help='extension of the small data file to write to. typically a,b or c',default="")
 	myParser.add_argument('-t','--testSample',action='store_true',help='only take a small set of data for testing')
-	myParser.add_argument('-m','--MPI',action='store_true',help='does not use mpi ')
+	myParser.add_argument('-td','--ttDevice',type=str,help='device to use for getting time tool ', default=None)
+	myParser.add_argument('-tc','--ttCode',type=int,help='event code to identify by kick', default=None)
+	
 	myParser.add_argument('-s','--start',type=int,help='skips until starting event reached', default=-1)
 
 	myArguments = myParser.parse_args()
@@ -227,5 +205,6 @@ if __name__ == '__main__':
 		myArguments.configFile,
 		myArguments.hd5File,
 		myArguments.testSample,
-		myArguments.MPI,
+		myArguments.ttDevice,
+		myArguments.ttCode,
 		myArguments.start)
