@@ -11,7 +11,7 @@ myData.subsets
 
 mySubset=myData.subsets[1]
 
-mySubset.to_mask()
+myMask = mySubset.to_mask()
 
 ####################################
 #######adding data##################

@@ -78,7 +78,80 @@ def hdf5_to_dict(myhdf5Object):
 
 	return replacementDictionary
 
+def dictToScatterTable(myDict):
+
+	#targetTable = copy.deepcopy(targetTableB)
+	#correspondingKeys = copy.deepcopy(correspondingKeysB)
+	
+	targetTable = []
+	correspondingKeys = []
+
+	#make large table for each dictionary element
+	for i in myDict:
+		print correspondingKeys
+		#print dir(myDict[i])
+		if('keys' not in dir(myDict[i])):
+			if(len(targetTable)==0):
+				targetTable = myDict[i]
+				correspondingKeys = i
+			else:
+				targetTable = vstack([targetTable,myDict[i]])
+				correspondingKeys = append(correspondingKeys,i)
+
+		else:	#(there is a sub key)
+			#print("Here be keys.  "+str(len(targetTable)))
+			tempTable, tempKeys = dictToScatterTable(myDict[i])
+			print(str(len(targetTable))+", "+str(len(tempTable)))			
+			if(len(targetTable)==0):
+				targetTable =tempTable
+				correspondingKeys = tempKeys
+
+			else:
+				
+				targetTable = vstack([targetTable,tempTable])
+				correspondingKeys = append(correspondingKeys,tempKeys)
+		
+
+	return targetTable,correspondingKeys
+
+
 def main():
+	global myDict
+	f = h5py.File(fileName,'r')
+	myDict= hdf5_to_dict(f)
+	f.close()
+
+	
+
+if(True):
+
+	myMask = loadtxt("myMask.dat")
+	myMask = myMask.astype(bool)
+	#chosenKeys = ['GMD','acqiris']
+
+	#toBeBinned = myDict['GMD']
+	#toBeBinned = vstack([toBeBinned,myDict['acqiris2']])
+	toBeBinned = myDict['acqiris2']/myDict['GMD']
+	toBeBinned = vstack([toBeBinned,2/.3*(myDict['delayStage']-49)+1*myDict['TSS_OPAL']['pixelTime']/1000.0])
+	toBeBinned = toBeBinned.transpose()
+	toBeBinned = toBeBinned[myMask==False]
+
+
+	#binEdges = (arange(0,.0014,.0014/20.0),arange(0,1,1/20.0),arange(-1,4,.015))
+	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
+	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
+	binEdges = (arange(0,4000,40),arange(-1,20,.05))
+
+	myWeights = (myDict['acqiris2'][myMask==False])/(myDict['GMD'][myMask==False])
+	
+
+	myBinCounts = histogramdd(toBeBinned,bins=binEdges)
+
+	myBinAverage = histogramdd(toBeBinned,bins=binEdges,weights=myWeights)
+
+	#plot(myBinAverage[0][0]/myBinCounts[0][0])
+
+
 
 if __name__ == '__main__':
 	
