@@ -250,9 +250,12 @@ bkill
 bsub
 batchSubmit = os.system("bsub -o /reg/neh/home/sioan/Desktop/psana/%J.log -q psnehhiprioq -n 32 mpirun --mca btl ^openib python kboPowerPostCleaning.py "+str(i)+" $1")
 #command that works
+#mpirun is a command in and of itself
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -c analysis.cfg -hd5 b -t
+#with time tools
+psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
-
+bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
 
 
 #link for contact lists
@@ -454,4 +457,4 @@ sxr patch panel ethernet
 https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG5r0/edit#gid=2074785331
 
 #
-daq-sxd-spec couldn't boot.  using wrong redhat from diskless boot.
+daq-sxd-spec couldn't boot.  using wrong redhat from diskless boot.  changed on pspxe

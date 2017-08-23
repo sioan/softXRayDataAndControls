@@ -1,7 +1,8 @@
-#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
+#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python -i
 from pylab import *
 import h5py
 import argparse
+import sys
 
 def hdf5_to_dict(myhdf5Object):
 	replacementDictionary = {}
@@ -31,11 +32,12 @@ def main(fileName):
 	#	print(str(array(f[i])[:10]))
 	#f.close()
 	myDict= hdf5_to_dict(f)
+	f.close()
 
 if __name__ == '__main__':
 
 	#myParser = argparse.ArgumentParser(description='Abstracts data analysis into user functions')
-	
+	print(sys.argv)	
 	print("parsing arguments")
 	myParser = argparse.ArgumentParser(description='Abstracts data analysis into user functions')
 		

@@ -91,7 +91,7 @@ def generateDetectorDictionary(configFileName):
 			print("casting time tool as detector object")
 			myDetectorObjectDictionary['TSS_OPAL'] = ttAnalyze
 			myDetectorObjectDictionary['analyzer']['TSS_OPAL'] = analysisFunctions.__dict__['getTimeToolData']
-			myDetectorObjectDictionary['summarizer']['TSS_OPAL'] = analysisFunctions.__dict__['genericSummaryZero']
+			#myDetectorObjectDictionary['summarizer']['TSS_OPAL'] = None
 		
 	return myDetectorObjectDictionary
 
