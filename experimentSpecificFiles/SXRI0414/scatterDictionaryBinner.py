@@ -3,7 +3,7 @@ from pylab import *
 from scipy.interpolate import interp1d
 import h5py
 import argparse
-
+from scipy.optimize import curve_fit
 
 #--------------------------------------------------------------------------
 # File and Version Information:
@@ -61,6 +61,13 @@ import argparse
 
 
 #==================
+
+def lognorm(x,a,mode,s):
+
+	#a,mu,s = p
+
+	mu = log(mode)+s**2
+	return a*(1.0/(s*x*2*3.14159)*exp(-(log(x)-mu)**2/(2*s**2)))
 
 def hdf5_to_dict(myhdf5Object):
 	replacementDictionary = {}
@@ -208,8 +215,10 @@ if __name__ == '__main__':
 	#chosenKeys = ['GMD','acqiris']
 	#myMask = [myDict]
 	myMask = myMask * (myDict['TSS_OPAL']['pixelTime']>0)	#excluding bad time tool data
-	myMask = myMask * (myDict['acqiris2']>0)	#excluding bad time tool data
-	myMask = myMask * (myDict['GMD']>0)	#excluding bad time tool data
+	myMask = myMask * (myDict['acqiris2']>0.002)	#excluding bad acqiris data
+	#myMask = myMask * (myDict['acqiris2']<0.75)	#excluding bad acqiris data
+	myMask = myMask * (myDict['GMD']>0.00001)	#excluding bad gmd data
+	#myMask = myMask * (myDict['GMD']<0.001)	#excluding bad gmd data
 	#myMask = myMask * (myDict['fiducials']%4==3)	#this has no effect on fourier components
 	
 
@@ -232,8 +241,14 @@ if __name__ == '__main__':
 	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
 	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
 	
+	#####################
+	####brute average###
 	#binEdges = (arange(0,4000,3001),arange(-1,20,.1))
-	binEdges = (arange(0,4000,3001),arange(-1,20,.0125))		#bin size.  need to abstract it into config file. 0.1 see's low frequency oscillations. 0.0125 see's multiple harmonics at 10.5 THZ, 20.5 THz and 30.5 THz (are units correct?) in bin count.  what's the physical interpretation?
+	binEdges = (arange(0,4000,3001),arange(-0.05,20,.1))		#bin size.  need to abstract it into config file. 
+	#0.1 see's low frequency oscillations. That's the delay stage step. 
+	#0.0125 see's multiple harmonics at 10.5 THZ, 20.5 THz and 30.5 THz (are units correct?) in bin count.  
+	#what's the physical interpretation?  Lame interpretation.  Due to sub delayStage resolution binning.  Would normally give sharp spikes
+	#that alias between the binning frequency and delayStage.  the time tool partially smears that away, but it's still present.
 
 	myWeights = 0+toBeBinned[:,0]
 	
@@ -245,24 +260,78 @@ if __name__ == '__main__':
 	myBin2Moment = histogramdd(toBeBinned,bins=binEdges,weights=myWeights**2)[0][0]/myBinCount[0][0]
 	myBin2StanError = abs(myBin2Moment - myBinAverage**2)**0.5/myBinCount[0][0]**0.5
 
-	subplot(221)
-	plot(myBinCount[1][1][:-1][::-1],myBinAverage,'.')
+	subplot(231)
+	#plot(myBinCount[1][1][:-1][::-1],myBinAverage,'.')
+	plot(binEdges[1][:-1][::-1],myBinAverage,'.')
 	#errorbar(myBinCount[1][1][:-1][::-1],myBinAverage,yerr=myBin2StanError)
 
-	subplot(222)
+	subplot(232)
 	plot(myBinCount[1][1][:-1][::-1],(myBinCount[0][0])[::-1],'.')
 
-	subplot(223)
+	subplot(234)
 	myFFT = (abs(fft(nan_to_num(myBinAverage[51:]))))
 	#myFFT = log(abs(fft(myBinCount[0][0][51:])))	#this shows intensity response in fourier domain is an artifact.
 	myFFT = myFFT[:int(len(myFFT)/2)]
 	semilogy(arange(len(myFFT))*1.0/20,myFFT)
 
-	subplot(224)
+	subplot(235)
 	#myFFT = log(abs(fft(myBinAverage[51:])))
 	myFFT = (abs(fft(myBinCount[0][0][51:])))	#this shows intensity response in fourier domain is an artifact.  is present even when mask is all true
 	myFFT = myFFT[:int(len(myFFT)/2)]
 	semilogy(arange(len(myFFT))*1.0/20,myFFT)
 
+	tempAverage = 0 + myBinAverage
+	
+	###############################
+	#####fitting distribution###### 
+	#abstracting different analysis types using histogramdd with different parameters
+
+	binEdges = (arange(0,3000,30),arange(-0.05,20,.1))		#bin size.  need to abstract it into config file. 
+	#0.1 see's low frequency oscillations. That's the delay stage step. 
+	#0.0125 see's multiple harmonics at 10.5 THZ, 20.5 THz and 30.5 THz (are units correct?) in bin count.  
+	#what's the physical interpretation?  Lame interpretation.  Due to sub delayStage resolution binning.  Would normally give sharp spikes
+	#that alias between the binning frequency and delayStage.  the time tool partially smears that away, but it's still present.
+
+	myWeights = 0+toBeBinned[:,0]
+	
+
+	myBinCount = histogramdd(toBeBinned,bins=binEdges)
+
+	myBinAverage = histogramdd(toBeBinned,bins=binEdges,weights=myWeights)[0][0]/myBinCount[0][0]
+
+	myBin2Moment = histogramdd(toBeBinned,bins=binEdges,weights=myWeights**2)[0][0]/myBinCount[0][0]
+	myBin2StanError = abs(myBin2Moment - myBinAverage**2)**0.5/myBinCount[0][0]**0.5
+
+	#actual fitting starts here.
+	#mu = log(mode)+s**2  and
+	#variance = (exp(s**2)-1)*exp(2*mu+s**2) for initial guess. variance doesn't solve well
+	
+	#def lognorm(x,p):
+	#a,mu,s = p
+	myModes = []
+	myModeError = []
+	mySigma = []
+	for thisBin in arange(myBinCount[0].shape[1]):
+		#initGuess = array([1,7.6,1])		
+		maxBinCountIndex= argmax(myBinCount[0][1:,thisBin])
+		myMode =	myBinCount[0][1:,thisBin][maxBinCountIndex]
+		
+		initGuess = array([sum(myBinCount[0][1:,thisBin]),myMode,1])
+		popt, pcov = curve_fit(lognorm, binEdges[0][1:-1][::1], myBinCount[0][1:,thisBin],p0=initGuess)
+		#plot(binEdges[0][1:-1][::1],lognorm(binEdges[0][1:-1][::1],*popt))
+		myModes = append(myModes,popt[1])
+		myModeError = append(myModeError,pcov[1,1])
+		mySigma = append(mySigma,popt[2])
+
+	subplot(233)
+	#errorbar(myBinCount[1][1][:-1][::-1],myModes,yerr=myModeError)
+	plot(myBinCount[1][1][:-1][::-1],myModes,'.')
+
+	subplot(236)
+	#errorbar(myBinCount[1][1][:-1][::-1],myModes,yerr=myModeError)
+	#plot(myBinCount[1][1][:-1][::-1],mySigma,'.')
+	myFFT = (abs(fft(myModes[10:])))	#this shows intensity response in fourier domain is an artifact.  is present even when mask is all true
+	myFFT = myFFT[:int(len(myFFT)/2)]
+	semilogy(arange(len(myFFT))*1.0/20,myFFT)
 	show()
 

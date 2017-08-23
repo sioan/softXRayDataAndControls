@@ -31,6 +31,10 @@ myData.components
 myRatio = (myData['/gas_detector/f_11_ENRC']-myData['/gas_detector/f_12_ENRC'])/(myData['/gas_detector/f_11_ENRC']+myData['/gas_detector/f_12_ENRC'])
 myData.add_component(myRatio,'FEE_position')
 
+####################################################
+#######adding time tool correction##################
+correctedTime = 2/.3*(myData['/delayStage']-49)+1*myData['/TSS_OPAL/pixelTime']/1000.0	#time tool direction. need to abstract into config file
+myData.add_component(correctedTime,'correctedTime')
 
 ###################################
 #######getting components##########
