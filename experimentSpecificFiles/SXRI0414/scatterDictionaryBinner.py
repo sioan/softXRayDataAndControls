@@ -1,6 +1,8 @@
+#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python -i
 from pylab import *
 from scipy.interpolate import interp1d
 import h5py
+import argparse
 
 
 #--------------------------------------------------------------------------
@@ -63,17 +65,17 @@ import h5py
 def hdf5_to_dict(myhdf5Object):
 	replacementDictionary = {}
 	for i in myhdf5Object:
-		print(str(myhdf5Object[i]))
+		#print(str(myhdf5Object[i]))
 		if ('dataset' in str(myhdf5Object[i])):
-			print("dataset is in"+str(myhdf5Object[i]))
+			#print("dataset is in"+str(myhdf5Object[i]))
 			if ('Summarized' not in str(myhdf5Object[i])):
 				replacementDictionary[i] = nan_to_num(myhdf5Object[i])
 			else:
 				x=1	
 		else:
 			replacementDictionary[i] = {}
-			print("dataset is not in"+str(myhdf5Object[i]))
-			print(i)
+			#print("dataset is not in"+str(myhdf5Object[i]))
+			#print(i)
 			replacementDictionary[i] = hdf5_to_dict(myhdf5Object[i])
 
 	return replacementDictionary
@@ -88,7 +90,7 @@ def dictToScatterTable(myDict):
 
 	#make large table for each dictionary element
 	for i in myDict:
-		print correspondingKeys
+		#print correspondingKeys
 		#print dir(myDict[i])
 		if('keys' not in dir(myDict[i])):
 			if(len(targetTable)==0):
@@ -101,7 +103,7 @@ def dictToScatterTable(myDict):
 		else:	#(there is a sub key)
 			#print("Here be keys.  "+str(len(targetTable)))
 			tempTable, tempKeys = dictToScatterTable(myDict[i])
-			print(str(len(targetTable))+", "+str(len(tempTable)))			
+			#print(str(len(targetTable))+", "+str(len(tempTable)))			
 			if(len(targetTable)==0):
 				targetTable =tempTable
 				correspondingKeys = tempKeys
@@ -114,66 +116,153 @@ def dictToScatterTable(myDict):
 
 	return targetTable,correspondingKeys
 
+def chooseFromScatterTable(myTable,correspondingKeys,chosenKeys):
 
-def main():
+	temp = []
+
+	for i in chosenKeys:
+		myIndex = argmax(i==correspondingKeys)
+		if len(temp) == 0:
+			temp = 0+ myTable[myIndex]
+		else:
+			temp = vstack([temp,myTable[myIndex]])
+	
+	return temp
+
+"""
+def main(filename):
 	global myDict
+
+	fileName = 'sxri0414run60.h5'
+
 	f = h5py.File(fileName,'r')
 	myDict= hdf5_to_dict(f)
 	f.close()
 
 	
 
-if(True):
-
 	myMask = loadtxt("myMask.dat")
 	myMask = myMask.astype(bool)
 	#chosenKeys = ['GMD','acqiris']
+	myMask = myMask * (myDict['TSS_OPAL']['pixelTime']<0)
+	myMask = myMask * (myDict['fiducials']%4==1)	#this has no effect on fourier components
 
-	#toBeBinned = myDict['GMD']
-	#toBeBinned = vstack([toBeBinned,myDict['acqiris2']])
-	toBeBinned = myDict['acqiris2']/myDict['GMD']
-	toBeBinned = vstack([toBeBinned,2/.3*(myDict['delayStage']-49)+1*myDict['TSS_OPAL']['pixelTime']/1000.0])
+	myDict['normalizedAcqiris'] = myDict['acqiris2']/myDict['GMD']
+	myDict['estimatedTime'] = 2/.3*(myDict['delayStage']-49)+0*myDict['TSS_OPAL']['pixelTime']/1000.0
+
+	myDataMatrix,myCorrespondingKeys = dictToScatterTable(myDict)
+
+	toBeBinned = myDataMatrix[:,myMask==False]
+	
+	myChosenKeys = ['normalizedAcqiris','estimatedTime']
+
+	toBeBinned = chooseFromScatterTable(toBeBinned,myCorrespondingKeys,myChosenKeys)
 	toBeBinned = toBeBinned.transpose()
-	toBeBinned = toBeBinned[myMask==False]
+
+	#binEdgesDictionary = makeBinEdgesDictionary
 
 
 	#binEdges = (arange(0,.0014,.0014/20.0),arange(0,1,1/20.0),arange(-1,4,.015))
 	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
 	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
-	binEdges = (arange(0,4000,40),arange(-1,20,.05))
+	binEdges = (arange(0,4000,3000),arange(-1,20,.05))
 
-	myWeights = (myDict['acqiris2'][myMask==False])/(myDict['GMD'][myMask==False])
+	myWeights = 0+toBeBinned[:,0]
 	
 
-	myBinCounts = histogramdd(toBeBinned,bins=binEdges)
+	myBinCount = histogramdd(toBeBinned,bins=binEdges)
 
 	myBinAverage = histogramdd(toBeBinned,bins=binEdges,weights=myWeights)
 
-	#plot(myBinAverage[0][0]/myBinCounts[0][0])
+	myBin2Moment = histogramdd(toBeBinned,bins=binEdges,weights=myWeights**2)
+	myBin2StanError = (myBin2Moment[0] - myBinAverage[0]**2)**0.5/myBinCount[0]**0.5
 
-
+	plot(myBinCount[1][1][:-1],(myBinAverage[0][0]/myBinCount[0][0])[::-1])
+	show()
+"""
 
 if __name__ == '__main__':
 	
-	print("parsing arguments")
-	myParser = argparse.ArgumentParser(description='Abstracts data analysis into user functions')
+	#print(sys.argv)	
+	#print("parsing arguments")
+	#myParser = argparse.ArgumentParser(description='Abstracts data analysis into user functions')
 		
-	myParser.add_argument('-f','--file name', help='file name')
-	myParser.add_argument('-d','--run',type=int,help='dictionary keys identifying data to bin',default=None)
-	myParser.add_argument('-c','--configuration file if the flags here are not helpful ',help='the config file to read from')
-	myParser.add_argument('-hd5','--hd5File',help='extension of the small data file to write to. typically a,b or c',default="")
-	myParser.add_argument('-t','--testSample',action='store_true',help='only take a small set of data for testing')
-	myParser.add_argument('-m','--MPI',action='store_true',help='does not use mpi ')
-	myParser.add_argument('-s','--start',type=int,help='skips until starting event reached', default=-1)
+	
+	#myParser.add_argument('-f','--fileName',help='fileName',default="None")
+	
+	#myArguments = myParser.parse_args()
 
-	myArguments = myParser.parse_args()
-	print("arguments parsed")
+	#main(myArguments.filename)
+	#main("temp")
 
-	main(
-		myArguments.exp,
-		myArguments.run,
-		myArguments.configFile,
-		myArguments.hd5File,
-		myArguments.testSample,
-		myArguments.MPI,
-		myArguments.start)
+	fileName = 'sxri0414run60.h5'
+
+	f = h5py.File(fileName,'r')
+	myDict= hdf5_to_dict(f)
+	f.close()
+
+	
+
+	myMask = loadtxt("myMask.dat")	#it's a positive mask.  keeping data that is good
+	myMask = myMask.astype(bool)
+	#chosenKeys = ['GMD','acqiris']
+	#myMask = [myDict]
+	myMask = myMask * (myDict['TSS_OPAL']['pixelTime']>0)	#excluding bad time tool data
+	myMask = myMask * (myDict['acqiris2']>0)	#excluding bad time tool data
+	myMask = myMask * (myDict['GMD']>0)	#excluding bad time tool data
+	#myMask = myMask * (myDict['fiducials']%4==3)	#this has no effect on fourier components
+	
+
+	myDict['normalizedAcqiris'] = myDict['acqiris2']/(1e-11+myDict['GMD'])	#when regulator is 1, not normalized by gmd. low oscilations present. disappear at meaningul normaization
+	myDict['estimatedTime'] = 2/.3*(myDict['delayStage']-49)+1*myDict['TSS_OPAL']['pixelTime']/1000.0	#time tool direction. need to abstract into config file
+
+	myDataMatrix,myCorrespondingKeys = dictToScatterTable(myDict)
+
+	toBeBinned = myDataMatrix[:,myMask]
+	
+	myChosenKeys = ['normalizedAcqiris','estimatedTime']
+
+	toBeBinned = chooseFromScatterTable(toBeBinned,myCorrespondingKeys,myChosenKeys)
+	toBeBinned = toBeBinned.transpose()
+
+	#binEdgesDictionary = makeBinEdgesDictionary
+
+
+	#binEdges = (arange(0,.0014,.0014/20.0),arange(0,1,1/20.0),arange(-1,4,.015))
+	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
+	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
+	
+	#binEdges = (arange(0,4000,3001),arange(-1,20,.1))
+	binEdges = (arange(0,4000,3001),arange(-1,20,.0125))		#bin size.  need to abstract it into config file. 0.1 see's low frequency oscillations. 0.0125 see's multiple harmonics at 10.5 THZ, 20.5 THz and 30.5 THz (are units correct?) in bin count.  what's the physical interpretation?
+
+	myWeights = 0+toBeBinned[:,0]
+	
+
+	myBinCount = histogramdd(toBeBinned,bins=binEdges)
+
+	myBinAverage = histogramdd(toBeBinned,bins=binEdges,weights=myWeights)[0][0]/myBinCount[0][0]
+
+	myBin2Moment = histogramdd(toBeBinned,bins=binEdges,weights=myWeights**2)[0][0]/myBinCount[0][0]
+	myBin2StanError = abs(myBin2Moment - myBinAverage**2)**0.5/myBinCount[0][0]**0.5
+
+	subplot(221)
+	plot(myBinCount[1][1][:-1][::-1],myBinAverage,'.')
+	#errorbar(myBinCount[1][1][:-1][::-1],myBinAverage,yerr=myBin2StanError)
+
+	subplot(222)
+	plot(myBinCount[1][1][:-1][::-1],(myBinCount[0][0])[::-1],'.')
+
+	subplot(223)
+	myFFT = (abs(fft(nan_to_num(myBinAverage[51:]))))
+	#myFFT = log(abs(fft(myBinCount[0][0][51:])))	#this shows intensity response in fourier domain is an artifact.
+	myFFT = myFFT[:int(len(myFFT)/2)]
+	semilogy(arange(len(myFFT))*1.0/20,myFFT)
+
+	subplot(224)
+	#myFFT = log(abs(fft(myBinAverage[51:])))
+	myFFT = (abs(fft(myBinCount[0][0][51:])))	#this shows intensity response in fourier domain is an artifact.  is present even when mask is all true
+	myFFT = myFFT[:int(len(myFFT)/2)]
+	semilogy(arange(len(myFFT))*1.0/20,myFFT)
+
+	show()
+
