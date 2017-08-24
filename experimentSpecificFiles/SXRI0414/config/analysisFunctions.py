@@ -17,12 +17,14 @@ def getTimeToolData(detectorObject,thisEvent):
 		
 		myDict['amplitude'] = -99999
 		myDict['pixelTime'] = -99999
+		myDict['positionFWHM'] = -99999
 
 
 	else:
 
 		myDict['amplitude'] = ttData.amplitude()
 		myDict['pixelTime'] = ttData.position_time()
+		myDict['positionFWHM'] = ttData.position_fwhm()
 
 	return myDict
 

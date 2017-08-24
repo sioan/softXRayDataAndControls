@@ -458,3 +458,12 @@ https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG
 
 #
 daq-sxd-spec couldn't boot.  using wrong redhat from diskless boot.  changed on pspxe
+
+amo-rga 
+netconfig search *rga for url and ip
+mksrga1
+
+
+#glue
+#source activate ana-1.3.11
+#

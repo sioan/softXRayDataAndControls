@@ -33,13 +33,20 @@ tssOpalDetectorObject = psana.Detector('TSS_OPAL')
 
 myEnumeratedEvents = enumerate(myDataSource.events())
 
+for eventNumber,thisEvent in myEnumeratedEvents:
+	ttResults = ttAnalyze.process(thisEvent)	
+	print eventNumber
+	if eventNumber > 200:
+		break
+
+
 eventNumber,thisEvent = next(myEnumeratedEvents)
 
 myWaveform = acqirisDetectorObject(thisEvent)
 
 myImage = andorDetectorObject.image(thisEvent)
 
-ttResults = ttAnalyze.process(evt))
+ttResults = ttAnalyze.process(thisEvent)
 
 ##################################################
 ###############making a photon image#############

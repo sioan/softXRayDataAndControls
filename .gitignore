@@ -40,6 +40,7 @@
 *.dat
 *.data
 *.pkl
+*.glu
 
 # temporary #
 #############
