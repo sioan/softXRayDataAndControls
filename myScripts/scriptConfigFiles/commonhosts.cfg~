@@ -22,6 +22,7 @@ psana1520
 #
 #phi and GPU computers
 #
+#psanagpu100
 psanagpu101
 psanagpu102
 psanagpu103
@@ -30,7 +31,10 @@ psanagpu105
 psanagpu106
 psanagpu107
 psanagpu108
+psanagpu109
+psanagpu110
 #
+psanaphi100
 psanaphi101
 psanaphi102
 psanaphi103
