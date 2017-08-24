@@ -1,0 +1,11 @@
+https://support.mozilla.org/en-US/kb/use-java-plugin-to-view-interactive-content#w_java-plugin-does-not-appear-in-the-add-ons-manager
+
+http://www.oracle.com/technetwork/java/javase/manual-plugin-install-linux-136395.html
+https://askubuntu.com/questions/383960/where-is-firefoxs-plugins-directory
+https://ubuntuforums.org/showthread.php?t=2063535
+https://sites.google.com/site/easylinuxtipsproject/java#TOC-HOW-TO-FOR-32-BIT-UBUNTU
+https://www.oracle.com/search/results?cat=javacom&Ntk=SI-ALL5&lang=en&Ntt=libnpjp2.so&submit.x=0&submit.y=0
+https://www.java.com/en/download/linux_manual.jsp
+
+/usr/lib64/mozilla/plugins
+http://www.oracle.com/technetwork/java/javase/manual-plugin-install-linux-136395.htm

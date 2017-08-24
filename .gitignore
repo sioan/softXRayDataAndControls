@@ -43,6 +43,7 @@
 *.json
 *.csv
 *.hdf5
+*.glu
 
 # temporary #
 #############
