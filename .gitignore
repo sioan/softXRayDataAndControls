@@ -40,6 +40,9 @@
 *.dat
 *.data
 *.pkl
+*.json
+*.csv
+*.hdf5
 
 # temporary #
 #############
