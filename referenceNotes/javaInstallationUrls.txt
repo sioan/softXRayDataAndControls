@@ -9,3 +9,13 @@ https://www.java.com/en/download/linux_manual.jsp
 
 /usr/lib64/mozilla/plugins
 http://www.oracle.com/technetwork/java/javase/manual-plugin-install-linux-136395.htm
+
+
+  109  alternatives --config java
+  166  alternatives java
+  188  sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jre1.8.0_144/bin/java" 1
+  189  sudo alternatives --config java
+  190  sudo update-alternatives --set java /usr/lib/jvm/jre1.8.0_144/bin/java
+  191  sudo alternatives --config java
+  376  ll /etc/alternatives/java
+

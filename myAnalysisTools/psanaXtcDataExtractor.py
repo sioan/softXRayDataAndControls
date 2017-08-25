@@ -16,6 +16,16 @@
 #
 #==================
 
+#to run interactively 
+#ipython -i ../../myAnalysisTools/psanaXtcDataExtractor.py -- -e sxri0414 -r 79 -td TSS_OPAL -tc 162 -f 150 -s 4 -t
+
+#to run on batch nodes
+#bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
+
+#mpi for specified hosts
+#mpirun -n 40 --host daq-amo-mon02,daq-amo-mon03,daq-amo-mon04,daq-amo-mon05,daq-amo-mon06 amon0816.sh
+
+#==================
 
 
 import argparse
@@ -36,7 +46,7 @@ ttAnalyze = None
 
 def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode):
 	global ttAnalyze
-
+	smldata = "None"
 	if(ttDevice is not None ):
 
 		print("setting up time tool.") 
@@ -49,13 +59,15 @@ def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode):
 		myDataSource = psana.MPIDataSource(experimentNameAndRun,module=ttAnalyze)	
 
 		print("defining small data")
-		smldata = myDataSource.small_data(h5FileName)
+		if(h5FileName!="None"):
+			smldata = myDataSource.small_data(h5FileName)
 	else:
 		print("loading experiment using custom small data")
 		myDataSource = psana.MPIDataSource(experimentNameAndRun)
 
 		print("defining small data. hook in place ")
-		smldata = myDataSource.small_data(h5FileName)
+		if(h5FileName!="None"):
+			smldata = myDataSource.small_data(h5FileName)
 
 
 	return (myDataSource,smldata)
@@ -108,27 +120,26 @@ def renameSummaryKeys(myDict):
 	for i in tempKeys:
 		myDict[i+'Summarized'] = myDict.pop(i)
 
-def main(exp, run, configFileName,h5FileName,testSample,ttDevice,ttCode,startEvent):
+def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,startEvent,finalEvent):
 	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary
-
+	#global myExp,myRun
+	print ("exp = "+str(myExp))
+	print ("run = "+str(myRun))
 	startTime = time.time()
 	print("entering main function")
 	
-	h5FileName = exp+'run'+str(run)+str(h5FileName)+'.h5'
-	
-	try:
-		print("removing file")
-		os.system("rm "+h5FileName)
-	except:
-		print("nothing to remove")
-	
-	experimentNameAndRun = "exp=%s:run=%d:smd"%(exp, run)
+	experimentNameAndRun = "exp=%s:run=%d:smd"%(myExp, myRun)
 	#print("loading experiment")
 	#myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
 
 	#print("defining small data")
 	#smldata = myDataSource.small_data(h5FileName)
-
+	
+	if(h5FileName!="None"):
+		h5FileName = myExp+'run'+str(myRun)+str(h5FileName)+'.h5'
+		print("removing file")
+		os.system("rm "+h5FileName)
+	
 	myDataSource, smldata = makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode)
 
 	print("loading detector object dictionary")
@@ -149,8 +160,8 @@ def main(exp, run, configFileName,h5FileName,testSample,ttDevice,ttCode,startEve
 			
 		if(eventNumber<startEvent):
 			continue
-		if(testSample):
-			if(eventNumber > 200):
+		if(testSample or (finalEvent > 0)):
+			if(eventNumber > finalEvent):
 				break
 		
 		for i in myDetectorObjectDictionary['analyzer']:
@@ -166,18 +177,19 @@ def main(exp, run, configFileName,h5FileName,testSample,ttDevice,ttCode,startEve
 		#	if (None is myDataDictionary[i]):
 		#		del myDataDictionary[i]
 
-		smldata.event(myDataDictionary)
+		if(h5FileName!="None"):
+			smldata.event(myDataDictionary)
 
 
 	print("finished looping over events")
-	print("saving small data")
-	#print(summaryDataDictionary)
-	renameSummaryKeys(summaryDataDictionary)
-	smldata.save(summaryDataDictionary)
-	#smldata.save()
-	print("small data file saved")
-	#smldata.close()
-	print("small data file closed")
+	if(h5FileName!="None"):
+		print("saving small data")
+	
+		renameSummaryKeys(summaryDataDictionary)
+		smldata.save(summaryDataDictionary)
+		print("small data file saved")
+		#smldata.close()
+		print("small data file closed")
 
 	return
 
@@ -195,6 +207,8 @@ if __name__ == '__main__':
 	myParser.add_argument('-tc','--ttCode',type=int,help='event code to identify by kick', default=None)
 	
 	myParser.add_argument('-s','--start',type=int,help='skips until starting event reached', default=-1)
+	myParser.add_argument('-f','--final',type=int,help='up to final event', default=1e12)
+	
 
 	myArguments = myParser.parse_args()
 	print("arguments parsed")
@@ -207,4 +221,5 @@ if __name__ == '__main__':
 		myArguments.testSample,
 		myArguments.ttDevice,
 		myArguments.ttCode,
-		myArguments.start)
+		myArguments.start,
+		myArguments.final)

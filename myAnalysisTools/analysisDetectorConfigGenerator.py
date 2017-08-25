@@ -35,7 +35,7 @@ def main(exp, run, configFileName):
 
 	print("initializing")
 	myDataSource = psana.MPIDataSource(experimentNameAndRun)
-	f = open('./config/'+configFileName+'.cfg','w')
+	f = open('./config/'+configFileName,'w')
 	print("writing libraries")
 
 	f.write('##########################\n')
@@ -69,7 +69,7 @@ if __name__ == '__main__':
 	
 	myParser.add_argument('-e','--exp', help='the experiment name')
 	myParser.add_argument('-r','--run',type=int,help='the run number to use when running offline')
-	myParser.add_argument('-c','--configFile',help='the config file to write to')
+	myParser.add_argument('-c','--configFile',help='the config file to write to',default="analysis.cfg")
 
 	myArguments = myParser.parse_args()
 

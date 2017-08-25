@@ -25,7 +25,7 @@ runNum = "38"
 #ds = psana.MPIDataSource('exp=xpptut15:run='+str(runNum))
 #myDataSource = psana.MPIDataSource('exp=sxrk3016:run=118:smd')
 #myDataSource = psana.MPIDataSource('exp=sxr10116:run=73:smd')
-myDataSource = psana.MPIDataSource('exp=sxri0414:run=60:smd',module=ttAnalyze)
+#myDataSource = psana.MPIDataSource('exp=sxri0414:run=60:smd',module=ttAnalyze)
 myDataSource = psana.MPIDataSource('exp=amolp0515:run=4:smd',module=ttAnalyze)
 
 

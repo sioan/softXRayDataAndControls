@@ -1,5 +1,0 @@
-#!/bin/bash
-HOST=$1
-echo "ssh'ing to " $HOST
-ssh $HOST screen -list
-

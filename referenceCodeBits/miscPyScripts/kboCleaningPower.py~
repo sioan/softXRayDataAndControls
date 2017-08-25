@@ -1,9 +1,0 @@
-from pyEpics import *
-from pylab import *
-import time
-
-myData = []
-
-
-while(1):
-	myData = vstack([myData,])

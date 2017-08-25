@@ -55,7 +55,7 @@ if __name__ == '__main__':
 	print("checking screens")
 	myParser = argparse.ArgumentParser(description='checks if screens exist on hosts in config file')
 		
-	myParser.add_argument('-k','--kill',action='store_true', help='kills the screens too')
+	myParser.add_argument('-k','--kill',action='store_true', help='kills the host too')
 	myParser.add_argument('-r','--run',type=int,help='the run number to use when running offline')
 
 	myArguments = myParser.parse_args()
