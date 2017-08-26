@@ -202,7 +202,7 @@ if __name__ == '__main__':
 	#main(myArguments.filename)
 	#main("temp")
 
-	fileName = 'sxri0414run60.h5'
+	fileName = 'sxri0414run63.h5'
 
 	f = h5py.File(fileName,'r')
 	myDict= hdf5_to_dict(f)
