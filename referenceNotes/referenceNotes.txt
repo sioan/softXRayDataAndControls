@@ -470,3 +470,44 @@ mksrga1
 #glue
 #source activate ana-1.3.11
 #
+
+
+pnccd motor locations
+Hi, the pixel positions are reportedly retrievable by
+cx, cy, cz = det.coords_xyz(par)
+See
+https://lcls-psana.github.io/Detector/index.html#module-AreaDetector
+
+To get motor and gain info I do
+     env = ds.env()
+     es = env.epicsStore()
+     pyt  = es.getPV('AMO:LMP:MMS:07.RBV').value(0)
+     pyb  = es.getPV('AMO:LMP:MMS:08.RBV').value(0)
+     px  = es.getPV('AMO:LMP:MMS:09.RBV').value(0)
+     pz = es.getPV('AMO:LMP:MMS:10.RBV').value(0)
+     gain = es.getPV('PNCCD:FRONT:GAIN').value(0)
+
+You can instead do
+     ds = DataSource('exp=amoj4115:run=%d:smd' %(run))
+     ytop = Detector('AMO:LMP:MMS:07.RBV')
+     ybot = Detector('AMO:LMP:MMS:08.RBV')
+     x = Detector('AMO:LMP:MMS:09.RBV')
+...
+
+
+The pixel gap is given by
+y_t - y_b + 3.31mm (front)
+1.33mm (back)
+
+The front x displacement is 0.464mm, with the top (lower z) camera 
+shifted by that much in +x with respect to the bottom; the bottom should 
+be about the same.
+
+- Philip
+
+reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
+/reg/g/pcds/setup/pcds_shortcuts.sh:#	show_epics_sioc [ all | hostname ] ...
+/reg/g/pcds/setup/pcds_shortcuts.sh:function show_epics_sioc_filter( )
+/reg/g/pcds/setup/pcds_shortcuts.sh:export show_epics_sioc_filter
+/reg/g/pcds/setup/pcds_shortcuts.sh:function show_epics_sioc( )
+

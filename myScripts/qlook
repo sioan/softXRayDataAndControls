@@ -1,6 +1,6 @@
 #!/bin/bash
 
 isGreppedWord=$1
-myFile=/reg/neh/home/sioan/softXRayDataAndControls/referenceNotes/directoryNotes.txt
+myFile=/reg/neh/home/sioan/softXRayDataAndControls/referenceNotes/referenceNotes.txt
 
 grep -A3 -B3 -i $isGreppedWord $myFile
