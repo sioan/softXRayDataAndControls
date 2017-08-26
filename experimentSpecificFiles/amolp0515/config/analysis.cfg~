@@ -3,7 +3,7 @@
 ##########################
 #NoDetector.0:Evr.0, , , 
 Camp.0:pnCCD.1, pnccdBack, ,pnccdBack,getPnccdImage,None,
-Camp.0:pnCCD.0, pnccdFront, ,pnccdFront,getPnccdImage,None,
+#Camp.0:pnCCD.0, pnccdFront, ,pnccdFront,getPnccdImage,None,
 #AmoEndstation.0:Opal1000.3, OPAL3, , 
 #NoDetector.0:Evr.1, , , 
 #EBeam, , , 

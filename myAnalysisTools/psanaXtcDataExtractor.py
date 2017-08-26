@@ -20,7 +20,7 @@
 #ipython -i ../../myAnalysisTools/psanaXtcDataExtractor.py -- -e sxri0414 -r 79 -td TSS_OPAL -tc 162 -f 150 -s 4 -t
 
 #to run on batch nodes
-#bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
+#bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162 -f 20000
 
 #mpi for specified hosts
 #mpirun -n 40 --host daq-amo-mon02,daq-amo-mon03,daq-amo-mon04,daq-amo-mon05,daq-amo-mon06 amon0816.sh
@@ -160,13 +160,13 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 			
 		if(eventNumber<startEvent):
 			continue
-		if(testSample or (finalEvent > 0)):
-			if(eventNumber > finalEvent):
-				break
+		if(testSample and (eventNumber > 200)):
+			break
+		if(eventNumber > finalEvent):
+			break
 		
 		for i in myDetectorObjectDictionary['analyzer']:
 			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
-	
 
 		for i in myDetectorObjectDictionary['summarizer']:
 				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary[i],thisEvent,summaryDataDictionary[i])
@@ -178,6 +178,7 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		#		del myDataDictionary[i]
 
 		if(h5FileName!="None"):
+			#print myDataDictionary[myDataDictionary.keys()[0]]
 			smldata.event(myDataDictionary)
 
 
@@ -223,3 +224,6 @@ if __name__ == '__main__':
 		myArguments.ttCode,
 		myArguments.start,
 		myArguments.final)
+
+	print("finished")
+	
