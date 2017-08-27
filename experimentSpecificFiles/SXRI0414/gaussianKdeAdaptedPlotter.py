@@ -42,8 +42,8 @@ def normalize(x,ignoreRange):
 	return tx/std(tx[ignoreRange:])
 	
 
-plot(yCalibrated,normalize(myY[::-1],4)) 
-plot(yCalibrated,normalize(myMedianY[::-1],4)) 
+plot(yCalibrated,normalize(myY[::-1],4),linewidth=2) 
+plot(yCalibrated,normalize(myMedianY[::-1],4),linewidth=2) 
 plot(myBinCount[1][1][:-1][::-1],normalize(myModes,4)) 
 plot(binEdges[1][:-1][::-1],normalize(tempAverage,4))
 ylim(-3,2)

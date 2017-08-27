@@ -210,15 +210,22 @@ if __name__ == '__main__':
 
 	
 
-	myMask = loadtxt("myMask.dat")	#it's a positive mask.  keeping data that is good
-	myMask = myMask.astype(bool)
+	#myMask = loadtxt("myMaskRun60.dat")	#it's a positive mask.  keeping data that is good
+	#myMask = myMask.astype(bool)
+	myMask = ones(len(myDict['acqiris2'])).astype(bool)
+	
 	#chosenKeys = ['GMD','acqiris']
 	#myMask = [myDict]
 	myMask = myMask * (myDict['TSS_OPAL']['pixelTime']>0)	#excluding bad time tool data
 	myMask = myMask * (myDict['acqiris2']>0.002)	#excluding bad acqiris data
-	#myMask = myMask * (myDict['acqiris2']<0.75)	#excluding bad acqiris data
+	myMask = myMask * (myDict['acqiris2']<0.75)	#excluding bad acqiris data
 	myMask = myMask * (myDict['GMD']>0.00001)	#excluding bad gmd data
-	#myMask = myMask * (myDict['GMD']<0.001)	#excluding bad gmd data
+	myMask = myMask * (myDict['GMD']<0.001)	#excluding bad gmd data
+	myMask = myMask * (myDict['evr']['code_162']==0)
+	myMask = myMask * (myDict['TSS_OPAL']['positionFWHM']<50)
+	myMask = myMask * (myDict['TSS_OPAL']['positionFWHM']>10)
+	myMask = myMask * (myDict['ebeam']['photon_energy']>900)
+	myMask = myMask * (myDict['ebeam']['photon_energy']<930)
 	#myMask = myMask * (myDict['fiducials']%4==3)	#this has no effect on fourier components
 	
 
@@ -334,4 +341,6 @@ if __name__ == '__main__':
 	myFFT = myFFT[:int(len(myFFT)/2)]
 	semilogy(arange(len(myFFT))*1.0/20,myFFT)
 	show()
+
+execfile("gaussianKdeAdapted.py")
 

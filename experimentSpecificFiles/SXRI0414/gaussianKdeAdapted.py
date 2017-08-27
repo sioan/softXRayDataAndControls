@@ -24,6 +24,9 @@ values = np.vstack([m1, m2])
 kernel = stats.gaussian_kde(values)
 Z = np.reshape(kernel(positions).T, X.shape)
 
+execfile("gaussianKdeAdaptedPlotter.py")
+
+"""
 print("Plot the results:")
 
 
@@ -67,4 +70,4 @@ plot(myBinCount[1][1][:-1][::-1],normalize(myModes,4))
 plot(binEdges[1][:-1][::-1],normalize(tempAverage,4))
 ylim(-3,2)
 xlim(-1,20)
-show()
+show()"""
