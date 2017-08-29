@@ -1,0 +1,147 @@
+2017-08-29 15:34:21 (info) Logger: Start session log file: 2017-08-29-15:34:21-log.txt
+2017-08-29 15:34:21 (info) ConfigParametersForApp: Read configuration parameters from file: confpars-calibman.txt
+2017-08-29 15:34:21 (warning) ConfigParametersForApp: The file confpars-calibman.txt is not found, use default parameters.
+2017-08-29 15:34:23 (info) CalibManager.GUIMainTabs:  makeTabBarr - set tab: Status
+2017-08-29 15:34:23 (info) CalibManager.GlobalUtils: Directory created: ./work
+2017-08-29 15:34:26 (info) CalibManager.GUIInsExpDirDet: Instrument selected: AMO
+2017-08-29 15:34:26 (info) CalibManager.GUIInsExpDirDet: Experiment selected: Select
+2017-08-29 15:34:26 (info) CalibManager.GUIInsExpDirDet: Set calibration directory: Select
+2017-08-29 15:34:26 (info) CalibManager.GUIInsExpDirDet: Selected detector(s): 
+2017-08-29 15:34:31 (info) CalibManager.GUIInsExpDirDet: Experiment selected: amolp0515
+2017-08-29 15:34:31 (info) CalibManager.GUIInsExpDirDet: Set calibration directory: /reg/d/psdm/AMO/amolp0515/calib
+2017-08-29 15:34:31 (info) CalibManager.GUIInsExpDirDet: Selected detector(s): 
+2017-08-29 15:34:31 (info) CalibManager.GUIDarkList: Begin to update the list of runs. It is slow procedure that takes ~0.1s/run, stay calm and wait.
+2017-08-29 15:34:32 (info) CalibManager.GUIDarkList: Consumed time to generate list of files (sec) =   0.307
+2017-08-29 15:34:36 (info) CalibManager.GUIRange: Set the range from "100"
+2017-08-29 15:34:36 (warning) CalibManager.GUIRange: Begin number 100 exceeds the end number 10
+RANGE SEQUENCE SHOULD BE FIXED !!!!!!!!
+2017-08-29 15:34:36 (info) CalibManager.GUIDarkControlBar: updateRunRange from:100
+2017-08-29 15:34:36 (info) CalibManager.GUIDarkList: Begin to update the list of runs. It is slow procedure that takes ~0.1s/run, stay calm and wait.
+2017-08-29 15:34:36 (info) CalibManager.GUIDarkList: Consumed time to generate list of files (sec) =   0.073
+2017-08-29 15:34:38 (info) CalibManager.GUIRange: Set the range up to "110"
+2017-08-29 15:34:38 (info) CalibManager.GUIDarkControlBar: updateRunRange to:110
+2017-08-29 15:34:38 (info) CalibManager.GUIDarkList: Begin to update the list of runs. It is slow procedure that takes ~0.1s/run, stay calm and wait.
+2017-08-29 15:34:38 (info) CalibManager.GUIDarkList: Consumed time to generate list of files (sec) =   0.253
+2017-08-29 15:34:45 (info) CalibManager.GUIInsExpDirDet: Selected detector(s): pnCCD
+2017-08-29 15:34:45 (info) CalibManager.GUIDarkList: Begin to update the list of runs. It is slow procedure that takes ~0.1s/run, stay calm and wait.
+2017-08-29 15:34:45 (info) CalibManager.GUIDarkList: Consumed time to generate list of files (sec) =   0.249
+2017-08-29 15:34:59 (info) CalibManager.GUIDarkListItemRun: onButGo for run 0105
+2017-08-29 15:34:59 (info) CalibManager.BatchJobPedestals: on_auto_processing_start()
+2017-08-29 15:34:59 (info) CalibManager.BatchJobPedestals: Scan xtc file(s) using command:
+event_keys -d exp=amolp0515:run=105:stream=0-79:xtc -n 10 -s 0 -m 1 -p EventKey
+and save results in the log-file: ./work/clb-amolp0515-r0105-peds-scan-batch-log.txt
+2017-08-29 15:35:00 (info) CalibManager.BatchJobPedestals: Scan for run 0105 is completed
+2017-08-29 15:35:01 (info) CalibManager.BatchJobPedestals: LSF status is ok for queue: psnehhiprioq on farm: psnehfarm
+2017-08-29 15:35:01 (info) CalibManager.BatchJobPedestals: Avereging xtc file(s) using command:
+det_ndarr_raw_proc -d exp=amolp0515:run=105:stream=0-79:xtc -s Camp.0:pnCCD.0,Camp.0:pnCCD.1 -n 1000 -m 0 -f ./work/clb-#exp-#run-peds-#type-#src.txt -b 0.100 -t 16000.000 -B 0.100 -T 10000.000 -F 0.1 -p 0 -S 0377 -v 511 -L 5.000 -H 5.000 -D 5.000 -U 5.000 -c None
+and save results in the log-file: ./work/clb-amolp0515-r0105-peds-aver-batch-log.txt
+2017-08-29 15:35:01 (warning) CalibManager.GlobalUtils: Warning: job being submitted without an AFS token.
+      This warning does not matter for jobs on LCLS NFS, continue
+2017-08-29 15:35:01 (info) CalibManager.GlobalUtils: Job <576268> is submitted to queue <psnehhiprioq>.
+
+2017-08-29 15:35:03 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: PEND
+2017-08-29 15:35:08 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: PEND
+2017-08-29 15:35:13 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:18 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:23 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:28 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:33 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:38 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:43 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:48 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:53 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:35:58 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:36:03 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:36:08 (info) CalibManager.BatchJobPedestals: Stage 2 for run 0105, Job Id: 576268 submitted on 2017-08-29 15:34:59 status: RUN
+2017-08-29 15:36:08 (info) CalibManager.BatchJobPedestals: on_auto_processing_status: Averaging is completed, stop processing for run 0105.
+2017-08-29 15:36:08 (info) CalibManager.BatchJob: Auto-processing for run 0105 IS STOPPED
+2017-08-29 15:36:08 (info) CalibManager.GUIDarkListItemRun: onStop - buttons status should be updated now for 0105
+2017-08-29 15:36:23 (info) CalibManager.GUIDarkList: Signal received: new xtc file is available, msg: thread_id:0.913767 counter:3 last_run:111
+2017-08-29 15:36:23 (info) CalibManager.GUIDarkList: Begin to update the list of runs. It is slow procedure that takes ~0.1s/run, stay calm and wait.
+2017-08-29 15:36:23 (info) CalibManager.GUIDarkList: Consumed time to generate list of files (sec) =   0.252
+2017-08-29 15:39:16 (info) CalibManager.FileDeployer: 
+Tentative deployment commands:
+cp ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.0.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pedestals/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.1.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pedestals/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.0.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pixel_rms/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.1.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pixel_rms/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.0.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pixel_status/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.1.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pixel_status/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.0.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/common_mode/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.1.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/common_mode/105-end.data
+2017-08-29 15:39:20 (info) CalibManager.FileDeployer: Deployment is cancelled!
+2017-08-29 15:39:32 (info) CalibManager.FileDeployer: 
+Tentative deployment commands:
+cp ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.0.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pedestals/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.1.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pedestals/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.0.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pixel_rms/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.1.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pixel_rms/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.0.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pixel_status/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.1.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pixel_status/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.0.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/common_mode/105-end.data
+cp ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.1.txt /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/common_mode/105-end.data
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Command: cat ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.0.txt > /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pedestals/105-end.data
+
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Add record: 
+file:105-end.data    copy_of:./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.0.txt  exp:amolp0515  run:0105  comment:calibman-dark  user:sioan  host:psanagpu101  cptime:2017-08-29T15:39:33  zone:PDT
+ to history file: /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pedestals/HISTORY
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Command: cat ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.1.txt > /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pedestals/105-end.data
+
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Add record: 
+file:105-end.data    copy_of:./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.1.txt  exp:amolp0515  run:0105  comment:calibman-dark  user:sioan  host:psanagpu101  cptime:2017-08-29T15:39:33  zone:PDT
+ to history file: /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pedestals/HISTORY
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Command: cat ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.0.txt > /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pixel_rms/105-end.data
+
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Add record: 
+file:105-end.data    copy_of:./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.0.txt  exp:amolp0515  run:0105  comment:calibman-dark  user:sioan  host:psanagpu101  cptime:2017-08-29T15:39:33  zone:PDT
+ to history file: /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pixel_rms/HISTORY
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Command: cat ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.1.txt > /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pixel_rms/105-end.data
+
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Add record: 
+file:105-end.data    copy_of:./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.1.txt  exp:amolp0515  run:0105  comment:calibman-dark  user:sioan  host:psanagpu101  cptime:2017-08-29T15:39:33  zone:PDT
+ to history file: /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pixel_rms/HISTORY
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Command: cat ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.0.txt > /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pixel_status/105-end.data
+
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Add record: 
+file:105-end.data    copy_of:./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.0.txt  exp:amolp0515  run:0105  comment:calibman-dark  user:sioan  host:psanagpu101  cptime:2017-08-29T15:39:33  zone:PDT
+ to history file: /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/pixel_status/HISTORY
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Command: cat ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.1.txt > /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pixel_status/105-end.data
+
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Add record: 
+file:105-end.data    copy_of:./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.1.txt  exp:amolp0515  run:0105  comment:calibman-dark  user:sioan  host:psanagpu101  cptime:2017-08-29T15:39:33  zone:PDT
+ to history file: /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/pixel_status/HISTORY
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Command: cat ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.0.txt > /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/common_mode/105-end.data
+
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Add record: 
+file:105-end.data    copy_of:./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.0.txt  exp:amolp0515  run:0105  comment:calibman-dark  user:sioan  host:psanagpu101  cptime:2017-08-29T15:39:33  zone:PDT
+ to history file: /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.0/common_mode/HISTORY
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Command: cat ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.1.txt > /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/common_mode/105-end.data
+
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: Add record: 
+file:105-end.data    copy_of:./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.1.txt  exp:amolp0515  run:0105  comment:calibman-dark  user:sioan  host:psanagpu101  cptime:2017-08-29T15:39:33  zone:PDT
+ to history file: /reg/d/psdm/AMO/amolp0515/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/common_mode/HISTORY
+2017-08-29 15:39:33 (info) CalibManager.FileDeployer: 
+Tentative DCS deployment commands:
+dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.0 -t pedestals -f ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.0.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.1 -t pedestals -f ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.1.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.0 -t pixel_rms -f ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.0.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.1 -t pixel_rms -f ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.1.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.0 -t pixel_status -f ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.0.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.1 -t pixel_status -f ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.1.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.0 -t common_mode -f ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.0.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.1 -t common_mode -f ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.1.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:38 (info) procDeployCommandDCS: dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.0 -t pedestals -f ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.0.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:43 (info) procDeployCommandDCS: dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.1 -t pedestals -f ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.1.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:47 (info) procDeployCommandDCS: dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.0 -t pixel_rms -f ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.0.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:51 (info) procDeployCommandDCS: dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.1 -t pixel_rms -f ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.1.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:52 (info) procDeployCommandDCS: dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.0 -t pixel_status -f ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.0.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:54 (info) procDeployCommandDCS: dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.1 -t pixel_status -f ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.1.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:55 (info) procDeployCommandDCS: dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.0 -t common_mode -f ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.0.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:58 (info) procDeployCommandDCS: dcs add -e amolp0515 -r 105 -d Camp.0:pnCCD.1 -t common_mode -f ./work/clb-amolp0515-r0105-peds-cmo-Camp.0:pnCCD.1.txt -m calibman-dark -c /reg/d/psdm/AMO/amolp0515/calib -i
+2017-08-29 15:39:58 (info) CalibManager.GUIDarkListItemRun: Deployment command completed.
+2017-08-29 15:47:09 (info) GUIMain: closeEvent
+2017-08-29 15:47:09 (info) CalibManager.GUIInsExpDirDet: closeEvent
+2017-08-29 15:47:09 (info) GUIMainTabs: closeEvent
+2017-08-29 15:47:09 (info) GUIMain: Save main window x,y,w,h : -2, 56, 800, 700
+2017-08-29 15:47:09 (info) CalibManager.ConfigParametersForApp: save configuration parameters in file: confpars-calibman.txt
+2017-08-29 15:47:09 (info) ConfigParametersForApp: Save configuration parameters in file: confpars-calibman.txt

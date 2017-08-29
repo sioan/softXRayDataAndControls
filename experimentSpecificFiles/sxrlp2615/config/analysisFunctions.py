@@ -17,9 +17,21 @@ def getAndorImageSummarizer(detectorObject,thisEvent,previousProcessing):
 	tempImage = detectorObject.image(thisEvent)
 	myDict= {}
 	if(tempImage is not None):
-		myDict[''] = tempImage		#this needs finishing
+		print("got image")
+		myEventId = thisEvent.get(psana.EventId)
+		myTime = myEventId.time()[0]
+		myDict["sec"+str(myTime)] = tempImage		
+		try:
+			previousProcessing.update(myDict)
+		except AttributeError:
+			print("creating first instance")
+			previousProcessing = myDict
+		except NameError:
+			print("variable doesn't exist")
+			#print("getAndorImageSummarizer is having an error")
 	
-	return 0
+
+	return previousProcessing
 
 def genericReturn(detectorObject,thisEvent):
 	return detectorObject(thisEvent)

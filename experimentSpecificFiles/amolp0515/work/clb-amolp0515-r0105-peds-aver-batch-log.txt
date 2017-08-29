@@ -1,0 +1,179 @@
+kinit: KDC can't fulfill requested option while renewing credentials
+Command: /reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/det_ndarr_raw_proc -d exp=amolp0515:run=105:stream=0-79:xtc -s Camp.0:pnCCD.0,Camp.0:pnCCD.1 -n 1000 -m 0 -f ./work/clb-#exp-#run-peds-#type-#src.txt -b 0.100 -t 16000.000 -B 0.100 -T 10000.000 -F 0.1 -p 0 -S 0377 -v 511 -L 5.000 -H 5.000 -D 5.000 -U 5.000 -c None
+Options:
+  evcode : None
+  intnhi : 5.0
+  rmslow : 0.1
+  rmshig : 10000.0
+  intlow : 0.1
+  intnlo : 5.0
+  verbos : 511
+  dsname : exp=amolp0515:run=105:stream=0-79:xtc
+  nsigma : 6.0
+  fraclm : 0.1
+  source : Camp.0:pnCCD.0,Camp.0:pnCCD.1
+  rmsnlo : 5.0
+  evskip : 0
+  savebw : 255
+  ofname : ./work/clb-#exp-#run-peds-#type-#src.txt
+  plotim : 0
+  inthig : 16000.0
+  events : 1000
+  rmsnhi : 5.0
+Arguments:  []
+Raw data processing of dataset: exp=amolp0515:run=105:stream=0-79:xtc
+EventCodeManager: list of requested event codes: None, do_check=False
+__________________________________________________
+Attributes of the DetNDArrRawProc object
+dataset name                    : exp=amolp0515:run=105:stream=0-79:xtc
+source name                     : Camp.0:pnCCD.0
+output file name template       : ./work/clb-#exp-#run-peds-#type-#src.txt
+number of events to collect     : 1000
+number of events to skip        : 0
+number of events for stage 1    : 50
+number of sigma intensity range : 6.000
+control bit-word to plot images : 0
+control bit-word for verbosity  : 511
+control bit-word to save arrays : 255
+INTENSITY low limit (ADU)       :  0.1
+INTENSITY high limit (ADU)      :  16000.0
+RMS low limit (ADU)             :  0.1
+RMS high limit (ADU)            :  10000.0
+allowed low/high fraction limit : 0.100
+
+Parameters for auto-evaluation of limits:
+number of sigma from mean for INTENSITY low limit  :  5.0
+number of sigma from mean for INTENSITY high limit :  5.0
+number of sigma from mean for RMS low limit        :  5.0
+number of sigma from mean for RMS high limit       :  5.0
+__________________________________________________ 
+
+Begin processing
+__________________________________________________
+Attributes of the DetNDArrRawProc object
+dataset name                    : exp=amolp0515:run=105:stream=0-79:xtc
+source name                     : Camp.0:pnCCD.1
+output file name template       : ./work/clb-#exp-#run-peds-#type-#src.txt
+number of events to collect     : 1000
+number of events to skip        : 0
+number of events for stage 1    : 50
+number of sigma intensity range : 6.000
+control bit-word to plot images : 0
+control bit-word for verbosity  : 511
+control bit-word to save arrays : 255
+INTENSITY low limit (ADU)       :  0.1
+INTENSITY high limit (ADU)      :  16000.0
+RMS low limit (ADU)             :  0.1
+RMS high limit (ADU)            :  10000.0
+allowed low/high fraction limit : 0.100
+
+Parameters for auto-evaluation of limits:
+number of sigma from mean for INTENSITY low limit  :  5.0
+number of sigma from mean for INTENSITY high limit :  5.0
+number of sigma from mean for RMS low limit        :  5.0
+number of sigma from mean for RMS high limit       :  5.0
+__________________________________________________ 
+
+Begin processing
+Begin stage 1 for Camp.0:pnCCD.0, raw.shape = (4, 512, 512), intensity limits low: 0.1  high: 16000.0
+Begin stage 1 for Camp.0:pnCCD.1, raw.shape = (4, 512, 512), intensity limits low: 0.1  high: 16000.0
+  Event:    0,  time=  0.621 sec,  dt=0.621 sec
+  Event:    1,  time=  0.701 sec,  dt=0.081 sec
+  Event:    2,  time=  0.781 sec,  dt=0.080 sec
+  Event:    3,  time=  0.866 sec,  dt=0.085 sec
+  Event:    4,  time=  0.947 sec,  dt=0.081 sec
+  Event:    5,  time=  1.027 sec,  dt=0.080 sec
+  Event:   10,  time=  1.400 sec,  dt=0.373 sec
+  Event:   20,  time=  2.052 sec,  dt=0.653 sec
+  Event:   30,  time=  2.721 sec,  dt=0.669 sec
+  Event:   40,  time=  3.350 sec,  dt=0.629 sec
+________________________________________________________________________________
+Begin stage 2 for Camp.0:pnCCD.0 after 50 events
+  mean rms=112.324 x 6.0 = intensity gate= +/- 673.941 around pixel average intensity
+Stage 2 initialization for Camp.0:pnCCD.0 consumes dt=  0.052 sec
+________________________________________________________________________________
+Begin stage 2 for Camp.0:pnCCD.1 after 50 events
+  mean rms=3.303 x 6.0 = intensity gate= +/- 19.820 around pixel average intensity
+Stage 2 initialization for Camp.0:pnCCD.1 consumes dt=  0.048 sec
+  Event:   50,  time=  4.099 sec,  dt=0.749 sec
+  Event:  100,  time=  6.585 sec,  dt=2.486 sec
+  Event:  200,  time= 11.511 sec,  dt=4.926 sec
+  Event:  300,  time= 16.559 sec,  dt=5.049 sec
+  Event:  400,  time= 21.463 sec,  dt=4.904 sec
+  Event:  500,  time= 26.436 sec,  dt=4.972 sec
+  Event:  600,  time= 31.448 sec,  dt=5.013 sec
+  Event:  700,  time= 36.475 sec,  dt=5.027 sec
+  Event:  800,  time= 41.523 sec,  dt=5.048 sec
+  Event:  900,  time= 46.660 sec,  dt=5.137 sec
+________________________________________________________________________________
+Raw data for Camp.0:pnCCD.0 found/selected in 1000 events , begin data summary stage
+  evaluate_limits: RMS ave, std = 113.312, 14.652  low, high limits = 40.050, 186.574
+  evaluate_limits: AVE ave, std = 1500.961, 340.371  low, high limits = 0.100, 3202.815
+  Bad pixel status:
+  status  1:        2 pixel rms       > 186.574
+  status  8:      512 pixel rms       < 40.050
+  status  2:        0 pixel intensity > 16000 in more than 0.1 fraction of events
+  status  4:        0 pixel intensity < 0.1 in more than 0.1 fraction of events
+  status 16:      833 pixel average   > 3202.82
+  status 32:        0 pixel average   < 0.1
+Evaluate common mode for source: Camp.0:pnCCD.0 det: pnCCD, estimated intensity ave: 1499.353  rms: 113.337
+File ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.0.txt is saved
+File ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.0.txt is saved
+File ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.0.txt is saved
+File ./work/clb-amolp0515-r0105-peds-msk-Camp.0:pnCCD.0.txt is saved
+File ./work/clb-amolp0515-r0105-peds-max-Camp.0:pnCCD.0.txt is saved
+File ./work/clb-amolp0515-r0105-peds-min-Camp.0:pnCCD.0.txt is saved
+File ./work/clb-amolp0515-r0105-peds-cmm-Camp.0:pnCCD.0.txt is saved
+Data summary for Camp.0:pnCCD.0 is completed, dt=  2.490 sec
+________________________________________________________________________________
+Raw data for Camp.0:pnCCD.1 found/selected in 1000 events , begin data summary stage
+  evaluate_limits: RMS ave, std = 3.350, 0.847  low, high limits = 0.100, 7.586
+  evaluate_limits: AVE ave, std = 1307.187, 112.620  low, high limits = 744.086, 1870.289
+  Bad pixel status:
+  status  1:     1924 pixel rms       > 7.586
+  status  8:        0 pixel rms       < 0.100
+  status  2:        0 pixel intensity > 16000 in more than 0.1 fraction of events
+  status  4:        0 pixel intensity < 0.1 in more than 0.1 fraction of events
+  status 16:        0 pixel average   > 1870.29
+  status 32:        0 pixel average   < 744.086
+Evaluate common mode for source: Camp.0:pnCCD.1 det: pnCCD, estimated intensity ave: 1307.269  rms: 3.340
+File ./work/clb-amolp0515-r0105-peds-ave-Camp.0:pnCCD.1.txt is saved
+File ./work/clb-amolp0515-r0105-peds-rms-Camp.0:pnCCD.1.txt is saved
+File ./work/clb-amolp0515-r0105-peds-sta-Camp.0:pnCCD.1.txt is saved
+File ./work/clb-amolp0515-r0105-peds-msk-Camp.0:pnCCD.1.txt is saved
+File ./work/clb-amolp0515-r0105-peds-max-Camp.0:pnCCD.1.txt is saved
+File ./work/clb-amolp0515-r0105-peds-min-Camp.0:pnCCD.1.txt is saved
+File ./work/clb-amolp0515-r0105-peds-cmm-Camp.0:pnCCD.1.txt is saved
+Data summary for Camp.0:pnCCD.1 is completed, dt=  2.233 sec
+________________________________________________________________________________
+Total consumed time = 56.458657 sec.
+
+------------------------------------------------------------
+Sender: LSF System <lsf@psana1506.pcdsn>
+Subject: Job 576268: <det_ndarr_raw_proc -d exp=amolp0515:run=105:stream=0-79:xtc -s Camp.0:pnCCD.0,Camp.0:pnCCD.1 -n 1000 -m 0 -f ./work/clb-#exp-#run-peds-#type-#src.txt -b 0.100 -t 16000.000 -B 0.100 -T 10000.000 -F 0.1 -p 0 -S 0377 -v 511 -L 5.000 -H 5.000 -D 5.000 -U 5.000 -c None> in cluster <slac> Done
+
+Job <det_ndarr_raw_proc -d exp=amolp0515:run=105:stream=0-79:xtc -s Camp.0:pnCCD.0,Camp.0:pnCCD.1 -n 1000 -m 0 -f ./work/clb-#exp-#run-peds-#type-#src.txt -b 0.100 -t 16000.000 -B 0.100 -T 10000.000 -F 0.1 -p 0 -S 0377 -v 511 -L 5.000 -H 5.000 -D 5.000 -U 5.000 -c None> was submitted from host <psanagpu101.pcdsn> by user <sioan> in cluster <slac> at Tue Aug 29 15:35:01 2017.
+Job was executed on host(s) <psana1506.pcdsn>, in queue <psnehhiprioq>, as user <sioan> in cluster <slac> at Tue Aug 29 15:35:08 2017.
+</reg/neh/home/sioan> was used as the home directory.
+</reg/neh/home/sioan/softXRayDataAndControls/experimentSpecificFiles/amolp0515> was used as the working directory.
+Started at Tue Aug 29 15:35:08 2017.
+Terminated at Tue Aug 29 15:36:10 2017.
+Results reported at Tue Aug 29 15:36:10 2017.
+Cannot open your job file: /reg/neh/home/sioan/.lsbatch/1504046101.576268
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   62.22 sec.
+    Max Memory :                                 317 MB
+    Average Memory :                             185.50 MB
+    Total Requested Memory :                     -
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              3
+    Max Threads :                                5
+    Run time :                                   81 sec.
+    Turnaround time :                            69 sec.
+
+The output (if any) is above this job summary.
+

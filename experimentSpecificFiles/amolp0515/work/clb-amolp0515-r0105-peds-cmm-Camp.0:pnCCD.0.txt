@@ -1,0 +1,14 @@
+# DATASET  exp=amolp0515:run=105:stream=0-79:xtc
+# STATISTICS  1000
+# ARR_TYPE  common_mode
+# SOURCE  Camp.0:pnCCD.0
+
+# HOST        psana1506
+# WORK_DIR    /reg/neh/home5/sioan/Desktop/softXRayDataAndControls/experimentSpecificFiles/amolp0515
+# FILE_NAME   ./work/clb-amolp0515-r0105-peds-cmm-Camp.0:pnCCD.0.txt
+# DATE_TIME   2017-08-29T15:36:06
+# UID         sioan
+# SHAPE       (4,)
+# DATATYPE    float64
+
+ 3 454 454 128 

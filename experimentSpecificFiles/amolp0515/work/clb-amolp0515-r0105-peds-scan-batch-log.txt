@@ -1,0 +1,22 @@
+Command: /reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/event_keys -d exp=amolp0515:run=105:stream=0-79:xtc -n 10 -s 0 -m 1 -p EventKey
+scan dataset       : exp=amolp0515:run=105:stream=0-79:xtc
+output file        : None
+first event        : 0
+last event         : 10
+mode bits          : 1
+verbose            : 1
+pattern to squeeze : EventKey
+EventKey(type=psana.EvrData.DataV4, src='DetInfo(NoDetector.0:Evr.0)')
+EventKey(type=psana.PNCCD.FullFrameV1, src='DetInfo(Camp.0:pnCCD.0)', alias='pnccdFront')
+EventKey(type=psana.PNCCD.FramesV1, src='DetInfo(Camp.0:pnCCD.0)', alias='pnccdFront')
+EventKey(type=psana.PNCCD.FullFrameV1, src='DetInfo(Camp.0:pnCCD.1)', alias='pnccdBack')
+EventKey(type=psana.PNCCD.FramesV1, src='DetInfo(Camp.0:pnCCD.1)', alias='pnccdBack')
+EventKey(type=psana.Acqiris.DataDescV1, src='DetInfo(AmoEndstation.0:Acqiris.4)', alias='ACQ4')
+EventKey(type=psana.Bld.BldDataEBeamV7, src='BldInfo(EBeam)')
+EventKey(type=psana.Bld.BldDataPhaseCavity, src='BldInfo(PhaseCavity)')
+EventKey(type=psana.Bld.BldDataFEEGasDetEnergyV1, src='BldInfo(FEEGasDetEnergy)')
+EventKey(type=psana.Bld.BldDataAnalogInputV1, src='BldInfo(AMO-AIN-01)')
+EventKey(type=psana.EventId)
+EventKey(type=None)
+EventKey(type=psana.DgramList)
+Loop over 10 events of the dataset exp=amolp0515:run=105:stream=0-79:xtc consumes 0.314244 sec.
