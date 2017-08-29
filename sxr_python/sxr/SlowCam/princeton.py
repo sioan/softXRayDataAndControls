@@ -136,19 +136,7 @@ class PrincetonDaqMultipleShot:
       self.eventShutterOpenClose = 0
 
   def getEventNum(self):
-    print "Waiting for event"
-    #eventnum = self.daq.eventnum()
-    #print "Waiting for event", "EVENT:", eventnum
-    #return eventnum
-
-
-    #while True:
-    #  eventnum = self.daq.eventnum()
-    #  if eventnum < 0xFFFFFFFF and eventnum >= 0:
-    #    return eventnum
-    #  else :
-    #    print "ILLEGAL EVENT NUM",eventnum,"....TRYING AGAIN"
-
+    return self.daq.eventnum()
 
   def setCameraControlSequence(self):
     print "Settings camera control sequence...\n"
@@ -596,18 +584,17 @@ class PrincetonDaqMultipleShot:
       print "Waiting for DAQ event: %d" % self.iNumShot
       time.sleep(1)
 
-#      while True:
-#        print "GOING TO READOUT EVENTNUM"
-#        eventnum = self.getEventNum()
-#        if eventnum >= iEventStart + self.iNumShot:
+      while True:
+        eventnum = self.getEventNum()
+        if eventnum >= iEventStart + self.iNumShot:
       #    if x_motor is not None:
       #      print "Time after DAQ ", datetime.datetime.time(datetime.datetime.now())
       #      print "Motor position after last DAQ event:" , float( caget("MEC:USR:MMS:17.RBV") ), " mm"
-#          break
-#        print "DAQ event: %d / %d\r" % (eventnum, iEventStart + self.iNumShot),
-#        sys.stdout.flush()
-#        time.sleep(0.05)
-#      print "                           \r",
+          break
+        print "DAQ event: %d / %d\r" % (eventnum, iEventStart + self.iNumShot),
+        sys.stdout.flush()
+        time.sleep(0.05)
+      print "                           \r",
 
       if self.bShutterMode:
         if ShutterArm(self.iNumShot) != 0:
