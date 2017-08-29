@@ -358,5 +358,5 @@ myBinAverage = averageShiftedHistogram(toBeBinned[:,1],0,21,0.1, toBeBinned[:,0]
 myBinCount = averageShiftedHistogram(toBeBinned[:,1][::-1],0,21,0.1, ones(len(toBeBinned[:,0])),50)
 plot(myBinAverage[1][::-1],myBinAverage[0]/myBinCount[0])
 show()
-#execfile("gaussianKdeAdapted.py")
+execfile("gaussianKdeAdapted.py")
 
