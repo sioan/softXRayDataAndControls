@@ -41,11 +41,17 @@ def normalize(x,ignoreRange):
 	tx = x - mean(x[ignoreRange:])
 	return tx/std(tx[ignoreRange:])
 	
-
+"""
 plot(yCalibrated,normalize(myY[::-1],4),linewidth=2) 
 plot(yCalibrated,normalize(myMedianY[::-1],4),linewidth=2) 
 plot(myBinCount[1][1][:-1][::-1],normalize(myModes,4)) 
 plot(binEdges[1][:-1][::-1],normalize(tempAverage,4))
 ylim(-3,2)
 xlim(-1,20)
+"""
+
+plot(yCalibrated,myY[::-1],linewidth=2) 
+plot(yCalibrated[::-1],myMedianY[::-1],linewidth=2) 
+plot(myBinCount[1][1][:-1][::-1],myModes) 
+plot(binEdges[1][:-1][::-1],tempAverage)
 show()

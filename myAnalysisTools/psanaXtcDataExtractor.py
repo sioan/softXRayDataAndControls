@@ -92,7 +92,8 @@ def generateDetectorDictionary(configFileName):
 			print(thisDetectorConfig)
 			print("found detector object named "+myParsedString[3])
 			myDetectorObjectDictionary[myParsedString[3]] = psana.Detector(myParsedString[0])
-			myDetectorObjectDictionary['analyzer'][myParsedString[3]] = analysisFunctions.__dict__[myParsedString[4]]
+			if(myParsedString[4]!='None'):
+				myDetectorObjectDictionary['analyzer'][myParsedString[3]] = analysisFunctions.__dict__[myParsedString[4]]
 			if(myParsedString[5]!='None'):		
 				myDetectorObjectDictionary['summarizer'][myParsedString[3]] = analysisFunctions.__dict__[myParsedString[5]]
 
