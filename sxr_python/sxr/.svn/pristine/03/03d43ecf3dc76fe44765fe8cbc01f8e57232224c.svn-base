@@ -1,0 +1,4 @@
+GaussFit
+- need to trap error when fit does not converge
+  & then set appropiate errors, etc
+- add logger 

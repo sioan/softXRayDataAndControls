@@ -1,0 +1,13 @@
+from blbase.device import Device
+from pswww import pypsElog
+import sxrmotors
+from psp.Pv import Pv
+
+expAlias = "LN54 Wall"
+pvBase = None
+presetsfile = None
+m = sxrmotors.SxrMotors()
+
+class USER(Device):
+  def __init__(self):
+    super(USER, self).__init__(expAlias, pvBase, presetsfile)

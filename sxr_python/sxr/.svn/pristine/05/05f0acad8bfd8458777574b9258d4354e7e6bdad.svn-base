@@ -1,0 +1,473 @@
+import logging
+import threading
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+import pyca
+from Pv import Pv
+from caget import caget
+
+
+class epics_camera :
+    """
+    Wrapper to grab an image from a EPICS camera and save it as a
+    numpy array.  Additional image manipulation routines are also
+    included. 
+    """
+
+    def __init__(self, camerapv) :
+        """
+        camerapv: Base EPICS PV for the camera
+        """        
+        # Set up logger
+        self.__logger = logging.getLogger(__name__)
+
+        # Set up camera PVs 
+        self.__basepv = camerapv
+
+        # Get row and columns, bit-depth, and model
+        # Using caget as we only need these values once
+        self.__nrow = caget(self.__basepv + ":N_OF_ROW")
+        self.__ncol = caget(self.__basepv + ":N_OF_COL")
+        self.__nbit = caget(self.__basepv + ":N_OF_BITS")
+        self.__model = caget(self.__basepv + ":Model")
+
+        # Print out status
+        print self.__basepv,self.__model
+        print self.__nrow,"by",self.__ncol,"@",self.__nbit
+
+        # Create PV to LIVE_IMAGE_FAST and average image
+        # Using Pv class, as we'll be wanting these PVs all the time
+        self.__liveimage_pv = Pv(self.__basepv + ":LIVE_IMAGE_FAST")
+        self.__avgimage_pv = Pv(self.__basepv + ":AVG_IMAGE")
+        self.__navgimage_pv = Pv(self.__basepv + ":AVERAGER.A")
+
+        # Create PV to get horizontal projection
+        self.__hproj_pv = Pv(self.__basepv + ":IMAGE_CMPX:HPrj")
+                
+        
+        # Create Threading Event objects to signal when new images are
+        # available  
+        self.__new_liveimage = threading.Event()
+        self.__new_avgimage = threading.Event()
+        self.__new_hproj = threading.Event()
+
+
+        # Connect to PVs
+        self.connect()
+
+
+        # Start monitors to asynchronously update Live Image, Average
+        # Image, and horizontal projection
+        self.__start_monitors()
+
+
+    
+    # Define properties to return camera model and image size
+    @property
+    def nrow(self):
+        return self.__nrow
+
+    @property
+    def ncol(self):
+        return self.__nol
+
+    @property
+    def nbit(self):
+        return self.__nbit
+
+    @property
+    def model(self):
+        return self.__model
+
+
+
+
+      
+    def connect(self,timeout=300.0) :
+        """ 
+        connect to camera
+        timeout : time to wait for EPICS connection (option)
+        """
+        # Connect to camera PV and cache number of row,columns
+        try: 
+            self.__liveimage_pv.connect(timeout)
+            self.__avgimage_pv.connect(timeout)
+            self.__navgimage_pv.connect(timeout)
+            self.__hproj_pv.connect(timeout)
+        except pyca.pyexc, e:
+            print "ERROR: Failed to connect or was already opened:",e
+            raise
+        except pyca.caexc, e:
+            print "ERROR: Channel Access Error:",e
+            raise
+        
+        
+    def disconnect(self) :
+        """
+        Disconnect from camera
+        """
+        try: 
+            self.__liveimage_pv.disconnect()
+            self.__avgimage_pv.disconnect()
+            self.__navgimage_pv.disconnect()
+            self.__hproj_pv.disconnect()
+        except pyca.pyexc, e:
+            print "ERROR: Failed to disconnect or was not opened:",e
+            raise
+        except pyca.caexc, e:
+            print "Error: Channel Access Error:",e
+            raise
+
+
+    def __start_monitors(self) :
+        """
+        Start EPICS monitors of variables that we want to be
+        continously monitored        
+        """
+        self.__logger.debug("Start monitors for %s"%self.__basepv)
+        
+        # Connect monitor call backs
+        self.__liveimage_pv.monitor_cb = self.__liveimage_cb
+        self.__avgimage_pv.monitor_cb = self.__avgimage_cb
+        self.__hproj_pv.monitor_cb = self.__hproj_cb
+
+        # Start monitors
+        pvevt = pyca.DBE_ALARM|pyca.DBE_LOG|pyca.DBE_VALUE
+        self.__liveimage_pv.monitor(pvevt)
+        self.__avgimage_pv.monitor(pvevt)
+        self.__hproj_pv.monitor(pvevt)
+        pyca.flush_io()
+        
+        # Wait 1.0 seconds for monitoring to start
+        time.sleep(1.0)
+    
+    
+    def __stop_monitors(self) :
+        """
+        Stop EPICS monitors
+        """
+        self.__liveimage_pv.unsubscribe()
+        self.__avgimage_pv.unsubscribe()
+        self.__navgimage_pv.unsubscribe()
+
+        
+    def __liveimage_cb(self, exception=None) :
+        """
+        Live image callback       
+        """
+        self.__logger.debug("%s liveimage updated"%self.__basepv)
+        self.__new_liveimage.set()
+
+        
+        
+    def __avgimage_cb(self,exception=None) :
+        """
+        Average image callback
+        """
+        self.__logger.debug("%s average image updated"%self.__basepv)
+        self.__new_avgimage.set()
+
+
+    def __hproj_cb(self,exception=None) :
+        """
+        Horizontal projection callback
+        """
+        self.__logger.debug("%s horizontal projection updated"%self.__basepv)
+        self.__new_hproj.set()
+        
+
+    def set_naverage(self,nimage,timeout=300) :
+        """
+        Set number of images for averaging
+        """
+        try:
+            self.__navgimage_pv.put(nimage,timeout)
+            pyca.flush_io()
+        except pyca.pyexc, e:
+            print "ERROR: Failed to set naverage:",e
+            raise
+        except pyca.caexc, e:
+            print "Error: Channel Access Error:",e
+            raise
+        
+        
+    def get_naverage(self,timeout=300) :
+        """
+        Get number of images for average
+        """
+        try:
+            self.__navgimage_pv.get(timeout=timeout)
+            pyca.flush_io()
+            return self.__navgimage_pv.value
+        except pyca.pyexc, e:
+            print "ERROR: Failed to get naverage:",e
+            raise
+        except pyca.caexc, e:
+            print "Error: Channel Access Error:",e
+            raise
+        
+        
+    def image(self,timeout=None):
+        """
+        Get the current image
+        """
+        # Get the image 
+        try:
+            self.__new_liveimage.clear()
+            self.__new_liveimage.wait(timeout)
+            if not self.__new_liveimage.isSet() :
+                raise pyca.pyexc,"live image timeout for PV%s"%self.__basepv
+
+            return np.array(self.__liveimage_pv.value).reshape([self.__nrow,
+                                                                self.__ncol])
+        except pyca.pyexc, e:
+            print "ERROR: Failed to get image:",e
+            raise
+        except pyca.caexc, e:
+            print "Error: Channel Access Error:",e
+            raise
+
+
+
+    def avg_image(self,naverage=None,timeout=None):
+        """
+        Get averaged images
+                
+        The IOC averages a chunk of frames. Start of each chunk
+        starts when AVERAGER.A is set.
+        """        
+        try: 
+            # Set the number of frames to average over
+            if naverage is None :
+                naverage = self.get_naverage()            
+            self.set_naverage(naverage)
+
+            # Wait for new averaged image
+            self.__new_avgimage.clear()
+            self.__new_avgimage.wait(timeout)
+
+            # Get the averaged image and return as numpy array
+            return np.array(self.__avgimage_pv.value).reshape([self.__nrow,
+                                                               self.__ncol])
+
+        except pyca.pyexc, e:
+            print "ERROR: Failed to get averaged image:",e
+            raise
+        except pyca.caexc, e:
+            print "Error: Channel Access Error:",e
+            raise
+
+        
+
+    def h_projection(self,timeout=None) :
+        """
+        Get the horizontal projection of a single image
+        """
+        try:
+            self.__new_hproj.clear()
+            self.__new_hproj.wait(timeout)
+            if not self.__new_hproj.isSet():
+                raise pyca.pyexc,"horizontal projection timeout for PV %s"%(self.__basepv)
+        
+            return self.__hproj_pv.value
+        
+        except pyca.pyexc, e:
+            print "ERROR: Failed to get horizontal projection:",e
+            raise
+        except pyca.caexc, e:
+            print "Error: Channel Access Error:",e
+            raise
+
+        
+        
+    def h_projection_avg(self,naverage=None,timeout=None) :
+        """
+        Get the horizontal projection of an averaged image
+        Uses IOC PV AVG_IMAGE as the averaging is done by the IOC host
+        at EVR trigger rate. 
+        """
+        self.__logger.debug("Averaged Horizontal Projection")
+
+        # Get averaged image
+        avg_image = self.avg_image(naverage,timeout)
+
+        # Do horizontal projection
+        hproj = np.sum(avg_image,axis=1)
+        self.__logger.debug("Horizontal Projection Size: %d"%hproj.size)
+
+        return hproj
+
+
+            
+    def v_projection_avg(self,naverage=None,timeout=None) :
+        """
+        Get the verical projection of an averaged image
+        Uses IOC PV AVG_IMAGE as the averaging is done by the IOC host
+        at EVR trigger rate. 
+        """
+        self.__logger.debug("Averaged Verticaal Projection")        
+
+        # Get averaged image
+        avg_image = self.avg_image(naverage,timeout)
+
+        # Do vertical projection
+        vproj = np.sum(avg_image,axis=0)
+        self.__logger.debug("Vertical Projection Size: %d"%vproj.size)
+
+        return vproj
+        
+
+
+    def collect_images(self,nimages, timeout=None) :
+
+        """
+        Collect 'nimages' and return as a 3D numpy array, where 1st
+        axis is the image index, the 2nd and 3rd are the image
+        dimensions.
+
+        The timeout is the time to wait for an image before raising a
+        timeout error        
+        """
+
+        # Create an empty 3D numpy array that will store all the images
+        allimages = np.empty([nimages, self.__nrow, self.__ncol])
+
+        # Now collect images, use live image threading event to signal
+        # when a new image is available
+        for index in range(nimages) :
+            self.__new_liveimage.clear()
+            self.__new_liveimage.wait(timeout)
+            if not self.__new_liveimage.isSet():
+                raise pyca.pyexc,"live image timeout for PV %s"%(self.__basepv)
+
+            # Add new image to image store
+            allimages[index,:,:] = \
+                np.array(self.__liveimage_pv.value).reshape([self.__nrow,
+                                                            self.__ncol])
+           
+        return allimages
+
+                                            
+        
+
+    def collect_h_projections(self,nprojections,timeout=None):
+        """
+        Collect horizontal projections and return a 2D Numpy array of
+        projections, where first index is image index
+
+        The timeout is the time to wait for a projection before raising a
+        timeout error        
+        """        
+        self.__logger.info("Collecting %d horizontal projections"%nprojections)
+                
+        # Create an empty 2D numpy array that will store all the
+        # projections - the projections are always 1024 long - fixed
+        # by the UNIXCAM IOC.         
+        allprojections = np.empty([nprojections, 1024])
+
+        # Collect the projections, using the projectiosn image
+        # threading event to signal when a new projection is
+        # available. 
+        for index in range(nprojections) :
+            self.__new_hproj.clear()
+            self.__new_hproj.wait(timeout)
+            if not self.__new_hproj.isSet():
+                raise pyca.pyexc,"horizontal projection timeout for PV %s"%(self.__basepv)
+
+            # Add new projection to projection store
+            allprojections[index,:] = np.array(self.__hproj_pv.value)
+
+        return allprojections
+
+
+    
+#    def __display_image(self,image_pv) :
+#        image_array = np.array(image_pv.value).reshape([self.__nrow,
+#    self.__ncol])
+
+#        fig = plt.figure(image_pv.name)
+#        fig.clf()
+#        im = plt.imshow(image_array)        
+#        plt.show()
+        
+
+#    def display_image(self,pv_stem) : 
+#        pv_dict = {"LIVE" : self.__liveimage_pv,
+#                   "AVG"  : self.__avgimage_pv}        
+#        self.__display_image(pv_dict[pv_stem])
+
+
+
+        
+        
+
+
+    
+if __name__ == "__main__" :
+
+    #    import time
+    
+    logging.basicConfig(level=logging.INFO)
+    #logging.basicConfig(level=logging.DEBUG)
+        
+    cam = epics_camera("SXR:EXS:CVV:01")
+    #    cam.connect()
+
+    #time.sleep(20)
+    
+    time_start = time.time()
+    print "Collecting images"
+    image_store = cam.collect_images(10)
+    time_diff = time.time() - time_start
+    rate = 10.0 / time_diff 
+    print "time taken for 10 images:",time_diff," (%f Hz)"%(rate)
+    
+    
+    time_start = time.time()
+    print "Collecting images"
+    image_store = cam.collect_images(10)
+    time_diff = time.time() - time_start
+    rate = 10.0 / time_diff 
+    print "time taken for 10 images:",time_diff," (%f Hz)"%(rate)
+    
+
+    time_start = time.time()
+    print "Collecting horizontal projections"
+    projection_store = cam.collect_h_projections(10)
+    time_diff = time.time()- time_start
+    rate = 10.0 / time_diff 
+    print "time taken for 10 projections:",time_diff," (%f Hz)"%(rate)
+    
+    
+    print "Getting averaged images"
+    print "Number of averaged images:",cam.get_naverage()
+    print "The current image:\n",cam.image()
+    
+    
+
+
+    print "Getting the average image"
+    time_start = time.time()
+    print cam.avg_image()
+    time_diff = time.time()- time_start
+    rate = cam.get_naverage() / time_diff     
+    print "time taken for",cam.get_naverage(),"averaged images",time_diff,\
+        " (%f Hz)"%(rate)
+    
+
+    
+    cam.set_naverage(240)
+    print "Getting 240 average images"
+    print cam.get_naverage()
+    time_start = time.time()
+    print cam.avg_image()
+    time_diff = time.time()- time_start
+    rate = cam.get_naverage() / time_diff     
+    print "time taken for 240 averaged images time_diff",time_diff,\
+        "(%0.2f Hz)"%(rate)
+    
+        
+    cam.disconnect()

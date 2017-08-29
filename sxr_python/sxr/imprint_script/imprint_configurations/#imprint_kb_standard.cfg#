@@ -1,0 +1,35 @@
+# Configuration File fo the imprint_kb.py script
+
+[positions]
+
+xfrom = 11.5
+deltaX = 0.1
+yfrom = -0.5
+deltaY = 0.1
+
+nPoints = 7
+
+[kb]
+
+kb11 = 0.072
+kb12 = 0.22
+kb13 = 0.08
+kb14 = 0.0467
+
+kb11s = 1.5 * 0.0036
+kb12s = 1.5 * 0.011
+kb13s = 1.5 * 0.0143
+kb14s = 1.5 * 0.0043
+
+
+# Make sure to not use quotations here - just write out the PVs
+[PVs]
+
+PV_X = 
+PV_Y = 
+
+PV_kb11 = Test PV kb11
+PV_kb12 = Test PV kb12
+PV_kb13 = Test PV kb13
+PV_kb14 = Test PV kb14
+

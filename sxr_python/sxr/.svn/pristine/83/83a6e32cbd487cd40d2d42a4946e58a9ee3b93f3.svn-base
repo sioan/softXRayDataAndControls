@@ -1,0 +1,138 @@
+import os
+import subprocess
+import ConfigParser
+import logging
+
+from  sxr_common.epics_ims_motor import epics_ims_motor
+
+logger = logging.getLogger(__name__)
+
+
+def createmotordb() :
+    """
+    Parse directory of config files to get serial-number for each
+    configuration and list of dumb-motor serial numbers to ID dumb
+    motors. 
+
+    Returns the motor_db, which is a dictionary of:
+    key = serial number
+    value = {cfg:config_file_name, type=smart|dumb}
+    """
+
+    logger.info("Creating motor DB")
+    logger.info("Parsing motor CFG files in %s"%os.environ["DEVICE_CONFIG_DIR"])
+
+    # grep SN in $DEVICE_CONFIG_DIR/*.cfg
+    grep_out = subprocess.check_output("grep SN $DEVICE_CONFIG_DIR/*.cfg",
+                                       shell=True).split("\n")[:-1]
+
+    # Read file that lists serial numbers of dumb motor controllers 
+    dumbmotorini = os.path.join( os.environ["DEVICE_CONFIG_DIR"],
+                                 "DumbMotorSN.ini")
+    config = ConfigParser.SafeConfigParser()
+    config.read(dumbmotorini)
+
+    dumb_sn_list_txt = config.get("Dumb_Motor_SN","sn").split(",")
+    dumb_sn_list = [int(item) for item in dumb_sn_list_txt]
+
+        
+    # Parse output and put into dictionary
+    #   - key: serial number
+    #   - value: {cfg:motor config filename,type:smart|dumb}
+    motor_db = { }
+    for line in grep_out:
+        line_piece = line.split()
+
+        # Extract motor config file name
+        # last 4 characters from grep output are always ':.SN' ==> so
+        # are cut off 
+        motor_cfg_filename = line_piece[0][:-4]
+        motor_sn = ""
+
+        # Reject lines that have no serial numbers
+        #  ==> Bad config files
+        if len(line_piece) == 1 :
+            logger.debug("%s has no SN"%motor_cfg_filename)
+            continue
+        else:
+            motor_sn = line_piece[1]
+
+        # Is this motor smart or dumb
+        motor_type = "dumb" if motor_sn in dumb_sn_list else "smart"
+                    
+        # fill in dictionary .. checking a previous one does not exist
+        if motor_sn not in motor_db.keys() :
+            motor_db[motor_sn] = {"cfg":motor_cfg_filename, "type":motor_type}
+        else :
+            logger.warning("Duplicate entry for motor SN %s",motor_sn)
+
+    return motor_db
+
+
+
+
+
+def setupmotor(motordb, motor_pv) :
+    """
+    Function to setup motor
+    
+    After parameter manager goes live:
+    - parameter manager API should offer the following:
+       - search for SN in Db
+       - search for dumb or smart using SN as key
+       - download all data to motor, using SN as key
+
+    After parameter manager goes live
+    - remove createdb function
+    - replace calls to check SN, motor-type with parameter-manager API
+    - epics_ims_motor.config function may be removed if
+      parameter-manager API can do this  
+    """
+
+    logger.info("Setup motor %s"%motor_pv)
+
+    # Create motor-pv object
+    motor = epics_ims_motor(motor_pv)
+
+    # Intialize motor
+    init_success = motor.init()
+    if not init_success :
+        logger.debug("Failed to initialize %s",motor_pv)
+        return False
+
+    
+    # Now get motor serial number
+    motor_sn = motor.sn()
+
+    # Use motor's serial number to find 
+    # a) if it's a dumb or smart motor
+    # b) download configuration file for smart motors
+    #    alert user that dumb motors need to be setup manually
+    config_success = False
+    if motor_sn in motordb.keys() :
+        motor_data = motordb[motor_sn]
+        if motor_data['type'] is "smart" :
+            config_success = motor.config(motor_data["cfg"])
+        else:
+            logger.warning("%s - Dumb motor has to be configured manually"%motor_pv)
+    else:
+        logger.warning("No config file for %s"%motor_pv)
+
+    if not config_success :
+        logger.warning("Failed to configure %s"%motor_pv)
+
+    return config_success
+        
+
+    
+if __name__ == "__main__" :     
+    logging.basicConfig(level=logging.INFO)
+    #logging.basicConfig(level=logging.DEBUG)
+  
+    motordb = createmotordb()
+
+    for ppl_motor in range(10,24) :
+        setupmotor(motordb, "SXR:EXP:MMS:%02d"%ppl_motor)
+
+    
+    

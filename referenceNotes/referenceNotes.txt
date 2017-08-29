@@ -511,3 +511,6 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 /reg/g/pcds/setup/pcds_shortcuts.sh:export show_epics_sioc_filter
 /reg/g/pcds/setup/pcds_shortcuts.sh:function show_epics_sioc( )
 
+
+#andor setup and evr setting is located in sxrlp8015 e-log
+#schlotter took pictures that are in the thumbnails for the evr setting.

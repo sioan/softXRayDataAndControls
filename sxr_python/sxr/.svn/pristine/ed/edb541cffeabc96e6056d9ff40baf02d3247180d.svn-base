@@ -1,0 +1,137 @@
+# Configuration file for LJE-YANO scan
+# The configuration file is divided into several sections, each with
+# its own settings
+#  SCAN : Scan settings
+#    fel_mode :  SEEDED or SASE or SEEDED SASE  
+#                Set to whether FEL is running in SASE, SEEDED, or SEEDED SASE 
+#       laser :  TRUE or FALSE
+#                When TRUE, record data with Fiber laser close/open per
+#                energy point
+#
+#  SEEDED : Seeded scan settings
+#    Scan proceeds from 'scan_start' to 'scan_stop' in 'scan_step' steps
+#    scan_start: starting energy of scan
+#     scan_stop: stop value of scan
+#    scan_steps: number of scan points 
+#
+#    ctrl_pv : PV that sets the SEEDED beam energy
+#     rbv_pv : PV that signals when FEL has finished moving to new energy
+#   rbv_done : Value rbv_pv has when finsihed moving to new energy
+#
+#  SASE : SASE scan settings
+#    Scan proceeds from 'scan_start' to 'scan_stop' in 'scan_step' steps
+#    scan_start: starting energy of scan
+#     scan_stop: stop value of scan
+#    scan_steps: number of scan points 
+#
+#    ctrl_pv : PV that sets the SASE beam energy
+#     rbv_pv : PV that signals when FEL has finished moving to new energy
+#   rbv_done : Value rbv_pv has when finsihed moving to new energy
+#
+#  MONO : Mono calibration parameters
+#    Record Mono grating position at low,medium, and high FEL energies
+#    LowMachine  : Low FEL Energy
+#    LowGrating  : Mono Grating at low FEL Energy
+#
+#    MidMachine  : Medium FEL Energy
+#    MidGrating  : Mono Grating at medium FEL Energy
+#
+#    HighMachine : High FEL Energy
+#    HighGrating : Mono Grating at high FEL Energy#  
+#
+#
+#  ANDOR : Andor camera settings
+#   integration: Exposure (integration) time in seconds
+#       readout: Readout time of Andor camera in seconds. 
+#                Use for staggered Andor readout
+#      simmode : TRUE or FALSE
+#                When TRUE, scan simulated BURST mode is used
+#   
+#      expdelay: SEE TOMY'S ORIGNAL CODE 
+#     postdelay: SEE TOMY'S ORIGNAL CODE 
+#     opendelay: SEE TOMY'S ORIGNAL CODE 
+#
+#  LASER: Laser settings
+#    laser_wait: Time in seconds, after shutter opens/closes, until
+#                jet is (not) illuminated 
+#     laser1 : TRUE or FALSE 
+#               When TRUE, fiber laser shutter 1 opens/closes
+#     laser2 : TRUE or FALSE 
+#               When TRUE, fiber laser shutter 2 opens/closes
+#     laser3 : TRUE or FALSE 
+#               When TRUE, fiber laser shutter 3 opens/closes
+#
+#
+# ANALYSIS : PVs that contain the scan parameters. Used by online
+#            PSANA analysis  
+#   scan_start_pv : PV that stores the starting value of scan
+#   scan_stop_pv  : PV that stores the end value of the scan
+#   scan_steps_pv : PV that stores the number of scan points
+#   fel_mode_pv   : PV that states whether we are in SASE or SEEDED mode
+#
+
+
+[SCAN]
+fel_mode = SEEDED
+laser = FALSE
+
+
+[SEEDED]
+scan_start = -4.65
+scan_stop =  -4.35
+scan_steps = 16
+
+ctrl_pv = SXR:EXP:MMS:01.VAL
+rbv_pv = SXR:EXP:MMS:01.DMOV
+rbv_done = 1
+
+
+[SASE]
+scan_start = 3.0
+scan_stop = 4.0
+scan_steps = 4
+
+ctrl_pv = SXR:MON:MMS:06.VAL
+rbv_pv = SIOC:SYS0:ML00:AO098
+rbv_done = 0
+
+
+[MONO]
+LowMachine = 660.0
+LowGrating = 1.0
+
+MidMachine = 670.0
+MidGrating = 2.0
+
+HighMachine = 680.0
+HighGrating = 3.0
+
+
+
+
+[ANDOR]
+integration = 30.0
+readout = 1.0
+simmode = FALSE
+
+expdelay = 0
+postdelay = 0
+opendelay = 5
+
+
+
+
+
+[LASER]
+laser_wait = 1.0
+laser1 = TRUE
+laser2 = TRUE
+laser3 = TRUE
+
+
+
+[ANALYSIS]
+scan_start_pv = SXR:EXP:ANAL:START
+scan_stop_pv = SXR:EXP:ANAL:STOP
+scan_steps_pv = SXR:EXP:ANAL:NSTEP
+fel_mode_pv = SXR:EXP:ANAL:FEL

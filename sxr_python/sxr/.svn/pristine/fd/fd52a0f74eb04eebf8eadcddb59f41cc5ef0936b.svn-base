@@ -1,0 +1,293 @@
+"""
+Mono Auto Focus for SXR Monochromator in first order
+
+Inherits from Mono Auto Focus class to run the mono scan. Only the
+methods specific to first-order tuning are defined. 
+"""
+
+
+import logging
+import numpy as np
+import matplotlib.pyplot as plt
+
+import pyca
+from Pv import Pv
+
+from utils.SpectrometerSharpness.theAlgorithm import main as sharpness
+from utils import GaussFit
+
+from sxr_common.daq_camera import daq_camera as epics_camera
+#from sxr_common.epics_camera_sim import epics_camera
+from sxr_common.epics_gasdet_sim import epics_gasdet
+from sxr_common.epics_ims_motor_sim import epics_ims_motor
+from sxr_mono_autofocus.mono_autofocus import Mono_Auto_Focus
+
+import FirstOrderSim
+
+
+class Mono_Auto_Focus_First_Order(Mono_Auto_Focus) :
+
+    def __init__(self,camera_pv,grating_pv,mirror_pv,gasdet_pv,nprojections,
+                 gasdet_threshold,gratingrule,photonE) :
+        Mono_Auto_Focus.__init__(self) 
+        self.__logger = logging.getLogger(__name__)
+        
+        self.__logger.info("Connect to EXS_OPAL camera")
+        self.__camera = epics_camera(camera_pv)
+        
+        self.__logger.info("Connect to MONO grating motor")
+        self.__grating = epics_ims_motor(grating_pv)
+        
+        self.__logger.info("Connect to MONO mirror motor")
+        self.__mirror = epics_ims_motor(mirror_pv)
+
+        self.__logger.info("Connect to FEE Gas Detector")
+        self.__gasdet = epics_gasdet(gasdet_pv)
+        self.__gasdet.connect()
+
+        self.__nprojections = nprojections
+        self.__logger.debug("Number of projections to measure sharpness: %d"%self.__nprojections)
+        
+        self.__gasdet_threshold = gasdet_threshold
+        self.__logger.debug("Gas detector threshold for dropshot counting: %f"%self.__gasdet_threshold) 
+        
+        self.__gratingrule = gratingrule
+        self.__logger.debug("Grating rule (lines/mm) %d"%self.__gratingrule)
+
+        self.__photonE = photonE
+        self.__logger.debug("Photon Energy (eV) %f"%self.__photonE)
+
+        self.setup_plot()
+
+
+
+    def setup_plot(self) :
+        plt.ion()
+        self.__fig = plt.figure("Projection")
+        self.__ax = self.__fig.add_subplot(111)        
+        self.__projplot, = self.__ax.plot(np.zeros(self.__camera.nrow),"r-")
+        #self.__fitplot, = self.__ax.plot(np.zeros(self.__camera.nrow),"b")
+        self.__fig.canvas.draw()
+        self.__text = self.__ax.text(0.5*self.__camera.nrow,0.0,"Sharpness:xx")
+
+    def update_plot(self,data) :
+        self.__ax.set_ylim((0.8 * np.min(data)),
+                           (1.2 * np.max(data)))
+        self.__projplot.set_ydata(data)
+        self.__text.set_y(0.9 * self.__ax.get_ylim()[1])
+        self.__fig.canvas.draw()
+        
+
+
+
+    def grating_position(self, mirror_pos) :
+        """
+        Calculate change in grating position for given change in
+        mirror position to keep spectrum centered. 
+
+        Based on parameterized fit by Daniel Coco.
+        Cf(100l/mm)=2.7183-0.0034357*E+0.0000029749*E^2-0.0000000009418*E^3
+        Cf(200 l/mm)=3.791-0.0045848*E+0.0000033009*E^2-0.00000000087928*E^3
+        """
+
+        self.__logger.info("Get current mirror position: %f"%self.__mirror.rbv())
+        self.__logger.debug("New mirror position: %f"%mirror_pos)
+        
+        delta_mirror = mirror_pos - self.__mirror.rbv()
+        self.__logger.info("mirror_shift: %f"%delta_mirror)
+
+        
+        # Using Daniel's parameterization, calculate factor to scale
+        # mirror dispacement 
+        factor = None
+        
+        if (self.__gratingrule == 100) :
+            factor = np.polyval([-0.0000000009418,
+                                  +0.0000029749,-0.0034357,2.7183],
+                                self.__photonE)
+        if (self.__gratingrule == 200) :
+            factor = np.polyval([-0.00000000087928,
+                                  +0.0000033009,-0.0045848,3.791],
+                                self.__photonE)
+
+        self.__logger.debug("Mirror Scale: %f"%factor)
+
+        delta_grating = delta_mirror * factor
+        self.__logger.debug("Delta Grating %f"%delta_grating)
+        
+        new_grating_pos = self.__grating.rbv() + delta_grating
+        self.__logger.info("Mirror: %0.3f  Grating: %0.3f"%(mirror_pos,new_grating_pos))
+        
+        return new_grating_pos
+
+
+
+    def move_mirror_grating(self, mirror_pos, grating_pos) :
+        self.__logger.info("Moving: mirror=%0.3f grating=%0.3f"%(mirror_pos,grating_pos))
+
+        # Move mirror and grating
+        self.__mirror.mv(mirror_pos)
+        self.__grating.mv(grating_pos)
+
+        # Wait for both to complete motion
+        self.__mirror.wait_for_motion()
+        self.__grating.wait_for_motion()
+
+
+
+    def measure_focus_quality(self) :
+        """
+        Average a set of projections seen by EXS_OPAL, then fit
+        gaussian and extract FWHM
+        """
+
+        self.__logger.info("Grab averaged EXS_OPAL horizontal projection")
+        h_proj = self.__get_projections(self.__nprojections)
+
+        self.__logger.info("Calculate Sharpness")
+        sharpness_list = [sharpness(proj) for proj in h_proj]
+
+        avg_sharpness = np.mean(sharpness_list)
+        std_sharpness = np.std(sharpness_list)
+        self.__logger.info("Sharpness: %0.3f+/-%0.3f"%(avg_sharpness,std_sharpness))
+
+        # Update plot
+        self.__text.set_text("Sharpness: %0.3f+/-%0.3f"%(avg_sharpness,std_sharpness))
+        self.__fig.canvas.draw()
+
+        return avg_sharpness
+
+
+
+    def __get_projections(self,nimage) :        
+        """
+        Collect horizontal projections while checking shots are
+        not dropped. If there are dropped shots during collection,
+        repeat collection.  If after 10 attempts, still get dropped
+        shots, raise error 
+        """
+        # The averaged image - initalized as None
+        projection_list = None
+
+        n_attempts = 0
+        for n_attempts in range(10) :
+                
+            # Start counting dropped shots
+            self.__gasdet.start_dropshot_counting(threshold=-1.0)
+
+            # Collect horizontal projections            
+            projection_list = self.__camera.collect_h_projections(nimage)
+            # ==> FOR SIMULATION
+            #projection_list = \
+            #    FirstOrderSim.collect_projections(nimage,
+            #                                      self.__mirror.rbv(),
+            #                                      np.arange(0.0,1024.0))
+
+
+            # Stop counting dropped shots
+            self.__gasdet.stop_dropshot_counting()
+
+            # break out for loop if no shots dropped
+            if (self.__gasdet.dropped_shots() == 0) :
+                break
+            else :
+                self.__logger.warning("FEL dropped shot. trying again")
+
+
+        if (n_attempts == 9) :
+            self.__logger.critical("After 10 attempts, failed to collect projections")
+            self.__logger.critical("without FEL dropping a shot. Stopping auto-tuning")
+            self.__logger.critical("Check with MCC about status of FEL")
+            raise
+        
+
+        self.update_plot(projection_list[-1])
+        return projection_list
+
+
+
+    def fit_focus_quality_vs_mirror(self):
+        self.__logger.info("Fit measured sharpness vs mirror position")
+
+        #self.__logger.info("Fit to a quadratic, and find maximum")
+        #coeff = np.polyfit(self.mirror_pos_log, self.focus_quality_log,2)
+        
+        # Find zero gradiant -- optimial mirror position
+        #optimalPos = -coeff[1] / (2.0 * coeff[0])
+
+        # Check this is a maxima
+        #if (coeff[0] > 0.0) :
+        #    self.__logger.error("FOUND A MINIMA RATHER THAN MAXIMA !!")
+        
+
+        self.__logger.info("Fit to a gaussian and find maximum")
+        
+        # Fit data to gaussian
+        fit_params = GaussFit.GaussFit(np.array(self.focus_quality_log),
+                                       np.array(self.mirror_pos_log))
+        print fit_params
+
+        # Update plot
+        fitplot = GaussFit.gauss(self.mirror_pos_log, 
+                                 mean=fit_params['mean'],
+                                 sigma=fit_params['sigma'],
+                                 height=fit_params['height'],
+                                 pedestal=fit_params['pedestal'])
+        self.ax.plot(self.mirror_pos_log,fitplot,"b")
+        self.fig.canvas.draw()
+
+
+        # Use mean as optimal position
+        optimalPos = fit_params['mean']
+
+            
+        # Calculate optimal grating position
+        gradient = \
+            (self.grating_pos_log[-1]-self.grating_pos_log[0]) / (self.mirror_pos_log[-1]-self.mirror_pos_log[0])
+
+        delta_mirrorpos = optimalPos - self.mirror_pos_log[0]
+        optimal_grating = self.grating_pos_log[0] + (gradient * delta_mirrorpos)
+
+
+        # Set the optimal values
+        self.best_mirror_pos = optimalPos
+        self.best_grating_pos = optimal_grating
+
+
+
+
+##############################
+#  Test code
+
+if __name__ == "__main__" :
+#    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
+
+    
+    first_order_mono_auto_focus = \
+<<<<<<< .mine
+        Mono_Auto_Focus_First_Order(camera_pv="SXR:EXS:CVV:01",
+                                    grating_pv="SXR:MON:MMS:06",
+                                    mirror_pv="SXR:MON:MMS:05",
+                                    gasdet_pv="GDET:FEE1:241",
+                                    nprojections=10,
+                                    gasdet_threshold=0.0,
+                                    gratingrule=200,
+                                    photonE=850.0)
+
+#    first_order_mono_auto_focus = \
+#        Mono_Auto_Focus_First_Order(camera_pv="SXR:EXS:CVV:01",
+#                                    grating_pv="SXR:MON:MMS:06",
+#                                    mirror_pv="SXR:MON:MMS:05",
+#                                    gasdet_pv="GDET:FEE1:241",
+#                                    nprojections=200,
+#                                    gasdet_threshold=-1.0,
+#                                    gratingrule=100,
+#                                    photonE=700)    
+        
+    first_order_mono_auto_focus.scan_start_pos = -0.19
+    first_order_mono_auto_focus.scan_stop_pos = -0.06
+    first_order_mono_auto_focus.scan_delta = 0.01
+
+    first_order_mono_auto_focus.find_best_focus()
+

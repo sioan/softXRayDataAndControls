@@ -1,0 +1,5 @@
+- Add script to clear errors 
+  => Useful for recovering from power-cycling motor power chasis
+
+
+

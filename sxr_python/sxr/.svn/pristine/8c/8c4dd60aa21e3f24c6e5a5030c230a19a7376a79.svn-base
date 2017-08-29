@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# Setup EPICS development environment
+
+# EPICS variables  -- Default to 3.14
+export EPICS_SITE_TOP=/reg/g/pcds/package/epics/3.14
+export EPICS_SITE_CONFIG=$EPICS_SITE_TOP/RELEASE_SITE
+
+echo "EPICS_SITE_TOP: " $EPICS_SITE_TOP
+
+# EPICS SVN repository path
+export REPO=file:///afs/slac/g/pcds/vol2/svn/pcds
+
+# Set SVN editor to emacs -nw
+export SVN_EDITOR='emacs -nw'
+
+# Add EPICS top directory, /reg/common/tools/bin, and ~/bin/
+source /reg/g/pcds/setup/pathmunge.sh
+pathmunge $EPICS_SITE_TOP
+pathmunge /reg/common/tools/bin
+#pathmunge $HOME/bin
+
+#PATH=$PATH:$EPICS_SITE_TOP:/reg/common/tools/bin:$HOME/bin
+#export PATH
+
+
+# Run standard EPICS & PCDS startup scripts
+epicssetup=/reg/g/pcds/setup/epicsenv-3.14.12.sh
+pcds_shortcuts=/reg/g/pcds/setup/pcds_shortcuts.sh
+#/reg/g/pcds/package/epics/3.14/tools/current/bin/pcds_shortcuts.sh
+
+echo "Running $epicssetup"
+source $epicssetup
+
+echo "Running $pcds_shortcuts"
+source $pcds_shortcuts
+
+echo "Set up pyca for PYTHON 2.7.2"
+source /reg/g/pcds/setup/pyca27.sh
+
+# Add PSPKG_ROOT for ps_make
+export PSPKG_ROOT=/reg/common/package
+
+# Add EDM paths
+export PCDS_EDMS=/reg/g/pcds/package/epics/3.14/screens/edm
+export EDMDATAFILES=.:${PCDS_EDMS}/xps8:${PCDS_EDMS}/ims
+export EDMCALC=$EDMCALC:./sxrCalc.list
+
+export DEVICE_CONFIG_TEMPLATE_DIR=/reg/g/pcds/controls/device_config/ims_templates/SXD
+export DEVICE_CONFIG_TEMPLATE_DEFAULT=sxd_ims_config.tmp
+export DEVICE_CONFIG_DIR=/reg/neh/operator/sxropr/device_config/ims
+
+
+pathmunge /reg/g/pcds/controls/device_config
+
+# Add EPICS Archiver to python-path
+pythonpathmunge /reg/g/pcds/controls/pycasi/
+
+
+
+
+
+
+
+#echo "Set up ROOT"
+#export ROOTSYS=/reg/common/package/root/5.30.06-python2.7/x86_64-rhel5-gcc41-opt
+#export PSPKG_ROOT=$ROOTSYS
+#pathmunge $ROOTSYS/bin
+#ldpathmunge $ROOTSYS/lib
+#pythonpathmunge $ROOTSYS/lib

@@ -1,0 +1,192 @@
+import logging
+import threading
+import time
+
+import pyca
+from Pv import Pv
+
+logging.getLogger(__name__)
+
+
+class fel_energy :
+    """
+    Class to control FEL energy.
+    Takes two pvs:
+     - a PV to set the FEL energy
+     - a PV that changes once the FEL has settled to new energy
+    """
+
+    def __init__(self,ctrl,rbv,rbv_done) :
+        """
+        ctrl : PV that sets the FEL 
+        rbv  : PV that changes once the FEL has settled to new energy
+        rbv_done: Value that indicates FEL has reached new energy
+        """
+
+        # Setup logger
+        self.__logger = logging.getLogger(__name__)
+
+        # String for CTRL and RBV PVs
+        self.ctrl_pv = ctrl
+        self.rbv_pv = rbv
+        
+        # Set up ctrl and rbv PVs
+        self.__ctrl = Pv(ctrl)
+        self.__rbv = Pv(rbv)
+        
+        self.rbv_done = rbv_done
+
+        # Connect to Pvs
+        self.__connect()
+
+        # Threading event to signal when shutter has changed state
+        self.__done = threading.Event()
+        
+        # Start monitors to live update shutter status
+        # ..as soon as monitor starts, it will update self._open and
+        # self._close 
+        self.__start_monitors()
+        
+
+        
+    def __connect(self) :
+        """
+        Connect to PVs
+        """
+        try:
+            self.__ctrl.connect(1.0)
+            self.__rbv.connect(1.0)
+        except pyca.pyexc, e:
+            self.__logger.error("Failed to connect or was already opened: %s"%e)
+            raise
+        except pyca.caexc, e:
+            self.__logger.error("Channel Access Error: %s"%e)
+            raise
+        
+        
+        
+    def disconnect(self) :
+        """
+        Disconnect PVs
+        """
+        self.__logger.info("Disconnecting PVs")
+        
+        try:
+            self.__ctrl.disconnect()
+            self.__rbv.disconnect()
+        except pyca.pyexc, e:
+            self.__logger.error("Failed to connect or was already opened: %s"%e)
+            raise
+        except pyca.caexc, e:
+            self.__logger.error("Channel Access Error: %s"%e)
+            raise
+        
+        
+        
+    def __start_monitors(self) :
+        """
+        Start EPICS monitors of rbv PV to continously update shutter state
+        """
+        self.__logger.debug("Starting monitor for %s"%self.__rbv.name)
+
+        # Connect to monitor callbacks
+        self.__rbv.monitor_cb = self.__rbv_cb
+
+        # Start monitor
+        pvevt = pyca.DBE_ALARM|pyca.DBE_LOG|pyca.DBE_VALUE
+        self.__rbv.monitor(pvevt)
+        pyca.flush_io()
+
+        # Wait 1 second for monitoring to start
+        time.sleep(1.0)
+        
+
+
+    def __stop_monitors(self) :
+        """
+        Stop EPICS monitors
+        """
+        self.__logger.debug("Stopping monitor for %s"%self.__rbv.name)
+        self.__rbv.unsubscribe()
+        
+        
+        
+    def __rbv_cb(self) :
+        """
+        rbv call back
+        """
+        self.__logger.debug("%s updated"%self.__rbv.name)
+        
+        if self.__rbv.value == self.rbv_done :
+            self.__logger.debug("%s -- Energy Set"%self.__rbv.name)
+            self.__done.set()
+        else:
+            self.__logger.debug("%s -- still ramping"%self.__rbv.name)
+            self.__done.clear()
+
+            
+
+
+    def set(self,value) :
+        """
+        Set FEL Energy
+        """
+        self.__logger.info("Set FEL Energy to %f"%value)
+
+        # Check current value 
+        self.__ctrl.get(timeout=1.0)
+        pyca.flush_io()
+
+        if self.__ctrl.value == value :
+            self.__logger.info("FEL already at %f"%value)
+            self.__done.set()
+        else :
+            self.__done.clear()
+            self.__ctrl.put(value)
+            pyca.flush_io()
+        
+
+    def wait(self) :
+        self.__logger.info("Wait for FEL to set energy")
+        self.__done.wait()
+
+
+
+
+        
+if __name__ == "__main__" :
+    logging.basicConfig(level=logging.DEBUG)
+    #fel = fel_energy("SXR:TST:CTRL:1",
+    #                 "SXR:TST:RBV:1",
+    #                 0)
+
+    fel = fel_energy("MCC:USR:PHOTON:ENERGY",
+                     "SIOC:SYS0:ML02:AO309",
+                     0)
+
+
+
+    #fel.set(665.0)
+    #fel.wait()
+
+    #print "SLEEP 10sec"
+    #time.sleep(10.0)
+    #fel.set(670.0)
+    #fel.wait()
+    
+    import numpy as np
+    energylist = np.linspace(665.0,675.0,num=5)
+    
+    for energy in energylist :
+        fel.set(energy)
+        fel.wait()
+        
+    for energy in energylist[::-1] :
+        fel.set(energy)
+        fel.wait()
+
+
+    print "DONE"
+
+    
+

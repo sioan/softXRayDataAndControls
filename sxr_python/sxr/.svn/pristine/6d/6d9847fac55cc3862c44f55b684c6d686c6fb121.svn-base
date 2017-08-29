@@ -1,0 +1,61 @@
+import casi, casiTools
+import os
+
+#/reg/g/pcds/controls/pycasi/pycasi.py --archive /reg/d/pscaa/SXR/2013/12_05/index --pv SXR:EXP:MMS:01.SREV
+
+def parse_template(filename) :
+
+    template_file = open(filename,'r')
+
+    motor_param_pv = []
+    
+    for line in template_file :        
+        if line.startswith(".") or line.startswith(":") :
+            motor_param_pv.append(line.strip())
+
+    return motor_param_pv
+
+
+def get_unique_vals(value,PV=None) :
+    previous_value = None 
+
+    while value.valid() :
+        if (value.isInfo() is False) and (value.text() != previous_value) :
+            
+            print PV,casiTools.formatValue(value)
+            previous_value = value.text()
+
+        value.next()
+
+
+def get_all_motor_params(motor_pv_prefix,motor_config_pv_list) :
+    
+    for pv in motor_config_pv_list :
+        motor_pv = motor_pv_prefix + pv
+
+        #print motor_pv
+        success = archive.findChannelByName(motor_pv,channel)
+        if success :
+            #print "*********",motor_pv,"*********"            
+            channel.getFirstValue(value)
+            get_unique_vals(value,motor_pv)
+        else :
+            print "*********",motor_pv,"is not archived","*********"
+
+    
+if __name__ == '__main__':
+
+    filename = "/reg/neh/home/mitra/tmp/device_config/ims_templates/sxd_ims_config_archive.tmp"
+    motor_config_pv_list = parse_template(filename) 
+
+    archive = casi.archive()
+    channel = casi.channel()
+    value   = casi.value()
+    archive.open("/reg/d/pscaa/SXR/2013/12_05/index")
+
+    motor_pv_ppl_prefix = "SXR:EXP:MMS"
+
+    for port in range(1,17) :
+        motor_pv_prefix = "%s:%02d"%(motor_pv_ppl_prefix,port)
+        get_all_motor_params(motor_pv_prefix, motor_config_pv_list)
+        

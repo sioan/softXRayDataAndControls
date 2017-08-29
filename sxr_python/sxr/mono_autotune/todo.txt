@@ -1,0 +1,49 @@
+mono_autotune.py
+- First version of autotune script
+
+mono_autotune_allshots
+- Capture 10 frame from EXS_OPAL, then sum, project and calculate
+  sharpness 
+- Assumes mono in first order
+
+mono_autotune_firstorder
+- Collects 200 horizontal projections.
+  During acquisition, FEE Gas Detector is monitored for dropped shots.
+  If FEL fails to lase, process to collect projects restarts.
+  If happens more than 10 times, scripts stops and alerts users.
+
+mono_autotune_zero_order
+- Collects 200 images and monitors FEE Gas Detector values for dropped
+  shots. If FEL fails to lase, acquisition restarts.
+  If this happens more than 10 times, scripts stops and alerts users.
+- Maybe better for script to collect projections rather than averaged
+  image.
+
+ss_measure
+- Calculates width from FEL soft x-ray self-seeding
+- Needs to be integrated with general fitting code to optimise mirror
+  focus. 
+
+Nexst steps are to combine the scripts in one larger script than can
+do mono zero, first, and SXRSS. 
+- must allow different algorithms that measure quality of focus to be
+  integrated 
+- must work for optimizing minimumn or maximum
+- know know whether mono is in zero or first order, and then make
+  corrections
+
+...futher down the line
+- automatically tune mirrror to get beam in center
+- define its own scan range. 
+  - a more general gradient descent/ascent algoritm a la MINUIT would
+    be needed. 
+
+
+
+mono_autofocus
+- rethink virtual functions
+  should move_mirror_grating be
+  	 move_mirror_grating(mirros_pos)
+	 or move_mirror_grating(mirror_pos,grating_pos)
+   if it's the 2 argument version, have function to calcualte grating position?
+      - would be more logical

@@ -62,6 +62,20 @@ from scipy.optimize import curve_fit
 
 #==================
 
+def averageShiftedHistogram(x,binStart,binStop,binIncrement,myWeights,m):
+	
+	myCounts = array([])
+	myBins = array([])
+	
+	
+	for i in arange(0,binIncrement,binIncrement*1.0/m):
+		myHistogram = histogram(x,bins=arange(binStart+i,binStop+i,binIncrement),weights=myWeights)
+		myCounts = append(myCounts,myHistogram[0])
+		myBins = append(myBins,myHistogram[1][:-1])
+
+	sortedIndex = argsort(myBins)
+	return myCounts[sortedIndex],myBins[sortedIndex]
+
 def lognorm(x,a,mode,s):
 
 	#a,mu,s = p
@@ -184,8 +198,6 @@ def main(filename):
 	myBin2Moment = histogramdd(toBeBinned,bins=binEdges,weights=myWeights**2)
 	myBin2StanError = (myBin2Moment[0] - myBinAverage[0]**2)**0.5/myBinCount[0]**0.5
 
-	plot(myBinCount[1][1][:-1],(myBinAverage[0][0]/myBinCount[0][0])[::-1])
-	show()
 """
 
 if __name__ == '__main__':
@@ -202,7 +214,7 @@ if __name__ == '__main__':
 	#main(myArguments.filename)
 	#main("temp")
 
-	fileName = 'sxri0414run63.h5'
+	fileName = 'sxri0414run60.h5'
 
 	f = h5py.File(fileName,'r')
 	myDict= hdf5_to_dict(f)
@@ -342,5 +354,9 @@ if __name__ == '__main__':
 	semilogy(arange(len(myFFT))*1.0/20,myFFT)
 	show()
 
-execfile("gaussianKdeAdapted.py")
+myBinAverage = averageShiftedHistogram(toBeBinned[:,1],0,21,0.1, toBeBinned[:,0],50)
+myBinCount = averageShiftedHistogram(toBeBinned[:,1][::-1],0,21,0.1, ones(len(toBeBinned[:,0])),50)
+plot(myBinAverage[1][::-1],myBinAverage[0]/myBinCount[0])
+show()
+#execfile("gaussianKdeAdapted.py")
 

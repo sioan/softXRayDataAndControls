@@ -1,0 +1,450 @@
+import string
+import time
+import datetime
+import subprocess
+import logging
+import threading
+
+import pyca
+from Pv import Pv
+from caget import caget
+from caput import caput
+
+
+class epics_ims_motor : 
+    """
+    Wrapper for EPICS IMS motors
+    Provides convenience methods to intialize motors 
+    """
+
+    def __init__(self, motorpv,timeout=1.0) :
+        """
+        motorpv : Base EPICS PV for IMS motors
+        """
+        # Set up logger
+        self.__logger = logging.getLogger(__name__)
+        
+        # Set up motor  base pv
+        self.__basepv = motorpv
+        self.__logger.debug("%s Creating motor"%self.__basepv)
+
+
+        # Create pyca variables
+        # - Move to position (.VAL)
+        self.__val = Pv(self.__basepv + ".VAL")
+        # - Relative Move (Tweak) 
+        self.__twv = Pv(self.__basepv + ".TWV") # Tweak Value
+        self.__twf = Pv(self.__basepv + ".TWF") # Tweak Forward
+        self.__twr = Pv(self.__basepv + ".TWR") # Tweak Reverse
+        # - Motor position (.RBV)
+        self.__rbv = Pv(self.__basepv + ".RBV")  
+        # - Motor finished moving (.DMOV)
+        self.__dmov = Pv(self.__basepv + ".DMOV")
+
+        # Create threading event to signal when motion in progress
+        self.__motion_done = threading.Event()
+
+        # Connect to PVs
+        self.__connect(timeout)
+
+
+        # Start monitors to asynchronously track motor status
+        self.__start_monitors()
+                
+
+    def __connect(self,timeout=1.0) :
+        """
+        Connect to PVs         
+        """
+        # Do this by manually creating list of Pv variables, and then
+        # initializing each one.  Smarter way is to use Python's
+        # introspection for it to finds its list of Pvs        
+        internal_pv_list = (self.__val,
+                            self.__twv,self.__twf,self.__twr,
+                            self.__rbv,self.__dmov)
+        
+        for internal_pv in internal_pv_list :
+            try:
+                internal_pv.connect(timeout)
+                self.__logger.debug("Motor PV %s Connected"%internal_pv.name)
+            except pyca.pyexc, e:
+                self.__logger.error("Failed to connect or was already open: %s"%e)
+                raise
+            except pyca.caexc, e:
+                self.__logger.error("Channel Access Error: %s"%e)
+                raise
+
+
+        self.__logger.info("%s motor PVs connected"%self.__basepv)
+
+
+
+
+
+    def __disconnect(self) :
+        """
+        Disconnect all PVs
+        """
+        self.__logger.info("%s Disconnect motor PVs"%self.__basepv)
+
+        # Do this by manually creating list of Pv variables, and then
+        # initializing each one.  Smarter way is to use Python's
+        # introspection for it to finds its list of Pvs        
+        internal_pv_list = (self.__val,
+                            self.__twv,self.__twf,self.__twr,
+                            self.__rbv,self.__dmov)
+        
+        for internal_pv in internal_pv_list :
+            try:
+                internal_pv.disconnect()
+                self.__logger.debug("Motor PV %s disconnected"%internal_pv.name)
+            except pyca.pyexc, e:
+                self.__logger.error("Failed to disconnect or was not open: %s"%e)
+                raise
+            except pyca.caexc, e:
+                self.__logger.error("Channel Access Error: %s"%e)
+                raise
+
+
+    def __start_monitors(self) :
+        """
+        Start EPICS monitors of variables that we want to be
+        continously updated
+        """
+        self.__logger.debug("Start monitors for RBV and DMOV")
+
+        # Connect monitor call backs 
+        self.__rbv.monitor_cb = self.__rbv_cb
+        self.__dmov.monitor_cb = self.__dmov_cb
+
+        # Start monitoring
+        pvevt = pyca.DBE_ALARM|pyca.DBE_LOG|pyca.DBE_VALUE
+        self.__rbv.monitor(pvevt)
+        self.__dmov.monitor(pvevt)
+        pyca.flush_io()
+
+        # Wait 1.0 seconds for monitoring to start
+        time.sleep(1.0)
+
+        
+    def __rbv_cb(self) :
+        """
+        Motor RBV call back - Update value of RBV
+        """
+        self.__rbv.get()
+        self.__logger.debug("%s RBV updated : %0.6f"%(self.__basepv,self.__rbv.value))
+
+
+
+
+    def __dmov_cb(self) :
+        """
+        Motor DMOV call back - Update value of DMOV
+        """
+        # Get the value of DMOV
+        self.__dmov.get()
+
+        # If motion is complete, set Threading-Event 
+        if self.__dmov.value == 0 :
+            self.__motion_done.clear()
+        else :
+            self.__motion_done.set()
+
+        self.__logger.debug("%s DMOV updated : %d"%(self.__basepv,self.__dmov.value))
+
+
+    def __stop_monitors(self) :
+        """
+        Stop EPICS monitors
+        """
+        self.__rbv.unsubscribe()
+        self.__dmov.unsubscribe()
+
+
+        
+    def init(self, timeout=10.0) :
+        """
+        Initialize motor
+        """
+        
+        # Initialize motor
+        self.__logger.info("%s initializing...please be patient"%self.__basepv)
+        self.__intialize()
+        
+        # Wait 0.2 seconds for log PVs to update
+        time.sleep(0.2)
+                
+        # Check motor initialized
+        motor_initialized = False 
+        logbytes = None
+        for letter in string.uppercase[0:8][::-1] :
+
+            # time-now
+            time_now = datetime.datetime.now()
+            
+            # Extract log messages
+            logbytes = list(caget(self.__basepv + ".LOG" + letter))
+            firstZero = logbytes.index(0L)            
+            logbytes = logbytes[:firstZero]
+            log = "".join(map(chr,logbytes))        
+            self.__logger.debug("%s %s"%(self.__basepv,log))
+
+
+            # Reject empty log mesages
+            if not log:
+                self.__logger.debug("empty message")
+                continue
+
+            # Split into time-stamp and log message
+            timestamp = log[:8]
+            logmessage = log[8:]
+        
+            # convert timestamp to datetime object
+            log_ts = datetime.datetime.strptime(timestamp,"%H:%M:%S")
+
+            # time difference [seconds]
+            time_diff = min((time_now - log_ts).seconds,
+                            (log_ts - time_now).seconds)
+
+            # reject old log messages
+            # Defined as message older than 1 minute
+            if (time_diff > 60) :
+                self.__logger.debug("Old message")
+                continue
+                        
+            if "Initialization completed" in logmessage :
+                motor_initialized = True
+                break
+        
+        if motor_initialized == False :
+            self.__logger.info("%s failed initialization" %self.__basepv)
+        else:
+            self.__logger.info("%s passed initialization" %self.__basepv)
+
+        return motor_initialized
+
+    
+
+    def __intialize(self) :
+        """
+        Private method to call basepv.RINI PV and wait for it to
+        complete 
+        """
+
+        # Create PV to basepv.RINI        
+        init_pv = Pv(self.__basepv + ".RINI")
+
+        # Connect to the PV
+        try: 
+            init_pv.connect(1.0)
+        except pyca.pyexc, e:
+            self.__logger.error("Failed to connect or was already opened: %s"%e)
+            raise
+        except pyca.caexc, e:
+            self.__logger.error("Channel Access Error: %s"%e)
+            raise
+
+        # Set up callback to EPICS put
+        init_pv.putevt_cb = self.__initialize_cb
+
+        # Set up threading event for motor
+        # initialization. __initialize waits until _initialize_cb is
+        # called, which sets __initialize_done.
+        self.__initialize_done = threading.Event()
+        
+        # Make EPICS call to basepv.RINI
+        # Writing '1' start reinitizlation sequence
+        init_pv.put(1,timeout=-1.0)
+        pyca.flush_io()
+        time_start = datetime.datetime.now()
+
+        # Wait for motor initialization to complete
+        self.__logger.debug("%s : Waiting for initilization to complete"%self.__basepv)
+        self.__initialize_done.wait()
+
+        time_end = datetime.datetime.now()
+        time_diff = time_end - time_start
+        self.__logger.debug("%s initialization complete (time taken: %.2f secs)"%(self.__basepv,time_diff.total_seconds()))
+
+        # Disconnect PV
+        try:
+            init_pv.disconnect()
+        except pyca.pyexc, e:
+            self.__logger.error("Failed to disconnect or was not opened: %s"%e)
+        except pyca.caexc, e:
+            self.__logger.error("Channel Access Error: %s"%e)
+            
+        return
+
+
+    def __initialize_cb(self,exception=None) :
+        """
+        Callback for __intialize
+        Sets __initialize_done
+        """        
+        self.__logger.debug("%s : __intialize callback called"%self.__basepv)
+        self.__initialize_done.set()
+        return
+
+
+
+
+    def config(self, motor_cfg) :
+        """
+        Download configuration parameters to motor
+        motor_cfg: Motor configuration file name
+        
+        Wrapper to call load_or_save_setting.sh script, used by
+        motor-ioc 
+        """
+        
+        # Create string for shell command
+        cmd = "$DEVICE_CONFIG_DIR/../load_or_save_settings.sh load " + \
+              self.__basepv + " " + motor_cfg
+        retval = subprocess.call(cmd,shell=True)        
+        success = True if retval == 0 else False
+
+        if success :
+            self.__logger.info("%s : Config success"%self.__basepv)
+        else :
+            self.__logger.info("%s : failed to config"%self.__basepv)
+
+        return success
+
+    
+ 
+    def sn(self) :
+        """
+        Get motor serial number
+        """
+        motor_sn = caget(self.__basepv + ".SN")
+        if motor_sn is "" :
+            motor_sn = None
+
+        self.__logger.debug("%s Serial Number: %s"%(self.__basepv,motor_sn))
+
+        return motor_sn
+
+
+    def pn(self) :
+        """
+        Get motor part number
+        """
+        motor_pn = caget(self.__basepv + ".PN")
+        if motor_pn is "" :
+            motor_pn = None
+
+        self.__logger.debug("%s Part Number: %s"%(self.__basepv,motor_pn))
+
+        return motor_pn
+
+
+
+    def mv(self,position,timeout=-1.0) :
+        """
+        Move motor to position
+        """
+        self.__logger.info("%s Move motor to %0.6f"%(self.__basepv,position))
+        try: 
+            self.__val.put(position,timeout)
+            pyca.flush_io()
+            self.__motion_done.clear()
+        except pyca.pyexc, e:
+            self.__logger.error("%s Failed to move motor"%self.__basepv)
+            raise
+        except pyca.caexc, e:
+            self.__logger.error("%s Channel Access Error"%self.__basepv)
+            raise
+
+
+    def mvr(self,nudge,timeout=-1.0) :
+        """
+        Nudge motor position by value nudge
+        """
+        self.__logger.info("%s Nudge motor by %0.6f"%(self.__basepv,nudge))
+        try:
+            self.__twv.put(nudge,timeout)
+            self.__twf.put(1,timeout)
+            pyca.flush_io()     
+            self.__motion_done.clear()
+        except pyca.pyexc, e:
+            self.__logger.error("%s Failed to nudge motor"%self.__basepv)
+            raise
+        except pyca.caexc, e:
+            self.__logger.error("%s Channel Access Error"%self.__basepv)
+            raise
+        
+
+    def rbv(self) :
+        """
+        Get curent position of motor
+        """
+        return self.__rbv.value
+
+    def dmov(self) :
+        """
+        Return status of motion moving
+        """
+        return True if self.__dmov.value == 1 else False
+
+    def wait_for_motion(self,timeout=30) :
+        """
+        Wait for motion to complete 
+        """
+        self.__logger.info("%s Waiting for motion to complete"%self.__basepv)
+        time_start = datetime.datetime.now()
+        
+        motion_success = self.__motion_done.wait(timeout)
+        if  not motion_success :
+            self.__logger.warning("%s Motion did not complete after %f seconds"%(self.__basepv,timeout))
+            raise
+
+        time_end = datetime.datetime.now()
+        time_diff = time_end -time_start
+        self.__logger.debug("%s Motion complete (time taken:%0.2f)"%(self.__basepv,time_diff.total_seconds()))
+
+
+
+
+if __name__ == "__main__" : 
+#    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
+    
+    motor21 = epics_ims_motor("SXR:EXP:MMS:31")
+
+    print "Create Motor"
+    motor22 = epics_ims_motor("SXR:EXP:MMS:32")
+    print "Motor created"
+
+    motor22.mv(10.0)
+    motor22.wait_for_motion()
+
+    motor22.mvr(-20.0)
+    motor22.wait_for_motion()
+    motor22.wait_for_motion()
+
+    
+
+
+#    motor21.init()
+#    motor22.init()
+
+#    print "Motor21 SN:",motor21.sn()
+#    print "Motor22 SN:",motor22.sn()
+    
+
+#    for num in range(10,24) :
+#        motor_ppl = epics_ims_motor("SXR:EXP:MMS:%02d"%num)
+#        motor_ppl.init()
+#        print "Motor SN:",motor_ppl.sn()
+        
+    
+
+
+#    print "Config Motor 21\n",motor21.config("$DEVICE_CONFIG_DIR/AMO:PPL:MMS:26_ANKUSHTESTMOTOR_.cfg")
+    
+
+
+
+        
+        

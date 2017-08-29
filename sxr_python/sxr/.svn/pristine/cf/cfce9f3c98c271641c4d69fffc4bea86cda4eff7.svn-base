@@ -1,0 +1,73 @@
+mono_autotune.py
+- First version of autotune script
+
+mono_autotune_allshots
+- Capture 10 frame from EXS_OPAL, then sum, project and calculate
+  sharpness 
+- Assumes mono in first order
+
+mono_autotune_firstorder
+- Collects 200 horizontal projections.
+  During acquisition, FEE Gas Detector is monitored for dropped shots.
+  If FEL fails to lase, process to collect projects restarts.
+  If happens more than 10 times, scripts stops and alerts users.
+
+mono_autotune_zero_order
+- Collects 200 images and monitors FEE Gas Detector values for dropped
+  shots. If FEL fails to lase, acquisition restarts.
+  If this happens more than 10 times, scripts stops and alerts users.
+- Maybe better for script to collect projections rather than averaged
+  image.
+
+ss_measure
+- Calculates width from FEL soft x-ray self-seeding
+- Needs to be integrated with general fitting code to optimise mirror
+  focus. 
+
+Nexst steps are to combine the scripts in one larger script than can
+do mono zero, first, and SXRSS. 
+- must allow different algorithms that measure quality of focus to be
+  integrated 
+- must work for optimizing minimumn or maximum
+- know whether mono is in zero or first order, and then make
+  corrections
+
+...futher down the line
+- automatically tune mirrror to get beam in center
+- define its own scan range. 
+  - a more general gradient descent/ascent algoritm a la MINUIT would
+    be needed. 
+
+
+
+mono_autofocus
+
+
+TO-DO:
+- mono_autofocus
+  - set colour and add legend
+  - allow errors to be plotted 
+  - print fit params to final fit
+
+- mono_autofocus_zeroorder
+  - allow option of parsing a config file 
+  - switch for simulation mode              
+  - set colour and add legend
+  - set axes titles and units
+  - allow errors to be plotted 
+  - propagate errors in fits
+  - print fit params on plots
+
+- mono_autofocus_firstorder
+  ==> GET FINAL GAUSSIAN FIT TO WORK WHEN TAKING DATA FROM EXS_OPAL <===
+      ==> MORE SPECIFICALLY HAVE GAUSSIAN FIT BE MORE ROBUST IF NAN
+      ==>  APPEAR IN DATA 
+  - allow option of parsing a config file 
+  - allow threshold for Gas Detector drop shot counting to be set 
+  - check number of projections can be set
+  - switch for simulation mode
+  - set colour and add legend
+  - set axes titles and units
+  - allow errors to be plotted 
+  - propagate errors in fits
+  - print fit params on plots

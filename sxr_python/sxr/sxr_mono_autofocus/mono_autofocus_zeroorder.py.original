@@ -1,0 +1,249 @@
+"""
+Mono Auto Focus for SXR Monochromator in zeroth order
+
+Inherits from Mono Auto Focus class to run the mono scan. Only the
+methods specific to zeroth-order tuning are defined. 
+"""
+
+import logging
+import numpy as np
+import matplotlib.pyplot as plt
+
+import pyca
+from Pv import Pv
+
+from sxr_common.epics_camera import epics_camera
+from sxr_common.epics_gasdet import epics_gasdet
+from sxr_common.epics_ims_motor import epics_ims_motor
+from sxr_mono_autofocus.mono_autofocus import Mono_Auto_Focus
+
+from utils import GaussFit
+
+import ZeroOrderSim
+
+class Mono_Auto_Focus_Zero_Order(Mono_Auto_Focus) :
+
+    def __init__(self,camera_pv,grating_pv,mirror_pv,gasdet_pv,nprojections,
+                 gasdet_threshold) :
+        Mono_Auto_Focus.__init__(self) 
+        self.__logger = logging.getLogger(__name__)
+
+        self.__logger.info("Connect to EXS_OPAL camera")
+        self.__camera = epics_camera(camera_pv)
+
+        self.__logger.info("Connect to MONO grating motor")
+        self.__grating = epics_ims_motor(grating_pv)
+
+        self.__logger.info("Connect to MONO mirror motor")
+        self.__mirror = epics_ims_motor(mirror_pv)
+
+        self.__logger.info("Connect to FEE Gas Detector")
+        self.__gasdet = epics_gasdet(gasdet_pv)
+        self.__gasdet.connect()
+
+        self.__nprojections = nprojections
+        self.__logger.debug("Number of projections for averaging: %d"%self.__nprojections)
+
+        self.__gasdet_threshold = gasdet_threshold
+        self.__logger.debug("Gas detector threshold for dropshot counting: %f"%self.__gasdet_threshold) 
+        
+
+        self.setup_plot()
+
+
+        
+        
+    def setup_plot(self) :
+        plt.ion()
+        self.__fig = plt.figure("Projection")
+        self.__ax = self.__fig.add_subplot(111)        
+        self.__projplot, = self.__ax.plot(np.zeros(self.__camera.nrow),"r-")
+        self.__fitplot, = self.__ax.plot(np.zeros(self.__camera.nrow),"b")
+        self.__fig.canvas.draw()
+
+    def update_plot(self,data) :
+        self.__ax.set_ylim((0.8 * np.min(data)),
+                           (1.2 * np.max(data)))
+        self.__projplot.set_ydata(data)
+        self.__fig.canvas.draw()
+        
+        
+        
+
+    def grating_position(self, mirror_pos) :
+        """
+        In zero order, the change in the grating position is identical
+        to the change in the mirror position
+        """
+
+        self.__logger.info("Get current mirror position: %f"%self.__mirror.rbv())
+        self.__logger.debug("New mirror position: %f"%mirror_pos)
+        
+        delta_mirror = mirror_pos - self.__mirror.rbv()
+        self.__logger.info("mirror_shift: %f"%delta_mirror)
+        
+        new_grating_pos = self.__grating.rbv() + delta_mirror
+        self.__logger.info("Mirror: %0.3f  Grating: %0.3f"%(mirror_pos,new_grating_pos))
+        
+        return new_grating_pos
+
+
+
+    def move_mirror_grating(self, mirror_pos, grating_pos) :
+        self.__logger.info("Moving: mirror=%0.3f grating=%0.3f"%(mirror_pos,grating_pos))
+
+        # Move mirror and grating
+        self.__mirror.mv(mirror_pos)
+        self.__grating.mv(grating_pos)
+
+        # Wait for both to complete motion
+        self.__mirror.wait_for_motion()
+        self.__grating.wait_for_motion()
+
+        
+ 
+
+    def measure_focus_quality(self) :
+        """
+        Average a set of projections seen by EXS_OPAL, then fit
+        gaussian and extract FWHM
+        """
+
+        self.__logger.info("Grab averaged EXS_OPAL horizontal projection")
+        h_proj = self.__get_avg_projection(self.__nprojections)
+
+        self.__logger.info("Fit gaussian and extract sigma")
+        fwhm = self.__measure_fwhm(h_proj)
+        self.__logger.info("FWHM: %0.3f"%fwhm)
+        
+        return fwhm
+
+
+    def __get_avg_projection(self,navg) :        
+        """
+        Get averaged horizontal projection while checking shots are
+        not dropped. If there are dropped shots during collection,
+        repeat collection.  If after 10 attempts, still get dropped
+        shots, raise error 
+        """
+        # The averaged image - initalized as None
+        avg_image = None
+
+        n_attempts = 0
+        for n_attempts in range(10) :
+                
+            # Start counting dropped shots
+            self.__gasdet.start_dropshot_counting(threshold=self.__gasdet_threshold)
+
+            # Get averaged horizontal projections
+            avg_image = self.__camera.h_projection_avg(navg)
+            # ==> FOR SIMULATION
+            #avg_image = \
+            #    ZeroOrderSim.projection(self.__mirror.rbv(),
+            #                            np.arange(0.0,1024.0))
+
+
+            # Stop counting dropped shots
+            self.__gasdet.stop_dropshot_counting()
+
+            # break out for loop if no shots dropped
+            if (self.__gasdet.dropped_shots() == 0) :
+                break
+            else :
+                self.__logger.warning("FEL dropped shot. trying again")
+
+
+        if (n_attempts == 9) :
+            self.__logger.critical("After 10 attempts, failed to collect projections")
+            self.__logger.critical("without FEL dropping a shot. Stopping auto-tuning")
+            self.__logger.critical("Check with MCC about status of FEL")
+            raise
+        
+
+        self.update_plot(avg_image)
+        return avg_image
+
+
+    def __measure_fwhm(self,data) :
+        """
+        Fit data to Gaussian+pedestal and return FWHM
+        """
+        self.__logger.info("Fit data and measure FWHM")
+
+        fit_results = GaussFit.GaussFit(data)
+        self.__logger.info("Fit Results: %s"%fit_results)
+
+        fit_plot = GaussFit.gauss(np.arange(data.size),
+                                  mean=fit_results['mean'],
+                                  sigma=fit_results['sigma'],
+                                  height=fit_results['height'],
+                                  pedestal=fit_results['pedestal'])
+        self.__fitplot.set_ydata(fit_plot)
+        self.__fig.canvas.draw()
+
+
+        fwhm = 2.35 * fit_results['sigma']
+        self.__logger.info("FWHM: %f"%fwhm)
+        
+        return fwhm
+
+
+
+    def fit_focus_quality_vs_mirror(self):
+        self.__logger.info("Fit measured width vs mirror position")
+        self.__logger.info("Fit to a quadratic, and find minimum")
+
+        # Fit data to quadratic
+        coeff = np.polyfit(self.mirror_pos_log, self.focus_quality_log,2)
+
+        # Update plot
+        fitplot = np.polyval(coeff, self.mirror_pos_log)
+        self.ax.plot(self.mirror_pos_log,fitplot,"b")
+        self.fig.canvas.draw()
+
+        # Find zero gradiant -- optimial mirror position
+        optimalPos = -coeff[1] / (2.0 * coeff[0])
+
+        # Check this is a minima
+        if (coeff[0] < 0.0) :
+            self.__logger.error("FOUND A MAXIMA RATHER THAN MINIMA !!")
+        
+            
+        # Calculate optimal grating position
+        gradient = \
+            (self.grating_pos_log[-1]-self.grating_pos_log[0]) / (self.mirror_pos_log[-1]-self.mirror_pos_log[0])
+
+        delta_mirrorpos = optimalPos - self.mirror_pos_log[0]
+        optimal_grating = self.grating_pos_log[0] + (gradient * delta_mirrorpos)
+
+
+        # Set the optimal values
+        self.best_mirror_pos = optimalPos
+        self.best_grating_pos = optimal_grating
+
+
+
+
+
+##############################
+#  Test code
+
+if __name__ == "__main__" :
+    logging.basicConfig(level=logging.INFO)
+#    logging.basicConfig(level=logging.DEBUG)
+
+    
+    zero_order_mono_auto_focus = \
+        Mono_Auto_Focus_Zero_Order(camera_pv="SXR:EXS:CVV:01",
+                                   grating_pv="SXR:MON:MMS:06",
+                                   mirror_pv="SXR:MON:MMS:05",
+                                   gasdet_pv="GDET:FEE1:241",
+                                   nprojections=200,
+                                   gasdet_threshold=0.0)
+        
+    zero_order_mono_auto_focus.scan_start_pos = -0.5
+    zero_order_mono_auto_focus.scan_stop_pos = -0.1
+    zero_order_mono_auto_focus.scan_delta = 0.02
+
+    zero_order_mono_auto_focus.find_best_focus()
+

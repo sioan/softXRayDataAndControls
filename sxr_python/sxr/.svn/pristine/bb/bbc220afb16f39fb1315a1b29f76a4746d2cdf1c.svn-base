@@ -1,0 +1,694 @@
+# Standard Python modules
+import os
+import sys
+import time
+import logging
+import threading 
+import itertools
+import random
+from ConfigParser import SafeConfigParser
+import numpy as np
+from scipy import optimize
+import signal
+
+# PCDS EPICS modules
+import pyca
+from Pv import Pv
+from caget import caget
+from caput import caput
+
+# DAQ slowcam module
+import princeton as slowcam
+
+# SXR Python modules
+from sxr_common.epics_shutter import epics_shutter
+from sxr_common.fel_energy import fel_energy
+
+# Energy Scan PVs
+#  - SASE: change mono-grating 
+#          => this will change SXR:IOC:POLY:Calc:Energy
+#          => MCC will monitor this PV and adjust machine 
+#  - SEEDED: set MCC:USR:PHOTON:ENERGY
+#          => MCC monitors this PV and adjust machine accordingly
+#
+# Tuning feedback PVs
+#  SIOC:SYS0:ML00:AO98 
+#          => Value 0 : Done
+#          => Value 1 : Magnets Ramping 
+#
+#  SIOC:SYS0:ML02:AO309 
+#         => Value 0 : Done
+#         => Value 1 : Seeding vernier moving
+#
+
+# To-do:
+#
+
+
+# Set upp logger
+logger = logging.getLogger(__name__)
+
+
+try:
+    import pydaq
+except:
+    logger.error("FAILED TO IMPORT PYDAQ")
+    sys.exit(1)
+
+#print pydaq.__dict__
+
+
+
+# WRITE CONVENIENCE CLASS FOR LASER SHUTTERS
+#  laser.open() ==> open all shutters
+#  laser.close() ==> close all shutters
+#  laser.wait() ==> wait for all shutters to change state
+#  laser.isopen() ==> Return AND of all shutters open state
+#  laser.isclose() ==> Return AND of all shutters close state
+#   ==> Hard code shutters that should be grouped together...TBC
+class lasershutter :
+    def __init__(self,s1=False,s2=False,s3=False):
+        self.shutter1 = epics_shutter("SXR:EXP:MPD:CH:5:SetVoltage",
+                            "SXR:EXP:MPD:CH:5:GetTerminalVoltageMeasurement",
+                            24.0,1.0)
+
+        self.shutter2 = epics_shutter("SXR:EXP:MPD:CH:6:SetVoltage",
+                            "SXR:EXP:MPD:CH:6:GetTerminalVoltageMeasurement",
+                            24.0,1.0)
+
+        self.shutter3 = epics_shutter("SXR:EXP:MPD:CH:7:SetVoltage",
+                            "SXR:EXP:MPD:CH:7:GetTerminalVoltageMeasurement",
+                            24.0,1.0)
+
+        self.s1 = s1
+        self.s2 = s2
+        self.s3 = s3
+
+
+    def open(self) :
+        if self.s1 : self.shutter1.open()
+        if self.s2 : self.shutter2.open()
+        if self.s3 : self.shutter3.open()
+    
+    
+    def close(self) :
+        if self.s1 : self.shutter1.close()
+        if self.s2 : self.shutter2.close()
+        if self.s3 : self.shutter3.close()
+    
+    
+    def isOpen(self) :        
+        all_shutter_open = True
+        if self.s1 : 
+            all_shutter_open = all_shutter_open and self.shutter1.isOpen() 
+        
+        if self.s2 :
+            all_shutter_open = all_shutter_open and self.shutter2.isOpen() 
+
+        if self.s3 :
+            all_shutter_open = all_shutter_open and self.shutter3.isOpen()
+
+        return all_shutter_open
+
+
+    def isClose(self) :
+        all_shutter_close = True
+        if self.s1 :
+            all_shutter_close = all_shutter_close and self.shutter1.isClose()
+
+        if self.s2 :
+            all_shutter_close = all_shutter_close and self.shutter2.isClose()
+
+        if self.s3 :
+            all_shutter_close = all_shutter_close and self.shutter3.isClose()
+
+        return all_shutter_close
+        
+
+    def wait(self) :
+        if self.s1 : self.shutter1.wait()
+        if self.s2 : self.shutter2.wait()
+        if self.s3 : self.shutter3.wait()
+        
+
+    
+class LJEScan : 
+    """
+    Class that defines the functions and data for the LJE-YANO scan. 
+    """
+
+    def __init__(self,config_file_name=None) :
+        """
+        Initializer : If config file name given, then it is used to
+        setup scan parameters
+        """
+        #self.controls = None
+        # Initialize logger
+        self.__logger = logging.getLogger(__name__)
+
+        # Exit if no config file was defined
+        if config_file_name is None: 
+            self.__logger.error("NO CONFIG FILE GIVEN")
+            sys.exit(1)
+        
+        self.__logger.debug("Creating LJEScan object")
+        self.config_file_name = config_file_name
+
+        # Initialise scan variables to none.  Will be initialized
+        # after parsing config file
+        self.laser = None
+        self.laser_shutter = None
+        
+        self.fel_mode = None
+        self.SASE = None
+        self.SEEDED = None
+
+        self.scan_start = None
+        self.scan_stop = None
+        self.scan_steps = None
+
+        self.energy_to_grating = None
+
+        self.andor_daq = None
+        self.andor_integration = None
+        self.andor_readout = None
+        self.andor_simmode = None
+        self.andor_expdelay = None
+        self.andor_postdelay = None
+        self.andor_opendelay = None
+
+        self.scan_start_pv = None
+        self.scan_stop_pv = None
+        self.scan_steps_pv = None
+        self.fel_mode_pv = None
+        
+        
+        
+    def config(self,config_file_name) :
+        """
+        Read data from config file to setup scan
+        """
+        self.__logger.info("Reading data from config-file:%s"%config_file_name)
+        
+        parser = SafeConfigParser()
+        parser.read(config_file_name)
+
+
+        # Read SCAN options first
+        self.fel_mode = parser.get("SCAN","fel_mode")
+        self.laser = parser.getboolean("SCAN","laser")
+
+
+        # Use fel_mode to detemine which scan parameters to use
+        # -- SASE
+        if self.fel_mode == "SASE" :
+            self.__logger.info("SASE Mode selected")
+
+            self.SASE = fel_energy(parser.get("SASE","ctrl_pv"),
+                                   parser.get("SASE","rbv_pv"),
+                                   parser.getfloat("SASE","rbv_done")
+                                   )
+
+
+            self.scan_start = parser.getfloat("SASE","scan_start")
+            self.scan_stop =  parser.getfloat("SASE","scan_stop")
+            self.scan_steps = parser.getint("SASE","scan_steps")
+
+        # -- SEEDED
+        if self.fel_mode == "SEEDED" :
+            self.__logger.info("SEEDED Mode selected")
+
+            self.SEEDED = fel_energy(parser.get("SEEDED","ctrl_pv"),
+                                     parser.get("SEEDED","rbv_pv"),
+                                     parser.getfloat("SEEDED","rbv_done")
+                                     )
+
+            self.scan_start = parser.getfloat("SEEDED","scan_start")
+            self.scan_stop =  parser.getfloat("SEEDED","scan_stop")
+            self.scan_steps = parser.getint("SEEDED","scan_steps")
+
+        # --  SASE + SEEDED
+        if "SASE" in self.fel_mode and "SEEDED" in self.fel_mode:
+            self.__logger.info("SASE+SEEDED Mode selected")
+
+            self.SASE = fel_energy(parser.get("SASE","ctrl_pv"),
+                                   parser.get("SASE","rbv_pv"),
+                                   parser.getfloat("SASE","rbv_done")
+                                   )
+
+            self.SEEDED = fel_energy(parser.get("SEEDED","ctrl_pv"),
+                                     parser.get("SEEDED","rbv_pv"),
+                                     parser.getfloat("SEEDED","rbv_done")
+                                     )
+
+            #   - SASE config scan values define the scan range
+            #     The MONO calibration is used to convert from grating
+            #     to energy value, which is used to set the SEEDED
+            #     energy during the scan
+            self.scan_start = parser.getfloat("SASE","scan_start")
+            self.scan_stop =  parser.getfloat("SASE","scan_stop")
+            self.scan_steps = parser.getint("SASE","scan_steps")
+            self.__logger.info("Grating range (mm): %f -- %f"%(self.scan_start,self.scan_stop))
+
+
+            # Read Mono calibration
+            # DIRECT CUT-N-PASTE FROM MARTIN BEYE'S seedingscanner3 SCRIPT
+            y1 = parser.getfloat('MONO', 'LowGrating')
+            y2 = parser.getfloat('MONO', 'MidGrating')
+            y3 = parser.getfloat('MONO', 'HighGrating')
+            
+            x1 = parser.getfloat('MONO', 'LowMachine')
+            x2 = parser.getfloat('MONO', 'MidMachine')
+            x3 = parser.getfloat('MONO', 'HighMachine')
+            
+            denom = (x1-x2)*(x1-x3)*(x2-x3)
+            A = (x3*(y2-y1) + x2*(y1-y3) + x1*(y3-y2))/denom
+            B = (x3**2 * (y1-y2) + x2**2 * (y3-y1) + x1**2 * (y2-y3))/denom
+            C = (x2*x3*(x2-x3)*y1 + x3*x1*(x3-x1)*y2 + x1*x2*(x1-x2)*y3)/denom
+            
+            self.energy_to_grating = np.poly1d([A,B,C])
+
+            # Convert grating values to energy            
+            energy_start = self.grating_to_energy(self.scan_start)
+            energy_stop =  self.grating_to_energy(self.scan_stop)
+            self.__logger.info("Converted Energy range (eV): %f -- %f"%(energy_start,energy_stop))
+            
+                         
+
+        # Read Andor camera options
+        self.andor_integration = parser.getfloat("ANDOR","integration")
+        self.andor_readout = parser.getfloat("ANDOR","readout")
+        self.andor_simmode = parser.getboolean("ANDOR","simmode")
+        self.andor_expdelay = parser.getfloat("ANDOR","expdelay")
+        self.andor_postdelay = parser.getfloat("ANDOR","postdelay")
+        self.andor_opendelay = parser.getfloat("ANDOR","opendelay")
+
+        # Read laser parameters if laser is TRUE
+        if self.laser : 
+            self.laser_wait = parser.getfloat("LASER","laser_wait")
+            self.laser_shutter = \
+                lasershutter(parser.getboolean("LASER","laser1"),
+                             parser.getboolean("LASER","laser2"),
+                             parser.getboolean("LASER","laser3")
+                             )
+            
+        # Get the PVs to send data to PSANA
+        self.scan_start_pv = parser.get("ANALYSIS","scan_start_pv")
+        self.scan_stop_pv = parser.get("ANALYSIS","scan_stop_pv")
+        self.scan_steps_pv = parser.get("ANALYSIS","scan_steps_pv")
+        self.fel_mode_pv = parser.get("ANALYSIS","fel_mode_pv")
+
+
+        # Set PVs to send data to PSANA 
+        caput(self.scan_start_pv, self.scan_start)
+        caput(self.scan_stop_pv, self.scan_stop)
+        caput(self.scan_steps_pv, self.scan_steps)
+        caput(self.fel_mode_pv, self.fel_mode)
+
+        
+
+    def grating_to_energy(self,grating) :
+
+        # Function to minimize
+        def fcn(x) :
+            chi = self.energy_to_grating(x) - grating
+            chi2 = chi*chi
+            return chi2
+
+        energy = optimize.brent(fcn)
+
+        self.__logger.info("Grating:%f  Energy:%f"%(grating,energy))
+        return energy
+
+
+    
+
+        
+    def init(self) :
+        """
+        Initialize for scan
+        """
+        self.__logger.info("Initializing")
+
+        # Read config file
+        self.config(self.config_file_name)
+
+        # Connect to DAQ
+        numshot = int(120 * self.andor_integration)        
+        burstrate = -1
+        shuttermode = False
+
+        self.andor_daq = slowcam.PrincetonDaqMultipleShot(numshot,
+                                                          self.andor_expdelay,
+                                                          self.andor_postdelay,
+                                                          self.andor_opendelay,
+                                                          burstrate,
+                                                          self.andor_simmode,
+                                                          shuttermode,
+                                                          self.andor_readout)
+        
+        # cpo changed this line (added False)
+        controls=[(self.scan_start_pv,self.scan_start),
+                  (self.scan_stop_pv,self.scan_stop),
+                  (self.scan_steps_pv,self.scan_steps),
+                  (self.fel_mode_pv,self.fel_mode_number())                  
+                  ]
+
+        # Add FEL mode dependant controls variables
+        if self.fel_mode == "SASE" :
+            self.fel_controls(controls,SASE_value=self.scan_start)
+        
+        if self.fel_mode == "SEEDED" :
+            self.fel_controls(controls,SEEDED_value=self.scan_start)
+
+        if "SASE" in self.fel_mode and "SEEDED" in self.fel_mode : 
+            self.fel_controls(controls,
+                              SASE_value=self.scan_start,
+                              SEEDED_value=self.grating_to_energy(self.scan_start))          
+
+
+        self.__logger.info("CONTROLS: %s"%controls)
+        self.__logger.info("INITILAIZE DAQ")
+        success = self.andor_daq.init(controls=controls,bDaqBegin=False)
+        if success != 0 :
+            self.__logger.error("Failed to initialize DAQ")
+            sys.exit(1)
+
+
+    def set_fel(self,value) :
+        if self.fel_mode == "SASE" :            
+            self.SASE.set(value)
+        
+        if self.fel_mode == "SEEDED" :
+            self.SEEDED.set(value)
+
+        if "SASE" in self.fel_mode and "SEEDED" in self.fel_mode :            
+            # Set MONO grating angle
+            self.SASE.set(value)
+
+            # Use MONO grating to detmine SEEDED energy
+            seeded_energy = self.grating_to_energy(value)
+            self.SEEDED.set(seeded_energy)
+
+
+
+    def fel_wait(self) :
+        if self.fel_mode == "SASE" :            
+            self.SASE.wait()
+        
+        if self.fel_mode == "SEEDED" :
+            self.SEEDED.wait()
+
+        if "SASE" in self.fel_mode and "SEEDED" in self.fel_mode :   
+            self.SASE.wait()
+            self.SEEDED.wait()
+
+    
+    def fel_controls(self,controls,SASE_value=None,SEEDED_value=None) :
+        
+        if self.fel_mode == "SASE" :
+            controls.append((self.SASE.ctrl_pv,SASE_value))
+
+        if self.fel_mode == "SEEDED" :
+            controls.append((self.SEEDED.ctrl_pv,SEEDED_value))
+
+        if "SASE" in self.fel_mode and "SEEDED" in self.fel_mode :
+            controls.append((self.SASE.ctrl_pv,SASE_value))
+            controls.append((self.SEEDED.ctrl_pv,SEEDED_value))
+
+
+    def fel_mode_number(self) :
+        """ 
+        DAQ python interface expects PV values to be numbers not stirngs.
+        Convert FEL mode from string to number
+        """
+        if self.fel_mode == "SASE" :
+            return 0
+        
+        if self.fel_mode == "SEEDED" :
+            return 1
+
+        if "SASE" in self.fel_mode and "SEEDED" in self.fel_mode : 
+            return 2
+
+
+        self.__logger.error("%s -- unknown FEL mode"%self.fel_mode)
+        return -1
+
+
+    def scan(self,energies, scan_result) :
+        """
+        Function to run LJE-Yano Scan For each energy in
+        energy-list, set the machine/mono energy, then fire the
+        FEL to send x-rays and record data. After data recorded,
+        ask DAQ if enough shots were on target, via the L3 Filter
+        count.
+            
+        At the end of the scan, an array is sent back, where each
+        element of the array contains the energy,SXR Mono grating
+        position, and the L3 Filter Pass/Fail.
+        """
+        
+        # Loop through energies and scan_result
+
+        for energy,result in itertools.izip(energies,scan_result) :
+            old_l3eventnum = self.andor_daq.daq.l3eventnum()
+        
+            self.__logger.info("Set Machine Energy %f"%energy)
+            self.set_fel(energy)
+
+            if (result.l3pass == True) : 
+                self.__logger.info("Wait for FEL")
+                self.fel_wait()
+                self.__logger.info("Skip energy %f"%energy)
+                continue
+
+            
+
+            controls=[(self.scan_start_pv,self.scan_start),
+                      (self.scan_stop_pv,self.scan_stop),
+                      (self.scan_steps_pv,self.scan_steps),
+                      (self.fel_mode_pv,self.fel_mode_number())                  
+                      ]
+            # Add FEL mode dependant controls variables
+            if self.fel_mode == "SASE" :
+                self.fel_controls(controls,SASE_value=energy)
+        
+            if self.fel_mode == "SEEDED" :
+                self.fel_controls(controls,SEEDED_value=energy)
+
+            if "SASE" in self.fel_mode and "SEEDED" in self.fel_mode : 
+                self.fel_controls(controls,
+                                  SASE_value=energy,
+                                  SEEDED_value=self.grating_to_energy(energy))                      
+
+            self.andor_daq.beginCycle(controls)
+
+            # As result.L3Pass is False, record data at this energy
+            # Alternate between laser on/off if requested, otherwise
+            # just collect data.
+            if self.laser is True :
+                # -- laser off
+                self.__logger.info("Laser Off") 
+                self.laser_shutter.close()
+
+                self.__logger.info("Wait for FEL and laser")
+                self.laser_shutter.wait()
+                time.sleep(self.laser_wait)
+                self.fel_wait()
+
+                self.__logger.info("Take Data")
+                self.andor_daq.getMoreImages(1)
+
+
+                print '***',controls
+                self.andor_daq.nextCycle(controls)
+
+
+                # -- laser on
+                self.__logger.info("Laser On")
+                self.laser_shutter.open()
+
+                self.__logger.info("Wait for laser")
+                self.laser_shutter.wait()
+                time.sleep(self.laser_wait)
+
+            else :
+                self.__logger.info("Wait for FEL")
+                self.fel_wait()
+
+
+            self.__logger.info("Take Data")
+            old_l3eventnum = self.andor_daq.daq.l3eventnum()
+            self.__logger.info("Old L3 PASS:%d"%old_l3eventnum)
+
+            self.andor_daq.getMoreImages(1)
+
+            delta_l3eventnum = self.andor_daq.daq.l3eventnum() - old_l3eventnum
+            self.__logger.info("Delta L3 PASS:%d"%delta_l3eventnum)
+
+            result.energy = energy            
+            result.l3pass = True if delta_l3eventnum == 1 else False
+            self.__logger.info("Energy:%f L3Pass:%f"%(result.energy,
+                                                      result.l3pass))
+
+
+            self.andor_daq.endCycle()
+
+
+    def run_scan(self) :
+        """
+        Function to drive the scan.
+        Continues to scan up and down energy until l3-pass at each energy  
+        """
+        
+        # Create the result object to store result at each energy
+        class result :
+            def __init__(self) :
+                self.l3pass = False
+                self.energy = None
+
+        scan_result = [result() for i in range(self.scan_steps)]
+        
+
+        # Create list of energies 
+        energies = np.linspace(self.scan_start,
+                               self.scan_stop,
+                               num=self.scan_steps)
+        
+
+        # Scan up and down until l3-pass at all energies, up to a
+        # maximum of 10times 
+        n_scans = None
+        for n_scans in range(10) :
+
+            # Scan up in energy
+            self.scan(energies, scan_result)
+
+            # break if we enough data
+            if all([result.l3pass == True for result in scan_result]):
+                break
+
+            # Scan down in energy
+            self.scan(energies[::-1], scan_result)
+
+            # break if we enough data
+            if all([result.l3pass == True for result in scan_result]):
+                break
+        
+
+        if n_scans == 9 :
+            self.__logger.warning("Have scanned FEL up/down 10 times")
+        else :
+            self.__logger.info("Every energy point has data")
+
+
+        # Unitialize DAQ
+        self.andor_daq.deinit()
+        time.sleep(0.5)
+        
+
+
+            
+
+if __name__ == "__main__" :    
+    instrument = "sxr"
+    curTime    = time.localtime(time.time())
+    experiment = "sxrg3715"
+    logdir =     "/reg/neh/operator/sxropr/" + experiment + "/scan_log"
+    hostname = os.popen("hostname").read().strip()
+    
+    curFilePath = os.path.realpath(sys.argv[0])
+    curFilename = os.path.basename(curFilePath)
+    
+    logfilename = "%s/%02d_%02d:%02d:%02d_%s:%s.log" % (logdir, curTime[2], curTime[3], curTime[4], curTime[5],
+                                                        hostname,curFilename)
+
+    print logfilename
+
+    #    logging.basicConfig(level=logging.INFO)   
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s  %(levelname)-8s %(name)-12s %(message)s',
+                        filename=logfilename,
+                        filemode='w')
+
+
+
+    console = logging.StreamHandler()
+    formatter = logging.Formatter('%(asctime)s  %(levelname)-8s %(name)-12s %(message)s')
+    console.setFormatter(formatter)
+
+    console.setLevel(logging.DEBUG)
+    logging.getLogger('').addHandler(console)
+
+
+    
+    # Read command line arguments
+    if len(sys.argv) < 2 :
+        print "No config file given"
+        sys.exit(2)
+    
+    # create the scan object
+    scan = LJEScan(sys.argv[1])
+
+    # Initialize the scan object
+    scan.init()
+
+    
+    # Function to trap Ctrl-C
+    def Exit_Gracefully(signal,frame) :
+        print "\n********"
+        print "Ctrl-C pressed.  Closing DAQ"
+        scan.andor_daq.deinit()
+        time.sleep(0.5)
+        sys.exit(0)
+
+    # Now start to trap Ctrl-C
+    # If ctrl-C is pressed before scan ends, DAQ will gracefully exit 
+    signal.signal(signal.SIGINT, Exit_Gracefully)
+
+    
+    print "Sleep for 5 second"
+    print "for bursts to be set"
+    time.sleep(5.0)
+
+    # Run the scan
+    scan.run_scan()
+
+
+ 
+
+
+
+
+#numshot = 10
+#expdelay = 0
+#postdelay = 0
+#opendelay = 5
+#burstrate = -1
+#simmode = True
+#shuttermode = False
+
+
+#slowcamdaq = slowcam.PrincetonDaqMultipleShot(numshot,
+#                                              expdelay,
+#                                              postdelay,
+#                                              opendelay,
+#                                              burstrate,
+#                                              simmode,
+#                                              shuttermode)
+
+#success = slowcamdaq.init()
+#if success != 0:
+#    print "FAIL!"
+#    sys.exit(1)
+
+#for energy in range(10): 
+#    print "Energy",energy
+#    slowcamdaq.getMoreImages(1)
+#    print "L3 Pass:",slowcamdaq.daq.l3eventnum()
+                            
+#slowcamdaq.deinit()
+#time.sleep(0.5)
+    
+

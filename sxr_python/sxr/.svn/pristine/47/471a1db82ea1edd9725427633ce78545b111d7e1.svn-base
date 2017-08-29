@@ -1,0 +1,277 @@
+from motor import Motor as psmotor
+
+class SxrMotors(object):
+  def __init__(self):
+    ## machine parameters
+#    self.lcls_eV      = psmotor("SIOC:SYS0:ML00:AO627",readbackpv="SIOC:SYS0:ML00:AO627",has_dial=False)
+#    self.lcls_Be      = psmotor("SATT:FEE1:320:RDES",readbackpv="SATT:FEE1:320:RACT",has_dial=False)
+#    self.lcls_ebeamrate= psmotor("EVNT:SYS0:1:LCLSBEAMRATE",readbackpv="EVNT:SYS0:1:LCLSBEAMRATE",has_dial=False)
+    self.homs1_x= psmotor("STEP:FEE1:611:MOTR","homs1_x",readbackpv="LVDT:FEE1:611:LVPOS")
+    self.homs1_dx= psmotor("STEP:FEE1:612:MOTR","homs1_x",readbackpv="LVDT:FEE1:612:LVPOS")
+    self.homs2_x= psmotor("STEP:FEE1:861:MOTR","homs1_x",readbackpv="LVDT:FEE1:861:LVPOS")
+    self.homs2_dx= psmotor("STEP:FEE1:862:MOTR","homs1_x",readbackpv="LVDT:FEE1:862:LVPOS")
+
+    ## X-ray pulse picker
+    self.pp_y = psmotor("SXR:SB2:MMS:21","pp_yr")
+
+    ## reference lasers:
+
+    # DG2
+    self.rl1_y = psmotor("HFX:DG2:MMS:01","rl1_y")
+
+    # SB1
+    self.rl2_y = psmotor("HFX:SB1:MMS:13","rl2_y")
+
+
+    ## Si attanuators in SB2
+    filt=range(11)
+    filt[1]  = psmotor("SXR:SB2:MMS:11","SXRSiFilter1(20um)")
+    filt[2]  = psmotor("SXR:SB2:MMS:12","SXRSiFilter2(40um)")
+    filt[3]  = psmotor("SXR:SB2:MMS:13","SXRSiFilter3(80um)")
+    filt[4]  = psmotor("SXR:SB2:MMS:14","SXRSiFilter4(160um)")
+    filt[5]  = psmotor("SXR:SB2:MMS:15","SXRSiFilter5(320um)")
+    filt[6]  = psmotor("SXR:SB2:MMS:16","SXRSiFilter6(640um)")
+    filt[7]  = psmotor("SXR:SB2:MMS:17","SXRSiFilter7(1.28mm)")
+    filt[8]  = psmotor("SXR:SB2:MMS:18","SXRSiFilter8(2.56mm)")
+    filt[9]  = psmotor("SXR:SB2:MMS:19","SXRSiFilter9(5.12mm)")
+    filt[10] = psmotor("SXR:SB2:MMS:20","SXRSiFilter10(10.24mm)")
+    self.filt=filt
+    del filt
+
+    ## ** IPMs ** ##
+		# ipm1 on DG1
+    self.ipm1_yd  = psmotor("HXX:UM6:MMS:07","ipm1_yd")
+    self.ipm1_xd  = psmotor("HXX:UM6:MMS:06","ipm1_xd")
+    self.ipm1_yt  = psmotor("HXX:UM6:MMS:05","ipm1_yt")
+		# ipm2 on DG2
+    self.ipm2_yd  = psmotor("HFX:DG2:MMS:06","ipm2_yd")
+    self.ipm2_xd  = psmotor("HFX:DG2:MMS:07","ipm2_xd")
+    self.ipm2_yt  = psmotor("HFX:DG2:MMS:08","ipm2_yt")
+    # ipm3m on DG3 MAIN LINE
+    self.ipm3m_yd  = psmotor("HFX:DG3:MMS:05","ipm3m_yd")
+    self.ipm3m_xd  = psmotor("HFX:DG3:MMS:06","ipm3m_xd")
+    self.ipm3m_yt  = psmotor("HFX:DG3:MMS:07","ipm3m_yt")
+    # ipm3 on DG3 SXR LINE
+    self.ipm3_yd  = psmotor("SXR:DG3:MMS:14","ipm3_yd")
+    self.ipm3_xd  = psmotor("SXR:DG3:MMS:15","ipm3_xd")
+    self.ipm3_yt  = psmotor("SXR:DG3:MMS:16","ipm3_yt")
+    # ipm_mon on MON
+#    self.ipm_mon_yd  = psmotor("SXR:MON:MMS:29","ipm_mon_yd")
+#    self.ipm_mon_xd  = psmotor("SXR:MON:MMS:30","ipm_mon_xd")
+#    self.ipm_mon_yt  = psmotor("SXR:MON:MMS:31","ipm_mon_yt")
+    # ipm_4 on SB1
+    self.ipm4_yd  = psmotor("SXR:SB1:MMS:06","ipm4_yd")
+    self.ipm4_xd  = psmotor("SXR:SB1:MMS:07","ipm4_xd")
+    self.ipm4_yt  = psmotor("SXR:SB1:MMS:08","ipm4_yt")
+    # ipm_5 on SB2
+    self.ipm5_yd  = psmotor("SXR:SB2:MMS:39","ipm5_yd")
+    self.ipm5_xd  = psmotor("SXR:SB2:MMS:40","ipm5_xd")
+    self.ipm5_yt  = psmotor("SXR:SB2:MMS:41","ipm5_yt")
+
+    ## ** PIMs ** ##
+    # yag1 on DG1
+    self.yag1_yscreen = psmotor("HXX:UM6:MMS:08","yag1_y")
+    self.yag1_zoom    = psmotor("HXX:UM6:CLZ:01","yag1_zoom")
+    # yag2 on DG2
+    self.yag2_yscreen = psmotor("HFX:DG2:MMS:09","yag2_y")
+    self.yag2_zoom    = psmotor("HFX:DG2:CLZ:01","yag2_zoom")
+    # yag3m on DG3 MAIN LINE
+    self.yag3m_yscreen = psmotor("HFX:DG3:MMS:08","yag3m_y")
+    self.yag3m_zoom    = psmotor("HFX:DG3:CLZ:01","yag3m_zoom")
+    # yag3 on DG3 SXR LINE
+    self.yag3_yscreen = psmotor("SXR:DG3:MMS:17","yag3_y")
+    self.yag3_zoom    = psmotor("SXR:DG3:CLZ:01","yag3_zoom")
+    # yag4 on SB1
+    self.yag4_yscreen = psmotor("SXR:SB1:MMS:09","yag4_y")
+    self.yag4_zoom    = psmotor("SXR:SB1:CLZ:01","yag4_zoom")
+    # yag5 on SB2
+    self.yag5_yscreen = psmotor("SXR:SB2:MMS:42","yag5_y")
+    self.yag5_zoom    = psmotor("SXR:SB2:CLZ:01","yag5_zoom")
+
+    ## ** Slits ** ##
+    ##Slit in DG1###
+    self.s1_d   = psmotor("HXX:UM6:MMS:03","s1_down_blade")
+    self.s1_u   = psmotor("HXX:UM6:MMS:04","s1_up_blade")
+    self.s1_s   = psmotor("HXX:UM6:MMS:02","s1_south_blade")
+    self.s1_n   = psmotor("HXX:UM6:MMS:01","s1_north_blade")
+#    self.s1hg   = psmotor("HX2:SB1:JAWS:XWID_REQ","s1hg")
+#    self.s1ho   = psmotor("HX2:SB1:JAWS:XCEN_REQ","s1ho")
+#    self.s1vg   = psmotor("HX2:SB1:JAWS:YWID_REQ","s1vg")
+#    self.s1vo   = psmotor("HX2:SB1:JAWS:YCEN_REQ","s1vo")
+
+    ##Slit in DG2###
+    self.s2_d   = psmotor("HFX:DG2:MMS:05","s2_down_blade")
+    self.s2_u   = psmotor("HFX:DG2:MMS:04","s2_up_blade")
+    self.s2_s   = psmotor("HFX:DG2:MMS:03","s2_south_blade")
+    self.s2_n   = psmotor("HFX:DG2:MMS:02","s2_north_blade")
+#    self.s2hg   = psmotor("XPP:SB2L:JAWS:XWID_REQ","s2hg")
+#    self.s2ho   = psmotor("XPP:SB2L:JAWS:XCEN_REQ","s2ho")
+#    self.s2vg   = psmotor("XPP:SB2L:JAWS:YWID_REQ","s2vg")
+#    self.s2vo   = psmotor("XPP:SB2L:JAWS:YCEN_REQ","s2vo")
+
+    ##Slit in DG3 main line###
+    self.s3m_d   = psmotor("HFX:DG3:MMS:04","s3m_down_blade")
+    self.s3m_u   = psmotor("HFX:DG3:MMS:03","s3m_up_blade")
+    self.s3m_s   = psmotor("HFX:DG3:MMS:02","s3m_south_blade")
+    self.s3m_n   = psmotor("HFX:DG3:MMS:01","s3m_north_blade")
+#    self.s3mhg   = psmotor("XPP:SB3:JAWS:XWID_REQ","s3mhg")
+#    self.s3mho   = psmotor("XPP:SB3:JAWS:XCEN_REQ","s3mho")
+#    self.s3mvg   = psmotor("XPP:SB3:JAWS:YWID_REQ","s3mvg")
+#    self.s3mvo   = psmotor("XPP:SB3:JAWS:YCEN_REQ","s3mvo")
+
+    ##Slit in DG3 SXR LINE###
+    self.s3_d   = psmotor("SXR:DG3:MMS:13","s3_down_blade")
+    self.s3_u   = psmotor("SXR:DG3:MMS:12","s3_up_blade")
+    self.s3_s   = psmotor("SXR:DG3:MMS:11","s3_south_blade")
+    self.s3_n   = psmotor("SXR:DG3:MMS:10","s3_north_blade")
+#    self.s3hg   = psmotor("XPP:SB2H:JAWS:XWID_REQ","s3hg")
+#    self.s3ho   = psmotor("XPP:SB2H:JAWS:XCEN_REQ","s3ho")
+#    self.s3vg   = psmotor("XPP:SB2H:JAWS:YWID_REQ","s3vg")
+#    self.s3vo   = psmotor("XPP:SB2H:JAWS:YCEN_REQ","s3vo")
+
+    ##Slit in SB1 ###
+    self.s4_d   = psmotor("SXR:SB1:MMS:05","s4_down_blade")
+    self.s4_u   = psmotor("SXR:SB1:MMS:04","s4_up_blade")
+    self.s4_s   = psmotor("SXR:SB1:MMS:03","s4_south_blade")
+    self.s4_n   = psmotor("SXR:SB1:MMS:02","s4_north_blade")
+#    self.s4hg   = psmotor("XPP:SB3:JAWS:XWID_REQ","s4hg")
+#    self.s4ho   = psmotor("XPP:SB3:JAWS:XCEN_REQ","s4ho")
+#    self.s4vg   = psmotor("XPP:SB3:JAWS:YWID_REQ","s4vg")
+#    self.s4vo   = psmotor("XPP:SB3:JAWS:YCEN_REQ","s4vo")
+    
+    ##Slits in SB2###
+    # Lo-Z
+    self.s5_d   = psmotor("SXR:SB2:MMS:34","s5_down_blade")
+    self.s5_u   = psmotor("SXR:SB2:MMS:33","s5_up_blade")
+    self.s5_s   = psmotor("SXR:SB2:MMS:31","s5_south_blade")
+    self.s5_n   = psmotor("SXR:SB2:MMS:32","s5_north_blade")
+    # Hi-Z
+    self.s6_d   = psmotor("SXR:SB2:MMS:38","s6_down_blade")
+    self.s6_u   = psmotor("SXR:SB2:MMS:37","s6_up_blade")
+    self.s6_s   = psmotor("SXR:SB2:MMS:35","s6_south_blade")
+    self.s6_n   = psmotor("SXR:SB2:MMS:36","s6_north_blade") 
+
+
+## Be lenses
+
+    # CRL in SB1
+    self.crl1_xpos = psmotor("SXR:SB1:MMS:10","Be_xpos")
+    self.crl1_ypos = psmotor("SXR:SB1:MMS:11","Be_ypos")
+    self.crl1_zpos = psmotor("SXR:SB1:MMS:12","Be_zpos")
+
+    # CRL in SB2
+    self.crl2_xpos = psmotor("SXR:SB2:MMS:22","Be_xpos")
+    self.crl2_ypos = psmotor("SXR:SB2:MMS:23","Be_ypos")
+    self.crl2_zpos = psmotor("SXR:SB2:MMS:24","Be_zpos")
+
+
+## ** Mirrors ** ##
+
+    # Mirror 1 on SB2
+    self.hrm1_rot   = psmotor("SXR:SB2:MMS:25","hrm1rot")
+    self.hrm1_x     = psmotor("SXR:SB2:MMS:26","hrm1x")
+    self.hrm1_y     = psmotor("SXR:SB2:MMS:27","hrm1y")
+
+    # Mirror 2 on SB2
+    self.hrm2_rot   = psmotor("SXR:SB2:MMS:28","hrm2rot")
+    self.hrm2_x     = psmotor("SXR:SB2:MMS:29","hrm2x")
+    self.hrm2_y     = psmotor("SXR:SB2:MMS:30","hrm2y")
+
+
+## Channel-Cut stand motors:
+    self.ccm_y1 = psmotor("SXR:MON:MMS:26","ccm_y1")
+    self.ccm_y2 = psmotor("SXR:MON:MMS:27","ccm_y2")
+    self.ccm_y3 = psmotor("SXR:MON:MMS:28","ccm_y3")
+    self.ccm_x1 = psmotor("SXR:MON:MMS:24","ccm_x1")
+    self.ccm_x2 = psmotor("SXR:MON:MMS:25","ccm_x2")
+
+####NEXT 4 LINES:COULDN'T FIND PVS IN JEFF'S FILE, USED THE ONES FROM THE CONTROLS SPREADSHEET TO BE CHECKED#####
+    self.ccm_chi2 = psmotor("SXR:MON:PIC:06","ccm_chi2")
+    self.ccm_theta2coarse = psmotor("SXR:MON:PIC:05","ccm_theta2coarse")
+    self.ccm_alio = psmotor("SXR:MON:MPZ:01:POSITIONSET","ccm_alio",readbackpv="SXR:MON:MPZ:01:POSITIONGET",has_done_moving=False,has_dial=False)
+    self.ccm_theta2fine = psmotor("SXR:MON:MPZ:02:POSITIONSET","ccm_theta2fine",readbackpv="SXR:MON:MPZ:02:POSITIONGET",has_done_moving=False)
+
+## Laser psmotors
+#    self.las_m1h = psmotor("XPP:LAS:FBM:01:M1H","las_m1h")
+#    self.las_m1v = psmotor("XPP:LAS:FBM:01:M1V","las_m1v")
+#    self.las_m2h = psmotor("XPP:LAS:FBM:02:M2H","las_m2h")
+#    self.las_m2v = psmotor("XPP:LAS:FBM:02:M2V","las_m2v")
+#    self.las_opam1h = psmotor("XPP:LAS:OPA:01:M1H","las_opam1h")
+#    self.las_opam1v = psmotor("XPP:LAS:OPA:01:M1V","las_opam1v")
+#    self.las_opam2h = psmotor("XPP:LAS:OPA:02:M2H","las_opam2h")
+#    self.las_opam2v = psmotor("XPP:LAS:OPA:02:M2V","las_opam2v")
+#    self.las_wvp1   = psmotor("XPP:LAS:CWP:01:MTR","las_wvp1")
+#    self.las_wvp2   = psmotor("XPP:LAS:WP1:01:ROT","las_wvp2")
+#    self.las_delay1 = psmotor("XPP:LAS:USR:01:XLT","las_delay")
+#    self.las_lensh  = psmotor("XPP:LAS:SB3:01:M1H","las_lensh")
+#    self.las_lensv  = psmotor("XPP:LAS:SB3:01:M1V","las_lensv")
+#    self.las_comp  = psmotor("XPP:LAS:CGT:01:XLT","las_comp")
+
+## Goniometer psmotors
+    # Common Translations (X,Y)
+    self.gon_x = psmotor("XPP:GON:MMS:01","gon_x")
+    self.gon_y = psmotor("XPP:GON:MMS:02","gon_y")
+    # Sample Rotation
+    self.gon_theta = psmotor("XPP:GON:MMS:03","gon_theta")
+    # Detector Rotation
+    self.gon_2theta  = psmotor("XPP:GON:MMS:04","gon_2theta")
+    # Sample tilt-rotations (chi,phi)
+    self.gon_chi = psmotor("XPP:GON:MMS:05","gon_chi")
+    self.gon_phi = psmotor("XPP:GON:MMS:06","gon_phi")
+    # Sample translations (sx,sy,sz)
+    self.gon_sx = psmotor("XPP:GON:MMS:07","gon_sx")
+    self.gon_sz = psmotor("XPP:GON:MMS:08","gon_sz")
+    self.gon_sy = psmotor("XPP:GON:MMS:09","gon_sy")
+    # Detector tilt-rotation (gamma)
+    self.gon_dy = psmotor("XPP:GON:MMS:10","gon_dy")
+    # Detectpr Translation (Y)
+    self.gon_gamma = psmotor("XPP:GON:MMS:11","gon_gamma")
+
+
+## User psmotors
+#    self.g2rot1 = psmotor("XPP:USR:R39:MMS:21","g2rot1")
+#    self.g2rot2 = psmotor("XPP:USR:R39:MMS:22","g2rot2")
+#    self.g1try  = psmotor("XPP:R31:IOC:21:ao0:out9",readbackpv="XPP:R31:IOC:21:ai0:in9",has_done_moving=False,has_dial=False)
+#    self.g1trx  = psmotor("XPP:R31:IOC:21:ao0:out10",readbackpv="XPP:R31:IOC:21:ai0:in10",has_done_moving=False,has_dial=False)
+#    self.samplez =  psmotor("XPP:LAS:USR:01:MTR","samplez")
+#    self.samx =  psmotor("XPP:USR:R39:MMS:01","samx")
+#    self.samz =  psmotor("XPP:USR:R39:MMS:02","samz")
+#    self.samy =  psmotor("XPP:USR:R39:MMS:03","samy")
+#    self.piny =  psmotor("XPP:USR:R39:MMS:04","piny")
+#    self.pinz =  psmotor("XPP:USR:R39:MMS:05","pinz")
+#    self.pinx =  psmotor("XPP:USR:R39:MMS:06","pinx")
+#    self.beamsy =  psmotor("XPP:USR:R39:MMS:07","beamsy")
+#    self.beamsx =  psmotor("XPP:USR:R39:MMS:08","beamsx")
+#    self.beamsz =  psmotor("XPP:USR:R39:MMS:09","beamsz")
+#    self.ss1vg = psmotor("XPP:USR:R39:MMS:19","ss1vg")
+#    self.ss1vo = psmotor("XPP:USR:R39:MMS:20","ss1vo")
+#    self.ss1hg = psmotor("XPP:USR:R39:MMS:21","ss1hg")
+#    self.ss1ho = psmotor("XPP:USR:R39:MMS:22","ss1ho")
+#    self.ss2vg = psmotor("XPP:USR:R39:MMS:23","ss2vg")
+#    self.ss2vo = psmotor("XPP:USR:R39:MMS:24","ss2vo")
+#    self.ss2hg = psmotor("XPP:USR:R39:MMS:25","ss2hg")
+#    self.ss2ho = psmotor("XPP:USR:R39:MMS:26","ss2ho")
+#    self.cc      = psmotor("XPP:USR:R39:MMS:04","cc")
+#    self.flow =  psmotor("XPP:USR:R39:MMS:10","flow")
+#    self.wire =  psmotor("XPP:USR:R39:MMS:11","wire")
+#    self.cav1x =  psmotor("XPP:USR:R39:MMS:06","cav1x")
+#    self.cav1y =  psmotor("XPP:USR:R39:MMS:05","cav1y")
+#    self.cav2x =  psmotor("XPP:USR:R39:MMS:07","cav2x")
+#    self.cav2y =  psmotor("XPP:USR:R39:MMS:08","cav2y")
+#    self.tx =  psmotor("XPP:LAS:USR:02:MTR","tx")
+#    self.ty =  psmotor("XPP:LAS:USR:01:MTR","ty")
+#    self.tpz =  psmotor("XPP:LAS:USR:03:MTR","tpz")
+#    self.lx =  psmotor("XPP:LAS:USR:04:MTR","lx")
+#    self.grz =  psmotor("XPP:LAS:USR:05:MTR","grz")
+#    self.gry =  psmotor("XPP:LAS:USR:06:MTR","gry")
+#    self.cmx =  psmotor("XPP:LAS:USR:07:MTR","cmx")
+#    self.cmy =  psmotor("XPP:LAS:USR:08:MTR","cmy")
+#    self.cmz = psmotor("XPP:LAS:USR:09:MTR","cmz")
+#    self.pz = psmotor("XPP:USR:PIC:01","pz")
+#    self.pv = psmotor("XPP:USR:PIC:02","pv")
+#    self.ph = psmotor("XPP:USR:PIC:03","ph")
+#    self.ff = psmotor("XPP:USR:PIC:05","ff")
+#    self.fh = psmotor("XPP:USR:PIC:04","fh")
+#    self.bf = psmotor("XPP:USR:PIC:07","bf")
+#    self.bh = psmotor("XPP:USR:PIC:06","bh")
+#    self.xtal = psmotor("XPP:USR:PIC:08","xtal")

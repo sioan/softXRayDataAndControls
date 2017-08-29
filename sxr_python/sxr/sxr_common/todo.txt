@@ -1,0 +1,14 @@
+Up to date...
+
+epics_camera
+- method to draw current image or projection if requested
+  ...or....should that be left to other applications, such as 
+  Dan D's PSPLOT ?
+  
+
+
+
+
+
+
+
