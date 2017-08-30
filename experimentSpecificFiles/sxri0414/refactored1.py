@@ -169,18 +169,6 @@ def getAllStats(x,isLog=False):
 
 	return toReturn
 
-def rollingTruncatedMean(scatterData,axisToAverage,axisToBin,bins,trnc,m):
-	#myKernel = stats.gaussian_kde(toBeBinned[:,0])
-
-	#movingMean = array([	median([i[0] for i in scatterData if (i[1]>j and i[1]<j+.1) ]) for j in arange(.5,21,.025)])
-	#movingMedian = array([	median([i[0] for i in scatterData if (i[1]>j and i[1]<j+.1) ]) for j in arange(.5,21,.025)])
-	
-	stepSize = mean(list(set(diff(bins))))
-
-	movingStatistics = array([mean(sort([i[axisToAverage] for i in scatterData if (i[axisToBin]>j and i[axisToBin]<j+stepSize) ])[trnc:-trnc]) for j in bins])
-
-	return movingStatistics
-
 
 def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False):
 	#myKernel = stats.gaussian_kde(toBeBinned[:,0])
@@ -196,11 +184,13 @@ def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False):
 
 	return rebins,movingStatistics
 
+
 #to do list
 #1) add arg parser to go over battery of analysis and specified files. need to use the @ trick to get the interactive to work
 #2) config file for which h5 files to compare
 #3) wrap matplotlib for redundant plotting
 #4) try and see if pyqtgraph image of 2dhistogram gives nice data. see the CLIexample.py in myAnalysis qt subdirectory
+#5) rolling covariance
 
 if __name__ == '__main__':
 	
@@ -266,7 +256,7 @@ if __name__ == '__main__':
 	
 	H, xedges, yedges = np.histogram2d(log(y), x, bins=(xEdges, yEdges))	#try to get least processing done before showing image.
 	import pyqtgraph as pg
-	pg.image(H.transpose(), title="Simplest possible image example")
+	#pg.image(H.transpose(), title="Simplest possible image example")
 
 
 	#x = rollingStatistics(toBeBinned,0,1,arange(0.5,21,.1),4,isLog=True)
