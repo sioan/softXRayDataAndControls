@@ -259,14 +259,14 @@ if __name__ == '__main__':
 	toBeBinned = chooseFromScatterTable(toBeBinned,myCorrespondingKeys,myChosenKeys)
 	toBeBinned = toBeBinned.transpose()
 	
-	xEdges = arange(0,21,0.1)
-	yEdges = arange(4,9,.01)
+	yEdges = arange(0,21,0.1)
+	xEdges = arange(5.75,7.75,.01)
 
 	y,x = toBeBinned.transpose()
 	
 	H, xedges, yedges = np.histogram2d(log(y), x, bins=(xEdges, yEdges))	#try to get least processing done before showing image.
 	import pyqtgraph as pg
-	pg.image(H, title="Simplest possible image example")
+	pg.image(H.transpose(), title="Simplest possible image example")
 
 
 	#x = rollingStatistics(toBeBinned,0,1,arange(0.5,21,.1),4,isLog=True)
