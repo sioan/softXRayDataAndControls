@@ -28,10 +28,29 @@ def logNormalFittedMax(y):
 		#mySigma = append(mySigma,popt[2])
 
 		return popt
+
+
+def quickInterp(y,x):
+	x1 = int(x)
+	x2 = int(x+0.5)
+
+	y1 = y[x1]
+	y2 = y[x2]
+	
+	interpolatedValue = y1+ (y2-y1)*(x-x1)
+	return interpolatedValue
 		
 
-myY = (([100*mean(i*arange(len(i)))/mean(i) for i in Z.transpose()]))
-myMedianY = [logNormalFittedMax(i)[1] for i in Z.transpose()]
+myY = array(([mean(i*arange(len(i)))/mean(i) for i in Z.transpose()]))
+myStanDev = array(([std(i*arange(len(i)))/mean(i) for i in Z.transpose()]))
+myModeY = array([quickInterp(exp(X[:,0]),logNormalFittedMax(i)[1]) for i in Z.transpose()])
+#myModeY = array([X[int(exp(logNormalFittedMax(i)[1])),0] for i in Z.transpose()])
+
+#scatterMedian = array([median([i[0] for i in toBeBinned if (i[1]>j and i[1]<j+.1) ]) for j in arange(0,20,0.01)])
+	
+
+scatterMedian = array([	median([i[0] for i in toBeBinned if (i[1]>j and i[1]<j+.1) ]) for j in arange(.5,21,.025)])
+scatterMedian = array([	median([i[0] for i in toBeBinned if (i[1]>j and i[1]<j+.1) ]) for j in arange(.5,21,.025)])
 
 yCalibrated = 0+Y[0]
 
@@ -50,8 +69,8 @@ ylim(-3,2)
 xlim(-1,20)
 """
 
-plot(yCalibrated,myY[::-1],linewidth=2) 
-plot(yCalibrated[::-1],myMedianY[::-1],linewidth=2) 
+plot(yCalibrated,myY[::-1]+(myStanDev[::-1])**2*3.0/2.0,linewidth=2) 
+plot(yCalibrated,myModeY[::-1],linewidth=2)
 plot(myBinCount[1][1][:-1][::-1],myModes) 
 plot(binEdges[1][:-1][::-1],tempAverage)
 show()

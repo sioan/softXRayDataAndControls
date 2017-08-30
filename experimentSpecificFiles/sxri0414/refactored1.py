@@ -54,6 +54,9 @@ from scipy.optimize import curve_fit
 #x-value (time in ps) = x-value (position of stage in mm) * 2 / c0
 #where c0 should be 0.299792458 (speed of light in mm/ps)
 
+#normalized acqiris is log normal distributed.  i.e. the histogram of log(normalizedAcqiris) is gaussian distributed.
+
+
 #==================
 #final product
 
@@ -61,6 +64,10 @@ from scipy.optimize import curve_fit
 
 
 #==================
+
+#popt, pcov = curve_fit(normalDistribution, x[1][:-1], x[0],p0=[2000,6.5,7]) 
+def normalDistribution(x,a,mu,s):
+	return a*exp(-(x-mu)**2/(2.0*s**2))
 
 def averageShiftedHistogram(x,binStart,binStop,binIncrement,myWeights,m):
 	
@@ -150,55 +157,50 @@ def chooseFromScatterTable(myTable,correspondingKeys,chosenKeys):
 	
 	return temp
 
-"""
-def main(filename):
-	global myDict
-
-	fileName = 'sxri0414run60.h5'
-
-	f = h5py.File(fileName,'r')
-	myDict= hdf5_to_dict(f)
-	f.close()
+#get a nice gaussian when taking log of sxr0414. mean and median are much more similar. not so when distribution is lognormal
+def getAllStats(x,isLog=False):
 
 	
+	if(not isLog):
+		toReturn = array([mean(x),median(x),std(x),len(x)])
 
-	myMask = loadtxt("myMask.dat")
-	myMask = myMask.astype(bool)
-	#chosenKeys = ['GMD','acqiris']
-	myMask = myMask * (myDict['TSS_OPAL']['pixelTime']<0)
-	myMask = myMask * (myDict['fiducials']%4==1)	#this has no effect on fourier components
+	else:
+		toReturn = array([exp(mean(log(x))),median(x),exp(std(log(x))),len(x)])
 
-	myDict['normalizedAcqiris'] = myDict['acqiris2']/myDict['GMD']
-	myDict['estimatedTime'] = 2/.3*(myDict['delayStage']-49)+0*myDict['TSS_OPAL']['pixelTime']/1000.0
+	return toReturn
 
-	myDataMatrix,myCorrespondingKeys = dictToScatterTable(myDict)
+def rollingTruncatedMean(scatterData,axisToAverage,axisToBin,bins,trnc,m):
+	#myKernel = stats.gaussian_kde(toBeBinned[:,0])
 
-	toBeBinned = myDataMatrix[:,myMask==False]
+	#movingMean = array([	median([i[0] for i in scatterData if (i[1]>j and i[1]<j+.1) ]) for j in arange(.5,21,.025)])
+	#movingMedian = array([	median([i[0] for i in scatterData if (i[1]>j and i[1]<j+.1) ]) for j in arange(.5,21,.025)])
 	
-	myChosenKeys = ['normalizedAcqiris','estimatedTime']
+	stepSize = mean(list(set(diff(bins))))
 
-	toBeBinned = chooseFromScatterTable(toBeBinned,myCorrespondingKeys,myChosenKeys)
-	toBeBinned = toBeBinned.transpose()
+	movingStatistics = array([mean(sort([i[axisToAverage] for i in scatterData if (i[axisToBin]>j and i[axisToBin]<j+stepSize) ])[trnc:-trnc]) for j in bins])
 
-	#binEdgesDictionary = makeBinEdgesDictionary
+	return movingStatistics
 
 
-	#binEdges = (arange(0,.0014,.0014/20.0),arange(0,1,1/20.0),arange(-1,4,.015))
-	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
-	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
-	binEdges = (arange(0,4000,3000),arange(-1,20,.05))
+def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False):
+	#myKernel = stats.gaussian_kde(toBeBinned[:,0])
 
-	myWeights = 0+toBeBinned[:,0]
+	#movingMean = array([	median([i[0] for i in scatterData if (i[1]>j and i[1]<j+.1) ]) for j in arange(.5,21,.025)])
+	#movingMedian = array([	median([i[0] for i in scatterData if (i[1]>j and i[1]<j+.1) ]) for j in arange(.5,21,.025)])
 	
+	stepSize = mean(list(set(diff(bins))))
 
-	myBinCount = histogramdd(toBeBinned,bins=binEdges)
+	rebins = arange(bins[0],bins[-1]+2*stepSize,stepSize*1.0/m)
 
-	myBinAverage = histogramdd(toBeBinned,bins=binEdges,weights=myWeights)
+	movingStatistics = array([getAllStats([i[axisToAverage] for i in scatterData if (i[axisToBin]>j and i[axisToBin]<j+stepSize) ],isLog) for j in rebins])
 
-	myBin2Moment = histogramdd(toBeBinned,bins=binEdges,weights=myWeights**2)
-	myBin2StanError = (myBin2Moment[0] - myBinAverage[0]**2)**0.5/myBinCount[0]**0.5
+	return rebins,movingStatistics
 
-"""
+#to do list
+#1) add arg parser to go over battery of analysis and specified files. need to use the @ trick to get the interactive to work
+#2) config file for which h5 files to compare
+#3) wrap matplotlib for redundant plotting
+#4) try and see if pyqtgraph image of 2dhistogram gives nice data. see the CLIexample.py in myAnalysis qt subdirectory
 
 if __name__ == '__main__':
 	
@@ -226,8 +228,7 @@ if __name__ == '__main__':
 	#myMask = myMask.astype(bool)
 	myMask = ones(len(myDict['acqiris2'])).astype(bool)
 	
-	#chosenKeys = ['GMD','acqiris']
-	#myMask = [myDict]
+
 	myMask = myMask * (myDict['TSS_OPAL']['pixelTime']>0)	#excluding bad time tool data
 	myMask = myMask * (myDict['acqiris2']>0.002)	#excluding bad acqiris data
 	myMask = myMask * (myDict['acqiris2']<0.75)	#excluding bad acqiris data
@@ -239,126 +240,41 @@ if __name__ == '__main__':
 	myMask = myMask * (myDict['ebeam']['photon_energy']>900)
 	myMask = myMask * (myDict['ebeam']['photon_energy']<930)
 	#myMask = myMask * (myDict['fiducials']%4==3)	#this has no effect on fourier components
-	
+	myMask = myMask * (myDict['gas_detector']['f_11_ENRC']>1)
 
-	myDict['normalizedAcqiris'] = myDict['acqiris2']/(1e-11+myDict['GMD'])	#when regulator is 1, not normalized by gmd. low oscilations present. disappear at meaningul normaization
-	myDict['estimatedTime'] = 2/.3*(myDict['delayStage']-49)+1*myDict['TSS_OPAL']['pixelTime']/1000.0	#time tool direction. need to abstract into config file
+	#when regulator is 1, not normalized by gmd. low oscilations present. disappear at meaningul normaization
+	myDict['normalizedAcqiris'] = myDict['acqiris2']/(1e-11+myDict['GMD'])	
+
+	#time tool direction. need to abstract into config file
+	myDict['estimatedTime'] = 2/.3*(myDict['delayStage']-49)+1*myDict['TSS_OPAL']['pixelTime']/1000.0	
 
 	myDataMatrix,myCorrespondingKeys = dictToScatterTable(myDict)
 
 	toBeBinned = myDataMatrix[:,myMask]
+	#toBeBinned = array([i[::-1] for i in toBeBinned.transpose()])
+	#toBeBinned = toBeBinned[::-1]
 	
 	myChosenKeys = ['normalizedAcqiris','estimatedTime']
 
 	toBeBinned = chooseFromScatterTable(toBeBinned,myCorrespondingKeys,myChosenKeys)
 	toBeBinned = toBeBinned.transpose()
-
-	#binEdgesDictionary = makeBinEdgesDictionary
-
-
-	#binEdges = (arange(0,.0014,.0014/20.0),arange(0,1,1/20.0),arange(-1,4,.015))
-	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
-	#binEdges = (arange(0,2*.0014,.0014),arange(0,2*1,1),arange(-1,20,.10))
 	
-	#####################
-	####brute average###
-	#binEdges = (arange(0,4000,3001),arange(-1,20,.1))
-	binEdges = (arange(0,4000,3001),arange(-0.05,20,.1))		#bin size.  need to abstract it into config file. 
-	#0.1 see's low frequency oscillations. That's the delay stage step. 
-	#0.0125 see's multiple harmonics at 10.5 THZ, 20.5 THz and 30.5 THz (are units correct?) in bin count.  
-	#what's the physical interpretation?  Lame interpretation.  Due to sub delayStage resolution binning.  Would normally give sharp spikes
-	#that alias between the binning frequency and delayStage.  the time tool partially smears that away, but it's still present.
+	xEdges = arange(0,21,0.1)
+	yEdges = arange(4,9,.01)
 
-	myWeights = 0+toBeBinned[:,0]
+	y,x = toBeBinned.transpose()
 	
+	H, xedges, yedges = np.histogram2d(log(y), x, bins=(xEdges, yEdges))	#try to get least processing done before showing image.
+	import pyqtgraph as pg
+	pg.image(H, title="Simplest possible image example")
 
-	myBinCount = histogramdd(toBeBinned,bins=binEdges)
 
-	myBinAverage = histogramdd(toBeBinned,bins=binEdges,weights=myWeights)[0][0]/myBinCount[0][0]
+	#x = rollingStatistics(toBeBinned,0,1,arange(0.5,21,.1),4,isLog=True)
 
-	myBin2Moment = histogramdd(toBeBinned,bins=binEdges,weights=myWeights**2)[0][0]/myBinCount[0][0]
-	myBin2StanError = abs(myBin2Moment - myBinAverage**2)**0.5/myBinCount[0][0]**0.5
+	#plot(max(x[0])-x[0],x[1][:,0])
+	#plot(max(x[0])-x[0],x[1][:,1])
+	#show()
 
-	subplot(231)
-	#plot(myBinCount[1][1][:-1][::-1],myBinAverage,'.')
-	plot(binEdges[1][:-1][::-1],myBinAverage,'.')
-	#errorbar(myBinCount[1][1][:-1][::-1],myBinAverage,yerr=myBin2StanError)
 
-	subplot(232)
-	plot(myBinCount[1][1][:-1][::-1],(myBinCount[0][0])[::-1],'.')
 
-	subplot(234)
-	myFFT = (abs(fft(nan_to_num(myBinAverage[51:]))))
-	#myFFT = log(abs(fft(myBinCount[0][0][51:])))	#this shows intensity response in fourier domain is an artifact.
-	myFFT = myFFT[:int(len(myFFT)/2)]
-	semilogy(arange(len(myFFT))*1.0/20,myFFT)
-
-	subplot(235)
-	#myFFT = log(abs(fft(myBinAverage[51:])))
-	myFFT = (abs(fft(myBinCount[0][0][51:])))	#this shows intensity response in fourier domain is an artifact.  is present even when mask is all true
-	myFFT = myFFT[:int(len(myFFT)/2)]
-	semilogy(arange(len(myFFT))*1.0/20,myFFT)
-
-	tempAverage = 0 + myBinAverage
-	
-	###############################
-	#####fitting distribution###### 
-	#abstracting different analysis types using histogramdd with different parameters
-
-	binEdges = (arange(0,3000,30),arange(-0.05,20,.1))		#bin size.  need to abstract it into config file. 
-	#0.1 see's low frequency oscillations. That's the delay stage step. 
-	#0.0125 see's multiple harmonics at 10.5 THZ, 20.5 THz and 30.5 THz (are units correct?) in bin count.  
-	#what's the physical interpretation?  Lame interpretation.  Due to sub delayStage resolution binning.  Would normally give sharp spikes
-	#that alias between the binning frequency and delayStage.  the time tool partially smears that away, but it's still present.
-
-	myWeights = 0+toBeBinned[:,0]
-	
-
-	myBinCount = histogramdd(toBeBinned,bins=binEdges)
-
-	myBinAverage = histogramdd(toBeBinned,bins=binEdges,weights=myWeights)[0][0]/myBinCount[0][0]
-
-	myBin2Moment = histogramdd(toBeBinned,bins=binEdges,weights=myWeights**2)[0][0]/myBinCount[0][0]
-	myBin2StanError = abs(myBin2Moment - myBinAverage**2)**0.5/myBinCount[0][0]**0.5
-
-	#actual fitting starts here.
-	#mu = log(mode)+s**2  and
-	#variance = (exp(s**2)-1)*exp(2*mu+s**2) for initial guess. variance doesn't solve well
-	
-	#def lognorm(x,p):
-	#a,mu,s = p
-	myModes = []
-	myModeError = []
-	mySigma = []
-	for thisBin in arange(myBinCount[0].shape[1]):
-		#initGuess = array([1,7.6,1])		
-		maxBinCountIndex= argmax(myBinCount[0][1:,thisBin])
-		myMode =	myBinCount[0][1:,thisBin][maxBinCountIndex]
-		
-		initGuess = array([sum(myBinCount[0][1:,thisBin]),myMode,1])
-		popt, pcov = curve_fit(lognorm, binEdges[0][1:-1][::1], myBinCount[0][1:,thisBin],p0=initGuess)
-		#plot(binEdges[0][1:-1][::1],lognorm(binEdges[0][1:-1][::1],*popt))
-		myModes = append(myModes,popt[1])
-		myModeError = append(myModeError,pcov[1,1])
-		mySigma = append(mySigma,popt[2])
-
-	subplot(233)
-	#errorbar(myBinCount[1][1][:-1][::-1],myModes,yerr=myModeError)
-	plot(myBinCount[1][1][:-1][::-1],myModes,'.')
-
-	subplot(236)
-	#errorbar(myBinCount[1][1][:-1][::-1],myModes,yerr=myModeError)
-	#plot(myBinCount[1][1][:-1][::-1],mySigma,'.')
-	myFFT = (abs(fft(myModes[10:])))	#this shows intensity response in fourier domain is an artifact.  is present even when mask is all true
-	myFFT = myFFT[:int(len(myFFT)/2)]
-	semilogy(arange(len(myFFT))*1.0/20,myFFT)
-	show()
-
-"""
-myBinAverage = averageShiftedHistogram(toBeBinned[:,1],0,21,0.1, toBeBinned[:,0],50)
-myBinCount = averageShiftedHistogram(toBeBinned[:,1][::-1],0,21,0.1, ones(len(toBeBinned[:,0])),50)
-plot(myBinAverage[1][::-1],myBinAverage[0]/myBinCount[0])
-show()
-"""
-#execfile("gaussianKdeAdapted.py")
 
