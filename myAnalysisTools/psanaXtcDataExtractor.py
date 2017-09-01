@@ -42,6 +42,7 @@ import subprocess
 import time
 import h5py
 import TimeTool
+import pickle
 
 
 
@@ -67,7 +68,7 @@ def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode):
 		if(h5FileName!="None"):
 			smldata = myDataSource.small_data(h5FileName)
 	else:
-		print("loading experiment using custom small data")
+		print("loading mpi data source")
 		myDataSource = psana.MPIDataSource(experimentNameAndRun)
 
 		print("defining small data. hook in place ")
@@ -127,17 +128,8 @@ def renameSummaryKeys(myDict):
 	for i in tempKeys:
 		myDict[i+'Summarized'] = myDict.pop(i)
 
-def merge_dicts(dict_list):
-	"""
-	Given any number of dicts, shallow copy and merge into a new dict,
-	precedence goes to key value pairs in latter dicts.
-	"""
-	print ("merging dictionary")
-	result = {}
-	for dictionary in dict_list:
-		print dictionary
-		result.update(dictionary)
-	return result
+##################################################################
+################### main##########################################
 
 def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,startEvent,finalEvent):
 	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary,mergedGatheredSummary,myRank,myComm
@@ -158,7 +150,7 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 	if(h5FileName!="None"):
 		h5FileName = myExp+'run'+str(myRun)+str(h5FileName)+'.h5'
 		print("removing file")
-		os.system("rm "+h5FileName)
+		#os.system("rm "+h5FileName)
 	
 	myDataSource, smldata = makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode)
 
@@ -207,16 +199,20 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		print("saving small data")
 	
 		renameSummaryKeys(summaryDataDictionary)
-		#allAndorImages = comm.gather(andorImages,root=0)
+		#print("gathering dictionaries. rank = "+str(myRank))
 		gatheredSummary = myComm.gather(summaryDataDictionary,root=0)
 		if myRank==0:
-			print("myRank = " + str(myRank))
-			#mergedAndorImages = merge_dicts(allAndorImages)
+			print("merging dictionary. rank = " + str(myRank)+". gathered summary "+str(gatheredSummary)+" end of gathered summary.")
 			mergedGatheredSummary = merge_dicts(gatheredSummary)
-			#print mergedAndorImages
+			print("Here's the merged dictionary")
+			print mergedGatheredSummary
+			print("end of merged dictionary")
 			smldata.save(mergedGatheredSummary)
+			#smldata.save()
+			#pickle.dump(gatheredSummary, open( "dictifiedData.pkl", "wb" ))	#for testing.  use code below to read it in.
+			#myData = pickle.load(open("dictifiedData.pkl","rb"))
+			
 
-			#smldata.save(summaryDataDictionary)
 			print("small data file saved")
 			#smldata.close()
 			print("small data file closed")
@@ -227,6 +223,30 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 
 
 	return
+
+def merge_dicts(dict_list):
+	"""
+	Given any number of dicts, shallow copy and merge into a new dict,
+	precedence goes to key value pairs in latter dicts.
+	"""
+	#print ("merging dictionary")
+	result = {}
+	result['summarized'] = {}
+	#print("merging the dictionary list.")
+	#print(dict_list)
+	myCounter = 0
+	for dictionary in dict_list:
+		result['summarized']["nonMeaningfulCoreNumber"+str(myCounter)]={}
+		myCounter += 1
+
+	myCounter = 0
+	for dictionary in dict_list:
+		result['summarized']["nonMeaningfulCoreNumber"+str(myCounter)].update(dictionary)
+		myCounter += 1
+		#print dictionary
+		#result.update(dictionary)
+	return result
+
 
 if __name__ == '__main__':
 	

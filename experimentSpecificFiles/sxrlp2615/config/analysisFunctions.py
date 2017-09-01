@@ -11,26 +11,28 @@ def getAndorImage(detectorObject,thisEvent):
 	#else:
 	#	return array([[0,0],[0,0]])
 
+
+
 def getAndorImageSummarizer(detectorObject,thisEvent,previousProcessing):
 	
 	#return detectorObject.image(thisEvent)
 	tempImage = detectorObject.image(thisEvent)
 	myDict= {}
+
+	try:
+		if(type(previousProcessing) != dict):
+			previousProcessing = {}
+	except NameError:
+		previousProcessing = {}
+
 	if(tempImage is not None):
 		print("got image")
 		myEventId = thisEvent.get(psana.EventId)
 		myTime = myEventId.time()[0]
 		myDict["sec"+str(myTime)] = tempImage		
-		try:
-			previousProcessing.update(myDict)
-		except AttributeError:
-			print("creating first instance")
-			previousProcessing = myDict
-		except NameError:
-			print("variable doesn't exist")
-			#print("getAndorImageSummarizer is having an error")
+		
+		previousProcessing.update(myDict)
 	
-
 	return previousProcessing
 
 def genericReturn(detectorObject,thisEvent):
@@ -46,6 +48,10 @@ def getEvrSummary(detectorObject,thisEvent,previousProcessing):
 	return 0
 
 def getPeak(detectorObject,thisEvent):
+	#return 0
+	
+	if(detectorObject(thisEvent)==None):
+		return 0
 
 	myWaveForm = -detectorObject(thisEvent)[0][0]
 

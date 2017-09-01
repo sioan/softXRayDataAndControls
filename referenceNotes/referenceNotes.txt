@@ -65,6 +65,11 @@ https://docs.google.com/spreadsheets/d/1bl9-c2aEoCufKXFNtL0ums51pb57XzaWi8E8gZ49
 Please follow these instructions to create your UNIX account for LCLS Experiment LQ27. 
 https://www-ssrl.slac.stanford.edu//lcls-resources/user-to-do-list#computers
 Your login on 'User Portal' (  https://userportal.slac.stanford.edu/ )is what you used to  registering as collaborator on the LCLS Proposal, the account name is most likely your e-mail address.
+Renew your Unix Account (if applicable)
+Login to the LCLS photon systems portal: https://pswww.slac.stanford.edu/
+If your password has expired, you can refresh your account at the following link: https://unix-password.slac.stanford.edu/chpw/kpasswd1.pl
+If you do not know your password, contact Account Services by email account-services@slac.stanford.edu or by telephone: 650-926-2228.
+
 
 #gige cameras to check if camera is working
 #also can search for below name in netconfig

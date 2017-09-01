@@ -158,7 +158,7 @@ def chooseFromScatterTable(myTable,correspondingKeys,chosenKeys):
 	return temp
 
 #get a nice gaussian when taking log of sxr0414. mean and median are much more similar. not so when distribution is lognormal
-def getAllStats(x,isLog=False):
+def getAllStats(x,axisToAverage,isLog=False):
 
 	
 	if(not isLog):
@@ -169,7 +169,7 @@ def getAllStats(x,isLog=False):
 
 	return toReturn
 
-
+#takes too long. not very efficient
 def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False):
 	#myKernel = stats.gaussian_kde(toBeBinned[:,0])
 
@@ -180,7 +180,7 @@ def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False):
 
 	rebins = arange(bins[0],bins[-1]+2*stepSize,stepSize*1.0/m)
 
-	movingStatistics = array([getAllStats([i[axisToAverage] for i in scatterData if (i[axisToBin]>j and i[axisToBin]<j+stepSize) ],isLog) for j in rebins])
+	movingStatistics = array([getAllStats([i[axisToAverage] for i in scatterData if (i[axisToBin]>j and i[axisToBin]<j+stepSize) ],axisToAverage,isLog) for j in rebins])
 
 	return rebins,movingStatistics
 
@@ -191,6 +191,7 @@ def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False):
 #3) wrap matplotlib for redundant plotting
 #4) try and see if pyqtgraph image of 2dhistogram gives nice data. see the CLIexample.py in myAnalysis qt subdirectory
 #5) rolling covariance
+#6) rolling statistics takes too long. how to speed up?
 
 if __name__ == '__main__':
 	
@@ -254,16 +255,16 @@ if __name__ == '__main__':
 
 	y,x = toBeBinned.transpose()
 	
-	H, xedges, yedges = np.histogram2d(log(y), x, bins=(xEdges, yEdges))	#try to get least processing done before showing image.
+	H, xedges, yedges = np.histogram2d(log(y), x, bins=(xEdges, yEdges))	#try to get least processing done before showing image. use averaged shifted histogram
 	import pyqtgraph as pg
 	#pg.image(H.transpose(), title="Simplest possible image example")
 
+	#def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False):
+	x = rollingStatistics(toBeBinned,0,1,arange(0.5,21,.1),2,isLog=True)	#very long wait time. not very efficient
 
-	#x = rollingStatistics(toBeBinned,0,1,arange(0.5,21,.1),4,isLog=True)
-
-	#plot(max(x[0])-x[0],x[1][:,0])
-	#plot(max(x[0])-x[0],x[1][:,1])
-	#show()
+	plot(max(x[0])-x[0],x[1][:,0])
+	plot(max(x[0])-x[0],x[1][:,1])
+	show()
 
 
 

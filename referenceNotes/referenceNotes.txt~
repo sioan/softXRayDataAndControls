@@ -514,3 +514,6 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 
 #andor setup and evr setting is located in sxrlp8015 e-log
 #schlotter took pictures that are in the thumbnails for the evr setting.
+
+#newport laser motors
+#mcn-sxr-las2/ #don't forget the slash in the web browser.
