@@ -126,7 +126,8 @@ def initializeDataDictionaries(myDetectorObjectDictionary):
 def renameSummaryKeys(myDict):
 	tempKeys = myDict.keys()
 	for i in tempKeys:
-		myDict[i+'Summarized'] = myDict.pop(i)
+		#myDict[i+'Summarized'] = myDict.pop(i)
+		myDict[i] = myDict.pop(i)
 
 ##################################################################
 ################### main##########################################
@@ -224,6 +225,7 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 
 	return
 
+#resulting dictionary tree works well enough. need to streamline.
 def merge_dicts(dict_list):
 	"""
 	Given any number of dicts, shallow copy and merge into a new dict,
@@ -231,17 +233,17 @@ def merge_dicts(dict_list):
 	"""
 	#print ("merging dictionary")
 	result = {}
-	result['summarized'] = {}
+	result['summary'] = {}
 	#print("merging the dictionary list.")
 	#print(dict_list)
 	myCounter = 0
 	for dictionary in dict_list:
-		result['summarized']["nonMeaningfulCoreNumber"+str(myCounter)]={}
+		result['summary']["nonMeaningfulCoreNumber"+str(myCounter)]={}
 		myCounter += 1
 
 	myCounter = 0
 	for dictionary in dict_list:
-		result['summarized']["nonMeaningfulCoreNumber"+str(myCounter)].update(dictionary)
+		result['summary']["nonMeaningfulCoreNumber"+str(myCounter)].update(dictionary)
 		myCounter += 1
 		#print dictionary
 		#result.update(dictionary)
