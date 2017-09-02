@@ -119,7 +119,8 @@ def initializeDataDictionaries(myDetectorObjectDictionary):
 	myDataDictionary = {}
 	summaryDataDictionary={}
 	for i in myDetectorObjectDictionary['summarizer']:
-		summaryDataDictionary[i] = 0
+		#summaryDataDictionary[i] = 0	#I want to change this to  dict
+		summaryDataDictionary[i] = {}	
 
 	return[myDataDictionary,summaryDataDictionary]
 
@@ -150,9 +151,11 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 	
 	if(h5FileName!="None"):
 		h5FileName = myExp+'run'+str(myRun)+str(h5FileName)+'.h5'
-		print("removing file")
+		#print("removing existing file")
 		#os.system("rm "+h5FileName)
-	
+		#if(myRank==0):		#may still not work if race conditions
+			#os.system("rm "+h5FileName)
+
 	myDataSource, smldata = makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode)
 
 	print("loading detector object dictionary")
@@ -165,6 +168,8 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 	messageFeedBackRate = 20+980*int(testSample==False)
 	
 	print("iterating over enumerated events")
+	if(myRank==0):
+		print("processing started at "+ str(time.asctime()))
 	
 	myEnumeratedEvents = enumerate(myDataSource.events())
 	for eventNumber,thisEvent in myEnumeratedEvents:
@@ -281,5 +286,16 @@ if __name__ == '__main__':
 		myArguments.start,
 		myArguments.final)
 
-	print("finished")
+	print("finished collecting data")
+	if(myArguments.testSample):
+		print("interactive usage instructions.")
+		print("The event number is stored in variable 'eventNumber'.")
+		print("The this current event is stored in object 'thisEvent'.")
+		print("detector objects are pre-initialized and stored in 'myDetectorObjectDictionary'")
+		print("thisEvent can be incremented with this snippet of code:")
+		print("									eventNumber,thisEvent = next(myEnumeratedEvents")
+		print("the current event data to be saved to 'small data' is contained in 'myDataDictionary'")
+		print("the summarized result to be saved at after all events are finished is contained in 'summaryDataDictionary'")
+
+		
 	
