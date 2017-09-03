@@ -17,10 +17,12 @@ for i in myPaths:
 		tempPaths.append(i)
 
 for i in myEnv:
-	
-	toTestIfPath = i.split("=")[1][:-1]
-	if(os.path.isdir(toTestIfPath)):
-		tempPaths.append(toTestIfPath)
+	try:
+		toTestIfPath = i.split("=")[1][:-1]
+		if(os.path.isdir(toTestIfPath)):
+			tempPaths.append(toTestIfPath)
+	except:
+		print("no data in equal sign")
 
 
 myPaths = tempPaths

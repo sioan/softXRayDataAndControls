@@ -41,6 +41,10 @@ psana.DetNames('epics')
 
 #jana log daq reporting 
 https://docs.google.com/a/stanford.edu/spreadsheets/d/1ZpijKpIWWeDac7XivMc12Afigps4I4eqwL3GC7wcQxk/edit?usp=sharing
+#database for previous daq configuraiton
+https://confluence.slac.stanford.edu/display/PCDS/DAQ+configuration+database
+/reg/g/pcds/dist/pds/8.6.3.a-p8.4.3/build/pdsapp/bin/x86_64-linux-opt/configdb_gui
+configdb_gui --db /reg/g/pcds/dist/pds/cxi/misc/.configdbrc
 
 #evr notation
 #acqiris are used all the time.  have permnanent connection don't go away.
@@ -256,7 +260,9 @@ bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtracto
 psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
-
+mca = modular component architecture
+btl = byte transfer layer
+openib = open infini-band
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0

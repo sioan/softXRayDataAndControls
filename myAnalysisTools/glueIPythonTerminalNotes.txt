@@ -1,0 +1,46 @@
+###########################
+active glue
+source activate ana-1.3.11
+
+####################################
+######making a subset mask##########
+
+from glue.core import DataCollection
+myData = dc[0]
+myData.subsets
+
+mySubset=myData.subsets[0]
+
+myMask = mySubset.to_mask()
+myMask = myMask==False	#reverse it to choose retained points as opposed to negative mask.
+
+savetxt("myMask.dat",myMask)
+
+
+####################################
+#######adding data##################
+#acqiris normalized  by GMD 
+myData = dc[0]
+myData.components
+myRatio = myData['/acqiris2']/myData['/GMD']
+myData.add_component(myRatio,'normalizedAcqiris2')
+
+#FEE position.  Shows monochromator bandwidth when plotting GMD vs FEE_Position.  Moeller this premise is not true.
+myData = dc[0]
+myData.components
+myRatio = (myData['/gas_detector/f_11_ENRC']-myData['/gas_detector/f_12_ENRC'])/(myData['/gas_detector/f_11_ENRC']+myData['/gas_detector/f_12_ENRC'])
+myData.add_component(myRatio,'FEE_position')
+
+####################################################
+#######adding time tool correction##################
+correctedTime = 2/.3*(myData['/delayStage']-49)+1*myData['/TSS_OPAL/pixelTime']/1000.0	#time tool direction. need to abstract into config file
+myData.add_component(correctedTime,'correctedTime')
+
+###################################
+#######getting components##########
+myData = dc[0]
+myData.subsets
+
+mySubset=myData.subsets[2]
+mySubset=myData.subsets[1]
+mySubset['\delayStage']
