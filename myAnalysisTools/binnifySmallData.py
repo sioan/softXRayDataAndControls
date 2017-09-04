@@ -1,4 +1,4 @@
-#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python -i
+#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
 from pylab import *
 from scipy.interpolate import interp1d
 import h5py
@@ -7,6 +7,7 @@ from scipy.optimize import curve_fit
 import pickle
 import os
 import math
+sys.path.append(os.curdir)
 from filterMasks import filterMasks
 
 #--------------------------------------------------------------------------
@@ -118,23 +119,30 @@ if __name__ == '__main__':
 	myDict= hdf5_to_dict(f)
 	f.close()
 
+	keyToNormalize = 'acqiris2'
+	keyToNormalizeBy = 'GMD'
+	keyToAverage = 'normalizedAcqiris'
+	
+	keyToBin = 'delayStage'
+	correctedKeyToBin = 'estimatedTime'
+	timeToolKeys = ['TSS_OPAL','pixelTime']
+
 	myMask =  filterMasks.__dict__[experimentRunName](myDict)
 
-	myDict['normalizedAcqiris'] = myDict['acqiris2']/(1e-11+myDict['GMD'])
+	myDict[keyToAverage] = myDict[keyToNormalize]/(1e-11+myDict[keyToNormalizeBy])
 
 	#time tool direction. need to abstract into config file. also, milimeter to picosecond correction
-	myDict['estimatedTime'] = 2/.3*(myDict['delayStage']-49)+1*myDict['TSS_OPAL']['pixelTime']/1000.0	
+	myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-49)+1*myDict['TSS_OPAL']['pixelTime']/1000.0	
 
-	myDict['normalizedAcqiris'] = myDict['normalizedAcqiris'][myMask]
-	myDict['estimatedTime'] = myDict['estimatedTime'][myMask]
+	myDict[keyToAverage] = myDict[keyToAverage][myMask]
+	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
 
 	
 	#def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False): #reference for how to use
 	#need to change arguments to binKey, averageKey. averageKey is really the y value and the binKey is the x
 	#myDataDictionary = rollingStatistics(toBeBinned,0,1,arange(0.5,21,.1),2,isLog=True)#very long wait time. not very efficient
-	keyToAverage = 'normalizedAcqiris'
-	keyToBin = 'estimatedTime'
-	myDataDictionary = basicHistogram(myDict,keyToAverage,keyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+
+	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
 
 	pickle.dump(myDataDictionary, open(currentWorkingDirectory+"/binnedData/"+experimentRunName+".pkl", "wb"))
 	#temp = pickle.load(open(experimentRunName+".pkl","rb"))
