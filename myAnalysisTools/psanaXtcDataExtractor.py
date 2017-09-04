@@ -34,7 +34,8 @@ size = myComm.Get_size()
 import argparse
 import os
 import sys
-sys.path.append(os.curdir) 
+sys.path.append(os.curdir)
+#sys.path.append(os.getcwd())  
 from config import analysisFunctions
 from pylab import *
 import psana
