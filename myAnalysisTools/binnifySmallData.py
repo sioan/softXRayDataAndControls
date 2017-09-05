@@ -122,6 +122,7 @@ if __name__ == '__main__':
 	keyToNormalize = 'acqiris2'
 	keyToNormalizeBy = 'GMD'
 	keyToAverage = 'normalizedAcqiris'
+	timeToolSign = 1
 	
 	keyToBin = 'delayStage'
 	correctedKeyToBin = 'estimatedTime'
@@ -132,15 +133,10 @@ if __name__ == '__main__':
 	myDict[keyToAverage] = myDict[keyToNormalize]/(1e-11+myDict[keyToNormalizeBy])
 
 	#time tool direction. need to abstract into config file. also, milimeter to picosecond correction
-	myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-49)+1*myDict['TSS_OPAL']['pixelTime']/1000.0	
+	myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-49)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0	
 
 	myDict[keyToAverage] = myDict[keyToAverage][myMask]
 	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
-
-	
-	#def rollingStatistics(scatterData,axisToAverage,axisToBin,bins,m,isLog=False): #reference for how to use
-	#need to change arguments to binKey, averageKey. averageKey is really the y value and the binKey is the x
-	#myDataDictionary = rollingStatistics(toBeBinned,0,1,arange(0.5,21,.1),2,isLog=True)#very long wait time. not very efficient
 
 	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
 
