@@ -13,13 +13,29 @@ def myZeroReturn(detectorObject,thisEvent,previousProcessing):
 def integrateAcqiris(detectorObject,thisEvent):
 	myDict = {}
 
-	myDict['scatterAPD'] = -99999
+	myDict['MCP'] = -99999
 	if (None not in [detectorObject(thisEvent)]):
 		tempWaveform = detectorObject(thisEvent)[0][0]
-		myDict['scatterAPD'] = -(sum(tempWaveform[4000:18000] - mean(tempWaveform[0:3000])))
+		myDict['MCP'] = -(sum(tempWaveform[1190:1220] - mean(tempWaveform[0:1190])))
+
+	return myDict
 
 def sumOverROI(detectorObject,thisEvent):
-	return 0
+	
+	myImage = detectorObject.image(thisEvent)
+
+	myDict = {}
+
+	if myImage is None:
+		myDict['ROI1'] = -9999999
+		myDict['ROI2'] = -9999999
+	
+	else:
+		myDict['ROI1'] = sum(myImage[420:560,80:220])
+		myDict['ROI2'] = sum(myImage[420:560,1040:1100])
+
+
+	return myDict
 
 def accumulatorROIImage(detectorObject,thisEvent,previousProcessing):
 
