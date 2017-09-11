@@ -66,6 +66,53 @@ def removeNans(myDict):
 
 	return myDict
 
+def ftBinning(myDict,keyToAverage,keyToBin,bins,isLog):
+	tPi = 2 * 3.14159
+	
+	myList = array([myDict[keyToBin],myDict[keyToAverage]]).transpose()
+
+	fStep = 1.0/(max(myDict[keyToBin]) - min(myDict[keyToBin]))
+		
+	#fAxis = arange(0,1000*fStep,fStep)
+
+	fAxis = exp(arange(-log(1000*fStep),log(1000*fStep),log(1000*fStep)/1000.0))
+	
+	myDict[keyToAverage]-=mean(myDict[keyToAverage])
+	
+	myCovLinear = cov(myDict[keyToAverage],myDict[keyToBin])
+
+	myDict[keyToAverage] -= myCovLinear[1,0]*1.0/myCovLinear[1,1]*(myDict[keyToBin] - mean(myDict[keyToBin]))
+	
+	myFtValue = []
+	myFtArtifact = []
+	myCounter = 0
+
+	#explicit projection onto sin and cos
+	for f in fAxis:
+		myCounter += 1
+		if(myCounter%100==1):
+			print(str(myCounter)+", ")
+		myCovCos = cov(myDict[keyToAverage],cos(tPi*f*myDict[keyToBin]))
+		myCovSin = cov(myDict[keyToAverage],sin(tPi*f*myDict[keyToBin]))
+	
+		myProjection = myCovCos[0,1]/(myCovCos[1,1]+1e-12)+1j*myCovSin[0,1]/(myCovSin[1,1]+1e-12)
+
+		myCovCosArtifact = mean(cos(2*tPi*f*myDict[keyToBin]))
+		myCovSinArtifact = mean(sin(2*tPi*f*myDict[keyToBin]))
+		myArtifactProjection = myCovCosArtifact+1j*myCovSinArtifact
+
+		
+		myFtValue.append(myProjection)
+		myFtArtifact.append(myArtifactProjection)		
+
+	myFtValue = array(myFtValue)
+	myFtArtifact = array(myFtArtifact)
+
+	return fAxis,myFtValue, myFtArtifact
+		
+#plot(myData[0],(abs(array(myData[1]))),'.')
+
+
 def basicHistogram(myDict,keyToAverage,keyToBin,bins,isLog):#fast for debugging
 
 	myDataDictionary = {}
@@ -133,20 +180,20 @@ if __name__ == '__main__':
 	myDict[keyToAverage] = myDict[keyToNormalize]/(1e-11+myDict[keyToNormalizeBy])
 
 	#time tool direction. need to abstract into config file. also, milimeter to picosecond correction
-	myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-49)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0	
+	myOffset = min(myDict[keyToBin])
+	myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-myOffset)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0	
+
+	laserMask = myDict[correctedKeyToBin] > max(myDict[correctedKeyToBin])/4.0
+	laserMask *= myDict[correctedKeyToBin] < max(myDict[correctedKeyToBin])*0.95
+	myMask *=laserMask 
 
 	myDict[keyToAverage] = myDict[keyToAverage][myMask]
 	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
 
-	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+	#myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+	myData = ftBinning(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
 
-	fileToExport = currentWorkingDirectory+"/binnedData/"+experimentRunName
-	pickle.dump(myDataDictionary, open(fileToExport+".pkl", "wb"))
-	
-	exportData = h5py.File(fileToExport+'.h5', 'w')	
-	for i in myDataDictionary:
-		exportData.create_dataset(i, data=myDataDictionary[i], chunks=True, maxshape=(None,))
-
+	#pickle.dump(myDataDictionary, open(currentWorkingDirectory+"/binnedData/"+experimentRunName+".pkl", "wb"))
 	#temp = pickle.load(open(experimentRunName+".pkl","rb"))
 
 
