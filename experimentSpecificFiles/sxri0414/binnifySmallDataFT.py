@@ -77,12 +77,6 @@ def ftBinning(myDict,keyToAverage,keyToBin,bins,isLog):
 
 	fAxis = exp(arange(-log(1000*fStep),log(1000*fStep),log(1000*fStep)/1000.0))
 	
-	myDict[keyToAverage]-=mean(myDict[keyToAverage])
-	
-	myCovLinear = cov(myDict[keyToAverage],myDict[keyToBin])
-
-	myDict[keyToAverage] -= myCovLinear[1,0]*1.0/myCovLinear[1,1]*(myDict[keyToBin] - mean(myDict[keyToBin]))
-	
 	myFtValue = []
 	myFtArtifact = []
 	myCounter = 0
@@ -97,8 +91,8 @@ def ftBinning(myDict,keyToAverage,keyToBin,bins,isLog):
 	
 		myProjection = myCovCos[0,1]/(myCovCos[1,1]+1e-12)+1j*myCovSin[0,1]/(myCovSin[1,1]+1e-12)
 
-		myCovCosArtifact = mean(cos(2*tPi*f*myDict[keyToBin]))
-		myCovSinArtifact = mean(sin(2*tPi*f*myDict[keyToBin]))
+		myCovCosArtifact = mean(cos(tPi*f*myDict[keyToBin]))
+		myCovSinArtifact = mean(sin(tPi*f*myDict[keyToBin]))
 		myArtifactProjection = myCovCosArtifact+1j*myCovSinArtifact
 
 		
@@ -181,14 +175,24 @@ if __name__ == '__main__':
 
 	#time tool direction. need to abstract into config file. also, milimeter to picosecond correction
 	myOffset = min(myDict[keyToBin])
-	myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-myOffset)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0	
+	myDict[correctedKeyToBin] = (2/.3*(myDict[keyToBin]-myOffset)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0)	
 
-	laserMask = myDict[correctedKeyToBin] > max(myDict[correctedKeyToBin])/4.0
-	laserMask *= myDict[correctedKeyToBin] < max(myDict[correctedKeyToBin])*0.95
-	myMask *=laserMask 
+	#removing pre laser shot
+	laserMask = myDict[correctedKeyToBin] < 12.4
+	myMask *= laserMask 
 
+	#adding sanity check reference oscillation
+	#myDict[keyToAverage] += 25*sin(2*3.14159*5.9*myDict[correctedKeyToBin])/1.0
+
+	#apply mask	
 	myDict[keyToAverage] = myDict[keyToAverage][myMask]
 	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
+
+	#subtract off linear trend and offset	
+	myDict[keyToAverage]-=mean(myDict[keyToAverage])	
+	myCovLinear = cov(myDict[keyToAverage],myDict[correctedKeyToBin])
+	myDict[keyToAverage] -= myCovLinear[1,0]*1.0/myCovLinear[1,1]*(myDict[correctedKeyToBin] - mean(myDict[correctedKeyToBin]))
+
 
 	#myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
 	myData = ftBinning(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging

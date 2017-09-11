@@ -133,7 +133,13 @@ if __name__ == '__main__':
 	myDict[keyToAverage] = myDict[keyToNormalize]/(1e-11+myDict[keyToNormalizeBy])
 
 	#time tool direction. need to abstract into config file. also, milimeter to picosecond correction
-	myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-49)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0	
+	myOffset = min(myDict[keyToBin])
+	myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-myOffset)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0
+	#myDict[correctedKeyToBin] = 2/.3*(myDict[keyToBin]-49)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0	
+
+	#removing pre laser shot need to abstract into config file
+	#laserMask = myDict[correctedKeyToBin] < 12.4
+	#myMask *= laserMask 
 
 	myDict[keyToAverage] = myDict[keyToAverage][myMask]
 	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
