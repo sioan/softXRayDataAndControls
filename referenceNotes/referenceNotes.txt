@@ -516,6 +516,10 @@ be about the same.
 
 - Philip
 
+
+#Herbst pgp confluence confluence page
+https://confluence.slac.stanford.edu/display/ppareg/Test+Setup+For+Low+Level+Communication+With+Eval+Board
+
 reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 /reg/g/pcds/setup/pcds_shortcuts.sh:#	show_epics_sioc [ all | hostname ] ...
 /reg/g/pcds/setup/pcds_shortcuts.sh:function show_epics_sioc_filter( )
