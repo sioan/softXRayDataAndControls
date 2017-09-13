@@ -36,9 +36,9 @@ myDataSource = psana.MPIDataSource('exp=xpptut15:run=360')
 
 andorDetectorObject = psana.Detector('andor')
 
-pnccdDetectorObject = psana.Detector('pnccdFront')
+#pnccdDetectorObject = psana.Detector('pnccdFront')
 
-tssOpalDetectorObject = psana.Detector('TSS_OPAL')
+#tssOpalDetectorObject = psana.Detector('TSS_OPAL')
 
 myEnumeratedEvents = enumerate(myDataSource.events())
 
@@ -50,10 +50,12 @@ for eventNumber,thisEvent in myEnumeratedEvents:
 		print eventNumber
 
 	myImage = andorDetectorObject.image(thisEvent)[0]
-	tempImage = vstack([zeros(len(myImage)),vstack([myImage,zeros(len(myImage))])])
+	myImage-=median(myImage)
+	tempImage = vstack([zeros(len(myImage)),vstack([myImage,zeros(len(myImage))])])	
 	#myImage += andorDetectorObject.photons(thisEvent,adu_per_photon=2643)[0]
+	#photonImage = andorDetectorObject.photons(evt=thisEvent,nda_calib=tempImage,adu_per_photon=130)
 
-	myHist += histogram(myImage,bins=arange(2000,3000,10))[0]
+	myHist += histogram(myImage,bins=arange(0,1000,10))[0]
 
 	if eventNumber > 2000:
 		break
