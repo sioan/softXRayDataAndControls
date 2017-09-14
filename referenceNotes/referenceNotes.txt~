@@ -26,6 +26,8 @@ https://calendar.google.com/calendar/render?pli=1#main_7%7Cweek-2+24333+24339+24
 #sxd absence vacation calendar
 https://docs.google.com/spreadsheets/d/1NZB4PqOEKdmAvwI6bqK78ZbFNgSeWrD5o7PS6W_EuW4/edit#gid=0
 
+#find pv findpv pvfind pv_find find_pv
+/reg/g/pcds/setup/pcds_shortcuts.sh
 
 
 #view ports communicating on host
@@ -41,6 +43,12 @@ psana.DetNames('epics')
 
 #jana log daq reporting 
 https://docs.google.com/a/stanford.edu/spreadsheets/d/1ZpijKpIWWeDac7XivMc12Afigps4I4eqwL3GC7wcQxk/edit?usp=sharing
+#database for previous daq configuraiton
+https://confluence.slac.stanford.edu/display/PCDS/DAQ+configuration+database
+/reg/g/pcds/dist/pds/8.6.3.a-p8.4.3/build/pdsapp/bin/x86_64-linux-opt/configdb_gui
+configdb_gui --db /reg/g/pcds/dist/pds/cxi/misc/.configdbrc
+
+
 
 #evr notation
 #acqiris are used all the time.  have permnanent connection don't go away.
@@ -65,6 +73,11 @@ https://docs.google.com/spreadsheets/d/1bl9-c2aEoCufKXFNtL0ums51pb57XzaWi8E8gZ49
 Please follow these instructions to create your UNIX account for LCLS Experiment LQ27. 
 https://www-ssrl.slac.stanford.edu//lcls-resources/user-to-do-list#computers
 Your login on 'User Portal' (  https://userportal.slac.stanford.edu/ )is what you used to  registering as collaborator on the LCLS Proposal, the account name is most likely your e-mail address.
+Renew your Unix Account (if applicable)
+Login to the LCLS photon systems portal: https://pswww.slac.stanford.edu/
+If your password has expired, you can refresh your account at the following link: https://unix-password.slac.stanford.edu/chpw/kpasswd1.pl
+If you do not know your password, contact Account Services by email account-services@slac.stanford.edu or by telephone: 650-926-2228.
+
 
 #gige cameras to check if camera is working
 #also can search for below name in netconfig
@@ -504,6 +517,10 @@ shifted by that much in +x with respect to the bottom; the bottom should
 be about the same.
 
 - Philip
+
+
+#Herbst pgp confluence confluence page
+https://confluence.slac.stanford.edu/display/ppareg/Test+Setup+For+Low+Level+Communication+With+Eval+Board
 
 reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 /reg/g/pcds/setup/pcds_shortcuts.sh:#	show_epics_sioc [ all | hostname ] ...

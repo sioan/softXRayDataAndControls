@@ -26,6 +26,8 @@ https://calendar.google.com/calendar/render?pli=1#main_7%7Cweek-2+24333+24339+24
 #sxd absence vacation calendar
 https://docs.google.com/spreadsheets/d/1NZB4PqOEKdmAvwI6bqK78ZbFNgSeWrD5o7PS6W_EuW4/edit#gid=0
 
+#find pv findpv pvfind pv_find find_pv
+/reg/g/pcds/setup/pcds_shortcuts.sh
 
 
 #view ports communicating on host
@@ -271,6 +273,7 @@ bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtracto
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
+https://confluence.slac.stanford.edu/display/PCDS/PCDS+Contact+List
 
 Released EPICS location (modules, IOCs, screens...):
 /reg/g/pcds/package/epics/3.14/

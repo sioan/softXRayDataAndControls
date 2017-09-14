@@ -41,6 +41,10 @@ psana.DetNames('epics')
 
 #jana log daq reporting 
 https://docs.google.com/a/stanford.edu/spreadsheets/d/1ZpijKpIWWeDac7XivMc12Afigps4I4eqwL3GC7wcQxk/edit?usp=sharing
+#database for previous daq configuraiton
+https://confluence.slac.stanford.edu/display/PCDS/DAQ+configuration+database
+/reg/g/pcds/dist/pds/8.6.3.a-p8.4.3/build/pdsapp/bin/x86_64-linux-opt/configdb_gui
+configdb_gui --db /reg/g/pcds/dist/pds/cxi/misc/.configdbrc
 
 #evr notation
 #acqiris are used all the time.  have permnanent connection don't go away.
@@ -256,7 +260,9 @@ bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtracto
 psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
-
+mca = modular component architecture
+btl = byte transfer layer
+openib = open infini-band
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
@@ -470,3 +476,37 @@ mksrga1
 #glue
 #source activate ana-1.3.11
 #
+
+
+pnccd motor locations
+Hi, the pixel positions are reportedly retrievable by
+cx, cy, cz = det.coords_xyz(par)
+See
+https://lcls-psana.github.io/Detector/index.html#module-AreaDetector
+
+To get motor and gain info I do
+     env = ds.env()
+     es = env.epicsStore()
+     pyt  = es.getPV('AMO:LMP:MMS:07.RBV').value(0)
+     pyb  = es.getPV('AMO:LMP:MMS:08.RBV').value(0)
+     px  = es.getPV('AMO:LMP:MMS:09.RBV').value(0)
+     pz = es.getPV('AMO:LMP:MMS:10.RBV').value(0)
+     gain = es.getPV('PNCCD:FRONT:GAIN').value(0)
+
+You can instead do
+     ds = DataSource('exp=amoj4115:run=%d:smd' %(run))
+     ytop = Detector('AMO:LMP:MMS:07.RBV')
+     ybot = Detector('AMO:LMP:MMS:08.RBV')
+     x = Detector('AMO:LMP:MMS:09.RBV')
+...
+
+
+The pixel gap is given by
+y_t - y_b + 3.31mm (front)
+1.33mm (back)
+
+The front x displacement is 0.464mm, with the top (lower z) camera 
+shifted by that much in +x with respect to the bottom; the bottom should 
+be about the same.
+
+- Philip

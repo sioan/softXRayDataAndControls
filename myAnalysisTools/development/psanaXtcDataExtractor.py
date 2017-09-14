@@ -185,10 +185,10 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 			break
 		
 		for i in myDetectorObjectDictionary['analyzer']:
-			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary,thisEvent)
 
 		for i in myDetectorObjectDictionary['summarizer']:
-				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary[i],thisEvent,summaryDataDictionary[i],myDataDictionary)
+				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary,thisEvent,summaryDataDictionary[i])
 
 		#for i in myDataDictionary:
 		if any([None is myDataDictionary[k] for k in myDataDictionary]):
