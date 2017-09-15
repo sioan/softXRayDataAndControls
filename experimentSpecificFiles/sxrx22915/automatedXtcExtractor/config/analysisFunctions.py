@@ -1,6 +1,7 @@
 from pylab import *
 import psana
-
+from roiConfigReader import *
+myReadInConfig = roiConfigReader("config/x229_ROI_V1.csv")
 
 def integrateAcqiris(detectorObject,thisEvent):
 	myDict = {}
@@ -22,10 +23,20 @@ def sumOverROI(detectorObject,thisEvent):
 	if myImage is None:
 		myDict['ROI1'] = -9999999
 		myDict['ROI2'] = -9999999
+		for i in myReadInConfig.roiDescription:
+			myDict[myReadInConfig.roiDescription[i]] = -9999999
 	
 	else:
 		myDict['ROI1'] = sum(myImage[420:560,80:220])
 		myDict['ROI2'] = sum(myImage[420:560,1040:1100])
+		for i in myReadInConfig.roiDescription:
+			#myDict['ROI2'] = sum(myImage[rowStart:rowEnd,columnStart:columnEnd])
+			rowStart = myReadInConfig.roiDescription[i]['upperLeftY']
+			rowEnd = myReadInConfig.roiDescription[i]['lowerRightY']
+			columnStart = myReadInConfig.roiDescription[i]['upperLeftX']
+			columnEnd = myReadInConfig.roiDescription[i]['lowerRightX']
+			myDict[i] = sum(myImage[rowStart:rowEnd,columnStart:columnEnd])
+			#print([rowStart,rowEnd,columnStart,columnEnd])
 
 
 	return myDict

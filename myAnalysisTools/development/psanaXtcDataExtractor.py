@@ -209,10 +209,10 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		#print("gathering dictionaries. rank = "+str(myRank))
 		gatheredSummary = myComm.gather(summaryDataDictionary,root=0)
 		if myRank==0:
-			print("merging dictionary. rank = " + str(myRank)+". gathered summary "+str(gatheredSummary)+" end of gathered summary.")
+			#print("merging dictionary. rank = " + str(myRank)+". gathered summary "+str(gatheredSummary)+" end of gathered summary.")
 			mergedGatheredSummary = merge_dicts(gatheredSummary)
-			print("Here's the merged dictionary")
-			print mergedGatheredSummary
+			#print("Here's the merged dictionary")
+			#print mergedGatheredSummary
 			print("end of merged dictionary")
 			smldata.save(mergedGatheredSummary)
 			#smldata.save()
