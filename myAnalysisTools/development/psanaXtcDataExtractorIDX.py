@@ -63,21 +63,37 @@ def makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode):
 		ttAnalyze = TimeTool.PyAnalyze(ttOptions)
 	
 		print("loading experiment data using standard small data")
-		myDataSource = psana.MPIDataSource(experimentNameAndRun,module=ttAnalyze)	
+		myDataSource = psana.DataSource(experimentNameAndRun+":smd",module=ttAnalyze)	
 
 		print("defining small data")
 		if(h5FileName!="None"):
 			smldata = myDataSource.small_data(h5FileName)
 	else:
-		print("loading mpi data source")
-		myDataSource = psana.MPIDataSource(experimentNameAndRun)
+		print("preloading data source for idx")
+		myDataSource = psana.DataSource(experimentNameAndRun+":smd")
+
+		seconds,nanoseconds,fiducials     = [],[],[]
+
+		for nevent,evt in enumerate(myDataSource.events()):
+			evtId = evt.get(psana.EventId)
+			seconds.append(evtId.time()[0])
+			nanoseconds.append(evtId.time()[1])
+			fiducials.append(evtId.fiducials())
+			if (1==nevent%100):
+				print("idx preload "+str(nevent))
+			if (1000==nevent):
+				break
+		zippedTimes = zip(reversed(seconds),reversed(nanoseconds),reversed(fiducials))
+		myDataSource = psana.DataSource(experimentNameAndRun+":idx")
 
 		print("defining small data. hook in place ")
-		if(h5FileName!="None"):
-			smldata = myDataSource.small_data(h5FileName)
+		#if(h5FileName!="None"):
+		#	smldata = myDataSource.small_data(h5FileName)
+
+		
 
 
-	return (myDataSource,smldata)
+	return (myDataSource,zippedTimes)
 
 def generateDetectorDictionary(configFileName):
 	global ttAnalyze
@@ -136,6 +152,7 @@ def renameSummaryKeys(myDict):
 
 def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,startEvent,finalEvent):
 	global smldata,	summaryDataDictionary,myDataDictionary,myEnumeratedEvents,eventNumber,thisEvent,myDetectorObjectDictionary,mergedGatheredSummary,myRank,myComm
+	global zippedTimes	
 
 	#global myExp,myRun
 	print ("exp = "+str(myExp))
@@ -143,7 +160,7 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 	startTime = time.time()
 	print("entering main function")
 	
-	experimentNameAndRun = "exp=%s:run=%d:smd"%(myExp, myRun)
+	experimentNameAndRun = "exp=%s:run=%d"%(myExp, myRun)
 	#print("loading experiment")
 	#myDataSource = psana.MPIDataSource(experimentNameAndRun+":smd")	#this needs to be merged
 
@@ -157,7 +174,8 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		#if(myRank==0):		#may still not work if race conditions
 			#os.system("rm "+h5FileName)
 
-	myDataSource, smldata = makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode)
+	myDataSource, zippedTimes = makeDataSourceAndSmallData(experimentNameAndRun,h5FileName,ttDevice,ttCode)
+	run = myDataSource.runs().next()
 
 	print("loading detector object dictionary")
 	myDetectorObjectDictionary = generateDetectorDictionary(configFileName)
@@ -173,7 +191,13 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		print("processing started at "+ str(time.asctime()))
 	
 	myEnumeratedEvents = enumerate(myDataSource.events())
-	for eventNumber,thisEvent in myEnumeratedEvents:
+	#for eventNumber,thisEvent in myEnumeratedEvents:
+	eventNumber = 0
+	for sec,nsec,fid in zippedTimes:
+		eventNumber+=1
+		
+		eventTime = psana.EventTime(int((sec<<32)|nsec),fid)
+		thisEvent = run.event(eventTime)
 		if(eventNumber %messageFeedBackRate == 1):
 			print("iterating over enumerated events. Rank = "+str(myRank)+" Event number = "+str(eventNumber)+" Elapsed Time (s) = "+str(time.time()-startTime))
 			
@@ -196,38 +220,12 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		#	if (None is myDataDictionary[i]):
 		#		del myDataDictionary[i]
 
-		if(h5FileName!="None"):
-			#print myDataDictionary[myDataDictionary.keys()[0]]
-			smldata.event(myDataDictionary)
+		#if(h5FileName!="None"):
+		#	#print myDataDictionary[myDataDictionary.keys()[0]]
+		#	smldata.event(myDataDictionary)
 
 
 	print("finished looping over events")
-	if(h5FileName!="None"):
-		print("saving small data")
-	
-		renameSummaryKeys(summaryDataDictionary)
-		#print("gathering dictionaries. rank = "+str(myRank))
-		gatheredSummary = myComm.gather(summaryDataDictionary,root=0)
-		if myRank==0:
-			#print("merging dictionary. rank = " + str(myRank)+". gathered summary "+str(gatheredSummary)+" end of gathered summary.")
-			mergedGatheredSummary = merge_dicts(gatheredSummary)
-			#print("Here's the merged dictionary")
-			#print mergedGatheredSummary
-			print("end of merged dictionary")
-			smldata.save(mergedGatheredSummary)
-			#smldata.save()
-			#pickle.dump(gatheredSummary, open( "dictifiedData.pkl", "wb" ))	#for testing.  use code below to read it in.
-			#myData = pickle.load(open("dictifiedData.pkl","rb"))
-			
-
-			print("small data file saved")
-			#smldata.close()
-			print("small data file closed")
-
-			
-		else:
-			smldata.save()
-
 
 	return
 
