@@ -273,6 +273,7 @@ bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtracto
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
+https://confluence.slac.stanford.edu/display/PCDS/PCDS+Contact+List
 
 Released EPICS location (modules, IOCs, screens...):
 /reg/g/pcds/package/epics/3.14/
@@ -534,3 +535,12 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 
 #newport laser motors
 #mcn-sxr-las2/ #don't forget the slash in the web browser.
+
+################# usb debuggin
+https://wiki.kubuntu.org/Kernel/Debugging/USB
+sudo mount -t debugfs none /sys/kernel/debug
+sudo cat /sys/kernel/debug/usb/usbmon/2u >bus2data.txt
+sudo cat /sys/kernel/debug/usb/usbmon/0u
+
+
+

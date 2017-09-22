@@ -54,25 +54,62 @@ def getGMD(detectorObject,thisEvent):
 	else: 	
 		return 0
 
+def GetZPX(detectorObject,thisEvent):
+	temp = detectorObject['ZPX'](thisEvent)
+	if (None not in [temp]):
+		return temp
+	else: 	
+		return -999999
+
 def accumulatorROIImage(detectorObject,thisEvent,previousProcessing):
 
 
 	myImage = detectorObject['pnccd'].image(thisEvent)
-	myGMD = detectorObject['GMD'].get(thisEvent)
+	#myGMD = detectorObject['GMD'].get(thisEvent)
 
-	if(None in [myImage,myGMD]):
+	desiredSingleImageEventList = [100,1000]
+
+	myEventID = thisEvent.get(psana.EventId)
+	sec,nanosec = myEventID.time()
+
+	#if(None in [myImage,myGMD]):
+	if(None in [myImage]):
 		return previousProcessing
 	else:
 		x=1	#some dummy else
 	
-	if ('acummulatedHistogram' not in previousProcessing.keys()):
+	if (len(previousProcessing.keys())==0):
 		y,x = histogram(myImage.flatten(),bins=arange(-200,4000,10))
 		previousProcessing['acummulatedHistogramCounts'] = y
 		previousProcessing['acummulatedHistogramBins'] = x 
 		previousProcessing['accumulatedImage'] = myImage
+		previousProcessing['sparseData'] = {}
+		previousProcessing['sparseData']['Images'] = []
+		previousProcessing['sparseData']['myEventID'] = []
+
+		myMask = zeros(myImage.shape)
+		for i in myReadInConfig.roiDescription:
+			validRunStart = myReadInConfig.roiDescription[i]['validRunStart']
+			validRunEnd = myReadInConfig.roiDescription[i]['validRunEnd']
+			if(thisEvent.run() >= validRunStart and thisEvent.run() < validRunEnd):
+				#myDict['ROI2'] = sum(myImage[rowStart:rowEnd,columnStart:columnEnd])
+				rowStart = myReadInConfig.roiDescription[i]['upperLeftY']
+				rowEnd = myReadInConfig.roiDescription[i]['lowerRightY']
+				columnStart = myReadInConfig.roiDescription[i]['upperLeftX']
+				columnEnd = myReadInConfig.roiDescription[i]['lowerRightX']
+				#myDict[i] = sum(myImage[rowStart:rowEnd,columnStart:columnEnd])
+				#print([rowStart,rowEnd,columnStart,columnEnd])
+				myMask[rowStart:rowEnd,columnStart:columnEnd] =	myMask[rowStart:rowEnd,columnStart:columnEnd]+1
+		previousProcessing['roiSanityCheck'] = myMask
 
 	else:
 		previousProcessing['acummulatedHistogramCounts']+=histogram(myImage.flatten(),bins=arange(-200,4000,10))[0]
-		previousProcessing['accumulatedImage'] += myImage/myGMD.milliJoulesPerPulse()
+		#previousProcessing['accumulatedImage'] += myImage/myGMD.milliJoulesPerPulse()
+		previousProcessing['accumulatedImage'] += myImage
+
+	if( nanosec<0.01*1e9 and sec%2==0):
+		previousProcessing['sparseData']['Images'].append(myImage)
+		previousProcessing['sparseData']['myEventID'].append(str(myEventID))
+
 
 	return previousProcessing
