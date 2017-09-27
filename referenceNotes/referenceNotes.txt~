@@ -36,6 +36,7 @@ then search for ports.
 
 #office desk linux machine
 #fpga pgp card computer
+#desktop
 lcls-pc83236
 
 psana epics show pv names in psana
@@ -270,6 +271,11 @@ psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
 
+
+#for running on mon nodes. this is because rhel 7 doesn't report to mpirun how many nodes it has. have to rely on mpirun to autobalance.
+`which mpirun` --oversubscribe -H daq-amo-mon02,daq-amo-mon03 -n 4 hostname
+#also, libbat.so warning is solved with bash below
+export LD_LIBRARY_PATH=/reg/neh/home/cpo/junk
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0

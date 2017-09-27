@@ -1,9 +1,0 @@
-notes
-
-hit finding in real time
-
-need nine micronix. speak with peter. (last year one arpeture had broken encoder.)
-
-lamp chamber with pnccd. 
-
-will be bringing xyz stage from sed. dumb motor stage.

@@ -108,6 +108,8 @@ https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detect
 /reg/g/pcds/package/epics/3.14/ioc/amo/hv/R1.0.3/db
 console ioc-amo-hv2
 iocsh()
+#notes for working with the edm
+Just to recap using the HV supplies, if you try to turn the HV on and it doesn't work, press and hold the "kill" button for a second, and then press and hold the "clear" button for a second. This should then allow the channel to power on. This can also be done for the channel as a whole using the all-channel "kill" button followed by the channel "clear" button.
 
 
 #epics and edm development area
@@ -271,6 +273,11 @@ psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
 
+
+#for running on mon nodes. this is because rhel 7 doesn't report to mpirun how many nodes it has. have to rely on mpirun to autobalance.
+`which mpirun` --oversubscribe -H daq-amo-mon02,daq-amo-mon03 -n 4 hostname
+#also, libbat.so warning is solved with bash below
+export LD_LIBRARY_PATH=/reg/neh/home/cpo/junk
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0

@@ -5,6 +5,9 @@ import sys
 import subprocess
 import threading
 import argparse
+import socket
+
+thisHost = socket.hostname()
 
 def sendSSHCommandQWrapper(q,commandString):
 	q.put(sendSSHCommand(commandString))

@@ -6,9 +6,9 @@
 
 from pylab import *
 import psana
-from ImgAlgos.PyAlgos import photons
-from scipy.signal import convolve2d
-import TimeTool
+#from ImgAlgos.PyAlgos import photons
+#from scipy.signal import convolve2d
+#import TimeTool
 
 
 ttOptions = TimeTool.AnalyzeOptions(get_key='TSS_OPAL',eventcode_nobeam = 162)
@@ -28,7 +28,8 @@ runNum = "38"
 #myDataSource = psana.MPIDataSource('exp=sxri0414:run=60:smd',module=ttAnalyze)
 #myDataSource = psana.MPIDataSource('exp=amolp0515:run=105:smd',module=ttAnalyze)
 #myDataSource = psana.MPIDataSource('exp=sxrlp2615:run=6:smd')
-myDataSource = psana.MPIDataSource('exp=xpptut15:run=360')
+#myDataSource = psana.MPIDataSource('exp=xpptut15:run=360')
+myDataSource = psana.DataSource("shmem=psana.0:stop=no")
 
 
 #psana.DetNames()
