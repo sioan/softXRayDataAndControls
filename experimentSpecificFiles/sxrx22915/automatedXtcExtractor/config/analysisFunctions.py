@@ -1,112 +1,115 @@
 from pylab import *
 import psana
-
-def genericReturn(detectorObject,thisEvent):
-	return detectorObject(thisEvent)
-
-def genericSummaryZero(detectorObject,thisEvent,previousProcessing):
-	return 0
-
-def myZeroReturn(detectorObject,thisEvent,previousProcessing):
-	return 0
+from roiConfigReader import *
+myReadInConfig = roiConfigReader("config/x229_ROI_V1.csv")
 
 def integrateAcqiris(detectorObject,thisEvent):
 	myDict = {}
 
-	myDict['scatterAPD'] = -99999
-	if (None not in [detectorObject(thisEvent)]):
-		tempWaveform = detectorObject(thisEvent)[0][0]
-		myDict['scatterAPD'] = -(sum(tempWaveform[4000:18000] - mean(tempWaveform[0:3000])))
-
-def sumOverROI(detectorObject,thisEvent):
-	return 0
-
-def accumulatorROIImage(detectorObject,thisEvent,previousProcessing):
-
-
-	myImage = detectorObject.image(thisEvent)
+	#myDict['MCP'] = -99999
+	acqirisData = detectorObject['acq01'](thisEvent)
+	if any (None in acqirisData):
+		myDict['MCP'] = -99999
 	
-	if ('acummulatedHistogram' not in previousProcessing.keys()):
-		y,x = histogram(myImage.flatten(),bins=arange(-200,4000,10))
-		previousProcessing['acummulatedHistogramCounts'] = y
-		previousProcessing['acummulatedHistogramBins'] = x 
-
 	else:
-		previousProcessing['acummulatedHistogramCounts']+=histogram(myImage.flatten(),bins=arange(-200,4000,10))[0]
-
-	return previousProcessing
-
-def getTimeToolData(detectorObject,thisEvent):
-	ttData = detectorObject.process(thisEvent)
-	myDict = {}	
-	if(ttData is None):
-		
-		myDict['amplitude'] = -99999
-		myDict['pixelTime'] = -99999
-		myDict['positionFWHM'] = -99999
-
-
-	else:
-
-		myDict['amplitude'] = ttData.amplitude()
-		myDict['pixelTime'] = ttData.position_time()
-		myDict['positionFWHM'] = ttData.position_fwhm()
+		tempWaveform = acqirisData[0][2]
+		myDict['MCP'] = -(sum(tempWaveform[1100:3000] - mean(tempWaveform[250:750])))
 
 	return myDict
 
-def getPeak(detectorObject,thisEvent):
-
-	myWaveForm = -detectorObject(thisEvent)[0][0]
-
-	myWaveForm -= mean(myWaveForm[:2500])
-
-	x = arange(len(myWaveForm))[7500:10000]-8406
-	myFit = polyfit(x, myWaveForm[7500:10000],3)
-
-	p = poly1d(myFit)
-	myMax = max(p(x))
-
-	#return myFit[-1]	#placing a dictionary here also works
-	return myMax	
-
-def accumulateAverageWave(detectorObject,thisEvent,previousProcessing):
-
-	myWaveForm = -detectorObject(thisEvent)[0][0]
-	myWaveForm -= mean(myWaveForm[:2500])
-
-	return (previousProcessing+myWaveForm)
-
-def getWaveForm(detectorObject,thisEvent):
-	if (None not in [detectorObject(thisEvent)[0][0]]):
-		return detectorObject(thisEvent)[0][0]
-	else:	
-		return 0
+def sumOverROI(detectorObject,thisEvent):
 	
-def get(detectorObject,thisEvent):
-	if (None not in [detectorObject(thisEvent)]):
-		return detectorObject(thisEvent)
-	else:
-		return 0
+	myImage = detectorObject['pnccd'].image(thisEvent)
+	
+	myDict = {}
 
-def getRaw(detectorObject,thisEvent):
-	if (None not in [detectorObject(thisEvent)]):
-		return detectorObject(thisEvent)
+	if myImage is None:
+		#myDict['ROI1'] = -9999999
+		#myDict['ROI2'] = -9999999
+		for i in myReadInConfig.roiDescription:
+			myDict[myReadInConfig.roiDescription[i]] = -9999999
+	
 	else:
-		return 0
+		#myDict['ROI1'] = sum(myImage[420:560,80:220])
+		#myDict['ROI2'] = sum(myImage[420:560,1040:1100])
+		for i in myReadInConfig.roiDescription:
+			validRunStart = myReadInConfig.roiDescription[i]['validRunStart']
+			validRunEnd = myReadInConfig.roiDescription[i]['validRunEnd']
+			if(thisEvent.run() >= validRunStart and thisEvent.run() < validRunEnd):
+				#myDict['ROI2'] = sum(myImage[rowStart:rowEnd,columnStart:columnEnd])
+				rowStart = myReadInConfig.roiDescription[i]['upperLeftY']
+				rowEnd = myReadInConfig.roiDescription[i]['lowerRightY']
+				columnStart = myReadInConfig.roiDescription[i]['upperLeftX']
+				columnEnd = myReadInConfig.roiDescription[i]['lowerRightX']
+				myDict[i] = sum(myImage[rowStart:rowEnd,columnStart:columnEnd])
+				#print([rowStart,rowEnd,columnStart,columnEnd])
+
+
+	return myDict
 
 def getGMD(detectorObject,thisEvent):
-	temp = detectorObject.get(thisEvent)
+	temp = detectorObject['GMD'].get(thisEvent)
 	if (None not in [temp]):
 		return temp.milliJoulesPerPulse()
 	else: 	
 		return 0
 
-def getEBeam(detectorObject,thisEvent):
-	temp = detectorObject.get(thisEvent)
-	if(None not in [temp]):
-		return temp.ebeamPhotonEnergy()
+def GetZPX(detectorObject,thisEvent):
+	temp = detectorObject['ZPX'](thisEvent)
+	if (None not in [temp]):
+		return temp
+	else: 	
+		return -999999
+
+def accumulatorROIImage(detectorObject,thisEvent,previousProcessing):
+
+
+	myImage = detectorObject['pnccd'].image(thisEvent)
+	#myGMD = detectorObject['GMD'].get(thisEvent)
+
+	desiredSingleImageEventList = [100,1000]
+
+	myEventID = thisEvent.get(psana.EventId)
+	sec,nanosec = myEventID.time()
+
+	#if(None in [myImage,myGMD]):
+	if(None in [myImage]):
+		return previousProcessing
 	else:
-		return 0
+		x=1	#some dummy else
+	
+	if (len(previousProcessing.keys())==0):
+		y,x = histogram(myImage.flatten(),bins=arange(-200,4000,10))
+		previousProcessing['acummulatedHistogramCounts'] = y
+		previousProcessing['acummulatedHistogramBins'] = x 
+		previousProcessing['accumulatedImage'] = myImage
+		previousProcessing['sparseData'] = {}
+		previousProcessing['sparseData']['Images'] = []
+		previousProcessing['sparseData']['myEventID'] = []
+
+		myMask = zeros(myImage.shape)
+		for i in myReadInConfig.roiDescription:
+			validRunStart = myReadInConfig.roiDescription[i]['validRunStart']
+			validRunEnd = myReadInConfig.roiDescription[i]['validRunEnd']
+			if(thisEvent.run() >= validRunStart and thisEvent.run() < validRunEnd):
+				#myDict['ROI2'] = sum(myImage[rowStart:rowEnd,columnStart:columnEnd])
+				rowStart = myReadInConfig.roiDescription[i]['upperLeftY']
+				rowEnd = myReadInConfig.roiDescription[i]['lowerRightY']
+				columnStart = myReadInConfig.roiDescription[i]['upperLeftX']
+				columnEnd = myReadInConfig.roiDescription[i]['lowerRightX']
+				#myDict[i] = sum(myImage[rowStart:rowEnd,columnStart:columnEnd])
+				#print([rowStart,rowEnd,columnStart,columnEnd])
+				myMask[rowStart:rowEnd,columnStart:columnEnd] =	myMask[rowStart:rowEnd,columnStart:columnEnd]+1
+		previousProcessing['roiSanityCheck'] = myMask
+
+	else:
+		previousProcessing['acummulatedHistogramCounts']+=histogram(myImage.flatten(),bins=arange(-200,4000,10))[0]
+		#previousProcessing['accumulatedImage'] += myImage/myGMD.milliJoulesPerPulse()
+		previousProcessing['accumulatedImage'] += myImage
+
+	if( nanosec<0.01*1e9 and sec%2==0):
+		previousProcessing['sparseData']['Images'].append(myImage)
+		previousProcessing['sparseData']['myEventID'].append(str(myEventID))
 
 
-
+	return previousProcessing

@@ -26,6 +26,8 @@ https://calendar.google.com/calendar/render?pli=1#main_7%7Cweek-2+24333+24339+24
 #sxd absence vacation calendar
 https://docs.google.com/spreadsheets/d/1NZB4PqOEKdmAvwI6bqK78ZbFNgSeWrD5o7PS6W_EuW4/edit#gid=0
 
+#find pv findpv pvfind pv_find find_pv
+/reg/g/pcds/setup/pcds_shortcuts.sh
 
 
 #view ports communicating on host
@@ -34,6 +36,7 @@ then search for ports.
 
 #office desk linux machine
 #fpga pgp card computer
+#desktop
 lcls-pc83236
 
 psana epics show pv names in psana
@@ -105,6 +108,8 @@ https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detect
 /reg/g/pcds/package/epics/3.14/ioc/amo/hv/R1.0.3/db
 console ioc-amo-hv2
 iocsh()
+#notes for working with the edm
+Just to recap using the HV supplies, if you try to turn the HV on and it doesn't work, press and hold the "kill" button for a second, and then press and hold the "clear" button for a second. This should then allow the channel to power on. This can also be done for the channel as a whole using the all-channel "kill" button followed by the channel "clear" button.
 
 
 #epics and edm development area
@@ -269,8 +274,14 @@ psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
 
 
+#for running on mon nodes. this is because rhel 7 doesn't report to mpirun how many nodes it has. have to rely on mpirun to autobalance.
+`which mpirun` --oversubscribe -H daq-amo-mon02,daq-amo-mon03 -n 4 hostname
+#also, libbat.so warning is solved with bash below
+export LD_LIBRARY_PATH=/reg/neh/home/cpo/junk
+
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
+https://confluence.slac.stanford.edu/display/PCDS/PCDS+Contact+List
 
 Released EPICS location (modules, IOCs, screens...):
 /reg/g/pcds/package/epics/3.14/
@@ -532,3 +543,12 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 
 #newport laser motors
 #mcn-sxr-las2/ #don't forget the slash in the web browser.
+
+################# usb debuggin
+https://wiki.kubuntu.org/Kernel/Debugging/USB
+sudo mount -t debugfs none /sys/kernel/debug
+sudo cat /sys/kernel/debug/usb/usbmon/2u >bus2data.txt
+sudo cat /sys/kernel/debug/usb/usbmon/0u
+
+
+
