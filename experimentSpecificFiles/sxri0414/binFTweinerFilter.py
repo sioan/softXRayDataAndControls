@@ -30,7 +30,18 @@ from filterMasks import filterMasks
 #In depth description
 #====================
 
+def subtractTrend(x,y):
+	#subtract off linear trend and offset	
+	#myDict[keyToAverage]-=mean(myDict[keyToAverage][myMask])	
+	#myCovLinear = cov(myDict[keyToAverage][myMask],myDict[correctedKeyToBin][myMask])
+	#myDict[keyToAverage] -= myCovLinear[1,0]*1.0/myCovLinear[1,1]*(myDict[correctedKeyToBin] - mean(myDict[correctedKeyToBin][myMask]))
 
+	y -= mean(y)
+	myCovLinear = cov(y,x)
+	y -= myCovLinear[1,0]*1.0/myCovLinear[1,1]*(x - mean(x))
+	
+	return y
+	
 
 def hdf5_to_dict(myhdf5Object):
 	replacementDictionary = {}
@@ -66,7 +77,27 @@ def removeNans(myDict):
 
 	return myDict
 
-def ftBinning(myDict,keyToAverage,keyToBin,bins,isLog):
+def  getFourierProjection(y,w):
+	myCovCos = cov(y,cos(w))
+	myCovSin = cov(y,sin(w))
+	return myCovCos[0,1]/(myCovCos[1,1]+1e-12)+1j*myCovSin[0,1]/(myCovSin[1,1]+1e-12)
+
+def ftBinning(tempDict,maskDict,keyToAverage,keyToBin,bins,isLog):
+
+	myMask = maskDict['laserOn']
+
+	#apply mask
+	myDict={}
+	myDict[keyToAverage] = tempDict[keyToAverage][myMask]
+	myDict[correctedKeyToBin] = tempDict[correctedKeyToBin][myMask]
+	myDict[keyToAverage] = subtractTrend(myDict[correctedKeyToBin],myDict[keyToAverage])
+
+	referenceNoise = {}
+	referenceNoise[keyToAverage] = tempDict[keyToAverage][maskDict['laserOff']]
+	referenceNoise[correctedKeyToBin] = tempDict[correctedKeyToBin][maskDict['laserOff']]
+	referenceNoise[keyToAverage] = subtractTrend(referenceNoise[correctedKeyToBin],referenceNoise[keyToAverage])
+
+
 	tPi = 2 * 3.14159
 	
 	myList = array([myDict[keyToBin],myDict[keyToAverage]]).transpose()
@@ -81,15 +112,19 @@ def ftBinning(myDict,keyToAverage,keyToBin,bins,isLog):
 	myFtArtifact = []
 	myCounter = 0
 
+	noiseFtValue = []
+
 	#explicit projection onto sin and cos
 	for f in fAxis:
 		myCounter += 1
 		if(myCounter%100==1):
 			print(str(myCounter)+", ")
-		myCovCos = cov(myDict[keyToAverage],cos(tPi*f*myDict[keyToBin]))
-		myCovSin = cov(myDict[keyToAverage],sin(tPi*f*myDict[keyToBin]))
-	
-		myProjection = myCovCos[0,1]/(myCovCos[1,1]+1e-12)+1j*myCovSin[0,1]/(myCovSin[1,1]+1e-12)
+		#myCovCos = cov(myDict[keyToAverage],cos(tPi*f*myDict[keyToBin]))
+		#myCovSin = cov(myDict[keyToAverage],sin(tPi*f*myDict[keyToBin]))
+		#myProjection = myCovCos[0,1]/(myCovCos[1,1]+1e-12)+1j*myCovSin[0,1]/(myCovSin[1,1]+1e-12)
+
+		myProjection = getFourierProjection(myDict[keyToAverage],tPi*f*myDict[keyToBin])
+		myNoiseProjection = getFourierProjection(referenceNoise[keyToAverage],tPi*f*referenceNoise[keyToBin])
 
 		myCovCosArtifact = mean(cos(tPi*f*myDict[keyToBin]))
 		myCovSinArtifact = mean(sin(tPi*f*myDict[keyToBin]))
@@ -99,53 +134,17 @@ def ftBinning(myDict,keyToAverage,keyToBin,bins,isLog):
 		myFtValue.append(myProjection)
 		myFtArtifact.append(myArtifactProjection)		
 
+		noiseFtValue.append(myNoiseProjection)
+
 	myFtValue = array(myFtValue)
 	myFtArtifact = array(myFtArtifact)
 
-	return fAxis,myFtValue, myFtArtifact
+	noiseFtValue = array(noiseFtValue)
+
+	return fAxis,myFtValue,noiseFtValue,myFtArtifact
 		
 #plot(myData[0],(abs(array(myData[1]))),'.')
 
-
-def basicHistogram(myDict,keyToAverage,keyToBin,bins,isLog):#fast for debugging
-
-	myDataDictionary = {}
-
-	if(isLog):
-		myDataDictionary['x'] = bins[:-1]
-		myDataDictionary['counts'] = histogram(myDict[keyToBin],bins)[0]
-
-		myDataDictionary['yMean'] = histogram(myDict[keyToBin],bins,weights = log(myDict[keyToAverage]))[0]
-		myDataDictionary['yMean']/= myDataDictionary['counts']
-		
-		myDataDictionary['y2ndMoment'] = histogram(myDict[keyToBin],bins,weights = log(myDict[keyToAverage])**2)[0]
-		myDataDictionary['y2ndMoment']/= myDataDictionary['counts']
-
-		myDataDictionary['standardDeviation'] = (myDataDictionary['y2ndMoment']-myDataDictionary['yMean'])**0.5
-		myDataDictionary['standardDeviation'] = exp(myDataDictionary['standardDeviation'])
-
-		myDataDictionary['yMean'] = exp(myDataDictionary['yMean'])
-
-		#myDataDictionary['yMean'] = exp(myDataDictionary['yMean'])
-		#myDataDictionary['standardDeviation'] = exp(myDataDictionary['standardDeviation'])
-	
-	else:
-		myDataDictionary['x'] = bins[:-1]
-		myDataDictionary['counts'] = histogram(myDict[keyToBin],bins)[0]
-
-		myDataDictionary['yMean'] = histogram(myDict[keyToBin],bins,weights = myDict[keyToAverage])[0]
-		myDataDictionary['yMean']/= myDataDictionary['counts']
-	
-		myDataDictionary['y2ndMoment'] = histogram(myDict[keyToBin],bins,weights = myDict[keyToAverage]**2)[0]
-		myDataDictionary['y2ndMoment']/= myDataDictionary['counts']
-
-		myDataDictionary['standardDeviation'] = (myDataDictionary['y2ndMoment']-myDataDictionary['yMean'])**0.5
-
-	del myDataDictionary['y2ndMoment']
-
-	myDataDictionary = removeNans(myDataDictionary)
-
-	return myDataDictionary
 
 if __name__ == '__main__':
 	
@@ -178,27 +177,32 @@ if __name__ == '__main__':
 	myDict[correctedKeyToBin] = (2/.3*(myDict[keyToBin]-myOffset)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0)	
 
 	#removing pre laser shot
+	maskDict = {}
 	laserMask = myDict[correctedKeyToBin] < 12.4
+	maskDict['laserOn'] = myMask*laserMask 
+	maskDict['laserOff'] = myMask*(laserMask==False)
 	myMask *= laserMask 
 
 	#adding sanity check reference oscillation
 	#myDict[keyToAverage] += 25*sin(2*3.14159*5.9*myDict[correctedKeyToBin])/1.0
 
 	#apply mask	
-	myDict[keyToAverage] = myDict[keyToAverage][myMask]
-	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
+	#myDict[keyToAverage] = myDict[keyToAverage][myMask]
+	#myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
 
 	#subtract off linear trend and offset	
-	myDict[keyToAverage]-=mean(myDict[keyToAverage])	
-	myCovLinear = cov(myDict[keyToAverage],myDict[correctedKeyToBin])
-	myDict[keyToAverage] -= myCovLinear[1,0]*1.0/myCovLinear[1,1]*(myDict[correctedKeyToBin] - mean(myDict[correctedKeyToBin]))
-
+	#myDict[keyToAverage]-=mean(myDict[keyToAverage][myMask])	
+	#myCovLinear = cov(myDict[keyToAverage][myMask],myDict[correctedKeyToBin][myMask])
+	#myDict[keyToAverage] -= myCovLinear[1,0]*1.0/myCovLinear[1,1]*(myDict[correctedKeyToBin] - mean(myDict[correctedKeyToBin][myMask]))
 
 	#myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
-	myData = ftBinning(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+	myData = ftBinning(myDict,maskDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+
+	x,y,yN = myData[:3]
 
 	#pickle.dump(myDataDictionary, open(currentWorkingDirectory+"/binnedData/"+experimentRunName+".pkl", "wb"))
 	#temp = pickle.load(open(experimentRunName+".pkl","rb"))
+
 
 
 
