@@ -1,0 +1,62 @@
+[Onda]
+processing_layer = 'photofragmentation_process_collect'
+facility_layer = 'psana_master_worker'
+detector_layer = 'cspad_slac'
+required_data = ['timestamp', 'timetool_data', 'digitizer_data', 'digitizer2_data']
+
+[PsanaFacilityLayer]
+psana_calib_dir = '/reg/d/psdm/amo/amon2216/calib'
+timetool_epics_name = 'TTSPEC:FLTPOS_PS'
+timetool_amplitude_epics_name = 'TTSPEC:AMPL'
+digitizer_name = 'DetInfo(AmoEndstation.0:Acqiris.1)'
+digitizer2_name = 'DetInfo(AmoEndstation.0:Acqiris.4)'
+event_rejection_threshold = None
+
+[General]
+publish_ip = None
+publish_port = None
+speed_report_interval = 100
+accumulated_shots = 10
+peaks_to_send = '1,2'
+mcp_time_tool_bins = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+minimum_tof = 0
+running_peak_count_size = 500
+frame_sending_interval = 10
+num_time_bins = 70000
+bin_size_in_usec = 0.00025
+mcp_digitizer = 1
+mcp_channel = 4
+mcp_scale_factor = -1.0
+delayline_x1_digitizer = 1
+delayline_x1_channel = 0
+delayline_x2_digitizer = 1
+delayline_x2_channel = 1
+delayline_y1_digitizer = 1
+delayline_y1_channel = 2
+delayline_y2_digitizer = 1
+delayline_y2_channel = 3
+vmi_gating_low_tof = 7.57
+vmi_gating_high_tof = 7.61
+low_limit_vmi_calculation = -80.0
+high_limit_vmi_calculation = -30.0
+
+[FindMinimaInWaveforms]
+mcp_threshold = 0.00043
+estimated_mcp_noise_width = 10
+minimum_mcp_peak_width = 20
+delayline_threshold = 0.00043
+estimated_delayline_noise_width = 10
+minimum_delayline_peak_width = 30
+background_subtraction = True
+
+[DelaylineDetectorAnalysis]
+peak_search_delay = 120
+peak_search_tolerance = 1000
+peak_search_scaling_factor = 1
+min_sum_x = 520
+max_sum_x = 560
+min_sum_y = 555
+max_sum_y = 595
+max_radius = 1000000
+
+

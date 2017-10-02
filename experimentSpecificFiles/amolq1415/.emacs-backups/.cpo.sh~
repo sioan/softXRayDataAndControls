@@ -1,0 +1,11 @@
+## Add the number of cores and the host IPs in place of question marks in lines 9 and 10
+. /reg/g/cfel/onda/onda-20170713-photofragmentation/setup-bash-slac.sh
+#. setup-bash.sh
+echo Running `pwd`/monitor_wrapper.sh
+echo '#!/bin/bash' > `pwd`/monitor_wrapper.sh
+echo '# Auto-generated file from run_onda_photofragmentation_slac.sh' >> `pwd`/monitor_wrapper.sh
+echo '. /reg/g/cfel/onda/onda-20170713-photofragmentation/setup-bash-slac.sh' >> `pwd`/monitor_wrapper.sh
+echo python /reg/g/cfel/onda/onda-20170713-photofragmentation/onda.py 'shmem=psana.0:stop=no' >> `pwd`/monitor_wrapper.sh
+chmod +x `pwd`/monitor_wrapper.sh
+#`which mpirun` --map-by ppr:1:node --host daq-amo-mon02,daq-amo-mon03,daq-amo-mon04,daq-amo-mon05 `pwd`/monitor_wrapper.sh
+`which mpirun` --map-by ppr:1:node --host psanaphi108,psanaphi110  `pwd`/monitor_wrapper.sh

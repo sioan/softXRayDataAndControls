@@ -1,6 +1,0 @@
-screens are running off of psdev7a are ssh'd into daq-sxr-mon06 and sxr-console which running the shared memory monitoring numpy array transfer to sxr-console and is then caput into the notepad waveform PV
-
-can't ksu on host. screen's will get stuck on asking for login.  need to just ssh to username@psdev7a to run
-
-earlier in the day attempts to screen get killed when the host bash terminal is killed.
-didn't happen with these scripts
