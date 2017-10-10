@@ -1,0 +1,2 @@
+#!/bin/bash
+ipython /reg/neh/home/sioan/softXRayDataAndControls/myScripts/sendSshCommand.py -- "$@"

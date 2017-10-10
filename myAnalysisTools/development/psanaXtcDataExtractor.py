@@ -185,6 +185,7 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 			break
 		
 		for i in myDetectorObjectDictionary['analyzer']:
+			myDetectorObjectDictionary['self_name'] = i
 			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary,thisEvent)
 
 		for i in myDetectorObjectDictionary['summarizer']:

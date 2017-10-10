@@ -92,6 +92,16 @@ mcbrowne/bin/evr_new.sh SXR:USR:EVR
 ./acq_export -o SXR:TST:ACQ:01, Acq01,0		#gets psana data from shared memory. arguments are pv Name, psana detector name, and then acquiris channel
 ./acq_ioc SXR:TST ACQ:01,10000				#generates a waveform IOC  10000 units long
 
+
+#offline AMI
+/reg/g/pcds/dist/pds/ami-current/build/ami/bin/x86_64-linux-opt/offline_ami -p /reg/d/psdm/sxr/sxrcom11/xtc/
+https://confluence.slac.stanford.edu/display/PCDS/AMI+Online+Monitoring
+
+
+#Ray Rodriguez
+#technicians FAMIS
+https://slacspace.slac.stanford.edu/sites/xfd/xip/104_famis/pages/famis.aspx
+
 #calibmanager geometry file location
 CalibManager.GUIAlignment: command: geo -g /reg/d/psdm/sxr/sxrlq7615/calib/PNCCD::CalibV1/Camp.0:pnCCD.1/geometry/0-end.data -i /reg/g/psdm/detector/alignment/cspad/calib-cxi-ds1-2014-03-19/calib/../cspad-ndarr-ave-cxii0114-r0227.dat -L INFO
 
@@ -132,6 +142,7 @@ sudo netstat -lpn | less ### This provides psproc information, but for all proce
 
 #ioc log files
 /reg/d/iocData
+/reg/d/iocData/ioc-sxr-ppl-ims/autosave
 
 #edl edm screens embedded
 double click while in edit mode where there supposed to go. and then click on 3 dots by menu info
@@ -239,8 +250,11 @@ https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=195857401
 
 #location of amo epicsArch.txt
 #ini file contains names of PV's that are put into the DAQ
+/reg/g/pcds/dist/pds/amo/misc/epicsArch.txt
+#location of logbook.txt for user run table
 #DAQ partition contains check box that allow for these PVs to be included
-/reg/g/pcds/dist/pds/amo/misc
+
+
 
 #EPICS Archiver and tools to enter PVs.  Takes arguments in file format
 #with columns for PV, second between polls, and Channel Access mode(monitor)
