@@ -20,6 +20,8 @@ def sendSSHCommand(HOST,COMMAND):
 	mySshSubProcess = subprocess.Popen(commandString.split(" "),shell=False,stdout=subprocess.PIPE,stderr=subprocess.PIPE)		
 	myStdOut = mySshSubProcess.stdout
 	myStdErr = mySshSubProcess.stderr
+	
+	print commandString
 	for i in myStdOut:
 		print HOST+", "+i,
 
@@ -40,7 +42,7 @@ def main(myCommand):
 			continue
 		HOST = i[:-1]
 		COMMAND=myCommand
-		
+		#print HOST+", "+myCommand
 	
 
 		t = threading.Thread(target=sendSSHCommand,args=([HOST,COMMAND]))
@@ -54,7 +56,7 @@ if __name__ == '__main__':
 	print("checking screens")
 	myParser = argparse.ArgumentParser(description='checks if screens exist on hosts in config file')
 		
-	myParser.add_argument('-c command','--command',type=str, help='command to send')
+	myParser.add_argument('command',type=str, help='command to send')
 	#myParser.add_argument('-r','--run',type=int,help='the run number to use when running offline')
 
 	myArguments = myParser.parse_args()

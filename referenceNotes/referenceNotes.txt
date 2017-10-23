@@ -354,6 +354,11 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 #/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop this is also a lustre file system
 
 
+#xtc reader 
+alias xtcr='/reg/common/package/pdsdata/8.7.5/x86_64-linux-opt/bin/xtcreader -f'
+e.g.  [tjohnson@psanaphi109:/reg/d/psdm/mec/meclq8515/xtc]$ xtcr e1051-r0022-s02-c00.xtc | grep L1Accept
+
+
 #instructions for restarting the data mover
 https://confluence.slac.stanford.edu/display/PCDS/HTF:+data+mover#mvr-showprocs-1806847601
 mvr-showprocs requires a data-management env:
@@ -495,8 +500,9 @@ The only real trick I need to mention is the Andor camera still needs an AC adap
 sxr patch panel ethernet
 https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG5r0/edit#gid=2074785331
 
-#
+#this is the spec computer
 daq-sxd-spec couldn't boot.  using wrong redhat from diskless boot.  changed on pspxe
+ioc-sxd-spec
 
 amo-rga 
 netconfig search *rga for url and ip
@@ -557,6 +563,7 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 
 #newport laser motors
 #mcn-sxr-las2/ #don't forget the slash in the web browser.
+Administrator (copy paste)
 
 ################# usb debuggin
 https://wiki.kubuntu.org/Kernel/Debugging/USB
@@ -565,4 +572,7 @@ sudo cat /sys/kernel/debug/usb/usbmon/2u >bus2data.txt
 sudo cat /sys/kernel/debug/usb/usbmon/0u
 
 
-
+######################################
+It's only on pspuppet and must be run as root:
+/usr/bin/func-command
+see funcCommands.txt in reference notes folders for more details

@@ -1,0 +1,43 @@
+It's only on pspuppet and must be run as root:
+/usr/bin/func-command
+
+Just be very carful.  This is the best way to accidentally destroy our system.
+
+Example use:
+
+[root@pspuppet:~]# func-command psanaphi* 'hostname; uptime'
+psanaphi109.pcdsn:
+psanaphi109
+ 10:13:04 up 48 days, 12:35, 10 users,  load average: 0.21, 0.67, 0.52
+ 
+psanaphi105.pcdsn:
+psanaphi105
+ 10:13:04 up 12 days,  4:18, 13 users,  load average: 0.21, 0.20, 0.16
+ 
+psanaphi101.pcdsn:
+psanaphi101
+ 10:13:04 up 48 days, 12:35,  2 users,  load average: 1.01, 1.04, 1.05
+ 
+psanaphi104.pcdsn:
+psanaphi104
+ 10:13:04 up 48 days, 12:35,  2 users,  load average: 1.03, 1.03, 1.05
+ 
+psanaphi103.pcdsn:
+psanaphi103
+ 10:13:04 up 48 days, 12:35,  2 users,  load average: 1.00, 1.01, 1.05
+ 
+psanaphi110.pcdsn:
+psanaphi110
+ 10:13:04 up 48 days, 12:35,  0 users,  load average: 0.08, 0.08, 0.05
+ 
+psanaphi106.pcdsn:
+psanaphi106
+ 10:13:04 up 48 days, 12:35,  3 users,  load average: 1.06, 1.06, 1.05
+ 
+psanaphi108.pcdsn:
+psanaphi108
+ 10:13:04 up 48 days, 12:35,  7 users,  load average: 0.01, 0.06, 0.19
+ 
+psanaphi102.pcdsn:
+psanaphi102
+ 10:13:04 up 48 days, 12:35, 16 users,  load average: 0.11, 0.12, 0.13
