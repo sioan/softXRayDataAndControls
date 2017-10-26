@@ -144,7 +144,9 @@ if __name__ == '__main__':
 	myDict[keyToAverage] = myDict[keyToAverage][myMask]
 	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
 
-	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+	myBins = arange(min(myDict[correctedKeyToBin]),max(myDict[correctedKeyToBin]),0.1)
+	#myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=myBins,isLog=True)#fast for debugging
 
 	fileToExport = currentWorkingDirectory+"/binnedData/"+experimentRunName
 	pickle.dump(myDataDictionary, open(fileToExport+".pkl", "wb"))

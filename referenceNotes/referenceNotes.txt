@@ -576,3 +576,18 @@ sudo cat /sys/kernel/debug/usb/usbmon/0u
 It's only on pspuppet and must be run as root:
 /usr/bin/func-command
 see funcCommands.txt in reference notes folders for more details
+
+#sxrpython 
+/reg/g/pcds/pyps/sxr/dev/sxr/sxrpython.sh
+#and its motor configurations
+/reg/g/pcds/pyps/sxr/dev/sxr/sxrmotors.py
+
+###################################
+mb's px alias instructions
+in .bashrc 
+alias px='xauth list | grep `echo $DISPLAY | sed -e s/\.0\$// -e s@localhost@$HOSTNAME/unix@` | sed -e "s/^/xauth add /"'
+sudo bash 
+export HOME=/tmp
+xauth add daq-amo-acq01/unix:10  MIT-MAGIC-COOKIE-1  c0b4c91c57c889af2cdf6560f865d59c
+
+then get to use command

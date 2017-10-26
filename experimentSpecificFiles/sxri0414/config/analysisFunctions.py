@@ -2,7 +2,8 @@ from pylab import *
 import psana
 
 def genericReturn(detectorObject,thisEvent):
-	return detectorObject(thisEvent)
+	selfName = detectorObject['self_name']
+	return detectorObject[selfName](thisEvent)
 
 def genericSummaryZero(detectorObject,thisEvent,previousProcessing):
 	return 0
@@ -11,7 +12,8 @@ def myZeroReturn(detectorObject,thisEvent,previousProcessing):
 	return 0
 
 def getTimeToolData(detectorObject,thisEvent):
-	ttData = detectorObject.process(thisEvent)
+	selfName = detectorObject['self_name']
+	ttData = detectorObject[selfName].process(thisEvent)
 	myDict = {}	
 	if(ttData is None):
 		
@@ -29,8 +31,9 @@ def getTimeToolData(detectorObject,thisEvent):
 	return myDict
 
 def getPeak(detectorObject,thisEvent):
+	selfName = detectorObject['self_name']
 
-	myWaveForm = -detectorObject(thisEvent)[0][0]
+	myWaveForm = -detectorObject[selfName](thisEvent)[0][0]
 
 	myWaveForm -= mean(myWaveForm[:2500])
 
@@ -44,39 +47,50 @@ def getPeak(detectorObject,thisEvent):
 	return myMax	
 
 def accumulateAverageWave(detectorObject,thisEvent,previousProcessing):
+	selfName = detectorObject['self_name']
 
-	myWaveForm = -detectorObject(thisEvent)[0][0]
+	myWaveForm = -detectorObject[selfName](thisEvent)[0][0]
 	myWaveForm -= mean(myWaveForm[:2500])
 
 	return (previousProcessing+myWaveForm)
 
 def getWaveForm(detectorObject,thisEvent):
-	if (None not in [detectorObject(thisEvent)[0][0]]):
-		return detectorObject(thisEvent)[0][0]
+	selfName = detectorObject['self_name']
+
+	if (None not in [detectorObject[selfName](thisEvent)[0][0]]):
+		return detectorObject[selfName](thisEvent)[0][0]
 	else:	
 		return 0
 	
 def get(detectorObject,thisEvent):
-	if (None not in [detectorObject(thisEvent)]):
-		return detectorObject(thisEvent)
+	selfName = detectorObject['self_name']
+	
+	if (None not in [detectorObject[selfName](thisEvent)]):
+		return detectorObject[selfName](thisEvent)
 	else:
 		return 0
 
 def getRaw(detectorObject,thisEvent):
-	if (None not in [detectorObject(thisEvent)]):
-		return detectorObject(thisEvent)
+	selfName = detectorObject['self_name']
+
+	if (None not in [detectorObject[selfName](thisEvent)]):
+		return detectorObject[selfName](thisEvent)
 	else:
 		return 0
 
 def getGMD(detectorObject,thisEvent):
-	temp = detectorObject.get(thisEvent)
+	selfName = detectorObject['self_name']
+
+	temp = detectorObject[selfName].get(thisEvent)
 	if (None not in [temp]):
 		return temp.milliJoulesPerPulse()
 	else: 	
 		return 0
 
 def getEBeam(detectorObject,thisEvent):
-	temp = detectorObject.get(thisEvent)
+	selfName = detectorObject['self_name']
+
+	temp = detectorObject[selfName].get(thisEvent)
 	if(None not in [temp]):
 		return temp.ebeamPhotonEnergy()
 	else:

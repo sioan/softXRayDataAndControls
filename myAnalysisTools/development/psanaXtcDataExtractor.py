@@ -188,7 +188,9 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 			myDetectorObjectDictionary['self_name'] = i
 			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary,thisEvent)
 
+		del myDetectorObjectDictionary['self_name']
 		for i in myDetectorObjectDictionary['summarizer']:
+				myDetectorObjectDictionary['self_name'] = i
 				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary,thisEvent,summaryDataDictionary[i])
 
 		#for i in myDataDictionary:

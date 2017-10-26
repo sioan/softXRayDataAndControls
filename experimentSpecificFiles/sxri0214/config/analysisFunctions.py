@@ -1,59 +1,66 @@
 from pylab import *
 import psana
+import IPython
 
-def genericReturn(detectorObject,thisEvent):
-	return detectorObject(thisEvent)
+def integrateAcqiris(detectorObject,thisEvent):
+	myDict = {}
+	AcqAlias = detectorObject['self_name']	
+	y,x = detectorObject[AcqAlias](thisEvent)
+	
 
-def genericSummaryZero(detectorObject,thisEvent,previousProcessing):
-	return 0
-
-def myZeroReturn(detectorObject,thisEvent,previousProcessing):
-	return 0
-
-def getTimeToolData(detectorObject,thisEvent):
-	ttData = detectorObject.process(thisEvent)
-	myDict = {}	
-	if(ttData is None):
-		
-		myDict['amplitude'] = -99999
-		myDict['pixelTime'] = -99999
-		myDict['positionFWHM'] = -99999
-
-
+	if (None is y):
+		myDict['MCP'] = -99999
 	else:
-
-		myDict['amplitude'] = ttData.amplitude()
-		myDict['pixelTime'] = ttData.position_time()
-		myDict['positionFWHM'] = ttData.position_fwhm()
+		myDict['MCP'] = sum(y[0,4720:5220]-mean(y[0,0:4000]))
+				
+	
 
 	return myDict
 
 def chopperState(detectorObject,thisEvent):
 	myDict = {}
+	chopperAlias = detectorObject['self_name']
+	y,x = detectorObject[chopperAlias](thisEvent)
 
-	for i in arange(4):
-		myDict['CH'+str(i)] = -99999
-	if (None not in [detectorObject(thisEvent)[0][0]]):
-		for i in arange(4):
-			tempWaveform = detectorObject(thisEvent)[0][i]
-			myDict['CH'+str(i)] = mean(tempWaveform)
-		  
+	if (None is y):
+		myDict['chopperState']=-999999
+	else:
+		myDict['chopperState']= mean(y[0])	#justify with boiler plate view analysis. this is painful. how to streamline?
+		#idea: put a commented flag here that tells the "to be written" script to bring up data
+
 	return myDict
 
-
-def integrateAcqiris(detectorObject,thisEvent):
+def genericReturn(detectorObject,thisEvent):
 	myDict = {}
+	genericDetectorAlias = detectorObject['self_name']
+	genericValue = detectorObject[genericDetectorAlias](thisEvent)
+	
+	if(genericValue is None):
+		myDict[genericDetectorAlias] = -9999
+		
+	else:
+		myDict[genericDetectorAlias] = genericValue
 
-	myDict['scatterAPD'] = -99999
-	if (None not in [detectorObject(thisEvent)[0][0]]):
-		tempWaveform = detectorObject(thisEvent)[0][0]
-		myDict['scatterAPD'] = -(sum(tempWaveform[4000:18000] - mean(tempWaveform[0:3000])))
-		  
 	return myDict
+
+def getGMD(detectorObject, thisEvent):
+	myAlias = detectorObject['self_name']
+	temp = detectorObject[myAlias].get(thisEvent)
+	myGmdValue = temp.milliJoulesPerPulse()
+	myDict = {}
+	if(myGmdValue is None):
+		myDict['milliJoulesPerPulse'] = -99999
+	else:
+		myDict['milliJoulesPerPulse'] = myGmdValue
+
+	return myDict
+
 
 def getPeak(detectorObject,thisEvent):
 
-	myWaveForm = -detectorObject(thisEvent)[0][0]
+	selfName = detectorObject['self_name']
+
+	myWaveForm = -detectorObject[selfName](thisEvent)[0][0]
 
 	myWaveForm -= mean(myWaveForm[:2500])
 
@@ -68,14 +75,26 @@ def getPeak(detectorObject,thisEvent):
 
 def accumulateAverageWave(detectorObject,thisEvent,previousProcessing):
 
-	myWaveForm = -detectorObject(thisEvent)[0][0]
-	myWaveForm -= mean(myWaveForm)
+	selfName = detectorObject['self_name']
 
-	return (previousProcessing+myWaveForm)
+	#IPython.embed()
+
+	if(selfName not in previousProcessing):
+		previousProcessing[selfName]=0
+
+	myWaveForm = -detectorObject[selfName](thisEvent)[0][0]
+	myWaveForm -= mean(myWaveForm[:2500])
+
+	previousProcessing[selfName] = (previousProcessing[selfName]+myWaveForm)
+
+	return previousProcessing
 
 def getWaveForm(detectorObject,thisEvent):
-	if (None not in [detectorObject(thisEvent)[0][0]]):
-		return detectorObject(thisEvent)[0][0]
+
+	selfName = detectorObject['self_name']
+
+	if (None not in [detectorObject[selfName](thisEvent)[0][0]]):
+		return detectorObject[selfName](thisEvent)[0][0]
 	else:	
 		return 0
 	
@@ -91,12 +110,12 @@ def getRaw(detectorObject,thisEvent):
 	else:
 		return 0
 
-def getGMD(detectorObject,thisEvent):
-	temp = detectorObject.get(thisEvent)
-	if (None not in [temp]):
-		return temp.milliJoulesPerPulse()
-	else: 	
-		return 0
+#def getGMD(detectorObject,thisEvent):
+#	temp = detectorObject.get(thisEvent)
+#	if (None not in [temp]):
+#		return temp.milliJoulesPerPulse()
+#	else: 	
+#		return 0
 
 def getEBeam(detectorObject,thisEvent):
 	temp = detectorObject.get(thisEvent)
@@ -104,6 +123,5 @@ def getEBeam(detectorObject,thisEvent):
 		return temp.ebeamPhotonEnergy()
 	else:
 		return 0
-
 
 

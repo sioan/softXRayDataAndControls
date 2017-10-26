@@ -1,0 +1,41 @@
+ioan, yes sorry! run 149. typo. She had a few plots looking at it
+differently, but I believe that was the most promising.
+
+I would say slides 7,15, or 17? Red and blue are laser on and off (or
+maybe off and on).
+
+These plot the intensity of the APD, so taking the pulse and
+subtracting the background, etc. and plotting it with a motor that
+represents the angle theta of the sample. The motor pv name is in the
+attached screen shot, along with what it looked like on the on-line
+monitoring, in the top left panel (this also shows the acq channel
+trace).
+
+To get blue and red, both sets are in the same data file but a
+differentiated by a chopper. To get that info, to separate the blue
+from the red, the signal is fed into another acquiris, so for this, it
+is ACQ02, input 2. This gives you a 0 or 1, for laser on or off, well
+actually it is  0.04 or 0.31, but same idea. The output of that
+channel, should tell us if we have a laser hitting the sample or not.
+
+Thanks a lot,
+
+Josh
+
+Hi Josh,
+
+Just getting started on this. Few questions first.
+
+1) does "file 49" in the email below mean "run 149"?
+
+2) which graph (i.e. on what number slide) linked to in the email below best shows the difference between laser on and laser off?
+
+3) what are the label for the axes in that graph?
+
+Best,
+-s
+
+
+Sioan, here is the rough analysis that Libby has done for i0214. file
+49 was the one that got me interested in if we see a difference
+between laser on and laser off!
