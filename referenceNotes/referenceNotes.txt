@@ -591,3 +591,9 @@ export HOME=/tmp
 xauth add daq-amo-acq01/unix:10  MIT-MAGIC-COOKIE-1  c0b4c91c57c889af2cdf6560f865d59c
 
 then get to use command
+
+#jupyter slac. jupiter
+https://confluence.slac.stanford.edu/display/PSDM/JupyterHub?focusedCommentId=219253673#comment-219253673
+
+experiment life cycle
+https://docs.google.com/spreadsheets/d/1B7eZvlKy-Ni8iDpt6RJpKxMNuHWL6PE-55oq3ysy3Ns/edit#gid=1352203380

@@ -9,6 +9,7 @@ import os
 import math
 sys.path.append(os.curdir)
 from filterMasks import filterMasks
+from config.bin_configuration import bin_configuration 
 
 #--------------------------------------------------------------------------
 # File and Version Information:
@@ -115,10 +116,23 @@ if __name__ == '__main__':
 	h5FileName = sys.argv[1]
 	experimentRunName = h5FileName.split("/")[1][:-3]
 
-	f = h5py.File(currentWorkingDirectory+"/"+h5FileName,'r')
-	myDict= hdf5_to_dict(f)
-	f.close()
+	f = h5py.File(currentWorkingDirectory+"/"+h5FileName,'r+')
+	#myDict= hdf5_to_dict(f)
+	myDict=f
+	#f.close()
+	myBinConfig = bin_configuration()
 
+	keyToNormalize = myBinConfig.keyToNormalize
+	keyToNormalizeBy = myBinConfig.keyToNormalizeBy
+	keyToAverage = myBinConfig.keyToAverage
+	timeToolSign = myBinConfig.timeToolSign
+	
+	keyToBin = myBinConfig.keyToBin
+	correctedKeyToBin = myBinConfig.correctedKeyToBin
+
+
+
+	"""
 	keyToNormalize = 'acqiris2'
 	keyToNormalizeBy = 'GMD'
 	keyToAverage = 'normalizedAcqiris'
@@ -126,11 +140,13 @@ if __name__ == '__main__':
 	
 	keyToBin = 'delayStage'
 	correctedKeyToBin = 'estimatedTime'
+	"""
 	timeToolKeys = ['TSS_OPAL','pixelTime']
 
 	myMask =  filterMasks.__dict__[experimentRunName](myDict)
 
-	myDict[keyToAverage] = myDict[keyToNormalize]/(1e-11+myDict[keyToNormalizeBy])
+	#myDict.create_dataset(keyToAverage,dtype=float32) 
+	myDict[keyToAverage] = array(myDict[keyToNormalize])/(1e-11+array(myDict[keyToNormalizeBy]))
 
 	#time tool direction. need to abstract into config file. also, milimeter to picosecond correction
 	myOffset = min(myDict[keyToBin])

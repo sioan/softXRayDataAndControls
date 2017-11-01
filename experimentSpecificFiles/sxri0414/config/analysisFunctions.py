@@ -85,7 +85,7 @@ def getGMD(detectorObject,thisEvent):
 	if (None not in [temp]):
 		return temp.milliJoulesPerPulse()
 	else: 	
-		return 0
+		return 0.0
 
 def getEBeam(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
