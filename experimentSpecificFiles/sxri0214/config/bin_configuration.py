@@ -6,5 +6,7 @@ class bin_configuration():
 		self.keyToAverage = 'normalizedAcqiris'
 		self.timeToolSign = 1
 
-		self.keyToBin = 'thetareadback/thetareadback'
-		self.correctedKeyToBin = 'estimatedTime'
+		self.xAxis = 'thetareadback/thetareadback'
+		self.xAxisCorrected = 'thetareadback/thetareadback'
+
+		

@@ -185,10 +185,13 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 			break
 		
 		for i in myDetectorObjectDictionary['analyzer']:
-			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary[i],thisEvent)
+			myDetectorObjectDictionary['self_name'] = i
+			myDataDictionary[i] = myDetectorObjectDictionary['analyzer'][i](myDetectorObjectDictionary,thisEvent)
 
+		del myDetectorObjectDictionary['self_name']
 		for i in myDetectorObjectDictionary['summarizer']:
-				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary[i],thisEvent,summaryDataDictionary[i])
+				myDetectorObjectDictionary['self_name'] = i
+				summaryDataDictionary[i] = myDetectorObjectDictionary['summarizer'][i](myDetectorObjectDictionary,thisEvent,summaryDataDictionary[i])
 
 		#for i in myDataDictionary:
 		if any([None is myDataDictionary[k] for k in myDataDictionary]):
@@ -209,10 +212,10 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		#print("gathering dictionaries. rank = "+str(myRank))
 		gatheredSummary = myComm.gather(summaryDataDictionary,root=0)
 		if myRank==0:
-			print("merging dictionary. rank = " + str(myRank)+". gathered summary "+str(gatheredSummary)+" end of gathered summary.")
+			#print("merging dictionary. rank = " + str(myRank)+". gathered summary "+str(gatheredSummary)+" end of gathered summary.")
 			mergedGatheredSummary = merge_dicts(gatheredSummary)
-			print("Here's the merged dictionary")
-			print mergedGatheredSummary
+			#print("Here's the merged dictionary")
+			#print mergedGatheredSummary
 			print("end of merged dictionary")
 			smldata.save(mergedGatheredSummary)
 			#smldata.save()
@@ -226,7 +229,7 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 
 			
 		else:
-		   smldata.save()
+			smldata.save()
 
 
 	return

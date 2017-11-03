@@ -6,7 +6,7 @@ import subprocess
 import threading
 import argparse
 import socket
-import IPython
+#import IPython
 
 thisHost = socket.gethostname()
 
