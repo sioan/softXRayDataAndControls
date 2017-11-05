@@ -53,14 +53,17 @@ def sxri0414run79(myDict):
 	#myMask = myMask * (array(myDict['fiducials']%4==3)	#this has no effect on fourier components
 	myMask = myMask * (array(myDict['gas_detector']['f_11_ENRC'])>0.3)
 
-	startTime = 6075229887493736017
-	stopTime  = 6075229943926703401
+	#startTime = 6075229887493736017
+	#stopTime  = 6075229943926703401
 	
-	tempMask = array([ (i<startTime or i > stopTime) for i in myDict['event_time']])
+	#tempMask = array([ (i<startTime or i > stopTime) for i in myDict['event_time']])
 	#myMask = myMask * (array(myDict['event_time'])>6075229887493736017)
 	#myMask = myMask * (array(myDict['event_time'])<6075229943926703401)
 
-	myMask = myMask * tempMask
+	#myMask = myMask * (array(myDict['delayStage'])<51.0)
+	#myMask = myMask * (array(myDict['delayStage'])>49.4)
+
+	#myMask = myMask * tempMask
 	return myMask
 
 def sxri0414run72(myDict):

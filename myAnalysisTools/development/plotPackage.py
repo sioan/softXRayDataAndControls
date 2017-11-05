@@ -24,6 +24,12 @@ import pickle
 import os
 import sys
 from scipy.signal import savgol_coeffs
+import h5py
+from hdf5_to_dict import hdf5_to_dict
+from ConfigParser import ConfigParser
+config = ConfigParser()
+config.read('config/plotting.cfg')
+
 
 def errorWeightedSmoothing(myData,myError,myWidth,myOrder):
 	myWeights = savgol_coeffs(myWidth,myOrder,0)
@@ -48,39 +54,55 @@ sys.path.append("/reg/neh/home/sioan/softXRayDataAndControls/myAnalysisTools/")
 
 dataDirectory = os.getcwd()+"/binnedData/"
 
-myFiles = [ i for i in os.listdir(dataDirectory) if ".pkl" in i]
+myFiles = [ i for i in os.listdir(dataDirectory) if ".h5" in i]
 
 myDataDict = {}
 
 for i in myFiles:
-	myDataDict[i[:-4]] = pickle.load(open(dataDirectory+i,"rb"))
+	print i
+	#myDataDict[i[:-4]] = pickle.load(open(dataDirectory+i,"rb"))
+	myDataDict[i[:-3]] = hdf5_to_dict(h5py.File(dataDirectory+i,"r"))
 
 
-fig, axs = plt.subplots(nrows=1, ncols=1, sharex=True)
-#ax = axs[0,0]
-ax = axs
-ax.set_title('time resolved')
+config._sections
 
-normalizeY(myDataDict)
-myCounter = 0
-myColor=iter(cm.rainbow(np.linspace(0,1,len(myDataDict.keys()))))
+myFigureDictionary = {}
+
+for i in config._sections['figureList']:
+	if i=="__name__": continue
+	print i
+
+	myFigureDictionary[i] = {}
+
+	myFigureDictionary[i]['fig'], myFigureDictionary[i]['axs'] = plt.subplots(nrows=1, ncols=1, sharex=True)
+	myFigureDictionary[i]['axs'].set_title('time resolved')
+
+	normalizeY(myDataDict)
+	myCounter = 0
+	myFigureDictionary[i]['myColor']=iter(cm.rainbow(np.linspace(0,1,len(myDataDict.keys()))))
+
 
 for i in myDataDict:
 
-	thisColor = next(myColor) 
+	figureNumber = config._sections[i]['figurenumber']
 
-	x = -myDataDict[i]['x']
+	thisColor = next(myFigureDictionary[figureNumber]['myColor']) 
+
+	x = myDataDict[i]['x']
+	x-=max(x)
+	x*=-1
+	
 	y = myDataDict[i]['yMean']-myCounter*75
 	yErrorBars = myDataDict[i]['standardDeviation']/myDataDict[i]['counts']**0.5
 	ySmoothed = errorWeightedSmoothing(y,yErrorBars,29,3)
 		
 
-	ax.errorbar(x,y,yerr=yErrorBars,label=i,marker='o',linestyle='None')
-	plot(x,ySmoothed[0],linewidth=4,c='k',linestyle='-')
+	myFigureDictionary[figureNumber]['axs'].errorbar(x,y,yerr=yErrorBars,label=i,marker='o',linestyle='None')
+	myFigureDictionary[figureNumber]['axs'].plot(x,ySmoothed[0],linewidth=4,c='k',linestyle='-')
 	myCounter+=1
 
-ax.set_xlabel('time(ps)')
-ax.set_ylabel('normalized acqiris')
-legend(myDataDict.keys(),loc=0)
+#ax.set_xlabel('time(ps)')
+#ax.set_ylabel('normalized acqiris')
+#legend(myDataDict.keys(),loc=0)
 
 show()

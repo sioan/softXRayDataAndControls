@@ -353,6 +353,9 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 #/reg/d/ffb/sxr/sxrx22915/xtc/	#intermidate this is a lustre file system
 #/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop this is also a lustre file system
 
+streams=0-79
+to get rid of iocrecorders from daq.
+
 
 #xtc reader 
 alias xtcr='/reg/common/package/pdsdata/8.7.5/x86_64-linux-opt/bin/xtcreader -f'

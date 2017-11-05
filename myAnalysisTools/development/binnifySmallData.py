@@ -9,6 +9,7 @@ import os
 import math
 sys.path.append(os.curdir)
 from filterMasks import filterMasks
+from hdf5_to_dict import hdf5_to_dict
 from config.bin_configuration import bin_configuration
 
 #--------------------------------------------------------------------------
@@ -31,18 +32,7 @@ from config.bin_configuration import bin_configuration
 #In depth description
 #====================
 
-def hdf5_to_dict(myhdf5Object):
-	replacementDictionary = {}
-	myList = []
-	myhdf5Object.visit(myList.append)
-	for i in myList:
-		try:
-			replacementDictionary[i] = array(myhdf5Object[i])
-		except:
-			pass
-		
 
-	return replacementDictionary
 
 #to do list
 #1) separate out mask section into directory and files. 
@@ -99,11 +89,11 @@ def basicHistogram(myDict,keyToAverage,xAxis,bins,isLog):#fast for debugging
 
 	return myDataDictionary
 
-makeGraphableData(unBinnedDataDictionary,instructionObject):
+def makeGraphableData(unBinnedDataDictionary,instructionObject):
 	#instructionObject has the mode. raw binning, correlation, saturated correction correlation
 
 	#instantiation
-	unBinnedDataDictionary[''] = 
+	unBinnedDataDictionary[''] = 0
 
 	
 	graphableDataObject['x'] = xDataBinned

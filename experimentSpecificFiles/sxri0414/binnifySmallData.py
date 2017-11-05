@@ -1,4 +1,4 @@
-#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
+#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/ipython -i
 from pylab import *
 from scipy.interpolate import interp1d
 import h5py
@@ -144,7 +144,7 @@ if __name__ == '__main__':
 	myDict[keyToAverage] = myDict[keyToAverage][myMask]
 	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
 
-	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(-5.0,26,.1),isLog=True)#fast for debugging
 
 	fileToExport = currentWorkingDirectory+"/binnedData/"+experimentRunName
 	pickle.dump(myDataDictionary, open(fileToExport+".pkl", "wb"))

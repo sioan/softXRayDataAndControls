@@ -1,4 +1,4 @@
-#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/python
+#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/ipython -i
 from pylab import *
 from scipy.interpolate import interp1d
 import h5py
@@ -9,6 +9,9 @@ import os
 import math
 sys.path.append(os.curdir)
 from filterMasks import filterMasks
+import IPython
+from binnifySmallData import basicHistogram
+from binnifySmallData import hdf5_to_dict
 
 #--------------------------------------------------------------------------
 # File and Version Information:
@@ -32,24 +35,6 @@ from filterMasks import filterMasks
 
 
 
-def hdf5_to_dict(myhdf5Object):
-	replacementDictionary = {}
-	for i in myhdf5Object:
-		#print(str(myhdf5Object[i]))
-		if ('dataset' in str(myhdf5Object[i])):
-			#print("dataset is in"+str(myhdf5Object[i]))
-			if ('Summarized' not in str(myhdf5Object[i])):
-				replacementDictionary[i] = nan_to_num(myhdf5Object[i])
-			else:
-				x=1	
-		else:
-			replacementDictionary[i] = {}
-			#print("dataset is not in"+str(myhdf5Object[i]))
-			#print(i)
-			replacementDictionary[i] = hdf5_to_dict(myhdf5Object[i])
-
-	return replacementDictionary
-
 
 #to do list
 #1) separate out mask section into directory and files. 
@@ -66,7 +51,7 @@ def removeNans(myDict):
 
 	return myDict
 
-def ftBinning(myDict,keyToAverage,keyToBin,bins,isLog):
+def ftBinning(myDict,keyToAverage,keyToBin,isLog):
 	tPi = 2 * 3.14159
 	
 	myList = array([myDict[keyToBin],myDict[keyToAverage]]).transpose()
@@ -107,45 +92,7 @@ def ftBinning(myDict,keyToAverage,keyToBin,bins,isLog):
 #plot(myData[0],(abs(array(myData[1]))),'.')
 
 
-def basicHistogram(myDict,keyToAverage,keyToBin,bins,isLog):#fast for debugging
 
-	myDataDictionary = {}
-
-	if(isLog):
-		myDataDictionary['x'] = bins[:-1]
-		myDataDictionary['counts'] = histogram(myDict[keyToBin],bins)[0]
-
-		myDataDictionary['yMean'] = histogram(myDict[keyToBin],bins,weights = log(myDict[keyToAverage]))[0]
-		myDataDictionary['yMean']/= myDataDictionary['counts']
-		
-		myDataDictionary['y2ndMoment'] = histogram(myDict[keyToBin],bins,weights = log(myDict[keyToAverage])**2)[0]
-		myDataDictionary['y2ndMoment']/= myDataDictionary['counts']
-
-		myDataDictionary['standardDeviation'] = (myDataDictionary['y2ndMoment']-myDataDictionary['yMean'])**0.5
-		myDataDictionary['standardDeviation'] = exp(myDataDictionary['standardDeviation'])
-
-		myDataDictionary['yMean'] = exp(myDataDictionary['yMean'])
-
-		#myDataDictionary['yMean'] = exp(myDataDictionary['yMean'])
-		#myDataDictionary['standardDeviation'] = exp(myDataDictionary['standardDeviation'])
-	
-	else:
-		myDataDictionary['x'] = bins[:-1]
-		myDataDictionary['counts'] = histogram(myDict[keyToBin],bins)[0]
-
-		myDataDictionary['yMean'] = histogram(myDict[keyToBin],bins,weights = myDict[keyToAverage])[0]
-		myDataDictionary['yMean']/= myDataDictionary['counts']
-	
-		myDataDictionary['y2ndMoment'] = histogram(myDict[keyToBin],bins,weights = myDict[keyToAverage]**2)[0]
-		myDataDictionary['y2ndMoment']/= myDataDictionary['counts']
-
-		myDataDictionary['standardDeviation'] = (myDataDictionary['y2ndMoment']-myDataDictionary['yMean'])**0.5
-
-	del myDataDictionary['y2ndMoment']
-
-	myDataDictionary = removeNans(myDataDictionary)
-
-	return myDataDictionary
 
 if __name__ == '__main__':
 	
@@ -173,12 +120,14 @@ if __name__ == '__main__':
 
 	myDict[keyToAverage] = myDict[keyToNormalize]/(1e-11+myDict[keyToNormalizeBy])
 
+	#IPython.embed()
+
 	#time tool direction. need to abstract into config file. also, milimeter to picosecond correction
 	myOffset = min(myDict[keyToBin])
 	myDict[correctedKeyToBin] = (2/.3*(myDict[keyToBin]-myOffset)+timeToolSign*myDict['TSS_OPAL']['pixelTime']/1000.0)	
 
-	#removing pre laser shot
-	laserMask = myDict[correctedKeyToBin] < 12.4
+	#removing pre laser shot. correct for run 79.  should abstract into config for all data sets. (< 12.4 for runs 63 and 60)
+	laserMask = myDict[correctedKeyToBin] > 9.65
 	myMask *= laserMask 
 
 	#adding sanity check reference oscillation
@@ -188,14 +137,17 @@ if __name__ == '__main__':
 	myDict[keyToAverage] = myDict[keyToAverage][myMask]
 	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
 
+	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(-3.5,24,.1),isLog=True)#fast for debugging
+	#IPython.embed()
+
+
 	#subtract off linear trend and offset	
 	myDict[keyToAverage]-=mean(myDict[keyToAverage])	
 	myCovLinear = cov(myDict[keyToAverage],myDict[correctedKeyToBin])
 	myDict[keyToAverage] -= myCovLinear[1,0]*1.0/myCovLinear[1,1]*(myDict[correctedKeyToBin] - mean(myDict[correctedKeyToBin]))
 
-
-	#myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
-	myData = ftBinning(myDict,keyToAverage,correctedKeyToBin,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
+	
+	myData = ftBinning(myDict,keyToAverage,correctedKeyToBin,isLog=True)#fast for debugging
 
 	#pickle.dump(myDataDictionary, open(currentWorkingDirectory+"/binnedData/"+experimentRunName+".pkl", "wb"))
 	#temp = pickle.load(open(experimentRunName+".pkl","rb"))

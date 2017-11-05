@@ -1,0 +1,81 @@
+[figureList]
+figure0=figure0
+figure1=figure1
+
+[figure0]
+xLabel = time(ps)
+yLabel = normalized acqiris
+
+[figure1]
+xLabel = time(ps)
+yLabel = normalized acqiris
+
+[sxri0414run60]
+figureNumber = figure0
+color = 'r'
+marker='o',
+linestyle='None'
+
+[sxri0414run63]
+figureNumber = figure0
+color = 'b'
+marker='o',
+linestyle='None'
+
+[sxri0414run79]
+figureNumber = figure0
+color = 'g'
+marker='o',
+linestyle='None'
+
+[sxri0414run72]
+figureNumber = figure1
+color = 'r'
+marker='o',
+linestyle='None'
+
+[sxri0414run81]
+figureNumber = figure1
+color = 'b'
+marker='o',
+linestyle='None'
+
+[sxri0414run60fit]
+figureNumber = figure0
+color = 'k'
+linewidth = 4
+marker='None',
+linewidth=4,
+linestyle='-'
+
+[sxri0414run63fit]
+figureNumber = figure0
+color = 'k'
+linewidth = 4
+marker='None',
+linewidth=4,
+linestyle='-'
+
+[sxri0414run79fit]
+figureNumber = figure0
+color = 'k'
+linewidth = 4
+marker='None',
+linewidth=4,
+linestyle='-'
+
+[sxri0414run72fit]
+figureNumber = figure1
+color = 'k'
+linewidth = 4
+marker='None',
+linewidth=4,
+linestyle='-'
+
+[sxri0414run81fit]
+figureNumber = figure1
+color = 'k'
+linewidth = 4
+marker='None',
+linewidth=4,
+linestyle='-'
