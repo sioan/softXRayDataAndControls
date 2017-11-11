@@ -231,7 +231,7 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		else:
 			smldata.save()
 
-
+	smldata.close()
 	return
 
 #resulting dictionary tree works well enough. need to streamline.

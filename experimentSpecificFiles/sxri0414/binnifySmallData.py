@@ -1,4 +1,4 @@
-#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/ipython -i
+#!/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.9/bin/ipython
 from pylab import *
 from scipy.interpolate import interp1d
 import h5py
@@ -98,7 +98,7 @@ def basicHistogram(myDict,keyToAverage,keyToBin,bins,isLog):#fast for debugging
 		myDataDictionary['y2ndMoment'] = histogram(myDict[keyToBin],bins,weights = myDict[keyToAverage]**2)[0]
 		myDataDictionary['y2ndMoment']/= myDataDictionary['counts']
 
-		myDataDictionary['standardDeviation'] = (myDataDictionary['y2ndMoment']-myDataDictionary['yMean'])**0.5
+		myDataDictionary['standardDeviation'] = (myDataDictionary['y2ndMoment']-myDataDictionary['yMean']**2)**0.5
 
 	del myDataDictionary['y2ndMoment']
 
@@ -113,6 +113,7 @@ if __name__ == '__main__':
 	currentWorkingDirectory = os.getcwd()
 
 	h5FileName = sys.argv[1]
+	logFlag = sys.argv[2]=="logOn"
 	experimentRunName = h5FileName.split("/")[1][:-3]
 
 	f = h5py.File(currentWorkingDirectory+"/"+h5FileName,'r')
@@ -144,7 +145,7 @@ if __name__ == '__main__':
 	myDict[keyToAverage] = myDict[keyToAverage][myMask]
 	myDict[correctedKeyToBin] = myDict[correctedKeyToBin][myMask]
 
-	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(-5.0,26,.1),isLog=True)#fast for debugging
+	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedKeyToBin,bins=arange(-5.0,26,.1),isLog=logFlag)#fast for debugging
 
 	fileToExport = currentWorkingDirectory+"/binnedData/"+experimentRunName
 	pickle.dump(myDataDictionary, open(fileToExport+".pkl", "wb"))

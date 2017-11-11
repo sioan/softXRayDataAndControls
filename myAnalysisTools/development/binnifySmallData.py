@@ -7,10 +7,12 @@ from scipy.optimize import curve_fit
 import pickle
 import os
 import math
+import IPython
 sys.path.append(os.curdir)
 from filterMasks import filterMasks
 from hdf5_to_dict import hdf5_to_dict
 from config.bin_configuration import bin_configuration
+
 
 #--------------------------------------------------------------------------
 # File and Version Information:
@@ -38,6 +40,14 @@ from config.bin_configuration import bin_configuration
 #1) separate out mask section into directory and files. 
 #2) add arg parser to go over battery of analysis and specified files. need to use the @ trick to get the interactive to work
 #3) rolling statistics takes too long. how to speed up?
+
+#y0 is normalization. parameters aren't correct yet
+def regressionBasedI0Normalization(myDict,xAxis,y,y0,normalizationFunction):
+
+	
+
+	myBinnedData = [normalizationFunction(y[i],y0[i],normalizationFunction for i in )]
+	
 
 def removeNans(myDict):
 	notNanMask = True
@@ -152,13 +162,15 @@ def main(h5FileName):
 	myDataDictionary = basicHistogram(myDict,keyToAverage,correctedxAxis,bins=arange(0.5,21,.1),isLog=True)#fast for debugging
 
 	fileToExport = currentWorkingDirectory+"/binnedData/"+experimentRunName
-	pickle.dump(myDataDictionary, open(fileToExport+".pkl", "wb"))
+	#pickle.dump(myDataDictionary, open(fileToExport+".pkl", "wb"))
 	
-	exportData = h5py.File(fileToExport+'.h5', 'w')	
-	for i in myDataDictionary:
-		exportData.create_dataset(i, data=myDataDictionary[i], chunks=True, maxshape=(None,))
+	#while testing so not overwriting old data
+	#exportData = h5py.File(fileToExport+'.h5', 'w')	
+	#for i in myDataDictionary:
+	#	exportData.create_dataset(i, data=myDataDictionary[i], chunks=True, maxshape=(None,))
 
 	#temp = pickle.load(open(experimentRunName+".pkl","rb"))
+	IPython.embed()
 
 if __name__ == '__main__':
 	myParser = argparse.ArgumentParser(description='Abstracts data analysis into user functions')
