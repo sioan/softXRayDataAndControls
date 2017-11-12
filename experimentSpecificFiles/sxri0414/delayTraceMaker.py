@@ -157,7 +157,7 @@ for i in arange(1,100,preLaser):
 
 #myWienerFilter = 1.0/(1+100*myNoiseSpectrum)
 transferSpectrum = 1
-myWienerFilter = transferSpectrum/(transferSpectrum+250*myNoiseSpectrum)
+myWienerFilter = transferSpectrum/(transferSpectrum+250*myNoiseSpectrum)# the myNoiseSpectrum coefficient is arbitrary. how to choose in physically meaningful way?
 
 #wienerFilteredSignal = real(ifft(myWienerFilter*fft(myDelayTrace[:,0])))
 #error weighted wiener filter

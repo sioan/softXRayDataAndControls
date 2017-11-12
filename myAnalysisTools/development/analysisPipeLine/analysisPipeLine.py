@@ -35,15 +35,32 @@ class makeAnalysisPipeLineInstance():
 	#members
 	def __init__(self,pipeLineAlias):
 		self.pipeLineAlias = pipeLineAlias
-		self.collectionOfAnalysisSteps = {}
+		self.collectionOfAnalysisSteps = {}	#e.g. load data, normalize x by y, bins along z,
 		self.collectionOfAnalysisResults = {}
+		self.collectionOfDisplayConfigurations = {}
 		self.orderOfAnalyses = [] #(this should always have all the keys from collection of analysis steps)
+		
+		#destinationList will be used to indicate which function should use which data. The dict key is the data source and the entry is the destination. 
+		#can be used to fork. but multiple function calls can't be duplicated unless they have aliases. is this problem present regardless?
+		#Thoughts for later.  Instead of a collectionOfAnalysisSteps, have a layer of analyses. Layer1, Layer2, Layer3.  each Layer has inputs 
+		#This could be visualized by an overlay architecture this would be better described by a controls diagram.
+		self.destinationList = {} 
+		
 
 	#methods
-	def insert_analysis_step(self,nameOfNewStep,functionItShouldComeAfter):
+	def insert_analysis_step(self,nameOfNewStep,placeToInsert):
+		
+		
+
 		return 0
 
 	def remove_analysis_step(self,analysis_alias):
+		if(analysis_alias in self.collectionOfAnalysisSteps):
+			del self.collectionOfAnalysisSteps[analysis_alias]
+		if(analysis_alias in self.collectionOfAnalysisResults):
+			del self.collectionOfAnalysisResults[analysis_alias]
+
+		self.orderOfAnalyses = [i for i in self.orderOfAnalyses if i != analysis_alias]
 		return 0
 
 	def append_analysis_step(self,analysis_function,analysis_alias):
@@ -51,17 +68,20 @@ class makeAnalysisPipeLineInstance():
 		self.orderOfAnalyses.append(analysis_alias)
 		return 0
 
-	def execute_analysis(initial_input):
+	def execute_analysis(self,initial_input):
 
-		self.collectionOfAnalysisResults[0] = self.collectionOfAnalysisSteps[0](initial_input)
+		firstAnalysisStep = self.orderOfAnalyses[0]
+		self.collectionOfAnalysisResults[firstAnalysisStep] = self.collectionOfAnalysisSteps[firstAnalysisStep](initial_input)
+		print("executing step "+firstAnalysisStep)
 
 		for i in range(1,len(self.orderOfAnalyses)):
-			previousAnalysisStep, currentAnalysisStep = collectionOfAnalysisSteps[i-1], collectionOfAnalysisSteps[i]
+			previousAnalysisStep, currentAnalysisStep = self.orderOfAnalyses[i-1], self.orderOfAnalyses[i]
 			previousResult = self.collectionOfAnalysisResults[previousAnalysisStep]
 			print("executing step "+currentAnalysisStep)
 			self.collectionOfAnalysisResults[currentAnalysisStep] = self.collectionOfAnalysisSteps[currentAnalysisStep](previousResult) 
 
-
+	def displayDataSummary():
+		return 0
 #collectionOfAnaysisPipelines = {}
 #collectionOfAnaysisPipelines['first_try'] = makeAnalysisPipeLineInstance
 #display and compare collectionOfAnaysisPipelines['first_try'].collectionOfAnalysisResults
