@@ -7,10 +7,11 @@ from hdf5_to_dict import hdf5_to_dict
 from filterMasks import filterMasks
 from scipy.optimize import curve_fit
 from plotPackage import errorWeightedSmoothing
+from scipy.interpolate import interp1d
 #fit's data to log
 
 #load data
-experimentRunName = "sxri0414run72"
+experimentRunName = "sxri0414run81"
 myFile = experimentRunName+".h5"
 myHdf5Object = h5py.File("smallHdf5Data/"+myFile)
 myDataDict = hdf5_to_dict(myHdf5Object)
@@ -21,6 +22,7 @@ myMask =  filterMasks.__dict__[experimentRunName](myHdf5Object)
 #make I vs I0 calibration
 xScatter = myDataDict['GMD'][myMask]
 yScatter = myDataDict['acqiris2'][myMask]
+energyScatter = myDataDict['ebeam/photon_energy'][myMask]
 maxXScatter = max(xScatter)
 myBins = arange(0,maxXScatter,0.000010)
 y,x = histogram(xScatter,myBins,weights = yScatter )
@@ -29,15 +31,14 @@ y/=(histogram(xScatter,myBins)[0])+1e-9
 x = x[nonZeroMask]
 y = y[nonZeroMask]
 #myFit = polyfit(x,y,4)
-myFit = polyfit(append(x,zeros(1e6)),append(y,zeros(1e6)),4)
+myFit = polyfit(append(x,zeros(1e6)),append(y,zeros(1e6)),1)
 p = poly1d(myFit)
-
 #correct the time
 timeToolSign = 1
 myOffset = min(myDataDict['delayStage'])
 
-#myDataDict['TSS_OPAL/pixelTime'] = append(0,myDataDict['TSS_OPAL/pixelTime'])[:1]
-myDataDict['TSS_OPAL/pixelTime'] = append(myDataDict['TSS_OPAL/pixelTime'],[0])[1:]
+#myDataDict['TSS_OPAL/pixelTime'] = append(0,myDataDict['TSS_OPAL/pixelTime'])[:-1]
+#myDataDict['TSS_OPAL/pixelTime'] = append(myDataDict['TSS_OPAL/pixelTime'],[0])[1:]
 correctedTimeScatter = (2/.3*(myDataDict['delayStage']-myOffset)+timeToolSign*myDataDict['TSS_OPAL/pixelTime']/1000.0)[myMask]
 #correctedTimeScatter -= min(correctedTimeScatter)
 figure(0)
@@ -47,7 +48,36 @@ plot(x,p(x),linewidth=3)
 def func(x,a):
 	return p(a*x)
 
-#def fitMyData(xdata,ydata):
+def getPhotonEnergyCalibration(startEnergy,stopEnergy,stepEnergy):
+	
+	#startEnergy,stopEnergy,stepEnergy = 911,918,0.4
+	myBins = arange(startEnergy,stopEnergy,stepEnergy)
+
+	toReturn = [0,0]
+	for i in myBins:
+		#print i
+		tempMask = 0+myMask
+		tempMask *= myDataDict['ebeam/photon_energy']>i
+		tempMask *= myDataDict['ebeam/photon_energy']<(i+stepEnergy)
+		tempMask = tempMask.astype(bool)
+
+		#IPython.embed()
+
+		x =  myDataDict['GMD'][tempMask]
+		y =  myDataDict['acqiris2'][tempMask]
+
+		myCov = cov(x,y)
+		
+
+		toReturn = vstack([toReturn,[i,myCov[0,1]/myCov[0,0]]])
+
+	return toReturn[1:].transpose()
+
+#temp = getPhotonEnergyCalibration(913,923,0.4)
+temp = getPhotonEnergyCalibration(910,918,0.4)
+myInterpolatedCalibration = interp1d(temp[0],temp[1],kind='linear',bounds_error=False,fill_value='extrapolate')
+
+
 def fitMyData(binStart,binEnd):
 
 	binStep = binEnd-binStart
@@ -56,11 +86,15 @@ def fitMyData(binStart,binEnd):
 	xdata = xScatter[timeMask]
 	ydata = yScatter[timeMask]
 	tdata = correctedTimeScatter[timeMask]
+	edata = energyScatter[timeMask]
+	
+	#energy calibration
+	#ydata = ydata/(myInterpolatedCalibration(913)/myInterpolatedCalibration(edata))
 
 	myLength = len(ydata)
 	#remove outliers
 	#outlier threshold is 20%
-	threshold = 0.1/4
+	threshold = 0.40/4
 	try:
 		#threshold = 10.0/(myLength)
 		temp=1
@@ -94,7 +128,7 @@ def fitMyData(binStart,binEnd):
 
 #binSize = 0.15
 binStart= -25.00
-binSize = 0.05
+binSize = 0.075
 myBins = arange(binStart,45,binSize)
 myDelayTrace = array([fitMyData(i,i+binSize) for i in myBins])
 
@@ -112,7 +146,7 @@ errorbar(myBins,myDelayTrace[:,0],yerr=myDelayTrace[:,1])
 errorbar(myBins,ySmoothed[0],ySmoothed[1],c='k')
 
 
-preLaser = 10
+preLaser = 7
 mySize = myDelayTrace.shape[0]
 myNoiseSpectrum = zeros(mySize)
 #print len(myNoiseSpectrum)
@@ -121,13 +155,28 @@ for i in arange(1,100,preLaser):
 	myNoiseSpectrum += abs(fft(noiseTrace))**2
 
 
-myWienerFilter = 1.0/(1+100*myNoiseSpectrum)
+#myWienerFilter = 1.0/(1+100*myNoiseSpectrum)
+transferSpectrum = 1
+myWienerFilter = transferSpectrum/(transferSpectrum+250*myNoiseSpectrum)
 
 #wienerFilteredSignal = real(ifft(myWienerFilter*fft(myDelayTrace[:,0])))
 #error weighted wiener filter
-wienerFilteredSignal = convolve(real(ifft(myWienerFilter))[:20],myDelayTrace[:,1]*myDelayTrace[:,0],mode='Same')
-wienerFilteredSignal /= convolve(real(ifft(myWienerFilter))[:20],myDelayTrace[:,1],mode='Same')
+wienerFilteredSignal = convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2*myDelayTrace[:,0],mode='Same')
+wienerFilteredSignal /= convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same')
+wienerFilterErrorBars = 1.0/(convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same'))
+
+#while testing so not overwriting old data
+#exportData = h5py.File('temp.h5', 'w')	
+
+#exportData.create_dataset("time_ps", data=myBins, chunks=True, maxshape=(None,))
+#exportData.create_dataset("normalized_intensity", data=myDelayTrace[:,0], chunks=True, maxshape=(None,))
+#exportData.create_dataset("normalized_intensity_error", data=myDelayTrace[:,1], chunks=True, maxshape=(None,))
+#exportData.create_dataset("wiener_filtered_signal", data=wienerFilteredSignal, chunks=True, maxshape=(None,))
+#exportData.create_dataset("wiener_filtered_error", data=wienerFilterErrorBars, chunks=True, maxshape=(None,))
+#exportData.close()
+
 
 figure(2)
-plot(myBins,wienerFilteredSignal)
+errorbar(myBins,wienerFilteredSignal+0.02,wienerFilterErrorBars)
+#plot(myBins,wienerFilteredSignal)
 show()

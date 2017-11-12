@@ -12,7 +12,7 @@ from plotPackage import errorWeightedSmoothing
 #load data
 experimentRunName = "sxri0414run72"
 myFile = experimentRunName+".h5"
-myHdf5Object = h5py.File("smallHdf5Data/"+myFile)
+myHdf5Object = h5py.File("../smallHdf5Data/"+myFile)
 myDataDict = hdf5_to_dict(myHdf5Object)
 
 #createFilter filter
@@ -36,7 +36,7 @@ p = poly1d(myFit)
 timeToolSign = 1
 myOffset = min(myDataDict['delayStage'])
 
-#myDataDict['TSS_OPAL/pixelTime'] = append(0,myDataDict['TSS_OPAL/pixelTime'])[:1]
+#myDataDict['TSS_OPAL/pixelTime'] = append(0,myDataDict['TSS_OPAL/pixelTime'])[:-1]
 myDataDict['TSS_OPAL/pixelTime'] = append(myDataDict['TSS_OPAL/pixelTime'],[0])[1:]
 correctedTimeScatter = (2/.3*(myDataDict['delayStage']-myOffset)+timeToolSign*myDataDict['TSS_OPAL/pixelTime']/1000.0)[myMask]
 #correctedTimeScatter -= min(correctedTimeScatter)
@@ -60,7 +60,7 @@ def fitMyData(binStart,binEnd):
 	myLength = len(ydata)
 	#remove outliers
 	#outlier threshold is 20%
-	threshold = 0.1/4
+	threshold = 0.40/4
 	try:
 		#threshold = 10.0/(myLength)
 		temp=1
@@ -125,9 +125,22 @@ myWienerFilter = 1.0/(1+100*myNoiseSpectrum)
 
 #wienerFilteredSignal = real(ifft(myWienerFilter*fft(myDelayTrace[:,0])))
 #error weighted wiener filter
-wienerFilteredSignal = convolve(real(ifft(myWienerFilter))[:20],myDelayTrace[:,1]*myDelayTrace[:,0],mode='Same')
-wienerFilteredSignal /= convolve(real(ifft(myWienerFilter))[:20],myDelayTrace[:,1],mode='Same')
+wienerFilteredSignal = convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2*myDelayTrace[:,0],mode='Same')
+wienerFilteredSignal /= convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same')
+wienerFilterErrorBars = 1.0/(convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same'))
+
+#while testing so not overwriting old data
+exportData = h5py.File('temp.h5', 'w')	
+
+exportData.create_dataset("time_ps", data=myBins, chunks=True, maxshape=(None,))
+exportData.create_dataset("normalized_intensity", data=myDelayTrace[:,0], chunks=True, maxshape=(None,))
+exportData.create_dataset("normalized_intensity_error", data=myDelayTrace[:,1], chunks=True, maxshape=(None,))
+exportData.create_dataset("wiener_filtered_signal", data=wienerFilteredSignal, chunks=True, maxshape=(None,))
+exportData.create_dataset("wiener_filtered_error", data=wienerFilterErrorBars, chunks=True, maxshape=(None,))
+exportData.close()
+
 
 figure(2)
+#errorbar(myBins,wienerFilteredSignal,wienerFilterErrorBars)
 plot(myBins,wienerFilteredSignal)
 show()
