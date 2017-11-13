@@ -136,8 +136,8 @@ def fitMyData(binStart,binEnd):
 	return popt[0],pcov[0][0]*len(tdata)**0.5
 
 #binSize = 0.15
-binStart= -25.20
-binSize = 0.07
+binStart= -25.15
+binSize = 0.075
 myBins = arange(binStart,45,binSize)
 myDelayTrace = array([fitMyData(i,i+binSize) for i in myBins])
 
@@ -176,14 +176,14 @@ wienerFilteredSignal /= convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrac
 wienerFilterErrorBars = 1.0/(convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same'))
 
 #while testing so not overwriting old data
-#exportData = h5py.File('temp.h5', 'w')	
+exportData = h5py.File('temp.h5', 'w')	
 
-#exportData.create_dataset("time_ps", data=myBins, chunks=True, maxshape=(None,))
-#exportData.create_dataset("normalized_intensity", data=myDelayTrace[:,0], chunks=True, maxshape=(None,))
-#exportData.create_dataset("normalized_intensity_error", data=myDelayTrace[:,1], chunks=True, maxshape=(None,))
-#exportData.create_dataset("wiener_filtered_signal", data=wienerFilteredSignal, chunks=True, maxshape=(None,))
-#exportData.create_dataset("wiener_filtered_error", data=wienerFilterErrorBars, chunks=True, maxshape=(None,))
-#exportData.close()
+exportData.create_dataset("time_ps", data=myBins, chunks=True, maxshape=(None,))
+exportData.create_dataset("normalized_intensity", data=myDelayTrace[:,0], chunks=True, maxshape=(None,))
+exportData.create_dataset("normalized_intensity_error", data=myDelayTrace[:,1], chunks=True, maxshape=(None,))
+exportData.create_dataset("wiener_filtered_signal", data=wienerFilteredSignal, chunks=True, maxshape=(None,))
+exportData.create_dataset("wiener_filtered_error", data=wienerFilterErrorBars, chunks=True, maxshape=(None,))
+exportData.close()
 
 
 figure(2)

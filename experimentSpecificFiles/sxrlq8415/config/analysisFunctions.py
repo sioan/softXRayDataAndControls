@@ -19,7 +19,7 @@ def genericReturn(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
 	x = detectorObject[selfName](thisEvent)
 	if x is None:
-		return -9999
+		return -9999.0
 	else:
 		return x
 
@@ -30,14 +30,18 @@ def myZeroReturn(detectorObject,thisEvent,previousProcessing):
 	return 0
 
 def getTimeToolData(detectorObject,thisEvent):
+	IPython.embed()
+
+	#print thisEvent.get(psana.EventId).fiducials()
+	
 	selfName = detectorObject['self_name']
 	ttData = detectorObject[selfName].process(thisEvent)
 	myDict = {}	
 	if(ttData is None):
 		
-		myDict['amplitude'] = -99999.0
-		myDict['pixelTime'] = -99999.0
-		myDict['positionFWHM'] = -99999.0
+		myDict['amplitude'] = -99999
+		myDict['pixelTime'] = -99999
+		myDict['positionFWHM'] = -99999
 
 
 	else:
