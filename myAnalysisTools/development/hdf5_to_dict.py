@@ -1,6 +1,6 @@
 from pylab import *
 import h5py
-print("importing hdf5_to_dict")
+#print("importing hdf5_to_dict")
 def hdf5_to_dict(myhdf5Object):
 	replacementDictionary = {}
 	myList = []

@@ -115,8 +115,8 @@ if __name__ == '__main__':
 		else:
 			myFigureDictionary[figureNumber]['axs'].errorbar(x,y,yerr=yErrorBars,label=i,marker='o',linestyle='None',c=thisColor)
 			#myFigureDictionary[figureNumber]['axs'].plot(x,ySmoothed[0],linewidth=4,c=thisColor,linestyle='-')
-			#myFigureDictionary[figureNumber]['axs'].plot(x,ySmoothed[0],linewidth=4,c='k',linestyle='-')
-			myFigureDictionary[figureNumber]['axs'].errorbar(x,ySmoothed[0],ySmoothed[1],linewidth=1,c='k',linestyle='-')
+			myFigureDictionary[figureNumber]['axs'].plot(x,ySmoothed[0],linewidth=4,c='k',linestyle='-')
+			#myFigureDictionary[figureNumber]['axs'].errorbar(x,ySmoothed[0],ySmoothed[1],linewidth=1,c='k',linestyle='-')
 		myCounter+=1
 
 	myFigureDictionary['figure0']['axs'].set_ylabel("amplitude")

@@ -95,7 +95,7 @@ def fitMyData(binStart,binEnd):
 	myLength = len(ydata)
 	#remove outliers
 	#outlier threshold is 20%
-	threshold = 0.00/4
+	threshold = 0.25/4
 	try:
 		#threshold = 10.0/(myLength)
 		temp=1
@@ -119,9 +119,19 @@ def fitMyData(binStart,binEnd):
 		mySigma = binStep/(binStep+tdata-binStart)**0.5 # equals one if tdata is binStart and weighted binning by distance from edge of bin
 		#popt, pcov = curve_fit(func, xdata, ydata,p0=1,sigma=mySigma) #implementing the weight
 		#popt, pcov = curve_fit(func, xdata, ydata,p0=1)
-		#IPython.embed()
-		myTempCov = cov([xdata,ydata,edata])
-		popt,pcov = [myTempCov[0,1]/myTempCov[0,0]],[[myTempCov[0,0]/len(edata)]]	#hey this works on run 60! needs more agressive filtering 
+		
+		#myTempCov = cov([xdata,ydata,edata])
+		xMat = array([ones(len(xdata)),xdata,edata,xdata**2,edata**2,xdata*edata]).transpose()
+		#xMat = array([ones(len(xdata)),xdata,edata]).transpose()
+		#myResults =  lstsq(xMat,ydata)
+		myResults = dot(dot(inv(dot(xMat.transpose(),xMat)),xMat.transpose()),ydata)
+
+		#if (len(xdata)>0):
+			#IPython.embed()
+
+		popt,pcov = [[myResults[1]],[[-9999]]]
+			
+		#popt,pcov = [myTempCov[0,1]/myTempCov[0,0]],[[myTempCov[0,0]/len(edata)]]	#hey this works on run 60! needs more agressive filtering 
 		#in filter file. also, see 1.6745 THz oscillation right after pulse.  Is this artifact?
 		#popt,pcov = [myTempCov[2,1]/myTempCov[2,2]],[[myTempCov[2,2]/len(edata)]]
 		
@@ -134,65 +144,62 @@ def fitMyData(binStart,binEnd):
 
 	#IPython.embed()
 	return popt[0],pcov[0][0]*len(tdata)**0.5
-def main():
-	#binSize = 0.15
-	binStart= -25.20
-	binSize = 0.07
-	myBins = arange(binStart,45,binSize)
-	myDelayTrace = array([fitMyData(i,i+binSize) for i in myBins])
 
-	zeroCountMask = myDelayTrace[:,0]>0
-	#zeroCountMask = myDelayTrace[:,0]>-9999
-	myDelayTrace = myDelayTrace[zeroCountMask]
-	myBins = myBins[zeroCountMask]
-	#myBins = myBins[::-1]
-	myBins *=-1
-	freqBins = arange(0,1.0/binSize,1/binSize/len(myBins))
+#binSize = 0.15
+binStart= -25.15
+binSize = 0.15
+myBins = arange(binStart,45,binSize)
+myDelayTrace = array([fitMyData(i,i+binSize) for i in myBins])
 
-	figure(1)
-	#plot(myBins,myDelayTrace[:,0]+0.1)
-	ySmoothed = errorWeightedSmoothing(myDelayTrace[:,0],myDelayTrace[:,1],29,3)
-	errorbar(myBins,myDelayTrace[:,0],yerr=myDelayTrace[:,1])
-	#errorbar(myBins,ySmoothed[0],ySmoothed[1],c='k')
+zeroCountMask = myDelayTrace[:,0]!=-999
+#zeroCountMask = myDelayTrace[:,0]>-9999
+myDelayTrace = myDelayTrace[zeroCountMask]
+myBins = myBins[zeroCountMask]
+#myBins = myBins[::-1]
+myBins *=-1
+freqBins = arange(0,1.0/binSize,1/binSize/len(myBins))
 
-
-	preLaser = 4
-	mySize = myDelayTrace.shape[0]
-	myNoiseSpectrum = zeros(mySize)
-	#print len(myNoiseSpectrum)
-	for i in arange(10,100,preLaser):
-		noiseTrace = append(myDelayTrace[-preLaser-i:-i,0]-mean(myDelayTrace[-preLaser-i:-i,0]),zeros(mySize-preLaser))
-		myNoiseSpectrum += abs(fft(noiseTrace))**2
+figure(1)
+plot(myBins,myDelayTrace[:,0]+0.1)
+#ySmoothed = errorWeightedSmoothing(myDelayTrace[:,0],myDelayTrace[:,1],29,3)
+#errorbar(myBins,myDelayTrace[:,0],yerr=myDelayTrace[:,1])
+#errorbar(myBins,ySmoothed[0],ySmoothed[1],c='k')
 
 
-	#myWienerFilter = 1.0/(1+100*myNoiseSpectrum)
-	transferSpectrum = 1
-	myWienerFilter = transferSpectrum/(transferSpectrum+.01*myNoiseSpectrum)# the myNoiseSpectrum coefficient is arbitrary. how to choose in physically meaningful way?
-
-	#wienerFilteredSignal = real(ifft(myWienerFilter*fft(myDelayTrace[:,0])))
-	#error weighted wiener filter
-	wienerFilteredSignal = convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2*myDelayTrace[:,0],mode='Same')
-	wienerFilteredSignal /= convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same')
-	wienerFilterErrorBars = 1.0/(convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same'))
-
-	#while testing so not overwriting old data
-	#exportData = h5py.File('temp.h5', 'w')	
-
-	#exportData.create_dataset("time_ps", data=myBins, chunks=True, maxshape=(None,))
-	#exportData.create_dataset("normalized_intensity", data=myDelayTrace[:,0], chunks=True, maxshape=(None,))
-	#exportData.create_dataset("normalized_intensity_error", data=myDelayTrace[:,1], chunks=True, maxshape=(None,))
-	#exportData.create_dataset("wiener_filtered_signal", data=wienerFilteredSignal, chunks=True, maxshape=(None,))
-	#exportData.create_dataset("wiener_filtered_error", data=wienerFilterErrorBars, chunks=True, maxshape=(None,))
-	#exportData.close()
+preLaser = 4
+mySize = myDelayTrace.shape[0]
+myNoiseSpectrum = zeros(mySize)
+#print len(myNoiseSpectrum)
+for i in arange(10,100,preLaser):
+	noiseTrace = append(myDelayTrace[-preLaser-i:-i,0]-mean(myDelayTrace[-preLaser-i:-i,0]),zeros(mySize-preLaser))
+	myNoiseSpectrum += abs(fft(noiseTrace))**2
 
 
-	figure(2)
-	#errorbar(myBins,wienerFilteredSignal,wienerFilterErrorBars)
-	errorbar(myBins,myDelayTrace[:,0],yerr=myDelayTrace[:,1])
-	#plot(myBins,myDelayTrace[:,0])
-	plot(myBins[7:],wienerFilteredSignal[:-7],c='k',linewidth=3)
-	#plot(myBins,wienerFilteredSignal)
-	show()
+#myWienerFilter = 1.0/(1+100*myNoiseSpectrum)
+transferSpectrum = 1
+myWienerFilter = transferSpectrum/(transferSpectrum+.01*myNoiseSpectrum)# the myNoiseSpectrum coefficient is arbitrary. how to choose in physically meaningful way?
 
-if __name__ == '__main__':
-	main()
+#wienerFilteredSignal = real(ifft(myWienerFilter*fft(myDelayTrace[:,0])))
+#error weighted wiener filter
+wienerFilteredSignal = convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2*myDelayTrace[:,0],mode='Same')
+wienerFilteredSignal /= convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same')
+wienerFilterErrorBars = 1.0/(convolve(real(ifft(myWienerFilter))[:20],1.0/myDelayTrace[:,1]**2,mode='Same'))
+
+#while testing so not overwriting old data
+#exportData = h5py.File('temp.h5', 'w')	
+
+#exportData.create_dataset("time_ps", data=myBins, chunks=True, maxshape=(None,))
+#exportData.create_dataset("normalized_intensity", data=myDelayTrace[:,0], chunks=True, maxshape=(None,))
+#exportData.create_dataset("normalized_intensity_error", data=myDelayTrace[:,1], chunks=True, maxshape=(None,))
+#exportData.create_dataset("wiener_filtered_signal", data=wienerFilteredSignal, chunks=True, maxshape=(None,))
+#exportData.create_dataset("wiener_filtered_error", data=wienerFilterErrorBars, chunks=True, maxshape=(None,))
+#exportData.close()
+
+
+#figure(2)
+#errorbar(myBins,wienerFilteredSignal,wienerFilterErrorBars)
+#errorbar(myBins,myDelayTrace[:,0],yerr=myDelayTrace[:,1])
+#plot(myBins,myDelayTrace[:,0])
+#plot(myBins[7:],wienerFilteredSignal[:-7],c='k',linewidth=3)
+#plot(myBins,wienerFilteredSignal)
+show()

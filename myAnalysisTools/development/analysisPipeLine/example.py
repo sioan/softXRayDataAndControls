@@ -1,6 +1,7 @@
 from pylab import *
-ion()
+#ion() #doesn't work with ipython
 #matplotlib.pyplot.switch_backend('QT4Agg')
+#%matplotlib needs to be used from ipython  shell
 
 import analysisPipeLine
 import analysisPipeLineMonitor 

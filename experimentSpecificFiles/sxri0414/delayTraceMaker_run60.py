@@ -121,6 +121,12 @@ def fitMyData(binStart,binEnd):
 		#popt, pcov = curve_fit(func, xdata, ydata,p0=1)
 		#IPython.embed()
 		myTempCov = cov([xdata,ydata,edata])
+		xMat = array([ones(len(xdata)),xdata,edata]).transpose()
+		#myResults =  lstsq(xMat,ydata)
+		#myResults = dot(dot(inv(dot(xMat.transpose(),xMat)),xMat.transpose()),ydata)
+
+		#popt,pcov = [[myResults[2]],[[-9999]]]
+			
 		popt,pcov = [myTempCov[0,1]/myTempCov[0,0]],[[myTempCov[0,0]/len(edata)]]	#hey this works on run 60! needs more agressive filtering 
 		#in filter file. also, see 1.6745 THz oscillation right after pulse.  Is this artifact?
 		#popt,pcov = [myTempCov[2,1]/myTempCov[2,2]],[[myTempCov[2,2]/len(edata)]]

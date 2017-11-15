@@ -25,7 +25,7 @@
 #6) choose algorithm and tuning parameters that are best for data. (optimize some set of metrics)
 
 
-#7) how does frequency domain behavior change with binning? (un binned? how to compare on same graph)
+#7) how does frequency domain behavior change with binning? (un binned? how to compare on same graph). energy binning?
 
 #8) create figure for publication
 #==================

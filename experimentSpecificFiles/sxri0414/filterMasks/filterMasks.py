@@ -10,8 +10,8 @@ def sxri0414run60(myDict):
 	myMask = myMask * (array(myDict['evr']['code_162'])==0)
 	myMask = myMask * (array(myDict['TSS_OPAL']['positionFWHM'])<50)
 	myMask = myMask * (array(myDict['TSS_OPAL']['positionFWHM'])>10)
-	myMask = myMask * (array(myDict['ebeam']['photon_energy'])>910)
-	myMask = myMask * (array(myDict['ebeam']['photon_energy'])<920)
+	myMask = myMask * (array(myDict['ebeam']['photon_energy'])>900)
+	myMask = myMask * (array(myDict['ebeam']['photon_energy'])<930)
 	#myMask = myMask * (array(myDict['fiducials']%4==3)	#this has no effect on fourier components
 	myMask = myMask * (array(myDict['gas_detector']['f_11_ENRC'])>1)
 
