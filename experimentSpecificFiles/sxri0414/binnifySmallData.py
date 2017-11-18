@@ -30,62 +30,7 @@ from filterMasks import filterMasks
 #In depth description
 #====================
 
-#from delay trace maker
-def fitMyData(binStart,binEnd):
 
-	binStep = binEnd-binStart
-	timeMask = correctedTimeScatter>binStart 
-	timeMask *= correctedTimeScatter<binEnd
-	xdata = xScatter[timeMask]
-	ydata = yScatter[timeMask]
-	tdata = correctedTimeScatter[timeMask]
-	edata = energyScatter[timeMask]
-	
-	#energy calibration
-	#ydata = ydata/(myInterpolatedCalibration(913)/myInterpolatedCalibration(edata))
-
-	myLength = len(ydata)
-	#remove outliers
-	#outlier threshold is 20%
-	threshold = 0.00/4
-	try:
-		#threshold = 10.0/(myLength)
-		temp=1
-	except ZeroDivisionError:
-		return -999,-999
-	
-	#sorting for median filtering
-	ySortedIndex = argsort(ydata)
-	ydata = ydata[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	xdata = xdata[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	tdata = tdata[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	edata = edata[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	
-	xSortedIndex = argsort(xdata)
-	ydata = ydata[xSortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	xdata = xdata[xSortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	tdata = tdata[xSortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	edata = edata[xSortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-
-	try:
-		mySigma = binStep/(binStep+tdata-binStart)**0.5 # equals one if tdata is binStart and weighted binning by distance from edge of bin
-		#popt, pcov = curve_fit(func, xdata, ydata,p0=1,sigma=mySigma) #implementing the weight
-		#popt, pcov = curve_fit(func, xdata, ydata,p0=1)
-		#IPython.embed()
-		myTempCov = cov([xdata,ydata,edata])
-		popt,pcov = [myTempCov[0,1]/myTempCov[0,0]],[[myTempCov[0,0]/len(edata)]]	#hey this works on run 60! needs more agressive filtering 
-		#in filter file. also, see 1.6745 THz oscillation right after pulse.  Is this artifact?
-		#popt,pcov = [myTempCov[2,1]/myTempCov[2,2]],[[myTempCov[2,2]/len(edata)]]
-		
-	except:
-		popt,pcov = [-999],[[-999]]
-
-	if popt[0]!=-999:
-		#IPython.embed()
-		temp = 1
-
-	#IPython.embed()
-	return popt[0],pcov[0][0]*len(tdata)**0.5
 
 def hdf5_to_dict(myhdf5Object):
 	replacementDictionary = {}

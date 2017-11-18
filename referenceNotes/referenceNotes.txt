@@ -49,7 +49,7 @@ https://confluence.slac.stanford.edu/display/PCDS/DAQ+configuration+database
 /reg/g/pcds/dist/pds/8.6.3.a-p8.4.3/build/pdsapp/bin/x86_64-linux-opt/configdb_gui
 configdb_gui --db /reg/g/pcds/dist/pds/cxi/misc/.configdbrc
 
-
+python ~jana/utils/logcheck.py -e amo --beg '2017-11-04' -x
 
 #evr notation
 #acqiris are used all the time.  have permnanent connection don't go away.
@@ -600,3 +600,9 @@ https://confluence.slac.stanford.edu/display/PSDM/JupyterHub?focusedCommentId=21
 
 experiment life cycle
 https://docs.google.com/spreadsheets/d/1B7eZvlKy-Ni8iDpt6RJpKxMNuHWL6PE-55oq3ysy3Ns/edit#gid=1352203380
+
+daq release
+https://confluence.slac.stanford.edu/display/PCDS/DAQ+and+AMI+Releases
+
+bokeh
+https://bokeh.pydata.org/en/latest/docs/user_guide/server.html

@@ -1,4 +1,0 @@
-#notes. anticipated work flow
-
-xtc -> psanaXtcExtractor.py -> scatterH5 directory -> binnifySmallData
-
