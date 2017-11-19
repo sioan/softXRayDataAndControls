@@ -33,18 +33,22 @@ from lib.analysis_library import *
 	
 def main(argd):
 	
-	data_dict = load_h5_file(argd['data_file'])
-	config_dict = load_h5_file(argd['confg_file'])
+	data_dict = load_h5_file(argd['data_file'])				#loading the data
+	config_dict = load_h5_file(argd['confg_file'])			#loading config file
 	#filter_dict = load_h5_file(config_dict['filter_file'])	#raw mask? instructions for generating mask?
-	filter_mask =  filterMasks.__dict__[argd['data_file'][:-3]](data_dict)
+	#still getting filter from import. (why don't I like that?). Cause the filters can't be easily changed in an ipytyhon
+	#terminal. need to reload filter. maybe make the filters a class whose members/methods implement 
+	filter_mask =  filterMasks.__dict__[argd['data_file'][:-3]](data_dict)	
+
 
 	the_bins = config_dict['bin_range']
 
-	filt_data_dict = apply_filter(data_dict,filter_mask)
+	filt_data_dict = apply_filter(data_dict,filter_mask)	#applying the filter
 	
-	binned_data = basic_histogram(filt_data_dict,argd['dependent_variable'],argd['bin_axes'],bins=the_bins,isLog=True)
-
-	cov_binned_data = array([covariance_by_bin(i,i+binSize) for i in myBins])
+	#binned_data = basic_histogram(filt_data_dict,argd['dependent_variable'],argd['bin_axes'],bins=the_bins,isLog=True)
+	#cov_binned_data = array([covariance_by_bin(i,i+binSize) for i in myBins])
+	#this line below is what will allow for rapidly comparing multiple analysis approaches.
+	my_bined_result = binned_statistic_dd(binned_axes,arg_axes,bins=(tEdges,eEdges),statistic=t_func) 
 
 	fileToExport = currentWorkingDirectory+"/binnedData/"+experimentRunName
 	#pickle.dump(myDataDictionary, open(fileToExport+".pkl", "wb"))

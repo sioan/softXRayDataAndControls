@@ -1,3 +1,4 @@
+from pylab import *
 import IPython
 
 def removeNans(myDict):
@@ -60,15 +61,15 @@ def basic_histogram(myDict,keyToAverage,xAxis,bins,isLog):#fast for debugging
 
 	return myDataDictionary
 
-def median_sorted_filter(data_dict, filter_criterion_dict):
+def median_sorted_filter(data_dict, filter_criterion):
 	
 	filtered_data = {}
-	for i in filter_criterion_dict:
-		for j in data_dict:
-			sorted_index = argsort(data_dict)
-			threshold_percentage = filter_criterion_dict[j]
-			
-			filtered_data[j] = data_dict[j][sorted_index][int(threshold*myLength):int(myLength*(1-1*threshold))]
+	myLength = len(data_dict[data_dict.keys()[0]])
+	for j in data_dict:
+		sorted_index = argsort(data_dict)
+		threshold = filter_criterion
+		filtered_data[j] = data_dict[j][sorted_index][int(threshold*myLength):int(myLength*(1-1*threshold))]
+		myLength = len(filtered_data[j])
 
 	return filtered_data
 
