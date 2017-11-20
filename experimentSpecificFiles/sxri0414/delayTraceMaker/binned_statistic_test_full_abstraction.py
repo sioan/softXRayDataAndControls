@@ -13,27 +13,38 @@ from filterMasks import filterMasks
 from scipy.optimize import curve_fit
 from plotPackage import errorWeightedSmoothing
 from scipy.interpolate import interp1d
+from lib.analysis_library import vectorized_binned_statistic_dd
 #fit's data to log
-from _binned_statistic import binned_statistic_dd
-	
-def vectorized_binned_statistic_dd(sample, values, statistic='mean',bins=10, range=None, expand_binnumbers=False):
-	arg_axes = array([pickle.dumps(i) for i in values])
 
-	results = binned_statistic_dd(sample,values = arg_axes,bins=bins,statistic=statistic)
-	my_dict_of_arrays ={}
+def normalize(data_dict):
+	temp_dict = {}
+	for i in data_dict:
+		temp_dict[i] = 0+nan_to_num(data_dict[i])
 
-	for this_key in results[0].item(0).keys():
-		#my_dict_of_arrays[this_key] = array([[array(j[this_key]) for j in i] for i in results[0]])	#only two dimensions
-		my_dict_of_arrays[this_key] = zeros(results[0].shape)
+	for i in data_dict:
+		for j in arange(data_dict[i].shape[1]):
+			temp_dict[i][:,j]-= mean(temp_dict[i][:,j])
+			temp_dict[i][:,j]/= std(temp_dict[i][:,j])
+			temp_dict[i][:,j]+=5*j*std(temp_dict[i][:,j])
 
-	for i in my_dict_of_arrays:
-		for j in arange(my_dict_of_arrays[i].size):
-			my_dict_of_arrays[i].itemset(j,results[0].item(j)[i])
+	return temp_dict
 
-	#results[0]=my_dict_of_arrays
+def plot_dict(to_graph_dict):
+	#u,s,v = svd(covxy[0])
+	myCounter = 0
+	myFigureDictionary={}
+	for i in to_graph_dict:
+		myFigureDictionary[i]={}
+		myFigureDictionary[i]['fig'], myFigureDictionary[i]['axs'] = plt.subplots(nrows=1, ncols=1, sharex=True)
+		#figure(myCounter)
+		myFigureDictionary[i]['axs'].set_title(i)
+		myCounter+=1
+		for j in arange(to_graph_dict[i].shape[1]):
+			#plot(-1*tEdges[:-1],sum(covxy[0],axis=1))
+			myFigureDictionary[i]['axs'].plot(-1*tEdges[:-1],to_graph_dict[i][:,j])
+			
 
-	return my_dict_of_arrays
-
+	show()
 
 def t_func(r):
 	temp = array([pickle.loads(i) for i in r])
@@ -64,7 +75,7 @@ def t_func(r):
 	
 	non_serialized_result = array([mean(y*1.0/x),mean(y)/mean(1.0*x),simple_slope])
 	#serialized_result = pickle.dumps(non_serialized_result)
-	dict_result = {'shot_by_shot':mean(y*1.0/x),'averaged':mean(y)/mean(1.0*x),'simple_slope':simple_slope}
+	dict_result = {'shot_by_shot_median':median(y*1.0/x),'shot_by_shot':mean(y*1.0/x),'median':median(y)/median(1.0*x),'averaged':mean(y)/mean(1.0*x),'simple_slope':simple_slope}
 
 	#IPython.embed()
 	return dict_result
@@ -101,21 +112,8 @@ if __name__ == '__main__':
 
 	#covxy = binned_statistic_dd(binned_axes,arg_axes,bins=(tEdges,eEdges),statistic=t_func)
 	covxy = vectorized_binned_statistic_dd(binned_axes,arg_axes,bins=(tEdges,eEdges),statistic=t_func)
-	  
+	 
+	plot_dict(normalize(covxy))
 
 
-
-	#u,s,v = svd(covxy[0])
-	myCounter = 0
-	for i in covxy:
-		figure(myCounter)
-		myCounter+=1
-		#plot(-1*tEdges[:-1],sum(covxy[0],axis=1))
-		plot(-1*tEdges[:-1],covxy[i][:,0])
-		plot(-1*tEdges[:-1],covxy[i][:,1])
-		plot(-1*tEdges[:-1],covxy[i][:,2])
-		plot(-1*tEdges[:-1],covxy[i][:,3])
-
-
-	show()
 

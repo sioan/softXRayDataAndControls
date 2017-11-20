@@ -98,6 +98,12 @@ def generateDetectorDictionary(configFileName):
 			myParsedString = thisDetectorConfig.split(',')
 			print(thisDetectorConfig)
 			print("found detector object named "+myParsedString[3])
+			try:
+				test = psana.Detector(myParsedString[0])
+			except KeyError:
+				print("detector named " + myParsedString[0] + " does not exist in this run")
+				continue
+			
 			myDetectorObjectDictionary[myParsedString[3]] = psana.Detector(myParsedString[0])
 			if(myParsedString[4]!='None'):
 				myDetectorObjectDictionary['analyzer'][myParsedString[3]] = analysisFunctions.__dict__[myParsedString[4]]
@@ -231,7 +237,7 @@ def main(myExp, myRun, configFileName,h5FileName,testSample,ttDevice,ttCode,star
 		else:
 			smldata.save()
 
-	smldata.close()
+
 	return
 
 #resulting dictionary tree works well enough. need to streamline.
