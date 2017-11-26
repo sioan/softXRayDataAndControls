@@ -25,23 +25,11 @@ import os
 import sys
 from scipy.signal import savgol_coeffs
 import h5py
-from hdf5_to_dict import hdf5_to_dict
+from lib.hdf5_to_dict import hdf5_to_dict
 from ConfigParser import ConfigParser
 config = ConfigParser()
 config.read('config/plotting.cfg')
 
-
-def errorWeightedSmoothing(myData,myError,myWidth,myOrder):
-	myWeights = savgol_coeffs(myWidth,myOrder,0)
-	
-	
-	mySignal = convolve(myData/myError**2,myWeights,mode='same')
-
-	mySignal = mySignal / convolve(1.0/myError**2,myWeights,mode='same')
-
-	myErrors = (1.0/convolve(1.0/myError**2,myWeights,mode='same'))**0.5/sum(myWeights)**0.5
-
-	return mySignal,myErrors
 
 def normalizeY(myDataDict):
 	for i in myDataDict:
@@ -51,7 +39,7 @@ def normalizeY(myDataDict):
 
 myDataDict = {}
 if __name__ == '__main__':
-	global myDataDict
+	#global myDataDict
 	sys.path.append("/reg/neh/home/sioan/softXRayDataAndControls/myAnalysisTools/")
 
 	dataDirectory = os.getcwd()+"/binnedData/"
@@ -61,7 +49,7 @@ if __name__ == '__main__':
 	myDataDict = {}
 
 	for i in myFiles:
-		print i
+		print(i)
 		#myDataDict[i[:-4]] = pickle.load(open(dataDirectory+i,"rb"))
 		myDataDict[i[:-3]] = hdf5_to_dict(h5py.File(dataDirectory+i,"r"))
 
@@ -102,7 +90,7 @@ if __name__ == '__main__':
 		y = myDataDict[i]['yMean']-myCounter*75
 		yErrorBars = myDataDict[i]['standardDeviation']/myDataDict[i]['counts']**0.5
 		ySmoothed = errorWeightedSmoothing(y,yErrorBars,29,3)
-		print i
+		print(i)
 		if (i=='sxri0414run72' or i=='sxri0414run81'):
 			mySizeDiff =tempSize-len(ySmoothed[0])
 			temp=vstack([temp,append(ySmoothed[0],zeros(mySizeDiff))])

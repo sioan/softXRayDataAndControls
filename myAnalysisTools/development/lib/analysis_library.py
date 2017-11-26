@@ -2,7 +2,19 @@ from pylab import *
 import IPython
 import pickle
 
-from _binned_statistic import binned_statistic_dd
+from lib._binned_statistic import binned_statistic_dd
+
+def errorWeightedSmoothing(myData,myError,myWidth,myOrder):
+	myWeights = savgol_coeffs(myWidth,myOrder,0)
+	
+	
+	mySignal = convolve(myData/myError**2,myWeights,mode='same')
+
+	mySignal = mySignal / convolve(1.0/myError**2,myWeights,mode='same')
+
+	myErrors = (1.0/convolve(1.0/myError**2,myWeights,mode='same'))**0.5/sum(myWeights)**0.5
+
+	return mySignal,myErrors
 
 def vectorized_binned_statistic_dd(sample, values, statistic='mean',bins=10, range=None, expand_binnumbers=False):
 	arg_axes = array([pickle.dumps(i) for i in values])

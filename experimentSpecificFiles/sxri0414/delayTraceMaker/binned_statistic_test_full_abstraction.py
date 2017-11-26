@@ -8,10 +8,10 @@ import h5py
 import os
 import sys
 import IPython
-from hdf5_to_dict import hdf5_to_dict
+from lib.hdf5_to_dict import hdf5_to_dict
 from filterMasks import filterMasks
 from scipy.optimize import curve_fit
-from plotPackage import errorWeightedSmoothing
+from lib.analysis_library import errorWeightedSmoothing
 from scipy.interpolate import interp1d
 from lib.analysis_library import vectorized_binned_statistic_dd
 #fit's data to log
@@ -89,7 +89,7 @@ def s_func(r):
 if __name__ == '__main__':
 
 	#load data
-	TOP="/reg/neh/home5/sioan/Desktop/softXRayDataAndControls/experimentSpecificFiles/sxri0414/"
+	TOP=""
 	experimentRunName = "sxri0414run60"
 	myFile = experimentRunName+".h5"
 	myHdf5Object = h5py.File(TOP+"smallHdf5Data/"+myFile,"r")

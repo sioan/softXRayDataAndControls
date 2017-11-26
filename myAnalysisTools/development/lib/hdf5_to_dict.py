@@ -25,6 +25,6 @@ def load_h5_file(file_name):
 
 def write_dict_to_h5(file_name,data_dict):
 	f = h5py.File(file_name+'.h5', 'w')	
-		for i in data_dict:
-			f.create_dataset(i, data=data_dict[i], chunks=True, maxshape=(None,))
+	for i in data_dict:
+		f.create_dataset(i, data=data_dict[i], chunks=True, maxshape=(None,))
 	f.close()
