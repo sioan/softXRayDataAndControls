@@ -53,6 +53,7 @@ class dls_viewer(CustomViewer):
 	z = 'att(/atm_corrected_timing)'
 	ephoton = 'att(/ebeam/photon_energy)'
 	shot_by_shot = False
+	the_slope = False
 	color = ['Reds', 'Purples']
 	#hit = 'att(shot_made)'
 
@@ -74,7 +75,7 @@ class dls_viewer(CustomViewer):
 		axes.plot(myHistogram[1][:-1],the_dls[::-1],marker='o',linewidth=0)
 
 
-	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot):
+	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot,the_slope):
 		binSize = (347.1-326.9)/bins
 		tEdges = np.arange(326.9,347.1,binSize)
 		myHistogramW=np.histogram(z,bins=tEdges,weights = np.nan_to_num(y*x*1.0/(x**2+1e-12)))
@@ -85,16 +86,18 @@ class dls_viewer(CustomViewer):
 		#axes.plot(myHistogram[1][:-1],the_dls[::-1],mec=style.color,mfc=style.color,marker='o',linewidth=0)
 
 		myValues = np.array([x,y]).transpose()
-		if(shot_by_shot):
+		if(the_slope):
+			myStatistic = 'simple_slope'
+		elif(shot_by_shot and not the_slope):
 			myStatistic = 'shot_by_shot'
-		else:
+		elif(not shot_by_shot and not the_slope):
 			myStatistic = 'averaged'
 
 		if(len(z)!=0):
 			myStats = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func)	#square brackets around tEdges is important
 			myStats[myStatistic]-=np.mean(myStats[myStatistic])
 			myStats[myStatistic]/=np.std(myStats[myStatistic])
-			axes.plot(tEdges[:-1],myStats[myStatistic][::-1],mec=style.color,mfc=style.color,marker='o',linewidth=0)
+			axes.plot(tEdges[:-1],myStats[myStatistic][::-1],c=style.color,marker='.',linewidth=2)
 
 
 	def setup(self, axes):
