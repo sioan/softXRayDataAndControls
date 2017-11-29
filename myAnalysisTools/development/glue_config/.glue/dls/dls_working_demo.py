@@ -10,7 +10,7 @@ from lib.analysis_library import vectorized_binned_statistic_dd
 from scipy.stats import binned_statistic
 import pickle
 
-def t_func(r,median_truncation):
+def t_func(r):
 	temp = np.array([pickle.loads(i) for i in r])
 	
 	x=temp[:,0]
@@ -22,7 +22,7 @@ def t_func(r,median_truncation):
 	#IPython.embed()
 
 	myLength=len(y)
-	threshold=median_truncation/400.0
+	threshold=0.05
 	ySortedIndex = np.argsort(y)
 	y = y[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
 	x = x[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
@@ -48,13 +48,11 @@ class dls_viewer(CustomViewer):
 	name = 'dls_viewer'
 	x = 'att(/GMD)'	#this switch swaps the x and y axes.
 	y = 'att(/acqiris2)'	#need to figure out how to make this programable.  Replaced x and y with pop and viv, then need to rename in glue.
-	bins = (25,300)
-	median_truncation = (1,100)
+	bins = (25, 300)
 	#more_bins =(-10,10)	#this adds bins 
 	z = 'att(/atm_corrected_timing)'
 	ephoton = 'att(/ebeam/photon_energy)'
 	shot_by_shot = False
-	the_slope = False
 	color = ['Reds', 'Purples']
 	#hit = 'att(shot_made)'
 
@@ -76,7 +74,7 @@ class dls_viewer(CustomViewer):
 		axes.plot(myHistogram[1][:-1],the_dls[::-1],marker='o',linewidth=0)
 
 
-	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot,the_slope,median_truncation):
+	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot):
 		binSize = (347.1-326.9)/bins
 		tEdges = np.arange(326.9,347.1,binSize)
 		myHistogramW=np.histogram(z,bins=tEdges,weights = np.nan_to_num(y*x*1.0/(x**2+1e-12)))
@@ -87,21 +85,16 @@ class dls_viewer(CustomViewer):
 		#axes.plot(myHistogram[1][:-1],the_dls[::-1],mec=style.color,mfc=style.color,marker='o',linewidth=0)
 
 		myValues = np.array([x,y]).transpose()
-		if(the_slope):
-			myStatistic = 'simple_slope'
-		elif(shot_by_shot and not the_slope):
+		if(shot_by_shot):
 			myStatistic = 'shot_by_shot'
-		elif(not shot_by_shot and not the_slope):
+		else:
 			myStatistic = 'averaged'
 
-		def t_func_wrapper(r):
-			return t_func(r,median_truncation)
-
 		if(len(z)!=0):
-			myStats = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func_wrapper)	#square brackets around tEdges is important
+			myStats = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func)	#square brackets around tEdges is important
 			myStats[myStatistic]-=np.mean(myStats[myStatistic])
 			myStats[myStatistic]/=np.std(myStats[myStatistic])
-			axes.plot(tEdges[:-1],myStats[myStatistic][::-1],c=style.color,marker='.',linewidth=2)
+			axes.plot(tEdges[:-1],myStats[myStatistic][::-1],mec=style.color,mfc=style.color,marker='o',linewidth=0)
 
 
 	def setup(self, axes):
