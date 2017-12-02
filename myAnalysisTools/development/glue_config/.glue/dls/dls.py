@@ -1,4 +1,5 @@
 from glue.viewers.custom.qt import CustomViewer
+from glue.core.visual import VisualAttributes
 
 from glue.core.subset import RoiSubsetState
 
@@ -44,6 +45,7 @@ def t_func(r,median_truncation):
 	#IPython.embed()
 	return dict_result
 
+
 class dls_viewer(CustomViewer):
 	name = 'dls_viewer'
 	#x = 'att(/GMD)'	#this switch swaps the x and y axes.
@@ -58,8 +60,13 @@ class dls_viewer(CustomViewer):
 	shot_by_shot = False
 	the_slope = False
 	modulation_spectroscopy = False
-	color = ['Reds', 'Purples']
+	#color = ['Reds', 'Purples']
 	#hit = 'att(shot_made)'
+	my_offset = 10
+
+	def __init__(self, widget_instance):
+		super().__init__(widget_instance)
+		self.test = "testing"
 
 	def make_selector(self, roi, x, y):
 
@@ -70,24 +77,16 @@ class dls_viewer(CustomViewer):
 
 		return state
 
-	def plot_data(self, axes, x, y,z, color, style,bins):
-		#myHistogramW=np.histogram(z,bins=np.arange(326.9,347.1,0.075),weights = np.nan_to_num(y*x*1.0/(x**2+1e-12)))
-		#myHistogram=np.histogram(z,bins=np.arange(326.9,347.1,0.075))
-		#the_dls= myHistogramW[0]/myHistogram[0]
-		#the_dls -= np.mean(the_dls)
-		#the_dls/=np.std(the_dls)
-		#axes.plot(myHistogram[1][:-1],the_dls[::-1],marker='o',linewidth=0)
+	def plot_data(self, axes, x, y,z, style,bins):
+
 		temp = 0
 
 
-	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot,the_slope,median_truncation,modulation_spectroscopy):
+	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot,the_slope,median_truncation,state,modulation_spectroscopy):
 		binSize = (347.1-326.9)/bins
 		tEdges = np.arange(326.9,347.1,binSize)
-		myHistogramW=np.histogram(z,bins=tEdges,weights = np.nan_to_num(y*x*1.0/(x**2+1e-12)))
-		myHistogram=np.histogram(z,bins=tEdges)
-		the_dls= myHistogramW[0]/myHistogram[0]
-		the_dls -= np.mean(the_dls)
-		the_dls/=np.std(the_dls)
+		print(self.test)
+
 		#axes.plot(myHistogram[1][:-1],the_dls[::-1],mec=style.color,mfc=style.color,marker='o',linewidth=0)
 
 		myValues = np.array([x,y]).transpose()
@@ -100,18 +99,19 @@ class dls_viewer(CustomViewer):
 
 		def t_func_wrapper(r):
 			return t_func(r,median_truncation)
-
+		
+		#the calculation below needs to be checked if it's already been calculated.  if not, don't re-calculate.
 		if(len(z)!=0):
 			myStats = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func_wrapper)	#square brackets around tEdges is important
-			myStats[myStatistic]-=np.mean(myStats[myStatistic])
-			myStats[myStatistic]/=np.std(myStats[myStatistic])
+			myStats[myStatistic]-=np.mean(myStats[myStatistic])	#normalization for displaying
+			myStats[myStatistic]/=np.std(myStats[myStatistic])	#normalization for displaying
 			if (not modulation_spectroscopy):
-				axes.plot(tEdges[:-1],myStats[myStatistic][::-1],c=style.color,marker='.',linewidth=2)
+				axes.plot(tEdges[:-1],myStats[myStatistic][::-1]+style.markersize,c=style.color,marker='.',linewidth=2)
 			else:
 				axes.plot(tEdges[:-1],np.cumsum(myStats['simple_slope'][::-1]/myStats['averaged'][::-1]),c=style.color,marker='.',linewidth=2)
 
 	def setup(self, axes):
 		temp =0 
-		axes.set_ylim(-1, 1)
+		axes.set_ylim(-1, 10)
 		axes.set_xlim(326, 347)
 		#axes.set_aspect('equal', adjustable='datalim')
