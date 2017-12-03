@@ -91,6 +91,10 @@ class dls_viewer(CustomViewer):
 			print("new hex id")
 			
 			self.my_sub_groups[my_hex_style_id]={"offset":my_offset,"x_id":my_hex_x_id,"y_id":my_hex_y_id}
+			self.my_sub_groups[my_hex_style_id]['last_x_id'] = 0
+			self.my_sub_groups[my_hex_style_id]['last_y_id'] = 0
+			self.my_sub_groups[my_hex_style_id]['x_data'] = tEdges
+			self.my_sub_groups[my_hex_style_id]['y_data'] = {}
 		
 		else:
 			self.my_sub_groups[my_hex_style_id]["x_id"] = my_hex_x_id
@@ -119,14 +123,24 @@ class dls_viewer(CustomViewer):
 			return t_func(r,median_truncation)
 		
 		#the calculation below needs to be checked if it's already been calculated.  if not, don't re-calculate.
-		if(len(z)!=0):
-			myStats = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func_wrapper)	#square brackets around tEdges is important
-			myStats[myStatistic]-=np.mean(myStats[myStatistic])	#normalization for displaying
-			myStats[myStatistic]/=np.std(myStats[myStatistic])	#normalization for displaying
-			if (not modulation_spectroscopy):
-				axes.plot(tEdges[:-1],myStats[myStatistic][::-1]+this_offset,c=style.color,marker='.',linewidth=2)
-			else:
-				axes.plot(tEdges[:-1],np.cumsum(myStats['simple_slope'][::-1]/myStats['averaged'][::-1]),c=style.color,marker='.',linewidth=2)
+		x_not_changed = (self.my_sub_groups[my_hex_style_id]['x_id']==self.my_sub_groups[my_hex_style_id]['last_x_id'])
+		y_not_changed = (self.my_sub_groups[my_hex_style_id]['y_id']==self.my_sub_groups[my_hex_style_id]['last_y_id'])
+		if(not (x_not_changed and y_not_changed)):
+			if(len(z)!=0):
+				self.my_sub_groups[my_hex_style_id]['y_data'] = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func_wrapper)	#square brackets around tEdges is important
+				self.my_sub_groups[my_hex_style_id]['y_data'][myStatistic]-=np.mean(self.my_sub_groups[my_hex_style_id]['y_data'][myStatistic])	#normalization for displaying
+				self.my_sub_groups[my_hex_style_id]['y_data'][myStatistic]/=np.std(self.my_sub_groups[my_hex_style_id]['y_data'][myStatistic])	#normalization for displaying
+				
+	
+				#if (not modulation_spectroscopy):
+				#	axes.plot(tEdges[:-1],myStats[myStatistic][::-1]+this_offset,c=style.color,marker='.',linewidth=2)
+				#else:
+				#	axes.plot(tEdges[:-1],np.cumsum(myStats['simple_slope'][::-1]/myStats['averaged'][::-1]),c=style.color,marker='.',linewidth=2)
+		try:	
+			myStats = self.my_sub_groups[my_hex_style_id]['y_data']
+			axes.plot(tEdges[:-1],myStats[myStatistic][::-1]+this_offset,c=style.color,marker='.',linewidth=2)
+		except:
+			pass
 
 		self.my_sub_groups[my_hex_style_id]['last_x_id'] = self.my_sub_groups[my_hex_style_id]['x_id']
 		self.my_sub_groups[my_hex_style_id]['last_y_id'] = self.my_sub_groups[my_hex_style_id]['y_id']
