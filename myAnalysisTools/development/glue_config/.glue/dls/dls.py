@@ -1,5 +1,6 @@
 from glue.viewers.custom.qt import CustomViewer
 from glue.core.visual import VisualAttributes
+from glue.core import DataCollection
 
 from glue.core.subset import RoiSubsetState
 
@@ -67,15 +68,18 @@ class dls_viewer(CustomViewer):
 	def __init__(self, widget_instance):
 		super().__init__(widget_instance)
 		self.test = "testing"
+		self.my_sub_groups = {}
+		self.my_sub_groups['x'] = {}
+		self.my_sub_groups['y'] = {}
 
-	def make_selector(self, roi, x, y):
+	"""def make_selector(self, roi, x, y):
 
 		state = RoiSubsetState()
 		state.roi = roi
 		state.xatt = x.id
 		state.yatt = y.id
 
-		return state
+		return state"""
 
 	def plot_data(self, axes, x, y,z, style,bins):
 
@@ -85,9 +89,10 @@ class dls_viewer(CustomViewer):
 	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot,the_slope,median_truncation,state,modulation_spectroscopy):
 		binSize = (347.1-326.9)/bins
 		tEdges = np.arange(326.9,347.1,binSize)
-		print(self.test)
+		print(self.widget.layers)
 
 		#axes.plot(myHistogram[1][:-1],the_dls[::-1],mec=style.color,mfc=style.color,marker='o',linewidth=0)
+		#print(dir(state))
 
 		myValues = np.array([x,y]).transpose()
 		if(the_slope):
