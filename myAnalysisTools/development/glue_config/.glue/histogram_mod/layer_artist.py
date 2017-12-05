@@ -66,7 +66,7 @@ class HistogramLayerArtist(MatplotlibLayerArtist):
             range = [xmin, xmax]
             bins = self._viewer_state.hist_n_bin
 
-        self.mpl_hist_unscaled, self.mpl_bins, self.mpl_artists = self.axes.hist(x, range=range, bins=bins)
+        self.mpl_hist_unscaled, self.mpl_bins, self.mpl_artists = self.axes.hist(2*x, range=range, bins=bins)
 
     @defer_draw
     def _scale_histogram(self):

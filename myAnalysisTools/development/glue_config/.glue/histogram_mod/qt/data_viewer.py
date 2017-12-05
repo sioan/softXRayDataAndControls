@@ -8,17 +8,17 @@ from glue.core import command
 
 from glue.viewers.matplotlib.qt.data_viewer import MatplotlibDataViewer
 from glue.viewers.histogram.qt.layer_style_editor import HistogramLayerStyleEditor
-from glue.viewers.histogram.layer_artist import HistogramLayerArtist
+from glue.viewers.histogram.layer_artist_mod import HistogramLayerArtist
 from glue.viewers.histogram.qt.options_widget import HistogramOptionsWidget
 from glue.viewers.histogram.state import HistogramViewerState
 from glue.viewers.histogram.compat import update_histogram_viewer_state
 
-__all__ = ['HistogramViewer']
+__all__ = ['HistogramViewer_mod']
 
 
-class HistogramViewer(MatplotlibDataViewer):
+class HistogramViewer_mod(MatplotlibDataViewer):
 
-    LABEL = '1D Histogram test'
+    LABEL = '1D Histogram mod'
     _toolbar_cls = MatplotlibViewerToolbar
     _layer_style_widget_cls = HistogramLayerStyleEditor
     _state_cls = HistogramViewerState
@@ -29,7 +29,7 @@ class HistogramViewer(MatplotlibDataViewer):
     tools = ['select:xrange']
 
     def __init__(self, session, parent=None, state=None):
-        super(HistogramViewer, self).__init__(session, parent, state=state)
+        super(HistogramViewer_mod, self).__init__(session, parent, state=state)
         self.state.add_callback('x_att', self._update_axes)
         self.state.add_callback('x_log', self._update_axes)
         self.state.add_callback('normalize', self._update_axes)

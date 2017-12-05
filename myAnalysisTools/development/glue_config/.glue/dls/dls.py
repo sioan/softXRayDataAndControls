@@ -65,6 +65,7 @@ class dls_viewer(CustomViewer):
 		self.test = "testing"
 		self.my_sub_groups = {}
 
+	
 	"""def make_selector(self, roi, x, y):
 
 		state = RoiSubsetState()
