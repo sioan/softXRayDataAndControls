@@ -31,5 +31,11 @@ brain storm (then order)
 7) (check) rapid testing script instead of openining full glue viewer every time. file is called quick debug and is in the sxri0414 smallhdf5 directory
 	a) doesn't work for custom viewers
 
-8) (check) got built in histogram viewer duplicated and demoed changing some functionality. copied entire histogram viewer from /anaconda/lib/python3.6/site-packages/glue/viewers/histogram to ~/.glue/histogram_mod and added a soft link in /anaconda/lib/python3.6/site-packages/glue/viewers/histogram/layer_artist_mod.py -> /home/sioan/.glue/histogram_mod/layer_artist.py to point. need to change a number of lines of code and the __init__.py. 
+8) (check) built in histogram viewer duplicated and demoed changing some functionality. copied entire histogram viewer from /anaconda/lib/python3.6/site-packages/glue/viewers/histogram to ~/.glue/histogram_mod and added a soft link in /anaconda/lib/python3.6/site-packages/glue/viewers/histogram/layer_artist_mod.py -> /home/sioan/.glue/histogram_mod/layer_artist.py to point. need to change a number of lines of code and the __init__.py. 
+
+9) (check) custom_viewer object access through glue ipython terminal. originally just printed and ctrl-c address and used ctypes to cast object as custom_viewer.
+
+10) (check) zmq can send address of object (maybe use __init__ instead of setup? ) to ipython terminal. no can make qt interaction.
+
+11) maybe see if zmq can directly send pyobject. is this even useful?
 
