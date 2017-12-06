@@ -11,6 +11,43 @@ import numpy as np
 from lib.analysis_library import vectorized_binned_statistic_dd
 from scipy.stats import binned_statistic
 import pickle
+import zmq
+import sys
+import time
+import threading
+import random
+
+"""
+class YourThreadName(QThread):
+
+    def __init__(self):
+        QThread.__init__(self)
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        # your logic here"""
+
+def publish_glue_object_memory(hex_id):
+	port = 5556
+
+
+	context = zmq.Context()
+	socket = context.socket(zmq.PUB)
+	socket.bind("tcp://*:%s" % port)
+
+	while True:
+		#topic = random.randrange(9999,10005)
+		topic = 10001
+		#messagedata = random.randrange(1,215) - 80
+		messagedata=hex_id
+		#print("%d %d" % (topic, messagedata))
+		socket.send_string("%d %d" % (topic, messagedata))
+		#socket.send(str(hex_id))
+		#print("sending string")
+		time.sleep(1)
+
 
 def t_func(r,median_truncation):
 	temp = np.array([pickle.loads(i) for i in r])
@@ -58,13 +95,14 @@ class dls_viewer(CustomViewer):
 	#hit = 'att(shot_made)'
 	my_offset = 5
 	my_offset_index = 0
-	test = {"testing":123,"testing_testing":456}
+	#test = {"testing":123,"testing_testing":456}
+
+
 
 	def __init__(self, widget_instance):
 		super().__init__(widget_instance)
 		self.test = "testing"
 		self.my_sub_groups = {}
-
 	
 	"""def make_selector(self, roi, x, y):
 
@@ -72,21 +110,31 @@ class dls_viewer(CustomViewer):
 		state.roi = roi
 		state.xatt = x.id
 		state.yatt = y.id
-
+		state.x=0
+		state.y=1
+		state.z=2
 		return state"""
+
+	def get_offset(self):
+		print(self.my_sub_groups)
+		
+		return
 
 	def plot_data(self, axes, x, y,z, style,bins):
 
 		temp = 0
 
 
-	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot,the_slope,median_truncation,state,modulation_spectroscopy,my_offset,my_offset_index,test):
+	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot,the_slope,median_truncation,state,modulation_spectroscopy,my_offset,my_offset_index):		
 		binSize = (347.1-326.9)/bins
 		tEdges = np.arange(326.9,347.1,binSize)
 		my_hex_style_id = str(hex(id(style))) 
 		my_hex_x_id = str(hash(frozenset(x)))
 		my_hex_y_id = str(hash(frozenset(y)))
 
+
+		print(""+str(dir(self.my_sub_groups)))
+		print(""+str(self))
 		#print(test)
 		if my_hex_style_id not in self.my_sub_groups.keys():
 			print("new hex id")
@@ -151,4 +199,12 @@ class dls_viewer(CustomViewer):
 		axes.set_ylim(-1, 10)
 		axes.set_xlim(326, 347)
 		#axes.set_aspect('equal', adjustable='datalim'
+		#publish_glue_object_memory(id(self))
+		self.t = threading.Thread(target=publish_glue_object_memory,args=(id(self),))
+		self.t.start()
 
+	#def __del__(self):
+	#	self.t.stop()
+		
+
+	

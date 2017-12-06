@@ -8,7 +8,8 @@ from glue.core import command
 
 from glue.viewers.matplotlib.qt.data_viewer import MatplotlibDataViewer
 from glue.viewers.histogram.qt.layer_style_editor import HistogramLayerStyleEditor
-from glue.viewers.histogram.layer_artist_mod import HistogramLayerArtist
+#from glue.viewers.histogram.layer_artist_mod import HistogramLayerArtist
+from ..layer_artist import HistogramLayerArtist
 from glue.viewers.histogram.qt.options_widget import HistogramOptionsWidget
 from glue.viewers.histogram.state import HistogramViewerState
 from glue.viewers.histogram.compat import update_histogram_viewer_state
