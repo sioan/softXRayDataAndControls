@@ -267,6 +267,9 @@ bjobs -l -u sioan
 sudo bkill
 sudo pkill -u -9 steitelb
 bhosts -w psnehfarm	#psana 1501 through 1520, except for psana1508, should all have ok status.
+
+sudo bkill  `bjobs -u jboes| grep PEND | grep psnehidleq | cut -f1 -d" "`
+
 sudo /etc/init.d/lsf start #restart lsf daemons 
 /reg/common/tools/lsf/show_closed_nodes.sh
 
@@ -296,6 +299,7 @@ export LD_LIBRARY_PATH=/reg/neh/home/cpo/junk
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
 https://confluence.slac.stanford.edu/display/PCDS/PCDS+Contact+List
+https://confluence.slac.stanford.edu/pages/viewpage.action?spaceKey=PCDS&title=PCDS+Contact+List
 
 Released EPICS location (modules, IOCs, screens...):
 /reg/g/pcds/package/epics/3.14/
@@ -606,3 +610,7 @@ https://confluence.slac.stanford.edu/display/PCDS/DAQ+and+AMI+Releases
 
 bokeh
 https://bokeh.pydata.org/en/latest/docs/user_guide/server.html
+
+python qt designer
+psdev7b
+/usr/bin/designer-qt4

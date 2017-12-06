@@ -100,7 +100,10 @@ class dls_viewer(CustomViewer):
 
 
 	def __init__(self, widget_instance):
-		super().__init__(widget_instance)
+		if(3==sys.version_info[0]):
+			super().__init__(widget_instance)
+		else:
+			CustomViewer.__init__(self,widget_instance)
 		self.test = "testing"
 		self.my_sub_groups = {}
 	

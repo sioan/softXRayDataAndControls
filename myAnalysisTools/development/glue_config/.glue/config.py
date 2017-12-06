@@ -25,7 +25,7 @@ def celsius2farhenheit(c):
 from dls import dls
 #import simple_qt_overwrite
 #from histogram.qt import data_viewer
-from histogram_mod.qt import data_viewer
+#from histogram_mod.qt import data_viewer
 
 """
 from glue.viewers.common.qt.data_viewer import DataViewer

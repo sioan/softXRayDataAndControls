@@ -10,7 +10,7 @@ from lib.analysis_library import vectorized_binned_statistic_dd
 from scipy.stats import binned_statistic
 import pickle
 
-def t_func(r):
+def t_func(r,median_truncation):
 	temp = np.array([pickle.loads(i) for i in r])
 	
 	x=temp[:,0]
@@ -22,7 +22,7 @@ def t_func(r):
 	#IPython.embed()
 
 	myLength=len(y)
-	threshold=0.05
+	threshold=median_truncation/400.0
 	ySortedIndex = np.argsort(y)
 	y = y[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
 	x = x[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
@@ -46,13 +46,18 @@ def t_func(r):
 
 class dls_viewer(CustomViewer):
 	name = 'dls_viewer'
-	x = 'att(/GMD)'	#this switch swaps the x and y axes.
-	y = 'att(/acqiris2)'	#need to figure out how to make this programable.  Replaced x and y with pop and viv, then need to rename in glue.
-	bins = (25, 300)
+	#x = 'att(/GMD)'	#this switch swaps the x and y axes.
+	#y = 'att(/acqiris2)'	#need to figure out how to make this programable.  Replaced x and y with pop and viv, then need to rename in glue.
+	x = 'att'
+	y = 'att'
+	bins = (25,300)
+	median_truncation = (1,100)
 	#more_bins =(-10,10)	#this adds bins 
 	z = 'att(/atm_corrected_timing)'
 	ephoton = 'att(/ebeam/photon_energy)'
 	shot_by_shot = False
+	the_slope = False
+	modulation_spectroscopy = False
 	color = ['Reds', 'Purples']
 	#hit = 'att(shot_made)'
 
@@ -66,15 +71,16 @@ class dls_viewer(CustomViewer):
 		return state
 
 	def plot_data(self, axes, x, y,z, color, style,bins):
-		myHistogramW=np.histogram(z,bins=np.arange(326.9,347.1,0.075),weights = np.nan_to_num(y*x*1.0/(x**2+1e-12)))
-		myHistogram=np.histogram(z,bins=np.arange(326.9,347.1,0.075))
-		the_dls= myHistogramW[0]/myHistogram[0]
-		the_dls -= np.mean(the_dls)
-		the_dls/=np.std(the_dls)
-		axes.plot(myHistogram[1][:-1],the_dls[::-1],marker='o',linewidth=0)
+		#myHistogramW=np.histogram(z,bins=np.arange(326.9,347.1,0.075),weights = np.nan_to_num(y*x*1.0/(x**2+1e-12)))
+		#myHistogram=np.histogram(z,bins=np.arange(326.9,347.1,0.075))
+		#the_dls= myHistogramW[0]/myHistogram[0]
+		#the_dls -= np.mean(the_dls)
+		#the_dls/=np.std(the_dls)
+		#axes.plot(myHistogram[1][:-1],the_dls[::-1],marker='o',linewidth=0)
+		temp = 0
 
 
-	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot):
+	def plot_subset(self, axes, x, y,z, style,bins,shot_by_shot,the_slope,median_truncation,modulation_spectroscopy):
 		binSize = (347.1-326.9)/bins
 		tEdges = np.arange(326.9,347.1,binSize)
 		myHistogramW=np.histogram(z,bins=tEdges,weights = np.nan_to_num(y*x*1.0/(x**2+1e-12)))
@@ -85,17 +91,24 @@ class dls_viewer(CustomViewer):
 		#axes.plot(myHistogram[1][:-1],the_dls[::-1],mec=style.color,mfc=style.color,marker='o',linewidth=0)
 
 		myValues = np.array([x,y]).transpose()
-		if(shot_by_shot):
+		if(the_slope):
+			myStatistic = 'simple_slope'
+		elif(shot_by_shot and not the_slope):
 			myStatistic = 'shot_by_shot'
-		else:
+		elif(not shot_by_shot and not the_slope):
 			myStatistic = 'averaged'
 
+		def t_func_wrapper(r):
+			return t_func(r,median_truncation)
+
 		if(len(z)!=0):
-			myStats = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func)	#square brackets around tEdges is important
+			myStats = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func_wrapper)	#square brackets around tEdges is important
 			myStats[myStatistic]-=np.mean(myStats[myStatistic])
 			myStats[myStatistic]/=np.std(myStats[myStatistic])
-			axes.plot(tEdges[:-1],myStats[myStatistic][::-1],mec=style.color,mfc=style.color,marker='o',linewidth=0)
-
+			if (not modulation_spectroscopy):
+				axes.plot(tEdges[:-1],myStats[myStatistic][::-1],c=style.color,marker='.',linewidth=2)
+			else:
+				axes.plot(tEdges[:-1],np.cumsum(myStats['simple_slope'][::-1]/myStats['averaged'][::-1]),c=style.color,marker='.',linewidth=2)
 
 	def setup(self, axes):
 		temp =0 
