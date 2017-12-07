@@ -136,7 +136,7 @@ class dls_viewer(CustomViewer):
 		my_hex_y_id = str(hash(frozenset(y)))
 
 
-		print(""+str(dir(self.my_sub_groups)))
+		#print(""+str(dir(self.my_sub_groups)))
 		print(""+str(self))
 		#print(test)
 		if my_hex_style_id not in self.my_sub_groups.keys():
@@ -203,8 +203,8 @@ class dls_viewer(CustomViewer):
 		axes.set_xlim(326, 347)
 		#axes.set_aspect('equal', adjustable='datalim'
 		#publish_glue_object_memory(id(self))
-		self.t = threading.Thread(target=publish_glue_object_memory,args=(id(self),))
-		self.t.start()
+		#self.t = threading.Thread(target=publish_glue_object_memory,args=(id(self),))
+		#self.t.start()
 
 	#def __del__(self):
 	#	self.t.stop()
