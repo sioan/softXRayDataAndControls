@@ -39,3 +39,10 @@ brain storm (then order)
 
 11) maybe see if zmq can directly send pyobject. is this even useful?
 
+12) (check) using gc.get_object() and searching for specific class type to find memory to ctype cast.
+
+
+13) features
+	1) copy and or saving data widget. mask would need to be gotten separately unless hub is used.
+	2) assign identifier based on subset, not on memory address
+	3) ipython ctyped cast is semi responsive. why the lag? different threads?
