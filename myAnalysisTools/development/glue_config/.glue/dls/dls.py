@@ -92,6 +92,7 @@ class dls_viewer(CustomViewer):
 			CustomViewer.__init__(self,widget_instance)
 		
 		self.my_subsets = {}
+		self.to_display = {}
 	
 	"""def make_selector(self, roi, x, y):
 
@@ -122,71 +123,77 @@ class dls_viewer(CustomViewer):
 
 		#calculation setup
 
-		my_edges = np.arange(bin_start,bin_end,(bin_end-bin_start)/n_bins)
+		temp_edges = np.arange(bin_start,bin_end,(bin_end-bin_start)/n_bins)
 		
 
 		#make new subset state		
 		if my_hex_style_id not in self.my_subsets.keys():
-			#print("new hex id")			
 			self.my_subsets[my_hex_style_id]={"offset":0,"x_id":my_hex_x_id,"y_id":my_hex_y_id,"Subset_Number":len(self.my_subsets)+1}
 			self.my_subsets[my_hex_style_id]['last_x_id'] = 0
 			self.my_subsets[my_hex_style_id]['last_y_id'] = 0
-			self.my_subsets[my_hex_style_id]['x_data'] = my_edges
+			self.my_subsets[my_hex_style_id]['x_data'] = temp_edges
+			self.my_subsets[my_hex_style_id]['last_x_data'] = np.zeros(len(temp_edges))
 			self.my_subsets[my_hex_style_id]['y_data'] = {}
 			self.my_subsets[my_hex_style_id]['offset'] = 0
 			self.my_subsets[my_hex_style_id]['median_truncation'] = 1
 			self.my_subsets[my_hex_style_id]['last_median_truncation'] = 1
 			self.my_subsets[my_hex_style_id][statistic_type+"_display"] = True
+
 		
 			
 		else:
 			self.my_subsets[my_hex_style_id]["x_id"] = my_hex_x_id
 			self.my_subsets[my_hex_style_id]["y_id"] = my_hex_y_id
+		
+			
 
 		
 		#tell rest of code which subset is being used #associate hex style id with subset number	
 		chosen_id = list(self.my_subsets.keys())[int(Subset_Number-1)]	#would like way that access "subset_number" entry to set this.
-		
+	
+
 		#apply the set parameters indicated in the argument to the identified members. should generally be off to prevent shitty values
 		if(apply_settings):
-			self.my_subsets[chosen_id]["offset"] = offset
-			this_offset = self.my_subsets[my_hex_style_id]["offset"]
+		
+			#other plot_subset routines don't need to change this data.
+			if(chosen_id==my_hex_style_id):
+				#apply the offset
+				self.my_subsets[chosen_id]["offset"] = offset
+				this_offset = self.my_subsets[my_hex_style_id]["offset"]
 
-			#calculation setup
-			my_edges = np.arange(bin_start,bin_end,(bin_end-bin_start)/n_bins)
-			myValues = np.array([x,y]).transpose()
+				#calculation setup
+				self.my_subsets[chosen_id]['x_data'] = temp_edges
+				my_edges = self.my_subsets[chosen_id]['x_data']
 			
+			myValues = np.array([x,y]).transpose()
 
-			#print(statistic_type)
-			self.my_subsets[my_hex_style_id][statistic_type+"_display"] = display
+			#self.my_subsets[my_hex_style_id][statistic_type+"_display"] = display #doesn't get more than one statistic for comparison
 
 			#apply the median truncation to the user statistic function
 			def t_func_wrapper(r):
-				return t_func(r,self.my_subsets[my_hex_style_id]['median_truncation'])
+				return t_func(r,self.my_subsets[chosen_id]['median_truncation'])
 	
-			#conditional below check if it's already been calculated.  if not, don't re-calculate.
-			x_not_changed = (self.my_subsets[my_hex_style_id]['x_id']==self.my_subsets[my_hex_style_id]['last_x_id'])	#these to save space
-			y_not_changed = (self.my_subsets[my_hex_style_id]['y_id']==self.my_subsets[my_hex_style_id]['last_y_id'])	#these to save space
-			med_trunc_changed = (self.my_subsets[my_hex_style_id]['median_truncation']==self.my_subsets[my_hex_style_id]['last_median_truncation']) 
-		
-			#this is where space is changed.
-			if((not (x_not_changed and y_not_changed and med_trunc_changed)) and len(z)!=0):
-			
+			#conditional below check if it's already been calculated.  if not, don't re-calculate. should always be recalculated or at least checked
+			x_changed = (self.my_subsets[my_hex_style_id]['x_id']!=self.my_subsets[my_hex_style_id]['last_x_id'])	#these to save space
+			y_changed = (self.my_subsets[my_hex_style_id]['y_id']!=self.my_subsets[my_hex_style_id]['last_y_id'])	#these to save space
+			med_trunc_changed = (self.my_subsets[my_hex_style_id]['median_truncation']!=self.my_subsets[my_hex_style_id]['last_median_truncation']) 
+			bins_changed = hash(frozenset(self.my_subsets[my_hex_style_id]['last_x_data']))!=hash(frozenset(self.my_subsets[my_hex_style_id]['x_data']))
+			#this is where space is saved.
+			if( (bins_changed or x_changed or y_changed or med_trunc_changed) and len(z)!=0):
 				#calculation is placed in the subsets
 				#square brackets around my_edges below is important
-				self.my_subsets[my_hex_style_id]['y_data'] = vectorized_binned_statistic_dd(z,myValues,bins=[my_edges],statistic=t_func_wrapper)
+				self.my_subsets[my_hex_style_id]['y_data'] = vectorized_binned_statistic_dd(z,myValues,bins=[self.my_subsets[my_hex_style_id]['x_data']],statistic=t_func_wrapper)
 		
-		to_display = {}
-		#displaying settings
+		#displaying settings. needs to display every line otherwise it's deleted when plot_subset is called
 		if(normalized and len(self.my_subsets[my_hex_style_id]['y_data'])>0):
-			#print(self.my_subsets[my_hex_style_id]['y_data'])
-			to_display['d']  = normalize_statistic(self.my_subsets[my_hex_style_id]['y_data'][statistic_type])+self.my_subsets[my_hex_style_id]['offset']
+			self.to_display['d']  = normalize_statistic(self.my_subsets[my_hex_style_id]['y_data'][statistic_type])+self.my_subsets[my_hex_style_id]['offset']
 		elif(not normalized and len(self.my_subsets[my_hex_style_id]['y_data'])>0):		
-			to_display['d']  = self.my_subsets[my_hex_style_id]['y_data'][statistic_type]+self.my_subsets[my_hex_style_id]['offset']
+			self.to_display['d']  = self.my_subsets[my_hex_style_id]['y_data'][statistic_type]+self.my_subsets[my_hex_style_id]['offset']
 		
-			#this will allow for multiple displays for comparison
-			if(self.my_subsets[my_hex_style_id][statistic_type+"_display"] and len(self.my_subsets)>0):
-				axes.plot(my_edges[:-1],to_display['d'][::-1]+self.my_subsets[my_hex_style_id]['offset'],c=style.color,marker='.',linewidth=2)
+
+		#if(self.my_subsets[my_hex_style_id][statistic_type+"_display"] and len(self.to_display)>0):#doesn't get more than one statistic for comparison
+		if(len(self.to_display)>0):
+			axes.plot(self.my_subsets[my_hex_style_id]['x_data'][:-1],self.to_display['d'][::-1],c=style.color,marker='.',linewidth=2)
 
 		
 	
@@ -194,6 +201,7 @@ class dls_viewer(CustomViewer):
 		self.my_subsets[my_hex_style_id]['last_x_id'] = self.my_subsets[my_hex_style_id]['x_id']
 		self.my_subsets[my_hex_style_id]['last_y_id'] = self.my_subsets[my_hex_style_id]['y_id']
 		self.my_subsets[my_hex_style_id]['last_median_truncation'] = self.my_subsets[my_hex_style_id]['median_truncation']
+		self.my_subsets[my_hex_style_id]['last_x_data'] = self.my_subsets[my_hex_style_id]['x_data']
 
 	def setup(self, axes):
 		temp = 0 
