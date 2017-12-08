@@ -137,8 +137,8 @@ class dls_viewer(CustomViewer):
 			self.my_subsets[my_hex_style_id]['offset'] = 0
 			self.my_subsets[my_hex_style_id]['median_truncation'] = 1
 			self.my_subsets[my_hex_style_id]['last_median_truncation'] = 1
-			self.my_subsets[my_hex_style_id][statistic_type+"_display"] = True
-
+			self.my_subsets[my_hex_style_id]["statistic_type"] = statistic_type
+			self.my_subsets[my_hex_style_id]["last_statistic_type"] = statistic_type
 		
 			
 		else:
@@ -151,11 +151,14 @@ class dls_viewer(CustomViewer):
 		#tell rest of code which subset is being used #associate hex style id with subset number	
 		chosen_id = list(self.my_subsets.keys())[int(Subset_Number-1)]	#would like way that access "subset_number" entry to set this.
 	
-
+		
 		#apply the set parameters indicated in the argument to the identified members. should generally be off to prevent shitty values
 		if(apply_settings):
-		
+			##################################################################################
+			##############This code below is applied only on the selected subset##############
+			##################################################################################
 			#other plot_subset routines don't need to change this data.
+			#applying new settings to data
 			if(chosen_id==my_hex_style_id):
 				#apply the offset
 				self.my_subsets[chosen_id]["offset"] = offset
@@ -166,10 +169,10 @@ class dls_viewer(CustomViewer):
 				my_edges = self.my_subsets[chosen_id]['x_data']
 
 				self.my_subsets[chosen_id]['median_truncation'] = median_truncation
+
+				self.my_subsets[chosen_id]["statistic_type"] = statistic_type
 			
 			myValues = np.array([x,y]).transpose()
-
-			#self.my_subsets[my_hex_style_id][statistic_type+"_display"] = display #doesn't get more than one statistic for comparison
 
 			#apply the median truncation to the user statistic function
 			def t_func_wrapper(r):
@@ -187,15 +190,20 @@ class dls_viewer(CustomViewer):
 				#calculation is placed in the subsets
 				#square brackets around my_edges below is important
 				self.my_subsets[my_hex_style_id]['y_data'] = vectorized_binned_statistic_dd(z,myValues,bins=[self.my_subsets[my_hex_style_id]['x_data']],statistic=t_func_wrapper)
-		
+
+
+		######################################################################
+		##############This code below is applied on every subset##############
+		######################################################################
 		#displaying settings. needs to display every line otherwise it's deleted when plot_subset is called
+		
+		this_statistic_type = self.my_subsets[my_hex_style_id]["statistic_type"]
 		if(normalized and len(self.my_subsets[my_hex_style_id]['y_data'])>0):
-			self.to_display['d']  = normalize_statistic(self.my_subsets[my_hex_style_id]['y_data'][statistic_type])+self.my_subsets[my_hex_style_id]['offset']
+			self.to_display['d']  = normalize_statistic(self.my_subsets[my_hex_style_id]['y_data'][this_statistic_type])+self.my_subsets[my_hex_style_id]['offset']
 		elif(not normalized and len(self.my_subsets[my_hex_style_id]['y_data'])>0):		
-			self.to_display['d']  = self.my_subsets[my_hex_style_id]['y_data'][statistic_type]+self.my_subsets[my_hex_style_id]['offset']
+			self.to_display['d']  = self.my_subsets[my_hex_style_id]['y_data'][this_statistic_type]+self.my_subsets[my_hex_style_id]['offset']
 		
 
-		#if(self.my_subsets[my_hex_style_id][statistic_type+"_display"] and len(self.to_display)>0):#doesn't get more than one statistic for comparison
 		if(len(self.to_display)>0):
 			axes.plot(self.my_subsets[my_hex_style_id]['x_data'][:-1],self.to_display['d'][::-1],c=style.color,marker='.',linewidth=2)
 
@@ -206,6 +214,7 @@ class dls_viewer(CustomViewer):
 		self.my_subsets[my_hex_style_id]['last_y_id'] = self.my_subsets[my_hex_style_id]['y_id']
 		self.my_subsets[my_hex_style_id]['last_median_truncation'] = self.my_subsets[my_hex_style_id]['median_truncation']
 		self.my_subsets[my_hex_style_id]['last_x_data'] = self.my_subsets[my_hex_style_id]['x_data']
+		self.my_subsets[my_hex_style_id]["last_statistic_type"] = self.my_subsets[my_hex_style_id]["statistic_type"]
 
 	def setup(self, axes):
 		temp = 0 

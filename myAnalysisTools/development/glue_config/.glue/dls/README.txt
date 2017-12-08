@@ -46,3 +46,9 @@ brain storm (then order)
 	1) copy and or saving data widget. mask would need to be gotten separately unless hub is used.
 	2) assign identifier based on subset, not on memory address
 	3) ipython ctyped cast is semi responsive. why the lag? different threads?
+
+14) (check) got underlying state (binning and median truncation) to be selective.  
+
+15) reloading parameters from previous subset is proving challenging.  need to test if functionality is even possible
+
+16) add averaging type to state
