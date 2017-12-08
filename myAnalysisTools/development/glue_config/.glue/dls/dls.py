@@ -68,7 +68,7 @@ class dls_viewer(CustomViewer):
 	
 	#selection settings
 	Subset_Number = 1
-	stored_value = 0	#each subset can have multiple stored values in self.my_subsets. how to make it so they don't get deleted when changing?
+	#stored_value = 0	#each subset can have multiple stored values in self.my_subsets. how to make it so they don't get deleted when changing?
 	
 	#calculation settings
 	bin_start = 326.9
@@ -111,7 +111,7 @@ class dls_viewer(CustomViewer):
 		temp = 0
 
 	#plots all subsets unless I put in the conditional
-	def plot_subset(self, axes, x, y,z, style,Subset_Number, stored_value, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,display,apply_settings):		
+	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,display,apply_settings):		
 		
 		#identify the subset coming in
 		my_hex_style_id = str(hex(id(style)))
@@ -161,9 +161,11 @@ class dls_viewer(CustomViewer):
 				self.my_subsets[chosen_id]["offset"] = offset
 				this_offset = self.my_subsets[my_hex_style_id]["offset"]
 
-				#calculation setup
+				#calculation setup: apply new bins
 				self.my_subsets[chosen_id]['x_data'] = temp_edges
 				my_edges = self.my_subsets[chosen_id]['x_data']
+
+				self.my_subsets[chosen_id]['median_truncation'] = median_truncation
 			
 			myValues = np.array([x,y]).transpose()
 
@@ -180,6 +182,8 @@ class dls_viewer(CustomViewer):
 			bins_changed = hash(frozenset(self.my_subsets[my_hex_style_id]['last_x_data']))!=hash(frozenset(self.my_subsets[my_hex_style_id]['x_data']))
 			#this is where space is saved.
 			if( (bins_changed or x_changed or y_changed or med_trunc_changed) and len(z)!=0):
+
+				print("recalculating")
 				#calculation is placed in the subsets
 				#square brackets around my_edges below is important
 				self.my_subsets[my_hex_style_id]['y_data'] = vectorized_binned_statistic_dd(z,myValues,bins=[self.my_subsets[my_hex_style_id]['x_data']],statistic=t_func_wrapper)
