@@ -75,7 +75,7 @@ class dls_viewer(CustomViewer):
 	n_bins = 150
 	median_truncation = 1
 	statistic_type =["average","median","shot_by_shot_average","shot_by_shot_median", "slope"]
-	
+	test_dict = {"testing":"123","abc":"efd"}
 	#display settings
 	offset = 0
 	normalized = True
@@ -111,7 +111,7 @@ class dls_viewer(CustomViewer):
 		temp = 0
 
 	#plots all subsets unless I put in the conditional
-	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,apply_settings):		
+	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,apply_settings,test_dict):		
 
 		#identify the subset coming in
 		my_hex_style_id = str(hex(id(style)))
@@ -151,10 +151,7 @@ class dls_viewer(CustomViewer):
 		#tell rest of code which subset is being used #associate hex style id with subset number	
 		chosen_id = list(self.my_subsets.keys())[int(Subset_Number-1)]	#would like way that access "subset_number" entry to set this.
 
-		#print("chosen id = "+str(chosen_id))
-		#print("last chosen id = "+str(self.last_chosen_id))
-		#print("my_hex_style_id = "+str(my_hex_style_id))
-		#print("end")
+
 	
 		##################################################################################
 		##############If this is a known subset, load the settings to widget##############
