@@ -9,4 +9,5 @@ my_custom_viewer_object
 
 myKeys = list(my_custom_viewer_object.value.my_subsets.keys())[0]
 this_custom_viewer  = my_custom_viewer_object.value.my_subsets[myKeys]
+#my_custom_viewer_object.value.widget.offset='0'	#changes widget. how to change widget from custom viewer code?
 

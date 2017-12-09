@@ -11,10 +11,9 @@ import numpy as np
 from lib.analysis_library import vectorized_binned_statistic_dd
 from scipy.stats import binned_statistic
 import pickle
-import zmq
 import sys
 import time
-import threading
+import ctypes
 import random
 
 
@@ -85,6 +84,8 @@ class dls_viewer(CustomViewer):
 	#apply settings. plot_subset only does this when true.  Should normally be false to prevent frivolous recalculation. would ideally be button
 	apply_settings = True
 
+	test_change = 0
+
 	def __init__(self, widget_instance):
 		if(3==sys.version_info[0]):
 			super().__init__(widget_instance)
@@ -93,6 +94,7 @@ class dls_viewer(CustomViewer):
 		
 		self.my_subsets = {}
 		self.to_display = {}
+		self.my_self = ctypes.cast(id(self),ctypes.py_object)
 	
 	"""def make_selector(self, roi, x, y):
 
@@ -113,6 +115,8 @@ class dls_viewer(CustomViewer):
 	#plots all subsets unless I put in the conditional
 	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,display,apply_settings):		
 		
+		self.my_self.value.widget.test_change = '10'
+
 		#identify the subset coming in
 		my_hex_style_id = str(hex(id(style)))
 
