@@ -91,19 +91,17 @@ class dls_viewer(CustomViewer):
 		
 		self.my_subsets = {}
 		self.to_display = {}
-		self.my_self = ctypes.cast(id(self),ctypes.py_object)
+		self.my_self = ctypes.cast(id(self),ctypes.py_object)	#this allows for saved values to be written to the "option widget"'s fields'.
 		self.last_chosen_id = '0'
 	
-	"""def make_selector(self, roi, x, y):
+	def make_selector(self, roi, x, y):
 
 		state = RoiSubsetState()
 		state.roi = roi
 		state.xatt = x.id
 		state.yatt = y.id
-		state.x=0
-		state.y=1
-		state.z=2
-		return state"""
+		print("selector roi =" +str(roi))
+		return state
 
 
 	def plot_data(self, axes, x, y,z, style,n_bins):
@@ -122,9 +120,8 @@ class dls_viewer(CustomViewer):
 
 
 		#calculation setup
-		
 
-		#make new subset state		
+		#make new subset state if one doesn't already exist	
 		if my_hex_style_id not in self.my_subsets.keys():
 			self.my_subsets[my_hex_style_id]={"offset":0,"x_id":my_hex_x_id,"y_id":my_hex_y_id,"Subset_Number":len(self.my_subsets)+1}
 			self.my_subsets[my_hex_style_id]['last_x_id'] = 0
@@ -140,9 +137,10 @@ class dls_viewer(CustomViewer):
 			self.my_subsets[my_hex_style_id]["bin_start"] = bin_start
 			self.my_subsets[my_hex_style_id]['bin_end'] = bin_end
 			self.my_subsets[my_hex_style_id]['n_bins'] = n_bins 
-			self.my_subsets[my_hex_style_id]['normalized'] = normalized	
+			self.my_subsets[my_hex_style_id]['normalized'] = normalized
+			self.my_subsets[my_hex_style_id]['subset_number'] = len(self.my_subsets)-1
 		
-			
+		#otherwise store the hash values to prevent frivolous recalculation	
 		else:
 			self.my_subsets[my_hex_style_id]["x_id"] = my_hex_x_id
 			self.my_subsets[my_hex_style_id]["y_id"] = my_hex_y_id
@@ -150,14 +148,19 @@ class dls_viewer(CustomViewer):
 
 		#tell rest of code which subset is being used #associate hex style id with subset number	
 		chosen_id = list(self.my_subsets.keys())[int(Subset_Number-1)]	#would like way that access "subset_number" entry to set this.
+		
+		print(str(self.my_self.value.widget.selected_layer))
+		#print("self.my_subsets = " + str(self.my_subsets.keys()))
+		#print("selected layer = " + str(self.my_self.value.widget.selected_layer))
+		#print("subset number = "+str(self.my_subsets[my_hex_style_id]['subset_number']))
 
-
+		#chosen_id = [i for i in self.my_subsets if self.my_self.value.widget.selected_layer == self.my_subsets[my_hex_style_id]['subset_number']][0]
 	
 		##################################################################################
 		##############If this is a known subset, load the settings to widget##############
 		##################################################################################
 		if((chosen_id==my_hex_style_id) and (self.last_chosen_id!=chosen_id) and (self.last_chosen_id!='0')):
-			#print("loading settings")
+		
 			self.my_self.value.redraw_on_settings_change=False
 			self.my_self.value.widget.offset = str(self.my_subsets[chosen_id]["offset"])
 			self.my_self.value.widget.median_truncation = str(self.my_subsets[chosen_id]['median_truncation'])
@@ -206,7 +209,6 @@ class dls_viewer(CustomViewer):
 			#this is where space is saved.
 			if( (bins_changed or x_changed or y_changed or med_trunc_changed) and len(z)!=0):
 
-				#print("recalculating")
 				#calculation is placed in the subsets
 				#square brackets around my_edges below is important
 				self.my_subsets[my_hex_style_id]['y_data'] = vectorized_binned_statistic_dd(z,myValues,bins=[self.my_subsets[my_hex_style_id]['x_data']],statistic=t_func_wrapper)
