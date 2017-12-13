@@ -2,9 +2,25 @@
 
 to do list
 
-brain storm (then order)
+
+#################################
+#####Done with new features. Now adding user safety limit wrappers
+1) stream lined way to have plot layer activate changes (ok, one new feature)
+2) more safety on text fields
+3) initial values for binning
+4) clean up
+	1) get rid of testing/debug text
+	2) put user choosable"att"
+5) record screen shots and user instructions
+6) can it handle deleted subsets?
+7) send pull request
+	1) prepare test data
+	2) how to instructions
+8) start user testing
 
 
+#################################
+#######
 
 
 
@@ -17,7 +33,7 @@ brain storm (then order)
 		(a) is still cludgy. using arbitrary indeces that break. would be nice if could 
 		(b) apply statistic to specific sub modules?  What about comparing different statistics for single ROI selection?
 	6) (check) conditional recalculating statistics. only recalculates when new region selected.
-	7) add do recalculation button now
+	7) (check) add do recalculation button now
 	7) stripped down 2d scatter viewer for faster rendering
 
 2) robust statistics instead of mean,median, slope, etc... also, slope is probably corrupted by brute median truncation.
@@ -37,7 +53,7 @@ brain storm (then order)
 
 10) (check) zmq can send address of object (maybe use __init__ instead of setup? ) to ipython terminal. no can make qt interaction.
 
-11) maybe see if zmq can directly send pyobject. is this even useful?
+11) (check) maybe see if zmq can directly send pyobject. is this even useful?
 
 12) (check) using gc.get_object() and searching for specific class type to find memory to ctype cast.
 
@@ -49,6 +65,7 @@ brain storm (then order)
 
 14) (check) got underlying state (binning and median truncation) to be selective.  
 
-15) reloading parameters from previous subset is proving challenging.  need to test if functionality is even possible
+15) (check) reloading parameters from previous subset is proving challenging.  need to test if functionality is even possible
 
 16) add averaging type to state
+
