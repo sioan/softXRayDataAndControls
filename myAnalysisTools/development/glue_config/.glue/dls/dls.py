@@ -138,7 +138,7 @@ class dls_viewer(CustomViewer):
 			self.my_subsets[my_hex_style_id]['bin_end'] = bin_end
 			self.my_subsets[my_hex_style_id]['n_bins'] = n_bins 
 			self.my_subsets[my_hex_style_id]['normalized'] = normalized
-			self.my_subsets[my_hex_style_id]['subset_number'] = len(self.my_subsets)-1
+			self.my_subsets[my_hex_style_id]['subset_number'] = str(len(self.my_subsets))
 		
 		#otherwise store the hash values to prevent frivolous recalculation	
 		else:
@@ -146,16 +146,26 @@ class dls_viewer(CustomViewer):
 			self.my_subsets[my_hex_style_id]["y_id"] = my_hex_y_id
 
 
-		#tell rest of code which subset is being used #associate hex style id with subset number	
-		chosen_id = list(self.my_subsets.keys())[int(Subset_Number-1)]	#would like way that access "subset_number" entry to set this.
+		#tell rest of code which subset is being used #associate hex style id with subset number
+		if(Subset_Number>0 and Subset_Number<=len(self.my_subsets)):
+			chosen_id = list(self.my_subsets.keys())[int(Subset_Number-1)]	#would like way that access "subset_number" entry to set this.
+		else:
+			#print("new subset line")		
 		
-		print(str(self.my_self.value.widget.selected_layer))
-		#print("self.my_subsets = " + str(self.my_subsets.keys()))
-		#print("selected layer = " + str(self.my_self.value.widget.selected_layer))
-		#print("subset number = "+str(self.my_subsets[my_hex_style_id]['subset_number']))
+			#print("subset number = "+str(self.my_subsets[my_hex_style_id]['subset_number']))
 
-		#chosen_id = [i for i in self.my_subsets if self.my_self.value.widget.selected_layer == self.my_subsets[my_hex_style_id]['subset_number']][0]
-	
+			this_layer_number = str(self.my_self.value.widget.selected_layer)[24:]	#uses the plot layers to select it
+			#print("selected layer = " + this_layer_number)
+
+			chosen_id_test = [i for i in self.my_subsets if this_layer_number == self.my_subsets[i]['subset_number']]
+
+			if (len(chosen_id_test)==0):
+				chosen_id_test = list(self.my_subsets.keys())[0]
+		
+			#print("chosen_id_test = "+str(chosen_id_test)+" and chosen id = "+str(chosen_id))
+			chosen_id = chosen_id_test[0]
+		
+
 		##################################################################################
 		##############If this is a known subset, load the settings to widget##############
 		##################################################################################
