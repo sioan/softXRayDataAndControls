@@ -125,6 +125,8 @@ Just to recap using the HV supplies, if you try to turn the HV on and it doesn't
 #epics and edm development area
 /reg/g/pcds/package/epics/3.14-dev
 
+#questionaire exporting
+https://confluence.slac.stanford.edu/display/~mshankar/Exporting+data+from+the+questionnaire
 
 
 #telnet to digi-sxr-04:2105
@@ -273,6 +275,8 @@ sudo bkill  `bjobs -u jboes| grep PEND | grep psnehidleq | cut -f1 -d" "`
 sudo /etc/init.d/lsf start #restart lsf daemons 
 /reg/common/tools/lsf/show_closed_nodes.sh
 
+
+#if bsub doesn't work, don't forget kinit and aklog
 #psana bsub bash commands
 #https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=225509678
 source /reg/g/psdm/etc/ana_env.sh	#this has been deprecated
