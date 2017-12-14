@@ -35,9 +35,9 @@ my_scatter_viewer.add_data(myData)
 my_scatter_viewer.state.x_att=myData.id['/GMD']
 my_scatter_viewer.state.y_att=myData.id['/acqiris2']
 
-#my_dls_viewer = application.new_data_viewer(dls.dls_viewer)
+#my_dls_viewer = application.new_data_viewer(dls.dls_viewer)	#this doesn't work
 my_Histogram_mod_viewer = application.new_data_viewer(data_viewer.HistogramViewer_mod)
-my_Histogram_mod_viewer.add_data(myData)
+my_Histogram_mod_viewer.add_data(dc[0])
 my_Histogram_mod_viewer.x_att=myData.id['/GMD']
 my_Histogram_mod_viewer.y_att=myData.id['/acqiris2']
 ######

@@ -15,6 +15,7 @@ import sys
 import time
 import ctypes
 import random
+import threading
 
 
 
@@ -75,7 +76,7 @@ class dls_viewer(CustomViewer):
 	n_bins = 150
 	median_truncation = 1
 	statistic_type =["average","median","shot_by_shot_average","shot_by_shot_median", "slope"]
-	test_dict = {"testing":"123","abc":"efd"}
+	toggler = True
 	#display settings
 	offset = 0
 	normalized = True
@@ -93,7 +94,11 @@ class dls_viewer(CustomViewer):
 		self.to_display = {}
 		self.my_self = ctypes.cast(id(self),ctypes.py_object)	#this allows for saved values to be written to the "option widget"'s fields'.
 		self.last_chosen_id = '0'
-	
+		self.last_selected_layer = 'None'
+
+		self.t = threading.Thread(target=self.check_layer_select)
+		self.t.start()
+
 	def make_selector(self, roi, x, y):
 
 		state = RoiSubsetState()
@@ -104,12 +109,21 @@ class dls_viewer(CustomViewer):
 		return state
 
 
+	def check_layer_select(self):
+		while(True):
+			if(str(self.my_self.value.widget.selected_layer)!=self.last_selected_layer):
+				print("switched layer "+str(self.my_self.value.widget.selected_layer))
+				self.my_self.value.widget.toggler = not self.my_self.value.widget.toggler
+				self.last_selected_layer=str(self.my_self.value.widget.selected_layer)
+			time.sleep(.3)
+			
+
 	def plot_data(self, axes, x, y,z, style,n_bins):
 
 		temp = 0
 
 	#plots all subsets unless I put in the conditional
-	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,apply_settings,test_dict):		
+	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,apply_settings,toggler):		
 
 		#identify the subset coming in
 		my_hex_style_id = str(hex(id(style)))
@@ -254,6 +268,6 @@ class dls_viewer(CustomViewer):
 		temp = 0 
 		axes.set_ylim(-5, 15)
 		axes.set_xlim(326, 347)
-		
+		#self.t.start()
 
 	
