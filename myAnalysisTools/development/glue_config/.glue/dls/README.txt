@@ -5,7 +5,8 @@ to do list
 
 #################################
 #####Done with new features. Now adding user safety limit wrappers
-1) stream lined way to have plot layer activate changes (ok, one new feature)
+1) (check) stream lined way to have plot layer activate changes (ok, one new feature).
+	a) is the threaded approach safe? use qthread instead?
 2) more safety on text fields
 3) initial values for binning
 4) clean up
@@ -22,6 +23,10 @@ to do list
 #################################
 #######
 
+#################################
+#############BUG LIST############
+1) bad binning breaks glue
+
 
 
 1) getting it to working demo mode for scientists
@@ -36,13 +41,15 @@ to do list
 	7) (check) add do recalculation button now
 	7) stripped down 2d scatter viewer for faster rendering
 
-2) robust statistics instead of mean,median, slope, etc... also, slope is probably corrupted by brute median truncation.
+2) (check) robust statistics instead of mean,median, slope, etc... also, slope is probably corrupted by brute median truncation.
+	a) added median truncation.
+	b) still need to add 
 
 3) scikit.beam binned_statistic is more efficient. is that compatible with the vectorized version?
 
 5) demo psana shared memory compatibility
 
-6) using psmon visualization (damiani)
+6) using psmon visualization (dd's stuff)
 
 7) (check) rapid testing script instead of openining full glue viewer every time. file is called quick debug and is in the sxri0414 smallhdf5 directory
 	a) doesn't work for custom viewers
@@ -60,12 +67,15 @@ to do list
 
 13) features
 	1) copy and or saving data widget. mask would need to be gotten separately unless hub is used.
-	2) assign identifier based on subset, not on memory address
-	3) ipython ctyped cast is semi responsive. why the lag? different threads?
+	2) (check) assign identifier based on subset, not on memory address
+	3) (check) ipython ctyped cast is semi responsive. why the lag? different threads?
+		a) because of the redraw. needed to turn off first. 
 
 14) (check) got underlying state (binning and median truncation) to be selective.  
 
 15) (check) reloading parameters from previous subset is proving challenging.  need to test if functionality is even possible
 
-16) add averaging type to state
+16) add averaging type to state. more difficult than anticipated since it's widget doesn't write to itself
+
+
 

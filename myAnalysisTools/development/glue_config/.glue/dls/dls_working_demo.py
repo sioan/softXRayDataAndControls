@@ -15,6 +15,7 @@ import sys
 import time
 import ctypes
 import random
+import threading
 
 
 
@@ -75,7 +76,7 @@ class dls_viewer(CustomViewer):
 	n_bins = 150
 	median_truncation = 1
 	statistic_type =["average","median","shot_by_shot_average","shot_by_shot_median", "slope"]
-	test_dict = {"testing":"123","abc":"efd"}
+	toggler = True
 	#display settings
 	offset = 0
 	normalized = True
@@ -91,29 +92,39 @@ class dls_viewer(CustomViewer):
 		
 		self.my_subsets = {}
 		self.to_display = {}
-		self.my_self = ctypes.cast(id(self),ctypes.py_object)
+		self.my_self = ctypes.cast(id(self),ctypes.py_object)	#this allows for saved values to be written to the "option widget"'s fields'.
 		self.last_chosen_id = '0'
-	
-	"""def make_selector(self, roi, x, y):
+		self.last_selected_layer = 'None'
+
+		self.t = threading.Thread(target=self.check_layer_select)
+		self.t.start()
+
+	def make_selector(self, roi, x, y):
 
 		state = RoiSubsetState()
 		state.roi = roi
 		state.xatt = x.id
 		state.yatt = y.id
-		state.x=0
-		state.y=1
-		state.z=2
-		return state"""
+		print("selector roi =" +str(roi))
+		return state
 
+
+	def check_layer_select(self):
+		while(True):
+			if(str(self.my_self.value.widget.selected_layer)!=self.last_selected_layer):
+				print("switched layer "+str(self.my_self.value.widget.selected_layer))
+				self.my_self.value.widget.toggler = not self.my_self.value.widget.toggler
+				self.last_selected_layer=str(self.my_self.value.widget.selected_layer)
+			time.sleep(.3)
+			
 
 	def plot_data(self, axes, x, y,z, style,n_bins):
 
 		temp = 0
 
 	#plots all subsets unless I put in the conditional
-	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,apply_settings,test_dict):		
+	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,apply_settings,toggler):		
 
-		print(hex(id(test_dict)))
 		#identify the subset coming in
 		my_hex_style_id = str(hex(id(style)))
 
@@ -123,9 +134,8 @@ class dls_viewer(CustomViewer):
 
 
 		#calculation setup
-		
 
-		#make new subset state		
+		#make new subset state if one doesn't already exist	
 		if my_hex_style_id not in self.my_subsets.keys():
 			self.my_subsets[my_hex_style_id]={"offset":0,"x_id":my_hex_x_id,"y_id":my_hex_y_id,"Subset_Number":len(self.my_subsets)+1}
 			self.my_subsets[my_hex_style_id]['last_x_id'] = 0
@@ -141,27 +151,40 @@ class dls_viewer(CustomViewer):
 			self.my_subsets[my_hex_style_id]["bin_start"] = bin_start
 			self.my_subsets[my_hex_style_id]['bin_end'] = bin_end
 			self.my_subsets[my_hex_style_id]['n_bins'] = n_bins 
-			self.my_subsets[my_hex_style_id]['normalized'] = normalized	
+			self.my_subsets[my_hex_style_id]['normalized'] = normalized
+			self.my_subsets[my_hex_style_id]['subset_number'] = str(len(self.my_subsets))
 		
-			
+		#otherwise store the hash values to prevent frivolous recalculation	
 		else:
 			self.my_subsets[my_hex_style_id]["x_id"] = my_hex_x_id
 			self.my_subsets[my_hex_style_id]["y_id"] = my_hex_y_id
 
 
-		#tell rest of code which subset is being used #associate hex style id with subset number	
-		chosen_id = list(self.my_subsets.keys())[int(Subset_Number-1)]	#would like way that access "subset_number" entry to set this.
+		#tell rest of code which subset is being used #associate hex style id with subset number
+		if(Subset_Number>0 and Subset_Number<=len(self.my_subsets)):
+			chosen_id = list(self.my_subsets.keys())[int(Subset_Number-1)]	#would like way that access "subset_number" entry to set this.
+		else:
+			#print("new subset line")		
+		
+			#print("subset number = "+str(self.my_subsets[my_hex_style_id]['subset_number']))
 
-		#print("chosen id = "+str(chosen_id))
-		#print("last chosen id = "+str(self.last_chosen_id))
-		#print("my_hex_style_id = "+str(my_hex_style_id))
-		#print("end")
-	
+			this_layer_number = str(self.my_self.value.widget.selected_layer)[24:]	#uses the plot layers to select it
+			#print("selected layer = " + this_layer_number)
+
+			chosen_id_test = [i for i in self.my_subsets if this_layer_number == self.my_subsets[i]['subset_number']]
+
+			if (len(chosen_id_test)==0):
+				chosen_id_test = list(self.my_subsets.keys())[0]
+		
+			#print("chosen_id_test = "+str(chosen_id_test)+" and chosen id = "+str(chosen_id))
+			chosen_id = chosen_id_test[0]
+		
+
 		##################################################################################
 		##############If this is a known subset, load the settings to widget##############
 		##################################################################################
 		if((chosen_id==my_hex_style_id) and (self.last_chosen_id!=chosen_id) and (self.last_chosen_id!='0')):
-			#print("loading settings")
+		
 			self.my_self.value.redraw_on_settings_change=False
 			self.my_self.value.widget.offset = str(self.my_subsets[chosen_id]["offset"])
 			self.my_self.value.widget.median_truncation = str(self.my_subsets[chosen_id]['median_truncation'])
@@ -210,7 +233,6 @@ class dls_viewer(CustomViewer):
 			#this is where space is saved.
 			if( (bins_changed or x_changed or y_changed or med_trunc_changed) and len(z)!=0):
 
-				#print("recalculating")
 				#calculation is placed in the subsets
 				#square brackets around my_edges below is important
 				self.my_subsets[my_hex_style_id]['y_data'] = vectorized_binned_statistic_dd(z,myValues,bins=[self.my_subsets[my_hex_style_id]['x_data']],statistic=t_func_wrapper)
@@ -246,6 +268,6 @@ class dls_viewer(CustomViewer):
 		temp = 0 
 		axes.set_ylim(-5, 15)
 		axes.set_xlim(326, 347)
-		
+		#self.t.start()
 
 	
