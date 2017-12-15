@@ -19,16 +19,21 @@ def errorWeightedSmoothing(myData,myError,myWidth,myOrder):
 def vectorized_binned_statistic_dd(sample, values, statistic='mean',bins=10, range=None, expand_binnumbers=False):
 	arg_axes = array([pickle.dumps(i) for i in values])
 
-	results = binned_statistic_dd(sample,values = arg_axes,bins=bins,statistic=statistic)
+	results = binned_statistic_dd(sample,values = arg_axes,bins=bins,statistic=statistic)	#return a float on error. but don't see any errors from statistic.
 	my_dict_of_arrays ={}
 
+	half_way = int(len(results)/2)
+	#these two for loops turn an array of dicts into a dict of arrays
 	for this_key in results[0].item(0).keys():
 		#my_dict_of_arrays[this_key] = array([[array(j[this_key]) for j in i] for i in results[0]])	#only two dimensions
 		my_dict_of_arrays[this_key] = zeros(results[0].shape)
 
 	for i in my_dict_of_arrays:
 		for j in arange(my_dict_of_arrays[i].size):
-			my_dict_of_arrays[i].itemset(j,results[0].item(j)[i])
+			try:
+				my_dict_of_arrays[i].itemset(j,results[0].item(j)[i])
+			except TypeError:
+				my_dict_of_arrays[i].itemset(j,-9999.9)
 
 	#results[0]=my_dict_of_arrays
 	#to do

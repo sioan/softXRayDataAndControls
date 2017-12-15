@@ -20,29 +20,32 @@ import threading
 
 
 def t_func(r,median_truncation):
-	temp = np.array([pickle.loads(i) for i in r])
+	try:
+		temp = np.array([pickle.loads(i) for i in r])
 	
-	x=temp[:,0]
-	y=temp[:,1]
+		x=temp[:,0]
+		y=temp[:,1]
 
 
-	myLength=len(y)
-	threshold=median_truncation/400.0
-	ySortedIndex = np.argsort(y)
-	y = y[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	x = x[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
+		myLength=len(y)
+		threshold=median_truncation/400.0
+		ySortedIndex = np.argsort(y)
+		y = y[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
+		x = x[ySortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
 	
-	xSortedIndex = np.argsort(x)
-	y = y[xSortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
-	x = x[xSortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
+		xSortedIndex = np.argsort(x)
+		y = y[xSortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
+		x = x[xSortedIndex][int(threshold*myLength):int(myLength*(1-1*threshold))]
 
 	
-	myCov = np.cov(x,y)
-	simple_slope = myCov[0,1]/myCov[0,0]
+		myCov = np.cov(x,y)
+		simple_slope = myCov[0,1]/myCov[0,0]
 	
-	non_serialized_result = np.array([np.mean(y*1.0/x),np.mean(y)/np.mean(1.0*x),simple_slope])
-	#serialized_result = pickle.dumps(non_serialized_result)
-	dict_result = {'shot_by_shot_median':np.median(y*1.0/x),'shot_by_shot_average':np.mean(y*1.0/x),'median':np.median(y)/np.median(1.0*x),'average':np.mean(y)/np.mean(1.0*x),'slope':simple_slope}
+		non_serialized_result = np.array([np.mean(y*1.0/x),np.mean(y)/np.mean(1.0*x),simple_slope])
+		#serialized_result = pickle.dumps(non_serialized_result)
+		dict_result = {'shot_by_shot_median':np.median(y*1.0/x),'shot_by_shot_average':np.mean(y*1.0/x),'median':np.median(y)/np.median(1.0*x),'average':np.mean(y)/np.mean(1.0*x),'slope':simple_slope}
+	except:
+		dict_result = {'shot_by_shot_median':-9999.0,'shot_by_shot_average':-9999.0,'median':-9999.0,'average':-9999.0,'slope':-9999.0}
 
 	return dict_result
 
@@ -76,10 +79,11 @@ class dls_viewer(CustomViewer):
 	n_bins = 150
 	median_truncation = 1
 	statistic_type =["average","median","shot_by_shot_average","shot_by_shot_median", "slope"]
-	toggler = True
+	refresh = True
 	#display settings
 	offset = 0
 	normalized = True
+	reverse_axis={"normal":1,"reversed":-1}
 
 	#apply settings. plot_subset only does this when true.  Should normally be false to prevent frivolous recalculation. would ideally be button
 	apply_settings = True
@@ -99,31 +103,24 @@ class dls_viewer(CustomViewer):
 		self.t = threading.Thread(target=self.check_layer_select)
 		self.t.start()
 
-	def make_selector(self, roi, x, y):
-
-		state = RoiSubsetState()
-		state.roi = roi
-		state.xatt = x.id
-		state.yatt = y.id
-		print("selector roi =" +str(roi))
-		return state
-
 
 	def check_layer_select(self):
 		while(True):
 			if(str(self.my_self.value.widget.selected_layer)!=self.last_selected_layer):
-				print("switched layer "+str(self.my_self.value.widget.selected_layer))
-				self.my_self.value.widget.toggler = not self.my_self.value.widget.toggler
+				self.my_self.value.widget.refresh = not self.my_self.value.widget.refresh
 				self.last_selected_layer=str(self.my_self.value.widget.selected_layer)
 			time.sleep(.3)
 			
 
 	def plot_data(self, axes, x, y,z, style,n_bins):
-
+		#z_sorted = np.sort(z)
+		#quarter_way = int(len(z)/4)
+		#self.my_self.value.widget.bin_start = str(z_sorted[quarter_way])	#not a good place to put this
+		#self.my_self.value.widget.bin_end = str(z_sorted[3*quarter_way])	#not a good place to put this
 		temp = 0
 
 	#plots all subsets unless I put in the conditional
-	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,apply_settings,toggler):		
+	def plot_subset(self, axes, x, y,z, style,Subset_Number, bin_start, bin_end,n_bins,median_truncation, statistic_type,offset,normalized,apply_settings,refresh,reverse_axis):		
 
 		#identify the subset coming in
 		my_hex_style_id = str(hex(id(style)))
@@ -192,7 +189,7 @@ class dls_viewer(CustomViewer):
 			self.my_self.value.widget.bin_start = str(self.my_subsets[chosen_id]["bin_start"])
 			self.my_self.value.widget.bin_end = str(self.my_subsets[chosen_id]["bin_end"])
 			self.my_self.value.widget.n_bins = str(self.my_subsets[chosen_id]["n_bins"])
-			self.my_self.value.widget.normalized = self.my_subsets[chosen_id]["normalized"]
+			#self.my_self.value.widget.normalized = self.my_subsets[chosen_id]["normalized"]
 			self.my_self.value.redraw_on_settings_change=True
 
 		
@@ -208,7 +205,7 @@ class dls_viewer(CustomViewer):
 				self.my_subsets[chosen_id]["offset"] = offset
 
 				#calculation setup: apply new bins
-				self.my_subsets[chosen_id]['x_data'] = np.arange(bin_start,bin_end,(bin_end-bin_start)/n_bins)
+				self.my_subsets[chosen_id]['x_data'] = np.arange(bin_start,bin_end,(bin_end-bin_start)*1.0/n_bins)
 				my_edges = self.my_subsets[chosen_id]['x_data']
 
 				self.my_subsets[chosen_id]['median_truncation'] = median_truncation
@@ -217,7 +214,7 @@ class dls_viewer(CustomViewer):
 				self.my_subsets[chosen_id]["bin_start"] = bin_start
 				self.my_subsets[chosen_id]['bin_end'] = bin_end
 				self.my_subsets[chosen_id]['n_bins'] = n_bins 
-				self.my_subsets[chosen_id]['normalized'] = normalized			
+				#self.my_subsets[chosen_id]['normalized'] = normalized			
 			
 			myValues = np.array([x,y]).transpose()
 
@@ -251,7 +248,7 @@ class dls_viewer(CustomViewer):
 		
 
 		if(len(self.to_display)>0):
-			axes.plot(self.my_subsets[my_hex_style_id]['x_data'][:-1],self.to_display['d'][::-1],c=style.color,marker='.',linewidth=2)
+			axes.plot(self.my_subsets[my_hex_style_id]['x_data'][:-1][::reverse_axis],self.to_display['d'],c=style.color,marker='.',linewidth=2)
 
 		
 	

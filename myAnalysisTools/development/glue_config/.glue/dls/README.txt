@@ -8,6 +8,7 @@ to do list
 1) (check) stream lined way to have plot layer activate changes (ok, one new feature).
 	a) is the threaded approach safe? use qthread instead?
 2) more safety on text fields
+	a) out of bounds safety on binned statistic.  It's now safe.
 3) initial values for binning
 4) clean up
 	1) get rid of testing/debug text
@@ -25,7 +26,7 @@ to do list
 
 #################################
 #############BUG LIST############
-1) bad binning breaks glue
+1) (check) fixed. bad binning breaks glue.
 
 
 
@@ -42,8 +43,8 @@ to do list
 	7) stripped down 2d scatter viewer for faster rendering
 
 2) (check) robust statistics instead of mean,median, slope, etc... also, slope is probably corrupted by brute median truncation.
-	a) added median truncation.
-	b) still need to add 
+	a) (check) median truncation.
+	b) still need to add robust slope estimator (Theil-Sen or RANSAC)
 
 3) scikit.beam binned_statistic is more efficient. is that compatible with the vectorized version?
 
