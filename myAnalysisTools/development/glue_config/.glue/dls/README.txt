@@ -7,6 +7,7 @@ to do list
 #####Done with new features. Now adding user safety limit wrappers
 1) (check) stream lined way to have plot layer activate changes (ok, one new feature).
 	a) is the threaded approach safe? use qthread instead?
+	b) needs set daemon.
 2) more safety on text fields
 	a) out of bounds safety on binned statistic.  It's now safe.
 3) initial values for binning

@@ -101,6 +101,7 @@ class dls_viewer(CustomViewer):
 		self.last_selected_layer = 'None'
 
 		self.t = threading.Thread(target=self.check_layer_select)
+		self.t.setDaemon(True)
 		self.t.start()
 
 
