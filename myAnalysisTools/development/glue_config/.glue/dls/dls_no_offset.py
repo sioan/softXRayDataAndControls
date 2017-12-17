@@ -10,6 +10,7 @@ from lib.analysis_library import vectorized_binned_statistic_dd
 from scipy.stats import binned_statistic
 import pickle
 import sys
+import ctypes
 
 def t_func(r,median_truncation):
 	try:
@@ -85,6 +86,7 @@ class dls_viewer(CustomViewer):
 		else:
 			CustomViewer.__init__(self,widget_instance)
 		
+		self.my_self = ctypes.cast(id(self),ctypes.py_object)
 		self.myStats = {}
 		self.to_display = 0
 		self.last_hex_x_id = 0
@@ -110,18 +112,12 @@ class dls_viewer(CustomViewer):
 		
 		tEdges = np.arange(bin_start,bin_end,(bin_end-bin_start)/n_bins)
 
-		#identify the subset coming in
-		my_hex_style_id = str(hex(id(style)))
-
 		#hash the values to prevent frivolous recalculation 
 		my_hex_x_id = str(hash(frozenset(x)))
 		my_hex_y_id = str(hash(frozenset(y)))
 		bin_hash_id = str(hash(frozenset(tEdges)))
 		
-
-		bin_hash_id = str(hash(frozenset(tEdges)))
-
-		if (int ==type(self.to_display)):
+		if ("int" in str(type(self.to_display))):
 			self.to_display = np.zeros(len(tEdges)-1)
 			self.tEdges = tEdges
 			self.myStats[statistic_type] = np.ones(len(tEdges)-1)
@@ -133,40 +129,46 @@ class dls_viewer(CustomViewer):
 			return t_func(r,median_truncation)
 
 		needs_recalculation = (self.last_median_truncation!=median_truncation)
-		needs_recalculation = needs_recalculation or (self.last_bin_hash_id!=bin_hash_id)
-		needs_recalculation = needs_recalculation and (self.last_apply_settings !=apply_settings)
+		needs_recalculation = (needs_recalculation or (self.last_bin_hash_id!=bin_hash_id))
+		needs_recalculation = (needs_recalculation or (self.last_hex_x_id != my_hex_x_id))
+		needs_recalculation = (needs_recalculation or (self.last_hex_y_id != my_hex_y_id))
+		#needs_recalculation = (needs_recalculation and (self.last_apply_settings !=apply_settings))
 
 		if(len(z)!=0 and apply_settings and needs_recalculation):
 			print("recalculating")
 			self.tEdges = tEdges
 			self.myStats = vectorized_binned_statistic_dd(z,myValues,bins=[tEdges],statistic=t_func_wrapper)#square brackets around tEdges is important
+		
+			#update last values to current values
+			self.last_hex_x_id = my_hex_x_id
+			self.last_hex_y_id = my_hex_y_id
+			self.last_bin_hash_id = bin_hash_id
+			self.last_median_truncation = median_truncation
+			self.last_apply_settings =apply_settings
 	
 
 		else:
 			pass
-
-		if(normalized):
-			self.to_display = normalize_statistic(self.myStats[statistic_type])
-		else:	
-			self.to_display = self.myStats[statistic_type]
+		if(len(self.myStats)!=0):
+			if(normalized):
+				self.to_display = normalize_statistic(np.nan_to_num(self.myStats[statistic_type]))
+			else:	
+				self.to_display = np.nan_to_num(self.myStats[statistic_type])
 
 		axes.plot(self.tEdges[:-1][::reverse_axis],self.to_display,c=style.color,marker='.',linewidth=2)
-		axes.set_xlim(min(tEdges),max(tEdges))
+		
 		
 		if(auto_scale):
-			myCenter = (min(self.to_display)+max(self.to_display))/2.0
-			myWindow = (-min(self.to_display)+max(self.to_display))
+			myMin = min((self.to_display))
+			myMax = max((self.to_display))
+			myCenter = (myMin+myMax)/2.0
+			myWindow = (myMax-myMin)
 			axes.set_ylim(myCenter-myWindow/(2-0.2),myCenter+myWindow/(2-0.2))
-
+			axes.set_xlim(min(self.tEdges),max(self.tEdges))
 		else: pass
 			
 
-		#update last values to current values
-		self.last_hex_x_id = my_hex_x_id
-		self.last_hex_y_id = my_hex_y_id
-		self.last_bin_hash_id = bin_hash_id
-		self.last_median_truncation = median_truncation
-		self.last_apply_settings =apply_settings
+
 
 	def setup(self, axes):
 		temp =0 
