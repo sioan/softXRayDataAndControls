@@ -263,6 +263,10 @@ https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=195857401
 https://pswww.slac.stanford.edu/apps/EpicsViewer/
 /reg/common/tools/bin/processRequestFile.py fileName
 
+New Archiver Tool
+https://pswww.slac.stanford.edu/archiveviewer/retrieval/ui/viewer/archViewer.html
+
+
 #bjobs psana commands
 #don't run calibman while analyzing data
 bjobs -l -u sioan
@@ -274,7 +278,6 @@ sudo bkill  `bjobs -u jboes| grep PEND | grep psnehidleq | cut -f1 -d" "`
 
 sudo /etc/init.d/lsf start #restart lsf daemons 
 /reg/common/tools/lsf/show_closed_nodes.sh
-
 
 #if bsub doesn't work, don't forget kinit and aklog
 #psana bsub bash commands

@@ -22,10 +22,10 @@ def celsius2farhenheit(c):
 """Extra qt clients"""
 #qt_client(ClientClass)
 #from bball_viewer import bball_viewer_6
-from dls import dls
+from dls import dls_no_offset
 #import simple_qt_overwrite
 #from histogram.qt import data_viewer
-from histogram_mod.qt import data_viewer
+#from histogram_mod.qt import data_viewer
 
 """
 from glue.viewers.common.qt.data_viewer import DataViewer
