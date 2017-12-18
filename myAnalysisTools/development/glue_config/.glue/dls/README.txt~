@@ -6,7 +6,7 @@ switched to stripped down no offset version
 
 ####################
 #user testing results
-1) theta scans need to be on top of each other (needs overlaying). separate graphs are not good enough. any way to do this without constantly recalculating or using hex id of style?
+1) theta scans need to be on top of each other. separate graphs are not good enough. any way to do this without constantly recalculating or using hex id of style?
 2) copy data to separate plotting...
 3) prevent outlier from gunking up auto scale
 4) prevent new subsets from gunking up custom viewer
