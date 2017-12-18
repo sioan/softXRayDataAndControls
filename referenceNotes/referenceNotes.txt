@@ -326,6 +326,9 @@ Python app (Camviewer, etc) releases:
 PCDS EPICS Gateway config and rule files (need to restart gateways to activate changes):
 /reg/g/pcds/gateway/config
 
+#thinpyepics wrapper
+~amoopr/thinPyEpicsWrapper
+
 Confluence page on Acqiris / TDC calibration program and usage:
 https://confluence.slac.stanford.edu/display/PCDS/Agilent+Acqiris+and+TDC+calibration
 

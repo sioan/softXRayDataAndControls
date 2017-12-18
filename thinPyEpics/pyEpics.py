@@ -7,6 +7,11 @@ class dummyClass:
 	 def __init__(self, VAL):
 	 	self.VAL = VAL
 
+def cagetg(pv):
+    
+    myString = subprocess.check_output(["caget","-t",pv])
+    return myString
+
 def caget(pv):
 	
 	myString = subprocess.check_output(["caget","-t",pv])
