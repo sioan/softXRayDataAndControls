@@ -1,0 +1,13 @@
+
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Stop Run Control
+Type=Application
+Terminal=false
+Name[en_US]=DAQ Stop
+Comment[en_US]=Stop AMO DAQ processes
+Exec=/reg/g/pcds/dist/pds/amo/scripts/shutdown_amo_daq.sh
+Comment=Stop AMO DAQ processes
+Icon=/usr/share/pixmaps/gnome-applets.png
+GenericName[en_US]=Stop Run Control

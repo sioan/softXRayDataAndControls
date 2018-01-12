@@ -266,6 +266,12 @@ https://pswww.slac.stanford.edu/apps/EpicsViewer/
 New Archiver Tool
 https://pswww.slac.stanford.edu/archiveviewer/retrieval/ui/viewer/archViewer.html
 
+Place to add new pv's to archiver. need to be on psdev
+http://pscaa01.slac.stanford.edu:17665/mgmt/ui/index.html
+
+
+X11 authentication problem solution
+In mikes .cshrc file, he has a macro named px.  Run this where you can access x11, then su or whatever where you can’t and enter the px output as a command.
 
 #bjobs psana commands
 #don't run calibman while analyzing data

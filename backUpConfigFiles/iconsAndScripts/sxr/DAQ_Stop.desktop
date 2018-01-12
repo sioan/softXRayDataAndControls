@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Stop Run Control
+Type=Application
+Terminal=false
+Name[en_US]=DAQ Stop
+Comment[en_US]=Stop SXR DAQ processes
+Exec=/reg/g/pcds/dist/pds/sxr/scripts/stop_sxr_daq.csh
+Comment=Stop SXR DAQ processes
+Icon=/usr/share/pixmaps/gnome-applets.png
+GenericName[en_US]=Stop Run Control

@@ -1,0 +1,12 @@
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=gnome-panel-launcher
+Exec=/reg/g/pcds/dist/pds/sxr/scripts/restart_sxr_daq.csh
+Name[en_US]=Restart DAQ
+Comment[en_US]=Restart DAQ
+Name=Restart DAQ
+Comment=Restart DAQ
+Icon=/usr/share/pixmaps/gnome-applets.png
