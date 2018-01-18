@@ -7,38 +7,32 @@
   997  ll
   999  cd Desktop/softXRayDataAndControls/myScripts/psanaShmemToEpics/
  1000  PATH="$PATH:/reg/g/pcds/package/epics/3.14/extensions/R3.14.12/bin/linux-x86_64"
- 1001  procServ -n "listenToPsanaShmem" -i ^D^C 20001 ./runOnSXR.sh
- 1002  telnet 127.0.0.1
- 1003  telnet 127.0.0.1 20001
  1004  sudo lsof -i -P -n
  1005  telnet 127.0.0.1 30030
  1006  procServ -n "listenToPsanaShmem" -i ^D^C 30030 ./runOnSXR.sh
  1007  telnet 127.0.0.1 30030
- 1008  history | grep PATH
- 1009  ll
+
  1010  telnet 127.0.0.1 30030
 
-### use this to make accessible on sxr-daq
-ssh -R 30030:localhost:30030 sxropr@sxr-daq
+### use this to make accessible on sxr-daq. runs in background bash
+ssh -nNT -R 30030:localhost:30030 sxropr@sxr-daq &
 
-
+#can then disown the job and l
+#how to keep track of daemon and ports?
 
 #########################################
 ##########RUNS ON daq-sxr-mon06##########
 #########################################
 
-
+  999  cd Desktop/softXRayDataAndControls/myScripts/psanaShmemToEpics/
  1014  PATH="$PATH:/reg/g/pcds/package/epics/3.14/extensions/R3.14.12/bin/linux-x86_64"
- 1015  procServ -n "sendToSxrConsole"
- 1016   sudo lsof -i -P -n
- 1017  kill %1
  1018  sudo lsof -i -P -n
  1020  procServ -n "sendToSxrConsole" -i ^D^C 30030 ./runOnMonNode.sh
  1021  telnet 127.0.0.1 30030
  1022  history
 
-### use this to make accesibale on sxr-daq
-ssh -R 30031:localhost:30030 sxropr@sxr-daq
+### use this to make accesibale on sxr-daq. add the "-nNT" to get rid of the shell
+ssh -nNT -R 30031:localhost:30030 sxropr@sxr-daq &
 
 
 
