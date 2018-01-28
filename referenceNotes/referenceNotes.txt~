@@ -49,7 +49,7 @@ https://confluence.slac.stanford.edu/display/PCDS/DAQ+configuration+database
 /reg/g/pcds/dist/pds/8.6.3.a-p8.4.3/build/pdsapp/bin/x86_64-linux-opt/configdb_gui
 configdb_gui --db /reg/g/pcds/dist/pds/cxi/misc/.configdbrc
 
-
+python ~jana/utils/logcheck.py -e amo --beg '2017-11-04' -x
 
 #evr notation
 #acqiris are used all the time.  have permnanent connection don't go away.
@@ -125,6 +125,8 @@ Just to recap using the HV supplies, if you try to turn the HV on and it doesn't
 #epics and edm development area
 /reg/g/pcds/package/epics/3.14-dev
 
+#questionaire exporting
+https://confluence.slac.stanford.edu/display/~mshankar/Exporting+data+from+the+questionnaire
 
 
 #telnet to digi-sxr-04:2105
@@ -261,15 +263,29 @@ https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=195857401
 https://pswww.slac.stanford.edu/apps/EpicsViewer/
 /reg/common/tools/bin/processRequestFile.py fileName
 
+New Archiver Tool
+https://pswww.slac.stanford.edu/archiveviewer/retrieval/ui/viewer/archViewer.html
+
+Place to add new pv's to archiver. need to be on psdev
+http://pscaa01.slac.stanford.edu:17665/mgmt/ui/index.html
+
+
+X11 authentication problem solution
+In mikes .cshrc file, he has a macro named px.  Run this where you can access x11, then su or whatever where you can’t and enter the px output as a command.
+
 #bjobs psana commands
 #don't run calibman while analyzing data
 bjobs -l -u sioan
 sudo bkill
 sudo pkill -u -9 steitelb
 bhosts -w psnehfarm	#psana 1501 through 1520, except for psana1508, should all have ok status.
+
+sudo bkill  `bjobs -u jboes| grep PEND | grep psnehidleq | cut -f1 -d" "`
+
 sudo /etc/init.d/lsf start #restart lsf daemons 
 /reg/common/tools/lsf/show_closed_nodes.sh
 
+#if bsub doesn't work, don't forget kinit and aklog
 #psana bsub bash commands
 #https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=225509678
 source /reg/g/psdm/etc/ana_env.sh	#this has been deprecated
@@ -287,6 +303,8 @@ psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
 
+pcaspy. is auto loaded on hutch nodes with my current bashrc 1/14/2108
+/reg/g/pcds/pkg_mgr/release/controls-0.1.8/x86_64-rhel6-gcc44-opt/python/pcaspy/__init__.pyc'
 
 #for running on mon nodes. this is because rhel 7 doesn't report to mpirun how many nodes it has. have to rely on mpirun to autobalance.
 `which mpirun` --oversubscribe -H daq-amo-mon02,daq-amo-mon03 -n 4 hostname
@@ -296,6 +314,7 @@ export LD_LIBRARY_PATH=/reg/neh/home/cpo/junk
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
 https://confluence.slac.stanford.edu/display/PCDS/PCDS+Contact+List
+https://confluence.slac.stanford.edu/pages/viewpage.action?spaceKey=PCDS&title=PCDS+Contact+List
 
 Released EPICS location (modules, IOCs, screens...):
 /reg/g/pcds/package/epics/3.14/
@@ -314,6 +333,9 @@ Python app (Camviewer, etc) releases:
 
 PCDS EPICS Gateway config and rule files (need to restart gateways to activate changes):
 /reg/g/pcds/gateway/config
+
+#thinpyepics wrapper
+~amoopr/thinPyEpicsWrapper
 
 Confluence page on Acqiris / TDC calibration program and usage:
 https://confluence.slac.stanford.edu/display/PCDS/Agilent+Acqiris+and+TDC+calibration
@@ -352,6 +374,9 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 # if xtc files appear here but not in directory below, then it's a data mover problem. call wilko
 #/reg/d/ffb/sxr/sxrx22915/xtc/	#intermidate this is a lustre file system
 #/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop this is also a lustre file system
+
+streams=0-79
+to get rid of iocrecorders from daq.
 
 
 #xtc reader 
@@ -597,3 +622,13 @@ https://confluence.slac.stanford.edu/display/PSDM/JupyterHub?focusedCommentId=21
 
 experiment life cycle
 https://docs.google.com/spreadsheets/d/1B7eZvlKy-Ni8iDpt6RJpKxMNuHWL6PE-55oq3ysy3Ns/edit#gid=1352203380
+
+daq release
+https://confluence.slac.stanford.edu/display/PCDS/DAQ+and+AMI+Releases
+
+bokeh
+https://bokeh.pydata.org/en/latest/docs/user_guide/server.html
+
+python qt designer
+psdev7b
+/usr/bin/designer-qt4

@@ -8,12 +8,13 @@ ds = psana.DataSource("shmem=psana.0:stop=no")
 acquiris1Det = psana.Detector("Acq01")
 execfile("numpyClientServer.py")
 
-toExport = zeros([120,500])
+mySize = 2000
+
+toExport = zeros([120,mySize])
 #toExportB = array([])
 channel_number = 0
 
 for nevent, evt in enumerate(ds.events()):
-	
 	#try:
 	time.sleep(0.01)
 	dummy = acquiris1Det(evt)
@@ -22,10 +23,12 @@ for nevent, evt in enumerate(ds.events()):
 	myTime = evt.get(psana.EventId)
 	y[channel_number,4720]=myTime.fiducials()
 	#numpysocket.startClient("sxr-console",12301,y[2,89100:89600])
-	toExport[int(nevent%120),:] = y[channel_number,4720:5220]
+	#toExport[int(nevent%120),:] = y[channel_number,4720:5220]
+	toExport[int(nevent%120),:] = y[channel_number,4720:4720+mySize]
 	#print nevent
 
 	if(nevent%120 == 0): 
+		print("test")
 		print("Channel Number "+str(channel_number))
 		numpysocket.startClient("sxr-console",12301,toExport)
 		#numpysocket.startClient("sxr-console",12301,toExportB)

@@ -11,11 +11,13 @@ import time
 
 while(True):
 	time.sleep(.05)
+	print("test")
 	try:
 		myData = numpysocket.startServer(12301)
 		for i in arange(120):
 			time.sleep(.04)
-			epics.caput("SXR:NOTE:ARRAY:01",myData[i])
+			#epics.caput("SXR:NOTE:ARRAY:01",myData[i])
+			epics.caput("SXR:NOTE:ARRAYB:01",myData[i])
 		
 	
 	except:

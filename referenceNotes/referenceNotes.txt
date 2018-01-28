@@ -140,6 +140,12 @@ sudo tcpdump port 56471 -w sxrMotor2113.txt
 tcpick -r tcpDump.txt -yP | less	#currently only on psusr112 
 #associate processes with ports
 sudo netstat -lpn | less ### This provides psproc information, but for all processes
+#bld tcpdump
+https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=138790412
+
+#convenient scripts
+/reg/neh/home/ddamiani/Scripts/Python/receive_bld.py
+
 
 
 #ioc log files
@@ -222,6 +228,9 @@ export EPICS=file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk
 #location of DAQ config files
 /reg/g/pcds/dist/pds/sxr/scripts/sxr.cnf
 /reg/g/pcds/dist/pds/amo/scripts/amo.cnf
+
+#SXR daq restart stop
+/reg/g/pcds/dist/pds/sxr/scripts/restart_sxr_daq.csh
 
 #remote connecting to VME crates
 console ioc-sxr-gmd-vme1
@@ -310,6 +319,10 @@ pcaspy. is auto loaded on hutch nodes with my current bashrc 1/14/2108
 `which mpirun` --oversubscribe -H daq-amo-mon02,daq-amo-mon03 -n 4 hostname
 #also, libbat.so warning is solved with bash below
 export LD_LIBRARY_PATH=/reg/neh/home/cpo/junk
+#sample code for oversubscribe is here
+/reg/neh/home/sioan/softXRayDataAndControls/myAnalysisTools/reference_notes/mpirun_test
+
+
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
