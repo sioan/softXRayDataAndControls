@@ -3,6 +3,14 @@ import psana
 from roiConfigReader import *
 myReadInConfig = roiConfigReader("config/x229_ROI_V1.csv")
 
+def get_projection(detectorObject,thisEvent):
+	myImage = detectorObject['TSS_OPAL'].raw(thisEvent)
+	if None == myImage:
+		return (zeros(1024))
+	else:
+		return sum(myImage[370:],axis=0)
+
+
 def integrateAcqiris(detectorObject,thisEvent):
 	myDict = {}
 
