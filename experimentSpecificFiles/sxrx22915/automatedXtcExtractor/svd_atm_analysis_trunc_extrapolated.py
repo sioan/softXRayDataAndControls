@@ -1,9 +1,14 @@
 dropped_shots = array([bool(i) for i in myDict['evr']['code_162']])
 dropped_tss_projections = myDict['TSS_OPAL'][dropped_shots] 
-u,s,v = svd(dropped_tss_projections)  
+traceStart = 400
+traceStop = -1
 svdSize = 10
+u,s,vTrunc = svd(dropped_tss_projections[:,traceStart:traceStop])  
+u,s,vFull = svd(dropped_tss_projections) 
+vTruncExtrapolated = dot(dot(vTrunc[:svdSize],vFull[:svdSize,traceStart:traceStop].transpose()),vFull[:svdSize])
 
-background_subtracted_opal_proj = myDict['TSS_OPAL']-dot(dot(myDict['TSS_OPAL'],v[:svdSize].transpose()),v[:svdSize])
+
+background_subtracted_opal_proj = myDict['TSS_OPAL']-dot(dot(myDict['TSS_OPAL'][:,traceStart:traceStop],vTrunc[:svdSize].transpose()),vTruncExtrapolated[:svdSize])
 
 background_divided_opal_proj = myDict['TSS_OPAL']/dot(dot(myDict['TSS_OPAL'],v[:svdSize].transpose()),v[:svdSize])
 

@@ -16,8 +16,15 @@ in url put
 digi-sxr-04/
 root / dbps
 
+#parameter manager
+https://confluence.slac.stanford.edu/display/PCDS/Parameter+Manager+User+Guide
+
 #place to compile epics IOC's
 ssh psbuild-rhel5
+
+#moxa replacement
+https://confluence.slac.stanford.edu/display/PCDS/Moxa+NPort+6650+Setup
+https://confluence.slac.stanford.edu/display/PCDS/Replacing+a+Digi+IMS+Smart+Motor+Server+with+a+Moxa
 
 #calendar pcds scheduling
 https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=123314644
@@ -403,6 +410,13 @@ mvr-showprocs requires a data-management env:
     . /reg/g/psdm/bin/sit_setup.sh dm-current
 
 
+#brocade switch documentation
+ssh admin@switch-sxr-h2
+https://confluence.slac.stanford.edu/display/PCDS/switch-sxr-h2
+http://www.brocade.com/content/html/en/command-reference-guide/fastiron-08040-commandref/GUID-894B57AD-7214-4DA0-94F4-57BA41555E00.html
+
+#how to read port field from show mac-address ethernet stack/slot/port
+
 #git rogue
 https://github.com/slaclab/rogue
 
@@ -529,6 +543,9 @@ https://drive.google.com/drive/folders/0B1-OMNjEHAACfjFMUWNwNHluYlNobkZGNEZmajA4
 # average of the two.
 # pulse_energy = 0.5*(fee_gas.f_21_ENRC() + fee_gas.f_22_ENRC())
 
+#rack profile rack_profile
+https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG5r0/edit#gid=770705420
+
 
 In case you need it, the documentation for plugging in the portable spectrometer should be with the rack, but it's also here:
 https://confluence.slac.stanford.edu/display/PCDS/SXD+Portable+Spectrometer+Vacuum+System
@@ -545,6 +562,10 @@ ioc-sxd-spec
 amo-rga 
 netconfig search *rga for url and ip
 mksrga1
+netconfig --help
+netconfig edit ioc-amo-hv1 --info "AMO positive HV IOC"
+#may need to restart nscd
+sudo service nscd restart
 
 
 #glue
