@@ -1,9 +1,19 @@
 from pylab import *
 import psana
+import IPython
+from scipy.optimize import curve_fit
 
 def genericReturn(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
 	return detectorObject[selfName](thisEvent)
+
+def get_projection(detectorObject,thisEvent):
+	#IPython.embed()
+	myImage = detectorObject['timeToolOpal'].raw(thisEvent)
+	if None == myImage:
+		return (zeros(1024))
+	else:
+		return sum(myImage[370:],axis=0)
 
 def genericSummaryZero(detectorObject,thisEvent,previousProcessing):
 	return 0
@@ -30,21 +40,38 @@ def getTimeToolData(detectorObject,thisEvent):
 
 	return myDict
 
+def peakFunction(x,a,x0,offset):
+	return a*(x-x0)**2+offset
+
 def getPeak(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
+
+	if(None is detectorObject[selfName](thisEvent)):
+		fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
+		return fit_results
+		
 
 	myWaveForm = -detectorObject[selfName](thisEvent)[0][0]
 
 	myWaveForm -= mean(myWaveForm[:2500])
 
 	x = arange(len(myWaveForm))[7500:10000]-8406
-	myFit = polyfit(x, myWaveForm[7500:10000],3)
+	#myFit = polyfit(x, myWaveForm[7500:10000],3)
+	#p = poly1d(myFit)
+	#myMax = max(p(x))
+	#return myMax	
 
-	p = poly1d(myFit)
-	myMax = max(p(x))
+	#IPython.embed()
+	try:
+		popt,pcov = curve_fit(peakFunction,x,myWaveForm[7500:10000])
+		
+		fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
 
-	#return myFit[-1]	#placing a dictionary here also works
-	return myMax	
+	except RuntimeError:
+		fit_results = {'amplitude':-9999,'uncertainty_cov':99999}
+
+
+	return fit_results
 
 def accumulateAverageWave(detectorObject,thisEvent,previousProcessing):
 	selfName = detectorObject['self_name']

@@ -412,6 +412,8 @@ mvr-showprocs requires a data-management env:
 
 #brocade switch documentation
 ssh admin@switch-sxr-h2
+https://confluence.slac.stanford.edu/display/PCDS/Brocade+Switch+Commands
+
 https://confluence.slac.stanford.edu/display/PCDS/switch-sxr-h2
 http://www.brocade.com/content/html/en/command-reference-guide/fastiron-08040-commandref/GUID-894B57AD-7214-4DA0-94F4-57BA41555E00.html
 
@@ -550,6 +552,11 @@ https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG
 In case you need it, the documentation for plugging in the portable spectrometer should be with the rack, but it's also here:
 https://confluence.slac.stanford.edu/display/PCDS/SXD+Portable+Spectrometer+Vacuum+System
 The only real trick I need to mention is the Andor camera still needs an AC adapter to work.  Feel free to call or text if there are any issues.
+
+RXSX chamber
+https://drive.google.com/drive/folders/0B1-OMNjEHAACaEVxbU9wM2dhZEE?usp=sharing
+
+
 
 
 sxr patch panel ethernet

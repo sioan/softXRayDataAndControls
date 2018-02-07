@@ -1,11 +1,13 @@
+
+atm_detector_name = 'TSS_OPAL'
 dropped_shots = array([bool(i) for i in myDict['evr']['code_162']])
-dropped_tss_projections = myDict['TSS_OPAL'][dropped_shots] 
+dropped_tss_projections = myDict[atm_detector_name][dropped_shots] 
 u,s,v = svd(dropped_tss_projections)  
 svdSize = 10
 
-background_subtracted_opal_proj = myDict['TSS_OPAL']-dot(dot(myDict['TSS_OPAL'],v[:svdSize].transpose()),v[:svdSize])
+background_subtracted_opal_proj = myDict[atm_detector_name]-dot(dot(myDict[atm_detector_name],v[:svdSize].transpose()),v[:svdSize])
 
-background_divided_opal_proj = myDict['TSS_OPAL']/dot(dot(myDict['TSS_OPAL'],v[:svdSize].transpose()),v[:svdSize])
+background_divided_opal_proj = myDict[atm_detector_name]/dot(dot(myDict[atm_detector_name],v[:svdSize].transpose()),v[:svdSize])
 
 figure(0)
 plot(background_subtracted_opal_proj[0])
