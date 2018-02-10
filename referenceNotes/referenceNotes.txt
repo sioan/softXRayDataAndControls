@@ -1,3 +1,28 @@
+#plc stuff
+ssh psbuild-rhel7
+bigplc3	#tab autocomplete after 3
+#following just needs to be done once
+#windows start menu in bottom left corner
+#select TwinCAT XAE (VS2013)
+#File, Open, Subversion Project, Repository selection wizard
+#copy and past "file://tsclient\PLC\plcRepo"
+#select plcProjects (Brances is stuff alex is testing, libraries are reusable data types)
+#select amo then base or lamp
+# I/O Lamp Fieldbus (EtherCAT) should match page 8 from Allen Pai's document
+https://confluence.slac.stanford.edu/download/attachments/9176004/LAMP_DOC_v0.pdf?version=2&modificationDate=1504986803000&api=v2
+
+https://confluence.slac.stanford.edu/display/PCDS/Getting+all+the+gate+valves+out
+
+#to reset
+#1) first do check BUILD from build menu on top
+
+#2) PLC/AMO_BASE/PLC_AMO_VAC_current/PLC_AMO_VAC_current_project/
+
+#3) TWINCAT from menu on top  Activate Configuration from (reload in case the )
+
+#4) EDM base has read lock / unlock. Put it in green configuration to allow users to access.
+
+
 #location of conig files for iocmanager and camviewer 
 /reg/g/pcds/pyps/config/amo
 /reg/g/pcds/pyps/config/sxr
