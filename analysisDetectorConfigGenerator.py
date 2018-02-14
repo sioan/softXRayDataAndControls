@@ -26,7 +26,7 @@ import psana
 
 
 def main(exp, run, configFileName):
-
+	
 	experimentNameAndRun = "exp=%s:run=%d"%(exp, run)
 	print("current working directory"+str(os.curdir))	
 	os.system('mkdir config')
@@ -60,7 +60,7 @@ def main(exp, run, configFileName):
 		#f.write(' epicsPvFinish')
 		f.write('\n')
 	f.close()
-
+	os.system("cp /reg/g/psdm/sw/hutch/sxd/auto_xtc_hdf5_converter/config/analysisFunctions.py ./config/")
 	
 
 if __name__ == '__main__':

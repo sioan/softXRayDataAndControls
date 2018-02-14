@@ -9,7 +9,7 @@ PATH ="$PATH:/reg/g/psdm/sw/hutch/sxd/auto_xtc_hdf5_converter"
 analysisDetectorConfigGenerator.py -r xpptut15 -r 280
 
 interactiveXtcExtractor.sh -e xpptut15 -r 280 -t
-psanaXtcDataExtractor.sh -e xpptut15 -r 280 -t
+psanaXtcDataExtractor.py -e xpptut15 -r 280 -t
 
 ### Usage
 
