@@ -4,13 +4,22 @@ This package separates the science analysis from the psana overhead when convert
 
 ## Quick Start
 
-PATH ="$PATH:/reg/g/psdm/sw/hutch/sxd/auto_xtc_hdf5_converter"
+</pre>$ PATH ="$PATH:/reg/g/psdm/sw/hutch/sxd/auto_xtc_hdf5_converter" </pre>
 
-analysisDetectorConfigGenerator.py -e xpptut15 -r 280
+navigate to a directory where you'd like to do the analysis.
 
-interactiveXtcExtractor.sh -e xpptut15 -r 280 -t
+</pre>$ analysisDetectorConfigGenerator.py -e xpptut15 -r 280 </pre>
 
-psanaXtcDataExtractor.py -e xpptut15 -r 280 -t
+this line of code generates a config directory with files analysis.cfg and analysisFunctions.py.
+
+
+</pre>$ psanaXtcDataExtractor.py -e xpptut15 -r 280 -t </pre>
+
+this line converts the xtc file to an hdf5 file called xpptut15run280.h5.
+
+### More involved quick start
+
+The example above only gets a small portion of the xtc data. to get more data, the analysis.cfg and analysisFunctions.py files in the config directory need to be edited. (instructions forth coming)
 
 ### Usage
 
