@@ -11,6 +11,7 @@ bigplc3	#tab autocomplete after 3
 # I/O Lamp Fieldbus (EtherCAT) should match page 8 from Allen Pai's document
 https://confluence.slac.stanford.edu/download/attachments/9176004/LAMP_DOC_v0.pdf?version=2&modificationDate=1504986803000&api=v2
 
+#more plc stuff
 https://confluence.slac.stanford.edu/display/PCDS/Getting+all+the+gate+valves+out
 
 #to reset
@@ -655,6 +656,7 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 #newport laser motors
 #mcn-sxr-las2/ #don't forget the slash in the web browser.
 Administrator (copy paste)
+#mcn-amo-las1 is only accessible from amo-control. some other mcn-amo-las hosts are available from psur112
 
 ################# usb debuggin
 https://wiki.kubuntu.org/Kernel/Debugging/USB
