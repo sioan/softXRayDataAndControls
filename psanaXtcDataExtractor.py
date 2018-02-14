@@ -36,7 +36,10 @@ import os
 import sys
 sys.path.append(os.curdir)
 #sys.path.append(os.getcwd())  
-from config import analysisFunctions
+try:
+	from config import analysisFunctions
+except:
+	pass
 from pylab import *
 import psana
 import subprocess
