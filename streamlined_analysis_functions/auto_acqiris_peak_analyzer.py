@@ -100,8 +100,10 @@ def generic_acqiris_analyzer(detectorObject,thisEvent):
 
 		y = detectorObject[selfName](thisEvent)[0][i]
 
-		initial_peak = argmax(convolve(abs(y),[1,1,1,1,1,1]),mode='same')
-	
+
+		smoothed_wave = convolve(y,[1,1,1,1,1,1],mode='same')
+		initial_peak = argmax(smoothed_wave)
+		initial_height = smoothed_wave[initial_peak]
 		
 
 		#myFit = polyfit(x, myWaveForm[7500:10000],3)
@@ -114,13 +116,12 @@ def generic_acqiris_analyzer(detectorObject,thisEvent):
 
 		#IPython.embed()
 		try:
-			popt,pcov = curve_fit(peakFunction,x_small,y_small,p0=[0.0,initial_peak,y[initial_peak]])
+			popt,pcov = curve_fit(peakFunction,x_small,y_small,p0=[0.0,initial_peak,initial_height])
 		
 			fit_results['ch'+str(i)] = {"position":popt[1],'amplitude':popt[2],'position_var':pcov[1,1],'amplitude_var':pcov[2,2]}
 
-		except RuntimeError:
-			fit_results = None}
-
+		except (RuntimeError,TypeError) as e:
+			fit_results = None
 
 	return fit_results
 
@@ -128,7 +129,7 @@ def getPeak(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
 
 	if(None is detectorObject[selfName](thisEvent)):
-		fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
+		fit_results = {'amplitude':-9999.9,'uncertainty_cov':-9999.9}
 		return fit_results
 		
 
@@ -190,10 +191,15 @@ def getGMD(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
 
 	temp = detectorObject[selfName].get(thisEvent)
+	my_dict = {"joules":-999.0,"relative":-999.0}
+
 	if (None not in [temp]):
-		return temp.milliJoulesPerPulse()
+		my_dict["joules"] = temp.milliJoulesPerPulse()
+		my_dict["relative"] = temp.relativeEnergyPerPulse()
 	else: 	
-		return 0.0
+		pass
+
+	return my_dict
 
 def getEBeam(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']

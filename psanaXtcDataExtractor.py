@@ -36,10 +36,7 @@ import os
 import sys
 sys.path.append(os.curdir)
 #sys.path.append(os.getcwd())  
-try:
-	from config import analysisFunctions
-except:
-	pass
+from config import analysisFunctions
 from pylab import *
 import psana
 import subprocess
@@ -47,7 +44,7 @@ import time
 import h5py
 import TimeTool
 import pickle
-
+import IPython
 
 
 #this small data wrapper is to swap out small data implementations 
