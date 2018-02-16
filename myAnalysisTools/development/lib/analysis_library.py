@@ -1,7 +1,7 @@
 from pylab import *
 import IPython
 import pickle
-
+from scipy.signal import savgol_coeffs
 from lib._binned_statistic import binned_statistic_dd
 
 def errorWeightedSmoothing(myData,myError,myWidth,myOrder):

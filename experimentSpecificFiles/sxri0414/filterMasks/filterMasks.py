@@ -1,10 +1,10 @@
 from pylab import *
 
 def sxri0414run60(myDict):
-	myMask = ones(len(myDict['acqiris2'])).astype(bool)
+	myMask = ones(len(myDict['acqiris2']['amplitude'])).astype(bool)
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])>0)	#excluding bad time tool data
-	myMask = myMask * (array(myDict['acqiris2'])>0.002)	#excluding bad acqiris data
-	myMask = myMask * (array(myDict['acqiris2'])<0.90)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])>0.002)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])<0.90)	#excluding bad acqiris data
 	myMask = myMask * (array(myDict['GMD'])>0.00001)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['GMD'])<0.0012)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['evr']['code_162'])==0)
@@ -20,11 +20,11 @@ def sxri0414run60(myDict):
 def sxri0414run63(myDict):
 	#myMask = myMask.astype(bool)
 	#arbKey = myDict.keys()[0]
-	myMask = ones(len(myDict['acqiris2'])).astype(bool)
+	myMask = ones(len(myDict['acqiris2']['amplitude'])).astype(bool)
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])>100)	#excluding bad time tool data
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])<350)	#excluding bad time tool data
-	myMask = myMask * (array(myDict['acqiris2'])>0.02)	#excluding bad acqiris data
-	myMask = myMask * (array(myDict['acqiris2'])<0.8)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])>0.02)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])<0.8)	#excluding bad acqiris data
 	myMask = myMask * (array(myDict['GMD'])>0.00001)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['GMD'])<0.0007)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['evr']['code_162'])==0)	#get rid of bY kick
@@ -38,11 +38,11 @@ def sxri0414run63(myDict):
 	return myMask
 
 def sxri0414run79(myDict):
-	myMask = ones(len(myDict['acqiris2'])).astype(bool)
+	myMask = ones(len(myDict['acqiris2']['amplitude'])).astype(bool)
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])>200)	#excluding bad time tool data
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])<600)	#excluding bad time tool data
-	myMask = myMask * (array(myDict['acqiris2'])>0.002)	#excluding bad acqiris data
-	myMask = myMask * (array(myDict['acqiris2'])<0.90)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])>0.002)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])<0.90)	#excluding bad acqiris data
 	myMask = myMask * (array(myDict['GMD'])>0.00001)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['GMD'])<0.0008)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['evr']['code_162'])==0)	#get rid of bY kick
@@ -67,11 +67,11 @@ def sxri0414run79(myDict):
 	return myMask
 
 def sxri0414run72(myDict):
-	myMask = ones(len(myDict['acqiris2'])).astype(bool)
+	myMask = ones(len(myDict['acqiris2']['amplitude'])).astype(bool)
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])>200)	#excluding bad time tool data
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])<600)	#excluding bad time tool data
-	myMask = myMask * (array(myDict['acqiris2'])>0.000)	#excluding bad acqiris data
-	myMask = myMask * (array(myDict['acqiris2'])<0.550)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])>0.000)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])<0.550)	#excluding bad acqiris data
 	myMask = myMask * (array(myDict['GMD'])>0.00000)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['GMD'])<0.0015)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['evr']['code_162'])==0)	#get rid of bY kick
@@ -85,11 +85,11 @@ def sxri0414run72(myDict):
 	return myMask
 
 def sxri0414run81(myDict):
-	myMask = ones(len(myDict['acqiris2'])).astype(bool)
+	myMask = ones(len(myDict['acqiris2']['amplitude'])).astype(bool)
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])>200)	#excluding bad time tool data
 	myMask = myMask * (array(myDict['TSS_OPAL']['pixelTime'])<600)	#excluding bad time tool data
-	myMask = myMask * (array(myDict['acqiris2'])>0.002)	#excluding bad acqiris data
-	myMask = myMask * (array(myDict['acqiris2'])<0.90)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])>0.002)	#excluding bad acqiris data
+	myMask = myMask * (array(myDict['acqiris2']['amplitude'])<0.90)	#excluding bad acqiris data
 	myMask = myMask * (array(myDict['GMD'])>0.00001)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['GMD'])<0.002)	#excluding bad gmd data
 	myMask = myMask * (array(myDict['evr']['code_162'])==0)	#get rid of bY kick

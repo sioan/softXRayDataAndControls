@@ -6,7 +6,7 @@ import IPython
 from hdf5_to_dict import hdf5_to_dict
 from filterMasks import filterMasks
 from scipy.optimize import curve_fit
-from plotPackage import errorWeightedSmoothing
+from lib.analysis_library import errorWeightedSmoothing
 from scipy.interpolate import interp1d
 #fit's data to log
 
@@ -21,7 +21,7 @@ myMask =  filterMasks.__dict__[experimentRunName](myHdf5Object)
 
 #make I vs I0 calibration
 xScatter = myDataDict['GMD'][myMask]
-yScatter = myDataDict['acqiris2'][myMask]
+yScatter = myDataDict['acqiris2/amplitude'][myMask]
 energyScatter = myDataDict['ebeam/photon_energy'][myMask]
 maxXScatter = max(xScatter)
 myBins = arange(0,maxXScatter,0.000010)
@@ -65,7 +65,7 @@ def getPhotonEnergyCalibration(startEnergy,stopEnergy,stepEnergy):
 		#IPython.embed()
 
 		x =  myDataDict['GMD'][tempMask]
-		y =  myDataDict['acqiris2'][tempMask]
+		y =  myDataDict['acqiris2/amplitude'][tempMask]
 
 		myCov = cov(x,y)
 		
