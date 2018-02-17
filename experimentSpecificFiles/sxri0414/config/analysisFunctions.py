@@ -125,3 +125,41 @@ def getEBeam(detectorObject,thisEvent):
 
 
 
+def generic_acqiris_analyzer(detectorObject,thisEvent):
+	selfName = detectorObject['self_name']
+	fit_results = {}
+
+	if(None is detectorObject[selfName](thisEvent)):
+		#fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
+		return None
+		
+	x = detectorObject[selfName](thisEvent)[1][0]
+	for i in arange(len(detectorObject[selfName](thisEvent)[0])):
+
+		y = detectorObject[selfName](thisEvent)[0][i]
+
+
+		smoothed_wave = convolve(y,[1,1,1,1,1,1],mode='same')
+		initial_peak = argmax(smoothed_wave)
+		initial_height = smoothed_wave[initial_peak]
+		
+
+		#myFit = polyfit(x, myWaveForm[7500:10000],3)
+		#p = poly1d(myFit)
+		#myMax = max(p(x))
+		#return myMax	
+
+		y_small = y[initial_peak-10:initial_peak+10]
+		x_small = x[initial_peak-10:initial_peak+10]
+
+		#IPython.embed()
+		try:
+			popt,pcov = curve_fit(peakFunction,x_small,y_small,p0=[0.0,initial_peak,initial_height])
+		
+			fit_results['ch'+str(i)] = {"position":popt[1],'amplitude':popt[2],'position_var':pcov[1,1],'amplitude_var':pcov[2,2]}
+
+		except (RuntimeError,TypeError) as e:
+			#print(initial_peak)
+			fit_results['ch'+str(i)] = {"position":-9999.0,'amplitude':-9999.0,'position_var':-9999.0,'amplitude_var':-9999.0}
+
+	return fit_results
