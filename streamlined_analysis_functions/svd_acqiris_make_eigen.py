@@ -4,10 +4,29 @@ import IPython
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
 
+def make_acq_svd_background(detectorObject,thisEvent,previousProcessing):
+	selfName = detectorObject['self_name']
+	
+	if (0==len(previousProcessing.keys())):
+		eigen_wave_forms = {'ch0':array([]),'ch1':array([]),'ch2':array([]),'ch3':array([])}
+	else:
+		eigen_wave_forms = previousProcessing
+
+	if(None is detectorObject[selfName](thisEvent)):
+		#fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
+		return None
+
+	x = detectorObject[selfName](thisEvent)[1][0]
+	for i in arange(len(detectorObject[selfName](thisEvent)[0])):
+
+		y = detectorObject[selfName](thisEvent)[0][i]
+
+		eigen_wave_forms['ch'+str(i)] = {}
 
 
-def peakFunction(x,a,x0,offset):
-	return a*(x-x0)**2+offset
+
+	return eigen_wave_forms
+
 
 def generic_acqiris_analyzer(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
@@ -41,6 +60,3 @@ def generic_acqiris_analyzer(detectorObject,thisEvent):
 			fit_results = None
 
 	return fit_results
-
-
-
