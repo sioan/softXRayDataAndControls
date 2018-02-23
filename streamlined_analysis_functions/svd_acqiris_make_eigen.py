@@ -4,12 +4,15 @@ import IPython
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
 
-def make_acq_svd_background(detectorObject,thisEvent,previousProcessing):
-	#waveforms are too large to write even several hundred to file.  doing a recusrive svd
+def make_acq_svd_basis(detectorObject,thisEvent,previousProcessing):
+	
+	thresh_hold = 0.05
+	waveform_window = [1200,1230]
+	eigen_basis_size = 25
 	selfName = detectorObject['self_name']
 	
 	if (0==len(previousProcessing.keys())):
-		eigen_wave_forms = {'ch0':array([]),'ch1':array([]),'ch2':array([]),'ch3':array([])}
+		eigen_wave_forms = {'ch0':array([]),'ch1':array([]),'ch2':array([]),'ch3':array([])}	#how to make auto sensing size?
 	else:
 		eigen_wave_forms = previousProcessing
 
@@ -24,27 +27,52 @@ def make_acq_svd_background(detectorObject,thisEvent,previousProcessing):
 	for i in arange(len(detectorObject[selfName](thisEvent)[0])):
 
 		y = detectorObject[selfName](thisEvent)[0][i]
+		y -= mean(y[:300])
 		try:
 			#IPython.embed()
+			y /= dot(y,y)
+			y -= dot(dot(eigen_wave_forms['ch'+str(i)],y),eigen_wave_forms['ch'+str(i)])
 			temp = vstack([eigen_wave_forms['ch'+str(i)],y])
 
-		except ValueError:
-			temp = y
-			eigen_wave_forms['ch'+str(i)] = y
+		except (ValueError,TypeError,) as e:
+			temp = y/dot(y,y)
+
+			my_max = max(abs(temp))	#generating eigenbasis with 
+			
+			eigen_wave_forms['ch'+str(i)] = y/dot(y,y)**0.5
 
 		try:
+			if(len(temp.shape)<2):
+				raise IndexError
 			
-			#u,s,v = svd(temp)
-			my_eig = eig(dot(temp,temp.transpose()))
-			v = dot(my_eig[1],temp)
+			#################	
+			#brute force svd approach. too big. fails. use svd approach based on eig below. keeping here so don't make same mistake
+			#u,s,v = svd(temp)	
+			#################
+			#how to preferentially select out peak region without explicit windowing?  Solution directly below
+			#finicky with threshold value
+			#################
+			#thresholded_temp = 0 + temp			
+			#for j in arange(len(temp)):
+			#	my_mask = abs(temp[j])<thresh_hold*max(abs(temp[j]))
+			#	thresholded_temp[j][my_mask] = 0
+			#my_eig = eig(dot(thresholded_temp,thresholded_temp.transpose()))
+			#################
+		
+			#################
+			#brute force windowing
+			my_eig = eig(dot(temp[:,waveform_window[0]:waveform_window[1]],temp[:,waveform_window[0]:waveform_window[1]].transpose()))
+			#################			
 
-			eigen_wave_forms['ch'+str(i)] = v[:11]
+			#my_eig = eig(dot(temp,temp.transpose()))
+			v = dot(my_eig[1],temp)
+			#v = array([j/dot(j,j) for j in v])
+
+			eigen_wave_forms['ch'+str(i)] = v[:eigen_basis_size]	
 	
-		except LinAlgError:
+		except (LinAlgError,IndexError) as e:
 			pass
 
-
-	return eigen_wave_forms
 
 	return eigen_wave_forms
 
