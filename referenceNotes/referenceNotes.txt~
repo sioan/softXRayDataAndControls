@@ -1,3 +1,45 @@
+#rci chamber stuff
+bl13-ejb
+172.21.39.107
+eth0 needs to be manually turned on (either command line (unverified) or through x window system-andministration-network)
+on standard cds network
+user names and passwords
+glassfish lol2000
+root lol2000
+rci singleshot
+
+usb motor ioc stalls and doesn't make it through boot when motor controller communication is bad. power cycle usb-find converter and motor controller
+
+
+
+#plc stuff
+ssh psbuild-rhel7
+bigplc3	#tab autocomplete after 3
+#following just needs to be done once
+#windows start menu in bottom left corner
+#select TwinCAT XAE (VS2013)
+#File, Open, Subversion Project, Repository selection wizard
+#copy and past "file://tsclient\PLC\plcRepo"
+#select plcProjects (Brances is stuff alex is testing, libraries are reusable data types)
+#select amo then base or lamp
+# I/O Lamp Fieldbus (EtherCAT) should match page 8 from Allen Pai's document
+https://confluence.slac.stanford.edu/download/attachments/9176004/LAMP_DOC_v0.pdf?version=2&modificationDate=1504986803000&api=v2
+
+#more plc stuff
+https://confluence.slac.stanford.edu/display/PCDS/Getting+all+the+gate+valves+out
+
+#to reset
+#1) first do check BUILD from build menu on top
+
+#2) PLC/AMO_BASE/PLC_AMO_VAC_current/PLC_AMO_VAC_current_project/
+
+#3) TWINCAT from menu on top  Activate Configuration from (reload in case the )
+
+#4) EDM base has read lock / unlock. Put it in green configuration to allow users to access.
+
+
+
+
 #location of conig files for iocmanager and camviewer 
 /reg/g/pcds/pyps/config/amo
 /reg/g/pcds/pyps/config/sxr
@@ -16,8 +58,15 @@ in url put
 digi-sxr-04/
 root / dbps
 
+#parameter manager
+https://confluence.slac.stanford.edu/display/PCDS/Parameter+Manager+User+Guide
+
 #place to compile epics IOC's
 ssh psbuild-rhel5
+
+#moxa replacement
+https://confluence.slac.stanford.edu/display/PCDS/Moxa+NPort+6650+Setup
+https://confluence.slac.stanford.edu/display/PCDS/Replacing+a+Digi+IMS+Smart+Motor+Server+with+a+Moxa
 
 #calendar pcds scheduling
 https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=123314644
@@ -140,6 +189,12 @@ sudo tcpdump port 56471 -w sxrMotor2113.txt
 tcpick -r tcpDump.txt -yP | less	#currently only on psusr112 
 #associate processes with ports
 sudo netstat -lpn | less ### This provides psproc information, but for all processes
+#bld tcpdump
+https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=138790412
+
+#convenient scripts
+/reg/neh/home/ddamiani/Scripts/Python/receive_bld.py
+
 
 
 #ioc log files
@@ -222,6 +277,9 @@ export EPICS=file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk
 #location of DAQ config files
 /reg/g/pcds/dist/pds/sxr/scripts/sxr.cnf
 /reg/g/pcds/dist/pds/amo/scripts/amo.cnf
+
+#SXR daq restart stop
+/reg/g/pcds/dist/pds/sxr/scripts/restart_sxr_daq.csh
 
 #remote connecting to VME crates
 console ioc-sxr-gmd-vme1
@@ -310,6 +368,10 @@ pcaspy. is auto loaded on hutch nodes with my current bashrc 1/14/2108
 `which mpirun` --oversubscribe -H daq-amo-mon02,daq-amo-mon03 -n 4 hostname
 #also, libbat.so warning is solved with bash below
 export LD_LIBRARY_PATH=/reg/neh/home/cpo/junk
+#sample code for oversubscribe is here
+/reg/neh/home/sioan/softXRayDataAndControls/myAnalysisTools/reference_notes/mpirun_test
+
+
 
 #link for contact lists
 https://docs.google.com/spreadsheets/d/1QYCTYDzq7ymqebJ7iztSoaCjFBNWMdKAGV9QITEL8MI/edit#gid=0
@@ -389,6 +451,15 @@ https://confluence.slac.stanford.edu/display/PCDS/HTF:+data+mover#mvr-showprocs-
 mvr-showprocs requires a data-management env:
     . /reg/g/psdm/bin/sit_setup.sh dm-current
 
+
+#brocade switch documentation
+ssh admin@switch-sxr-h2
+https://confluence.slac.stanford.edu/display/PCDS/Brocade+Switch+Commands
+
+https://confluence.slac.stanford.edu/display/PCDS/switch-sxr-h2
+http://www.brocade.com/content/html/en/command-reference-guide/fastiron-08040-commandref/GUID-894B57AD-7214-4DA0-94F4-57BA41555E00.html
+
+#how to read port field from show mac-address ethernet stack/slot/port
 
 #git rogue
 https://github.com/slaclab/rogue
@@ -516,10 +587,18 @@ https://drive.google.com/drive/folders/0B1-OMNjEHAACfjFMUWNwNHluYlNobkZGNEZmajA4
 # average of the two.
 # pulse_energy = 0.5*(fee_gas.f_21_ENRC() + fee_gas.f_22_ENRC())
 
+#rack profile rack_profile
+https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG5r0/edit#gid=770705420
+https://docs.google.com/spreadsheets/d/107YQ_F-5jvy7V9APGnotYoh1q1yh9pvVb3hrx8RG5r0/edit#gid=897011760
 
 In case you need it, the documentation for plugging in the portable spectrometer should be with the rack, but it's also here:
 https://confluence.slac.stanford.edu/display/PCDS/SXD+Portable+Spectrometer+Vacuum+System
 The only real trick I need to mention is the Andor camera still needs an AC adapter to work.  Feel free to call or text if there are any issues.
+
+RXSX chamber
+https://drive.google.com/drive/folders/0B1-OMNjEHAACaEVxbU9wM2dhZEE?usp=sharing
+
+
 
 
 sxr patch panel ethernet
@@ -532,6 +611,10 @@ ioc-sxd-spec
 amo-rga 
 netconfig search *rga for url and ip
 mksrga1
+netconfig --help
+netconfig edit ioc-amo-hv1 --info "AMO positive HV IOC"
+#may need to restart nscd
+sudo service nscd restart
 
 
 #glue
@@ -589,6 +672,7 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 #newport laser motors
 #mcn-sxr-las2/ #don't forget the slash in the web browser.
 Administrator (copy paste)
+#mcn-amo-las1 is only accessible from amo-control. some other mcn-amo-las hosts are available from psur112
 
 ################# usb debuggin
 https://wiki.kubuntu.org/Kernel/Debugging/USB

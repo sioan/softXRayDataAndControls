@@ -1,3 +1,18 @@
+#rci chamber stuff
+bl13-ejb
+172.21.39.107
+gets plugged into port one on the patch panel ethernet (it's on the cds network just like sxr-control).
+eth0 needs to be manually turned on (either command line (unverified) or through x window system-andministration-network)
+on standard cds network
+user names and passwords
+glassfish lol2000
+root lol2000
+rci singleshot
+
+usb motor ioc stalls and doesn't make it through boot when motor controller communication is bad. power cycle usb-find converter and motor controller
+
+
+
 #plc stuff
 ssh psbuild-rhel7
 bigplc3	#tab autocomplete after 3
@@ -22,6 +37,8 @@ https://confluence.slac.stanford.edu/display/PCDS/Getting+all+the+gate+valves+ou
 #3) TWINCAT from menu on top  Activate Configuration from (reload in case the )
 
 #4) EDM base has read lock / unlock. Put it in green configuration to allow users to access.
+
+
 
 
 #location of conig files for iocmanager and camviewer 
