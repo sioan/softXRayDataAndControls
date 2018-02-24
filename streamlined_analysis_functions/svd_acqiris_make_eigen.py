@@ -4,6 +4,44 @@ import IPython
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
 
+
+######################################################
+#######Using the eigen traces#########################
+######################################################
+
+try:
+	f=h5py.File("eigen_traces_run192.h5")
+	eigen_traces = f['summary/nonMeaningfulCoreNumber0/Acq01/ch1/eigen_wave_forms']
+except:
+	print("eigen_traces_run192.h5")
+	pass
+
+
+def use_acq_svd_basis(detectorObject, thisEvent):
+	selfName = detectorObject['self_name']
+	my_results = {}
+
+	if(None is detectorObject[selfName](thisEvent)):
+		#fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
+		return None
+		
+	#x = detectorObject[selfName](thisEvent)[1][0]
+	for i in arange(len(detectorObject[selfName](thisEvent)[0])):
+		y = detectorObject[selfName](thisEvent)[0][i]
+		weightings = dot(eigen_traces,y)
+		residuals = y-dot(weightings,eigen_traces)
+		variance = dot(eigen_traces,residuals)**2
+		#approximation in line above comes from eigen_traces is orthogonal matrix, 
+		#so dot (eigen_traces.transpose(),eigen_traces) is diagonal. 
+		#missing something with number of points and degrees of freedom
+		my_results["ch"+str(i)] = {"weightings":weightings,"variance":variance}
+
+	return my_results
+
+######################################################
+#######Creating the acqiris eigen basis###############
+######################################################
+
 def svd_update(eigen_system,new_vector,config_parameters):
 	
 	try:
