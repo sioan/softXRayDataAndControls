@@ -16,10 +16,10 @@ except:
 	print("eigen_traces_run192.h5")
 	pass
 
-
 def use_acq_svd_basis(detectorObject, thisEvent):
 	selfName = detectorObject['self_name']
 	my_results = {}
+	config_parameters = {"thresh_hold":0.05,"waveform_mask":arange(1200,1230),"eigen_basis_size":25,"offset_mask":arange(300)}
 
 	if(None is detectorObject[selfName](thisEvent)):
 		#fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
@@ -28,6 +28,7 @@ def use_acq_svd_basis(detectorObject, thisEvent):
 	#x = detectorObject[selfName](thisEvent)[1][0]
 	for i in arange(len(detectorObject[selfName](thisEvent)[0])):
 		y = detectorObject[selfName](thisEvent)[0][i]
+		y -= mean(y[config_parameters['offset_mask']])
 		weightings = dot(eigen_traces,y)
 		residuals = y-dot(weightings,eigen_traces)
 		variance = dot(eigen_traces,residuals)**2
