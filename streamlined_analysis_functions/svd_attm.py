@@ -35,10 +35,10 @@ def svd_atm_analysis(detectorObject,thisEvent):
 		my_projection = sum(myImage[370:],axis=0)
 		background_subtracted = my_projection - dot(dot(my_projection,v[:svd_size].transpose()),v[:svd_size])
 
-		#initial guess. win_c = window cneter. 25 is empirical drop width
+		#initial guess. win_c = window center. 25 is empirical drop width
 		filtered_signal = savgol_filter(background_subtracted,25,2,1)
 		win_c = argmax(abs(filtered_signal))
-		initial_guess = [1,win_c,filtered_signal[win_c]]
+		initial_guess = [1,win_c,abs(filtered_signal[win_c])]
 		try:
 			popt,pcov = curve_fit(peakFunction,arange(win_c-4,win_c+5),abs(filtered_signal[win_c-4:win_c+5]), p0=initial_guess)
 		

@@ -3,6 +3,7 @@ from pylab import *
 import h5py
 import argparse
 import sys
+import IPython
 
 def hdf5_to_dict(myhdf5Object):
 	replacementDictionary = {}
@@ -23,16 +24,34 @@ def hdf5_to_dict(myhdf5Object):
 	return replacementDictionary
 
 def main(fileName):
-	global myDict
+	#global myDict
+	global my_dict
 	#f = h5py.File("sxr10116run73.h5",'r')
-	f = h5py.File(fileName,'r')
+	#f = h5py.File(fileName,'r')
+	my_hdf5_object = h5py.File(fileName,'r')
 	#f = h5py.File("sxrx24615run21.h5",'r')
 	#for i in f:
 	#	print(str(i))
 	#	print(str(array(f[i])[:10]))
 	#f.close()
-	myDict= hdf5_to_dict(f)
-	f.close()
+	#myDict= hdf5_to_dict(f)
+
+	#convert hdf5 to dict
+	my_list = []
+	def func(name, obj):
+		my_list.append(name)
+
+	my_hdf5_object.visititems(func)
+	my_dict = {}
+	
+	for i in my_list:
+		try:
+			my_dict[i] = array(my_hdf5_object[i])
+		except:
+			#IPython.embed()
+			pass
+
+	my_hdf5_object.close()
 
 if __name__ == '__main__':
 
