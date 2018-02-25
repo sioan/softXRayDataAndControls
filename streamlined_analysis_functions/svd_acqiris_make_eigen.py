@@ -10,11 +10,12 @@ from scipy.signal import savgol_filter
 ######################################################
 
 try:
-	f=h5py.File("eigen_traces_run192.h5")
-	eigen_traces = f['summary/nonMeaningfulCoreNumber0/Acq01/ch1/eigen_wave_forms']
+	eigen_traces_h5py=h5py.File("eigen_traces_run192.h5")
+	#eigen_traces = f['summary/nonMeaningfulCoreNumber0/Acq01/ch1/eigen_wave_forms']
 except:
 	print("eigen_traces_run192.h5")
 	pass
+
 
 def use_acq_svd_basis(detectorObject, thisEvent):
 	selfName = detectorObject['self_name']
@@ -27,6 +28,7 @@ def use_acq_svd_basis(detectorObject, thisEvent):
 		
 	#x = detectorObject[selfName](thisEvent)[1][0]
 	for i in arange(len(detectorObject[selfName](thisEvent)[0])):
+		eigen_traces = eigen_traces_h5py["summary/nonMeaningfulCoreNumber0/"+selfName+"/ch"+str(i)+"/eigen_wave_forms"]
 		y = detectorObject[selfName](thisEvent)[0][i]
 		y -= mean(y[config_parameters['offset_mask']])
 		weightings = dot(eigen_traces,y)
@@ -38,7 +40,6 @@ def use_acq_svd_basis(detectorObject, thisEvent):
 		my_results["ch"+str(i)] = {"weightings":weightings,"variance":variance}
 
 	return my_results
-
 ######################################################
 #######Creating the acqiris eigen basis###############
 ######################################################
