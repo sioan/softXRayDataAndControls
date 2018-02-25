@@ -8,8 +8,8 @@ import h5py
 ######################################################
 
 try:
-	f=h5py.File("eigen_traces_run192.h5")
-	eigen_traces = f['summary/nonMeaningfulCoreNumber0/Acq01/ch1/eigen_wave_forms']
+	eigen_traces_h5py=h5py.File("eigen_traces_run192.h5")
+	#eigen_traces = f['summary/nonMeaningfulCoreNumber0/Acq01/ch1/eigen_wave_forms']
 except:
 	print("eigen_traces_run192.h5")
 	pass
@@ -18,6 +18,7 @@ except:
 def use_acq_svd_basis(detectorObject, thisEvent):
 	selfName = detectorObject['self_name']
 	my_results = {}
+	config_parameters = {"thresh_hold":0.05,"waveform_mask":arange(1200,1230),"eigen_basis_size":25,"offset_mask":arange(300)}
 
 	if(None is detectorObject[selfName](thisEvent)):
 		#fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
@@ -25,7 +26,12 @@ def use_acq_svd_basis(detectorObject, thisEvent):
 		
 	#x = detectorObject[selfName](thisEvent)[1][0]
 	for i in arange(len(detectorObject[selfName](thisEvent)[0])):
+		eigen_traces = eigen_traces_h5py["summary/nonMeaningfulCoreNumber0/"+selfName+"/ch"+str(i)+"/norm_eigen_wave_forms"]
+		#eigen_traces = eigen_traces_h5py["summary/nonMeaningfulCoreNumber0/"+selfName+"/ch"+str(i)+"/eigen_wave_forms"]
+		#eigen_traces = array([eigen_traces[j]/sum(eigen_traces[j]**2)**0.5 for j in arange(len(eigen_traces))])	#not efficient. constantly renormalizing. will optimize later
+		#IPython.embed()
 		y = detectorObject[selfName](thisEvent)[0][i]
+		y -= mean(y[config_parameters['offset_mask']])
 		weightings = dot(eigen_traces,y)
 		residuals = y-dot(weightings,eigen_traces)
 		variance = dot(eigen_traces,residuals)**2
@@ -51,7 +57,9 @@ def svd_update(eigen_system,new_vector,config_parameters):
 		new_weightings = dot(svd_lsv,diag(singular_values))
 		new_eigen_vectors = dot(pinv(new_weightings),reconstructed_system)[:config_parameters["eigen_basis_size"]]
 
-		eigen_system = {'eigen_weightings':new_weightings,'eigen_wave_forms':new_eigen_vectors}
+		norm_eigen_vectors = real(array([new_eigen_vectors[i]/sum(new_eigen_vectors[i]**2)**0.5 for i in arange(len(new_eigen_vectors))]))
+
+		eigen_system = {'eigen_weightings':new_weightings,'eigen_wave_forms':new_eigen_vectors,'norm_eigen_wave_forms':norm_eigen_vectors}
 	
 	except TypeError:
 		if ((None is new_vector) and (len(eigen_system['eigen_weightings'])>1)):
@@ -59,13 +67,15 @@ def svd_update(eigen_system,new_vector,config_parameters):
 		else:
 			eigen_system['eigen_weightings'] = [1]
 			eigen_system['eigen_wave_forms'] = new_vector
+			eigen_system['norm_eigen_wave_forms'] = new_vector
 
 	except ValueError:
 		
 		if (1==len(eigen_system['eigen_weightings'])):
 			eigen_system['eigen_weightings'] = array([[1,0],[0,1]])
 			eigen_system['eigen_wave_forms'] = vstack([eigen_system['eigen_wave_forms'],new_vector])
-	
+			eigen_system['norm_eigen_wave_forms'] = eigen_system['eigen_wave_forms']		
+
 	return eigen_system
 
 def make_acq_svd_basis(detectorObject,thisEvent,previousProcessing):
@@ -88,9 +98,9 @@ def make_acq_svd_basis(detectorObject,thisEvent,previousProcessing):
 			try:
 				y =  detectorObject[selfName](thisEvent)[0][i]			
 				y -= mean(y[config_parameters['offset_mask']])			
-				eigen_system["ch"+str(i)]= {'eigen_wave_forms':y,'eigen_weightings':[1]}
+				eigen_system["ch"+str(i)]= {'eigen_wave_forms':y,'eigen_weightings':[1],'norm_eigen_wave_forms':[1]}
 			except (KeyError,TypeError) as e:
-				eigen_system["ch"+str(i)] = {'eigen_wave_forms':None,'eigen_weightings':None}
+				eigen_system["ch"+str(i)] = {'eigen_wave_forms':None,'eigen_weightings':None,'norm_eigen_wave_forms':None}
 
 	##############################
 	###main part of calculation###
