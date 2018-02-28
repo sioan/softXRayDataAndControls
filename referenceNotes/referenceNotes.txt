@@ -9,8 +9,12 @@ glassfish lol2000
 root lol2000
 rci singleshot
 
+https://docs.google.com/document/d/1e4VAOkkh7PB103dH4bcfaaPVZ0qCU4mPUAOrLEokhRs/edit
+
+
 usb motor ioc stalls and doesn't make it through boot when motor controller communication is bad. power cycle usb-find converter and motor controller
 
+https://stanford.zoom.us/profile
 
 
 #plc stuff
