@@ -92,6 +92,8 @@ then search for ports.
 #fpga pgp card computer
 #desktop
 lcls-pc83236
+https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=231475834
+
 
 psana epics show pv names in psana
 psana.DetNames('epics')
@@ -224,8 +226,9 @@ source sxrenv.sh
 
 #sxr slow camera script location
 /reg/neh/operator/sxropr/sxr_python/sxr/SlowCam #don't use this. instead use
-python princeton.py
-slowcam.takeShotsInteractive
+python princeton.py	#no more. use sxrpython instead
+daq.connect()
+slowcam.takeShotsInteractive(numShots=120)
 
 
 #svn commands
@@ -365,6 +368,11 @@ bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtracto
 psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
+
+/reg/g/psdm/sw/hutch
+
+https://confluence.slac.stanford.edu/display/PSDM/Other+LCLS+Analysis+Tools
+
 
 pcaspy. is auto loaded on hutch nodes with my current bashrc 1/14/2108
 /reg/g/pcds/pkg_mgr/release/controls-0.1.8/x86_64-rhel6-gcc44-opt/python/pcaspy/__init__.pyc'
@@ -721,3 +729,27 @@ https://bokeh.pydata.org/en/latest/docs/user_guide/server.html
 python qt designer
 psdev7b
 /usr/bin/designer-qt4
+
+
+moxa stuff
+You can check these out using what's under "URL"
+
+psdev7b:configs> svn info
+Path: .
+Working Copy Root Path: /reg/neh/home4/sstubbs/work/switches
+URL: file:///reg/g/pcds/repo/svn/admin/switches/trunk/configs
+Relative URL: ^/admin/switches/trunk/configs
+Repository Root: file:///reg/g/pcds/repo/svn
+Repository UUID: 247463d3-2014-4be8-a203-cde5d93eee3a
+Revision: 1188
+Node Kind: directory
+Schedule: normal
+Last Changed Author: paiser
+Last Changed Rev: 1181
+Last Changed Date: 2018-02-15 09:46:47 -0800 (Thu, 15 Feb 2018)
+
+
+Also see:
+https://confluence.slac.stanford.edu/display/PCDS/Installing+a+new+serial+ports+server
+(has some limited info on why and how you add terminal servers using addtermsrv)
+

@@ -1,9 +1,0 @@
-/reg/d/psdm/sxr/sxrlp2515/results/beforebeamtime/config/analysisFunctions.py
-/reg/d/psdm/sxr/sxrlp2515/results/duringbeamtime/config/analysisFunctions.py
-/reg/d/psdm/sxr/sxrlp2615/scratch/analysisScripts/config/analysisFunctions.py
-/reg/d/psdm/sxr/sxrlp2615/results/AnalysisLCLS/config/analysisFunctions.py
-/reg/d/psdm/sxr/sxrlp4215/results/config/analysisFunctions.py
-/reg/d/psdm/sxr/sxrlq8415/scratch/automatedXTC/config/analysisFunctions.py
-/reg/d/psdm/sxr/sxrx22915/scratch/automatedXtcExtractor/config/analysisFunctions.py
-/reg/d/psdm/sxr/sxrx22915/scratch/Xanthe/X229_analysis/analysisFunctions.py
-/reg/d/psdm/sxr/sxrx22915/results/run18/config/analysisFunctions.py
