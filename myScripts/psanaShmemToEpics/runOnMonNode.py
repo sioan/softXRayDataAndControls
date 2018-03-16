@@ -47,7 +47,7 @@ for nevent, evt in enumerate(ds.events()):
 	if(nevent%120 == 0): 
 		print("test")
 		print("Channel Number "+str(channel_number))
-		numpysocket.startClieint(controlNode,12301,toExport)
+		numpysocket.startClient(controlNode,12301,toExport)
 		#numpysocket.startClient("sxr-console",12301,toExportB)
 		#toExportB = array([])
 
