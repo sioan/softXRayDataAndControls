@@ -1,11 +1,28 @@
+import sys
 import psana
 from pylab import *
 import time
+import argparse
 ds = psana.DataSource("shmem=psana.0:stop=no")
 #myEvents = enumerate(ds.events())
 #nevent,evt = next(myEvents)
 #psana.DetNames()
-acquiris1Det = psana.Detector("Acq01")
+
+parser = argparse.ArgumentParser(description='Serve as numpy array client for shmem -> EPICS pipeline. Run on daq-<hutch>-mon06.')
+parser.add_argument('hutch', metavar='HUTCH', help='Name of hutch (AMO or SXR)')
+try:
+	args=parser.parse_args()
+except:
+	pass #Likely no arguments passed in
+if args.hutch.lower() == "amo":
+	acquiris1Det = psana.Detector("ACQ1")
+        controlNode = "amo-console"
+elif args.hutch.lower() == "sxr":
+	acquiris1Det = psana.Detector("Acq01")
+	controlNode = "sxr-console"
+else:
+	print "Error, hutch %s not supported!" % args.hutch
+        sys.exit()
 execfile("numpyClientServer.py")
 
 mySize = 2000
@@ -30,7 +47,7 @@ for nevent, evt in enumerate(ds.events()):
 	if(nevent%120 == 0): 
 		print("test")
 		print("Channel Number "+str(channel_number))
-		numpysocket.startClient("sxr-console",12301,toExport)
+		numpysocket.startClient(controlNode,12301,toExport)
 		#numpysocket.startClient("sxr-console",12301,toExportB)
 		#toExportB = array([])
 
