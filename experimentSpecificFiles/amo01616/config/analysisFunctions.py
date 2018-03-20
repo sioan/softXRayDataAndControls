@@ -1,6 +1,8 @@
 from pylab import *
 import psana
 import IPython
+from scipy.optimize import curve_fit
+from scipy.signal import savgol_filter
 import h5py
 
 ######################################################
@@ -8,10 +10,10 @@ import h5py
 ######################################################
 
 try:
-	eigen_traces_h5py=h5py.File("eigen_traces_run192.h5")
+	eigen_traces_h5py=h5py.File("eigen_traces.h5")
 	#eigen_traces = f['summary/nonMeaningfulCoreNumber0/Acq01/ch1/eigen_wave_forms']
 except:
-	print("eigen_traces_run192.h5")
+	print("eigen_traces.h5 not found")
 	pass
 
 
@@ -34,7 +36,8 @@ def use_acq_svd_basis(detectorObject, thisEvent):
 		y -= mean(y[config_parameters['offset_mask']])
 		weightings = dot(eigen_traces,y)
 		residuals = y-dot(weightings,eigen_traces)
-		variance = dot(eigen_traces,residuals)**2
+		variance = sum(residuals**2)/len(y)
+		#variance = dot(eigen_traces,residuals)**2
 		#approximation in line above comes from eigen_traces is orthogonal matrix, 
 		#so dot (eigen_traces.transpose(),eigen_traces) is diagonal. 
 		#missing something with number of points and degrees of freedom
@@ -118,26 +121,18 @@ def make_acq_svd_basis(detectorObject,thisEvent,previousProcessing):
 #######End of eigen basis generation##################
 ######################################################
 
-def getDelay(detectorObject, thisEvent):
-        selfName = detectorObject['self_name']
-
-        # IPython.embed()
-
-        if detectorObject[selfName].values(thisEvent) is None:
-                myDictionary = {'DLS_PS': -999.0}
-                return myDictionary
-
-        DLS_PS = detectorObject[selfName].values(thisEvent)[0]
-        return {'DLS_PS': DLS_PS}
-
-
 def genericReturn(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
-	x = detectorObject[selfName](thisEvent)
-	if x is None:
-		return -9999.0
+	return detectorObject[selfName](thisEvent)
+
+
+def get_projection(detectorObject,thisEvent):
+	#IPython.embed()
+	myImage = detectorObject['timeToolOpal'].raw(thisEvent)
+	if None == myImage:
+		return (zeros(1024))
 	else:
-		return x
+		return sum(myImage[370:],axis=0)
 
 def genericSummaryZero(detectorObject,thisEvent,previousProcessing):
 	return 0
@@ -146,87 +141,54 @@ def myZeroReturn(detectorObject,thisEvent,previousProcessing):
 	return 0
 
 def getTimeToolData(detectorObject,thisEvent):
-	IPython.embed()
-
-	#print thisEvent.get(psana.EventId).fiducials()
-	
 	selfName = detectorObject['self_name']
 	ttData = detectorObject[selfName].process(thisEvent)
 	myDict = {}	
 	if(ttData is None):
 		
-		myDict['amplitude'] = -99999
-		myDict['pixelTime'] = -99999
-		myDict['positionFWHM'] = -99999
+		myDict['amplitude'] = -99999.0
+		myDict['pixelTime'] = -99999.0
+		myDict['positionFWHM'] = -99999.0
 
 
 	else:
 
 		myDict['amplitude'] = ttData.amplitude()
+		myDict['pixel_position'] = ttData.position_pixel()
 		myDict['pixelTime'] = ttData.position_time()
 		myDict['positionFWHM'] = ttData.position_fwhm()
 
 	return myDict
 
-def getxtcavData(detectorObject,thisEvent):
-	selfName = detectorObject['self_name']
-	detectorObject[selfName]
-
-def getpeakb(detectorObject,thisEvent):
-	selfName = detectorObject['self_name']
-
-	myDict = {}
-	myDict['APDNOAP'] = -9999.0
-	myDict['APDAP'] = -9999.0
-	myDict['MCPI0'] = -9999.0
-	
-	myWaveForm = detectorObject[selfName].waveform(thisEvent)
-	if any (None in [myWaveForm]):
-		return myDict
-	
-	MCPI0ind = 1202
-	APDNOAPind = 1208
-	APDAPind = 1207
-	MCPI0width = 1
-	APDwidth = 2
-	
-	myWaveForm[0] -= mean(myWaveForm[0][:1000]) #small APD	
-	myWaveForm[1] -= mean(myWaveForm[1][:1000]) #large APD
-	myWaveForm[2] -= mean(myWaveForm[2][:1000]) #MCP
-	myDict['APDNOAP'] = mean(myWaveForm[1][APDNOAPind-APDwidth:APDNOAPind+APDwidth])
-	myDict['APDAP'] = mean(myWaveForm[0][APDAPind-APDwidth:APDAPind+APDwidth])
-	myDict['MCPI0'] = mean(myWaveForm[2][MCPI0ind-MCPI0width:MCPI0ind+MCPI0width])
-	
-	return myDict	
-def getSum(detectorObject,thisEvent):
-	selfName = detectorObject['self_name']
-	
-	myImage = detectorObject[selfName].image(thisEvent)
-	
-	myDict = {}
-	myDict['sum'] = -999.0
-	if None is not myImage:
-		myDict['sum'] = sum(myImage)
-	
-	return myDict
-	
-
-
 def getPeak(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
+
+	if(None is detectorObject[selfName](thisEvent)):
+		fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
+		return fit_results
+		
 
 	myWaveForm = -detectorObject[selfName](thisEvent)[0][0]
 
 	myWaveForm -= mean(myWaveForm[:2500])
 
 	x = arange(len(myWaveForm))[7500:10000]-8406
-	myFit = polyfit(x, myWaveForm[7500:10000],3)
+	#myFit = polyfit(x, myWaveForm[7500:10000],3)
+	#p = poly1d(myFit)
+	#myMax = max(p(x))
+	#return myMax	
 
-	p = poly1d(myFit)
-	myMax = max(p(x))
+	#IPython.embed()
+	try:
+		popt,pcov = curve_fit(peakFunction,x,myWaveForm[7500:10000])
+		
+		fit_results = {'amplitude':popt[2],'uncertainty_cov':pcov[2,2]}
 
-	#return myFit[-1]	#placing a dictionary here also works
-	return myMax	
+	except RuntimeError:
+		fit_results = {'amplitude':-9999.0,'uncertainty_cov':99999.0}
+
+
+	return fit_results
 
 def accumulateAverageWave(detectorObject,thisEvent,previousProcessing):
 	selfName = detectorObject['self_name']
@@ -243,7 +205,23 @@ def getWaveForm(detectorObject,thisEvent):
 		return detectorObject[selfName](thisEvent)[0][0]
 	else:	
 		return 0
+
+def getImage(detectorObject,thisEvent):
+	#IPython.embed()
+	selfName = detectorObject['self_name']
+	myImage = detectorObject[selfName].raw(thisEvent)
+	my_dict = {}
 	
+	#IPython.embed()
+	if None == myImage:
+		my_dict['image'] = zeros(2048)
+		#print("None")
+	else:
+		my_dict['image'] = myImage[0]
+		#print(myImage.shape)
+	
+	return my_dict
+
 def get(detectorObject,thisEvent):
 	selfName = detectorObject['self_name']
 	
@@ -278,5 +256,37 @@ def getEBeam(detectorObject,thisEvent):
 	else:
 		return 0
 
+#for slow cameras that would crash psana if written every event cause of back filling with zeros
+def slowCameraImageSummarizer(detectorObject,thisEvent,previousProcessing):
+	
+	#return detectorObject.image(thisEvent)
+	tempImage = detectorObject.image(thisEvent)
+	myDict= {}
 
+	try:
+		if(type(previousProcessing) != dict):
+			previousProcessing = {}
+	except NameError:
+		previousProcessing = {}
 
+	if(tempImage is not None):
+		print("got image")
+		myEventId = thisEvent.get(psana.EventId)
+		myTime = myEventId.time()[0]
+		myDict["sec"+str(myTime)] = tempImage		
+		
+		previousProcessing.update(myDict)
+	
+	return previousProcessing
+
+def getDLS(detectorObject, thisEvent):
+        selfName = detectorObject['self_name']
+
+        # IPython.embed()
+
+        if detectorObject[selfName].values(thisEvent) is None:
+                myDictionary = {'DLS_PS': -999.0}
+                return myDictionary
+
+        DLS_PS = detectorObject[selfName].values(thisEvent)[0]
+        return {'DLS_PS': DLS_PS}

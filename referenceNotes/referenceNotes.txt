@@ -98,6 +98,9 @@ https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=231475834
 psana epics show pv names in psana
 psana.DetNames('epics')
 
+/reg/neh/home/sioan/softXRayDataAndControls/experimentSpecificFiles/sxrlr2916
+flush h5py on every gather? in cleanTableGenerator
+
 #jana log daq reporting 
 https://docs.google.com/a/stanford.edu/spreadsheets/d/1ZpijKpIWWeDac7XivMc12Afigps4I4eqwL3GC7wcQxk/edit?usp=sharing
 #database for previous daq configuraiton
@@ -521,6 +524,8 @@ turn on every ioc that runs on a pnccd host
 error from RhodeSchwartz's
 /reg/g/pcds/pyps/config/det/iocmanager/startProc: /reg/g/pcds/package/epics/3.14/ioc/common/RohdeSchwartzNGPS/R1.0.4/children/build/iocBoot/ioc-det-pnccd-front-rsngps02/st.cmd: ../../bin/linux-x86_64/rsngps: bad interpreter: No such file or directory
 
+https://drive.google.com/drive/folders/0B1-OMNjEHAACWHpqN2xjNURqMWc?usp=sharing
+
 #ioc template dereferencing hell.  this is the st.cmd file that get's actually run
 /reg/g/pcds/package/epics/3.14/ioc/common/RohdeSchwartzNGPS/R1.0.4/children/build/iocBoot/ioc-det-pnccd-front-rsngps01
 
@@ -687,12 +692,27 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 Administrator (copy paste)
 #mcn-amo-las1 is only accessible from amo-control. some other mcn-amo-las hosts are available from psur112
 
+Sequence for getting the newports to start working (assuming nothing is actually wrong with them). Also wait at least a couple seconds before moving between steps.
+
+ 
+     Reboot the ioc
+     Re-connect
+     Autoconfig (This should result in a lost connection, so you will need to wait. Run this from the web interface if you want some feedback)
+     Re-connect
+     Initialize all
+     Home or reference all
+
+
 ################# usb debuggin
 https://wiki.kubuntu.org/Kernel/Debugging/USB
 sudo mount -t debugfs none /sys/kernel/debug
 sudo cat /sys/kernel/debug/usb/usbmon/2u >bus2data.txt
 sudo cat /sys/kernel/debug/usb/usbmon/0u
+#########################################
 
+webcam
+sxropr
+pcds
 
 ######################################
 It's only on pspuppet and must be run as root:
@@ -752,4 +772,14 @@ Last Changed Date: 2018-02-15 09:46:47 -0800 (Thu, 15 Feb 2018)
 Also see:
 https://confluence.slac.stanford.edu/display/PCDS/Installing+a+new+serial+ports+server
 (has some limited info on why and how you add terminal servers using addtermsrv)
+
+
+
+cable infrastructure
+https://confluence.slac.stanford.edu/display/PCDS/Cable+Drawings
+
+
+(beefy machines with 90 G of ram, can read PVs, but not write them, and have internet access.)
+psbuild-rhel7 ()
+/reg/neh/operator/sxropr/python/sxr_python
 
