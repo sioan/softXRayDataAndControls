@@ -783,3 +783,6 @@ https://confluence.slac.stanford.edu/display/PCDS/Cable+Drawings
 psbuild-rhel7 ()
 /reg/neh/operator/sxropr/python/sxr_python
 
+procurement
+https://slacspace.slac.stanford.edu/sites/xfd/os/Lists/Procurement_Support
+
