@@ -14,10 +14,18 @@ def main(argd):
 		myDataSource = psana.DataSource(experimentNameAndRun)
 	myEnumeratedEvents = enumerate(myDataSource.events())
 	
+	smldata = myDataSource.small_data("test.h5")
+
 	for eventNumber, thisEvent in myEnumeratedEvents:
 		if eventNumber<argd['start']:continue
-		elif eventNumber>argd['final']: break
-		else:print eventNumber
+		if eventNumber>argd['final']: break
+
+		if(eventNumber%200==1):
+			print eventNumber
+
+		smldata.event()
+
+	smldata.save()
 
 	IPython.embed()
 
