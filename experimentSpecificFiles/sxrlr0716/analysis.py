@@ -47,7 +47,7 @@ def get_peaks(my_spectra):
 	
 				popt,pcov = curve_fit(gaussian,y,x,p0=[initial_positions[i],0.1,initial_amplitudes[i],0.0])
 		
-				my_fits = vstack([my_fits,[popt[0],popt[1]+initial_positions[i],popt[2],popt[3]]])
+				my_fits = vstack([my_fits,[popt[0]+initial_positions[i],popt[1],popt[2],popt[3]]])
 		except RuntimeError:
 			#IPython.embed()
 			pass
