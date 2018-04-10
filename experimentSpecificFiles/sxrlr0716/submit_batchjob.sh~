@@ -1,0 +1,14 @@
+#!/bin/bash
+EXP=$1
+RUN=$2
+
+
+if [ $# -ne $MINARGS ] ; then
+   echo -e ""
+   echo -e "Usage:   `basename "$0"` <exp|run>"
+   echo -e ""
+   exit 0 
+fi
+
+
+bsub -o %J.log -q psnehhiprioq -n 15 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e ${EXP} -r ${RUN}

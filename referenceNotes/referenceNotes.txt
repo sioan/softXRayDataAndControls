@@ -194,6 +194,14 @@ https://confluence.slac.stanford.edu/display/~mshankar/Exporting+data+from+the+q
 #dehong motor record untemplated is located here
 /reg/g/pcds/epics/ioc/common/ims/R2.2.0 (this current version is bad)
 
+reset a motor to factor settings
+telnet in to digiport with motor
+cp #clears program
+fd #factory default
+em 2 #echo mode
+py 0 #party mode 
+
+
 #tcpdump on all computers in amo and sxr now.  tcpick is only on psusr112
 sudo tcpdump port 56471 -w sxrMotor2113.txt
 tcpick -r tcpDump.txt -yP | less	#currently only on psusr112 
@@ -232,7 +240,7 @@ source sxrenv.sh
 python princeton.py	#no more. use sxrpython instead
 daq.connect()
 slowcam.takeShotsInteractive(numShots=120)
-
+/reg/g/pcds/pyps/sxr/dev/sxr/sxrpython.sh
 
 #svn commands
 svn checkout (co)

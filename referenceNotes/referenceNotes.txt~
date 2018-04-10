@@ -1,6 +1,7 @@
 #rci chamber stuff
 bl13-ejb
 172.21.39.107
+gets plugged into port one on the patch panel ethernet (it's on the cds network just like sxr-control).
 eth0 needs to be manually turned on (either command line (unverified) or through x window system-andministration-network)
 on standard cds network
 user names and passwords
@@ -8,8 +9,12 @@ glassfish lol2000
 root lol2000
 rci singleshot
 
+https://docs.google.com/document/d/1e4VAOkkh7PB103dH4bcfaaPVZ0qCU4mPUAOrLEokhRs/edit
+
+
 usb motor ioc stalls and doesn't make it through boot when motor controller communication is bad. power cycle usb-find converter and motor controller
 
+https://stanford.zoom.us/profile
 
 
 #plc stuff
@@ -87,9 +92,14 @@ then search for ports.
 #fpga pgp card computer
 #desktop
 lcls-pc83236
+https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=231475834
+
 
 psana epics show pv names in psana
 psana.DetNames('epics')
+
+/reg/neh/home/sioan/softXRayDataAndControls/experimentSpecificFiles/sxrlr2916
+flush h5py on every gather? in cleanTableGenerator
 
 #jana log daq reporting 
 https://docs.google.com/a/stanford.edu/spreadsheets/d/1ZpijKpIWWeDac7XivMc12Afigps4I4eqwL3GC7wcQxk/edit?usp=sharing
@@ -219,9 +229,10 @@ source sxrenv.sh
 
 #sxr slow camera script location
 /reg/neh/operator/sxropr/sxr_python/sxr/SlowCam #don't use this. instead use
-python princeton.py
-slowcam.takeShotsInteractive
-
+python princeton.py	#no more. use sxrpython instead
+daq.connect()
+slowcam.takeShotsInteractive(numShots=120)
+/reg/g/pcds/pyps/sxr/dev/sxr/sxrpython.sh
 
 #svn commands
 svn checkout (co)
@@ -361,6 +372,11 @@ psanaXtcDataExtractor.py -e sxri0414 -r 60 -t -td TSS_OPAL -tc 162
 
 bsub -o %J.log -q psnehprioq -n 48 mpirun --mca btl ^openib psanaXtcDataExtractor.py -e sxri0414 -r 60 -td TSS_OPAL -tc 162
 
+/reg/g/psdm/sw/hutch
+
+https://confluence.slac.stanford.edu/display/PSDM/Other+LCLS+Analysis+Tools
+
+
 pcaspy. is auto loaded on hutch nodes with my current bashrc 1/14/2108
 /reg/g/pcds/pkg_mgr/release/controls-0.1.8/x86_64-rhel6-gcc44-opt/python/pcaspy/__init__.pyc'
 
@@ -477,6 +493,15 @@ cd ~detopr a
 ./pnccdHome.sh expert back
 ./pnccdHome.sh expert #(does both)
 
+camonitor these PVs to get to make sure encoder lights are on.
+camonitor AMO:LMP:MMS:{07,08,10}:LE:POSITIONGET
+
+telnet digi-det-pnccd01 2013
+~detopr/pnccdHome.sh front expert
+example pv AMO:LMP:MMS:09
+telnet localhost 30050
+3661  detioc    ioc-amo-lamp-stage-ims    procServ 
+
 #this will take a few minutes after the physical racks are moved in
 #to place and the switch is hooked up for the network to 
 
@@ -507,6 +532,11 @@ turn on every ioc that runs on a pnccd host
 
 error from RhodeSchwartz's
 /reg/g/pcds/pyps/config/det/iocmanager/startProc: /reg/g/pcds/package/epics/3.14/ioc/common/RohdeSchwartzNGPS/R1.0.4/children/build/iocBoot/ioc-det-pnccd-front-rsngps02/st.cmd: ../../bin/linux-x86_64/rsngps: bad interpreter: No such file or directory
+
+https://drive.google.com/drive/folders/0B1-OMNjEHAACWHpqN2xjNURqMWc?usp=sharing
+
+sxd controls stalking
+https://drive.google.com/drive/folders/0B1-OMNjEHAACQkhrLVBHZEcycTg
 
 #ioc template dereferencing hell.  this is the st.cmd file that get's actually run
 /reg/g/pcds/package/epics/3.14/ioc/common/RohdeSchwartzNGPS/R1.0.4/children/build/iocBoot/ioc-det-pnccd-front-rsngps01
@@ -674,12 +704,27 @@ reg/g/pcds/setup/pcds_shortcuts.csh~:alias psproc=show_epics_sioc
 Administrator (copy paste)
 #mcn-amo-las1 is only accessible from amo-control. some other mcn-amo-las hosts are available from psur112
 
+Sequence for getting the newports to start working (assuming nothing is actually wrong with them). Also wait at least a couple seconds before moving between steps.
+
+ 
+     Reboot the ioc
+     Re-connect
+     Autoconfig (This should result in a lost connection, so you will need to wait. Run this from the web interface if you want some feedback)
+     Re-connect
+     Initialize all
+     Home or reference all
+
+
 ################# usb debuggin
 https://wiki.kubuntu.org/Kernel/Debugging/USB
 sudo mount -t debugfs none /sys/kernel/debug
 sudo cat /sys/kernel/debug/usb/usbmon/2u >bus2data.txt
 sudo cat /sys/kernel/debug/usb/usbmon/0u
+#########################################
 
+webcam
+sxropr
+pcds
 
 ######################################
 It's only on pspuppet and must be run as root:
@@ -716,3 +761,40 @@ https://bokeh.pydata.org/en/latest/docs/user_guide/server.html
 python qt designer
 psdev7b
 /usr/bin/designer-qt4
+
+
+moxa stuff
+You can check these out using what's under "URL"
+
+psdev7b:configs> svn info
+Path: .
+Working Copy Root Path: /reg/neh/home4/sstubbs/work/switches
+URL: file:///reg/g/pcds/repo/svn/admin/switches/trunk/configs
+Relative URL: ^/admin/switches/trunk/configs
+Repository Root: file:///reg/g/pcds/repo/svn
+Repository UUID: 247463d3-2014-4be8-a203-cde5d93eee3a
+Revision: 1188
+Node Kind: directory
+Schedule: normal
+Last Changed Author: paiser
+Last Changed Rev: 1181
+Last Changed Date: 2018-02-15 09:46:47 -0800 (Thu, 15 Feb 2018)
+
+
+Also see:
+https://confluence.slac.stanford.edu/display/PCDS/Installing+a+new+serial+ports+server
+(has some limited info on why and how you add terminal servers using addtermsrv)
+
+
+
+cable infrastructure
+https://confluence.slac.stanford.edu/display/PCDS/Cable+Drawings
+
+
+(beefy machines with 90 G of ram, can read PVs, but not write them, and have internet access.)
+psbuild-rhel7 ()
+/reg/neh/operator/sxropr/python/sxr_python
+
+procurement purchase
+https://slacspace.slac.stanford.edu/sites/xfd/os/Lists/Procurement_Support
+

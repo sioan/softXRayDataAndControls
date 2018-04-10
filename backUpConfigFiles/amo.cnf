@@ -16,7 +16,7 @@ ami_path        = ami_base_path+'/ami/bin/x86_64-linux-dbg'
 amiRH7_path     = ami_base_path+'/ami/bin/x86_64-rhel7-opt'
 plugin_path     = ami_base_path+'/ami/lib/x86_64-rhel7-opt'
 daq2epics_path  = base_path+'/../tools/scripts'
-timetool_path   = base_path+'/timetool/lib/x86_64-linux-opt/libttappmtdb.so'
+timetool_path   = base_path+'/timetool/lib/x86_64-rhel7-opt/libttappmtdb.so'
 #pdsappv_path = '/usr/bin/valgrind --log-file=/tmp/val.log --leak-check=full '+pdsapp64_path
 
 old_monshm_path = '/reg/g/pcds/dist/pds/8.0.1-p8.1.7/build/pdsapp/bin/x86_64-linux-opt'
@@ -52,6 +52,13 @@ ami_opts = '-R -L '+plugin_path+'/libtimetooldbd.so'
 #slow_readout = '1' # for princeton and andor
 slow_readout = '0' # for non-princeton
 
+# NB: set the monitoring node configuration mode
+# 0: Default Mode - balanced AMI/PSANA setup
+# 1: SPI Mode - more PSANA, less AMI
+# 2: All AMI mode - all monitoring nodes used by ami - good for 'SLOW' cameras (sz: pre config not yet implemented in AMO)
+# 3: ()Single psana node mode - one monitoring node for psana the rest for AMI (sz: pre config not yet implemented in AMO)
+mon_node_mode = 1
+
 
 # default platform number, represented as a string
 if not platform: platform = '0'
@@ -86,7 +93,6 @@ daq_amo_cam02  = '172.21.20.92'
 daq_amo_usr1   = '172.21.20.83'
 daq_det_pnccd01  = '172.21.23.34'
 daq_det_pnccd02  = '172.21.23.27'
-daq_amo_sdl      = '172.21.20.121'
 psanaamo         = '172.21.20.115'
 daq_amo_ana02    = '172.21.20.94'
 rce08            = '172.21.20.109'
@@ -98,21 +104,21 @@ daq_sxd_spec     = '172.21.23.33'
 
 # Default setup
 # - always have all DSS nodes included
-dss_nodes = [ daq_amo_dss01, daq_amo_dss02, daq_amo_dss03, daq_amo_dss04, daq_amo_dss05, daq_amo_dss06 ]
-# JBT - Temporarily remove daq-amo-dss01 since it seems to be plagued by nfs issues
-#dss_nodes = [ daq_amo_dss02, daq_amo_dss03, daq_amo_dss04, daq_amo_dss05, daq_amo_dss06 ]
+dss_nodes = [ daq_amo_dss01, daq_amo_dss02, daq_amo_dss03,daq_amo_dss04, daq_amo_dss05, daq_amo_dss06 ]
 
 # Default AMI/PSANA MON node setup
 # - AMI MON Nodes:   MON01,MON02,MON03
 # - PSANA MON Nodes: MON04,MON05,MON06
-#mon_nodes = [ daq_amo_mon01, daq_amo_mon02, daq_amo_mon03 ]
-#psana_mon_nodes = [ daq_amo_mon04, daq_amo_mon05, daq_amo_mon06 ]
+if mon_node_mode == 0:
+   mon_nodes = [ daq_amo_mon01, daq_amo_mon02, daq_amo_mon03 ]
+   psana_mon_nodes = [ daq_amo_mon04, daq_amo_mon05, daq_amo_mon06 ]
 #
 # SPI Mode (or other PSANA heavy experiments)
 # - AMI MON Nodes:    MON01
 # - PSANA MON Nodes:  MON02,MON03,MON04,MON05,MON06
-mon_nodes = [ daq_amo_mon01]
-psana_mon_nodes = [ daq_amo_mon02, daq_amo_mon03, daq_amo_mon04, daq_amo_mon05, daq_amo_mon06 ]
+elif mon_node_mode == 1:
+   mon_nodes = [ daq_amo_mon01]
+   psana_mon_nodes = [ daq_amo_mon02, daq_amo_mon03, daq_amo_mon04, daq_amo_mon05, daq_amo_mon06 ]
 
 #proxy_node = daq_amo_dss06
 proxy_node = daq_amo_dss05
@@ -155,10 +161,11 @@ procmgr_config_base = [
    env:'PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86', cmd:pdsapp_path+'/acq -P AMO:DAQ:ACQ1 -i 23 -d 1'}, # OLD ITOF 
   {host:daq_amo_acq02,       id:'ACQ2',   flags:'sup', evr:'0,1', rtprio:'50',
    env:'PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86', cmd:pdsapp_path+'/acq -P AMO:DAQ:ACQ2 -i 23 -d 2'}, # OLD GD
-  {host:daq_amo_acq03,       id:'ACQ3',  flags:'sup', evr:'0,2', rtprio:'50',
-   env:'PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86', cmd:pdsapp_path+'/acq -P AMO:DAQ:ACQ3 -i 23 -d 3'}, # OLD MBES
-  {host:daq_amo_acq04,       id:'ACQ4',   flags:'sup', evr:'0,3', rtprio:'50',
-   env:'PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86', cmd:pdsapp_path+'/acq -P AMO:DAQ:ACQ4 -i 23 -d 4'}, # OLD ETOF
+# ACQ3 & ACQ4 commented out 1/2018 - one board went back to CXI and others being RMA'd
+#  {host:daq_amo_acq03,       id:'ACQ3',  flags:'sup', evr:'0,2', rtprio:'50',
+#   env:'PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86', cmd:pdsapp_path+'/acq -P AMO:DAQ:ACQ3 -i 23 -d 3'}, # OLD MBES
+#  {host:daq_amo_acq04,       id:'ACQ4',   flags:'sup', evr:'0,3', rtprio:'50',
+#   env:'PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86', cmd:pdsapp_path+'/acq -P AMO:DAQ:ACQ4 -i 23 -d 4'}, # OLD ETOF
 
 
 # AMO OPAL Cameras
@@ -171,13 +178,14 @@ procmgr_config_base = [
   {host:daq_amo_cam02,      id:'OPAL4',   flags:'sup', evr:'0,7',  cmd:pdsappRH7_path+'/camedt -i "AmoEndstation/0/Opal1000/4" -g 0 -c 1 '+camera_opt+ ' -L '+timetool_path}, # Right
 
 
-# BLD and EPICS-ARCH machines
+# BLD and EPICS-ARCH machines. Located on dss04 as of 01/12/2018. switching to dss05
   {host:daq_amo_dss04,      id:'bldeb',    flags:'sp',           cmd:pdsappRH7_path+'/bld -m 0xa000000004000007'},
   {host:daq_amo_dss04,      id:'epicsArch',flags:'sp', env:'PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86_64/', cmd:pdsappRH7_path+'/epicsArch -f  '+offlinerc_path+'/epicsArch.txt'},
 
    # PnCCD racks
-#   {host:daq_det_pnccd01,    id:'pnccdFront',     flags:'sup', evr:'0,8', cmd:pdsapp64_path+'/pnccd -P 0xf0 -d Camp -i 0 -D 0x20 -t PNCCD:FRONT:SELFTRIGGER -f /reg/g/pcds/dist/pds/amo/misc/pnccdconfig/camp1/pnccdParam2Daq'},
-#   {host:daq_det_pnccd02,    id:'pnccdBack',      flags:'sup', evr:'0,9', cmd:pdsapp64_path+'/pnccd -P 0xf0 -d Camp -i 1 -D 0x20 -t PNCCD:BACK:SELFTRIGGER -f /reg/g/pcds/dist/pds/amo/misc/pnccdconfig/camp2/pnccdParam2Daq'},
+   {host:daq_det_pnccd01,    id:'pnccdFront',     flags:'sup', evr:'0,8', cmd:pdsapp64_path+'/pnccd -P 0xf0 -d Camp -i 0 -D 0x20 -t PNCCD:FRONT:SELFTRIGGER -f /reg/g/pcds/dist/pds/amo/misc/pnccdconfig/camp1/pnccdParam2Daq'},
+#   {host:daq_det_pnccd01,    id:'pnccdFront',     flags:'sup', evr:'0,8', cmd:pdsapp64_path+'/pnccd -P 0xf0 -d Camp -i 0 -D 0x20 -f /reg/g/pcds/dist/pds/amo/misc/pnccdconfig/camp1/pnccdParam2Daq'},
+   {host:daq_det_pnccd02,    id:'pnccdBack',      flags:'sup', evr:'0,9', cmd:pdsapp64_path+'/pnccd -P 0xf0 -d Camp -i 1 -D 0x20 -t PNCCD:BACK:SELFTRIGGER -f /reg/g/pcds/dist/pds/amo/misc/pnccdconfig/camp2/pnccdParam2Daq'},
 
    # Princeton cameras
   #{host:daq_amo_cam01,    id:'princeton0',  flags:'spX',          cmd:pdsapp_path+'/princeton -n -c 0 -l 5 -i "23/0/0" '+camera_opt},
@@ -192,13 +200,12 @@ procmgr_config_base = [
 
   # USB encoder
   #{host:daq_amo_cam01,    id:'usdusb',  flags:'sp', evr:'0,5', cmd:pdsappRH7_path+'/usdusb -i 23'},
-#   {host:daq_amo_sdl,    id:'usdusb',  flags:'sp',  evr:'0,5', cmd:pdsappRH7_path+'/usdusb -i AmoEndstation/0/USDUSB/0'},
 
   # Ocean Optics spectrometer
 #   {host:daq_amo_usr1,      id:'oospec_0',     flags:'sp',    cmd:pdsappRH7_path+'/oceanoptics -i "23/0/0" -d 0 -l 2'},
 
 ## Portable Spectrometer ANDOR Mar 2016
-## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE IF RUNNING NOT RUNNING IN FULL VERTICAL BINNING MODE !
+## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE IF NOT RUNNING IN FULL VERTICAL BINNING MODE !
 #  {host:daq_sxd_spec, id:'andor', flags:'sxpu', evr:'1,0', cmd:andor_path+'/andor -t SXD:ANDOR0:TEMP -n -d -c 0 -l 5 -i "23/0/0" -g ' + configdb_path},
 
 
@@ -259,20 +266,22 @@ procmgr_config_mon.append({id:'ami_client', flags:'s', cmd:ami_path+'/online_ami
 
 
 ############################################################
-#
+#This is for 3 psana and 3 AMI 
 # ****  Default mapping, 2 DSS nodes per PSANA node ****
 # [ staggered for crude load balancing attempt ]
 #  daq-amo-mon04 => subscribe to DSS01 and DSS04
 #   => mask = 1 + 8 = 9
-#procmgr_config_mon.append({host:daq_amo_mon04,  id:'monreqsrv_psana_0', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 9 -n 32 -s '+max_evt_sz })
 
-# daq-amo-mon05 => subscribe to DSS02 and DSS05
-#  => mask = 2 + 16 = 18
-#procmgr_config_mon.append({host:daq_amo_mon05,  id:'monreqsrv_psana_1', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 18 -n 32 -s '+max_evt_sz })
+if mon_node_mode == 0:
+   procmgr_config_mon.append({host:daq_amo_mon04,  id:'monreqsrv_psana_0', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 9 -n 32 -s '+max_evt_sz })
 
-# daq-amo-mon06 => subscribe to DSS03 and DSS06
-#  => mask = 4 + 32 = 36
-#procmgr_config_mon.append({host:daq_amo_mon06,  id:'monreqsrv_psana_2', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 36 -n 32 -s '+max_evt_sz })
+   # daq-amo-mon05 => subscribe to DSS02 and DSS05
+   #  => mask = 2 + 16 = 18
+   procmgr_config_mon.append({host:daq_amo_mon05,  id:'monreqsrv_psana_1', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 18 -n 32 -s '+max_evt_sz })
+
+   # daq-amo-mon06 => subscribe to DSS03 and DSS06
+   #  => mask = 4 + 32 = 36
+   procmgr_config_mon.append({host:daq_amo_mon06,  id:'monreqsrv_psana_2', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 36 -n 32 -s '+max_evt_sz })
 ############################################################
 
 
@@ -282,64 +291,28 @@ procmgr_config_mon.append({id:'ami_client', flags:'s', cmd:ami_path+'/online_ami
 #JBT# ****  SPI mapping, ~1 DSS nodes per PSANA node ****
 #JBT# [ staggered for crude load balancing attempt ]
 #JBT#
-#JBT# daq-amo-mon02 => subscribed to DSS01 
-#JBT#   => mask = 1 
-#JBTprocmgr_config_mon.append({host:daq_amo_mon02,  id:'monreqsrv_psana_0', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 1 -n 32 -s '+max_evt_sz })
-#JBT
-#JBT# daq-amo-mon03 => subscribed to DSS02
-#JBT#   => mask = 2
-#JBTprocmgr_config_mon.append({host:daq_amo_mon03,  id:'monreqsrv_psana_1', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 2 -n 32 -s '+max_evt_sz })
-#JBT
-#JBT# daq-amo-mon04 => subscribed to DSS04
-#JBT#   => mask = 8
-#JBTprocmgr_config_mon.append({host:daq_amo_mon04,  id:'monreqsrv_psana_2', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 8 -n 32 -s '+max_evt_sz })
-#JBT
-#JBT# daq-amo-mon05 => subscribed to DSS05
-#JBT#   => mask = 16
-#JBTprocmgr_config_mon.append({host:daq_amo_mon05,  id:'monreqsrv_psana_3', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 16 -n 32 -s '+max_evt_sz })
-#JBT
-#JBT# daq-amo-mon06 => subscribed to DSS03 and DSS06
-#JBT#   => mask = 4 + 32 = 36
-#JBTprocmgr_config_mon.append({host:daq_amo_mon06,  id:'monreqsrv_psana_4', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 36 -n 32 -s '+max_evt_sz })
-
-
-
-############################################################
-#
-# ****  SPI mapping, ~1 DSS nodes per PSANA node ****
-# [ staggered for crude load balancing attempt ]
-# JBT Removed daq-amo-dss01 to try and minimize NFS issues
-# CPO and YOON82 shifted -i flag down 1 bit, we think to compensate for the removal of dss01 above (aug 12, 2016)
-#
-# daq-amo-mon02 => subscribed to DSS06
-#   => mask = 32
-
-# cpo switch to monSHMsrv for amon0816 to support some old code
-
-procmgr_config_mon.append({host:daq_amo_mon02,  id:'monreqsrv_psana_0', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 16 -n 32 -s '+max_evt_sz })
-
-# daq-amo-mon03 => subscribed to DSS02
-#   => mask = 2
-procmgr_config_mon.append({host:daq_amo_mon03,  id:'monreqsrv_psana_1', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 1 -n 32 -s '+max_evt_sz })
-
-# daq-amo-mon04 => subscribed to DSS04
-#   => mask = 8
-procmgr_config_mon.append({host:daq_amo_mon04,  id:'monreqsrv_psana_2', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 4 -n 32 -s '+max_evt_sz })
-
-# daq-amo-mon05 => subscribed to DSS05
-#   => mask = 16
-procmgr_config_mon.append({host:daq_amo_mon05,  id:'monreqsrv_psana_3', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 8 -n 32 -s '+max_evt_sz })
-
-# daq-amo-mon06 => subscribed to DSS03
-#   => mask = 4 
-procmgr_config_mon.append({host:daq_amo_mon06,  id:'monreqsrv_psana_4', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 2 -n 32 -s '+max_evt_sz })
-
-# JBT 2016-06-29 Test
-#procmgr_config_mon.append({host:daq_amo_mon02,  id:'xtcmonclient_2', flags:'sp', cmd:pdsdata_path+'/xtcmonclient -p psana -i 0'})
-#procmgr_config_mon.append({host:daq_amo_mon03,  id:'xtcmonclient_3', flags:'sp', cmd:pdsdata_path+'/xtcmonclient -p psana -i 0'})
-#procmgr_config_mon.append({host:daq_amo_mon04,  id:'xtcmonclient_4', flags:'sp', cmd:pdsdata_path+'/xtcmonclient -p psana -i 0'})
-#procmgr_config_mon.append({host:daq_amo_mon05,  id:'xtcmonclient_5', flags:'sp', cmd:pdsdata_path+'/xtcmonclient -p psana -i 0'})
-#procmgr_config_mon.append({host:daq_amo_mon06,  id:'xtcmonclient_6', flags:'sp', cmd:pdsdata_path+'/xtcmonclient -p psana -i 0'})
+elif mon_node_mode == 1:
+   #JBT# daq-amo-mon02 => subscribed to DSS01 
+   #JBT#   => mask = 1 
+   procmgr_config_mon.append({host:daq_amo_mon02,  id:'monreqsrv_psana_0', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 1 -n 32 -s '+max_evt_sz })
+   #JBT
+   #JBT# daq-amo-mon03 => subscribed to DSS02
+   #JBT#   => mask = 2
+   procmgr_config_mon.append({host:daq_amo_mon03,  id:'monreqsrv_psana_1', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 2 -n 32 -s '+max_evt_sz })
+   #JBT
+   #JBT# daq-amo-mon04 => subscribed to DSS04
+   #JBT#   => mask = 8
+   procmgr_config_mon.append({host:daq_amo_mon04,  id:'monreqsrv_psana_2', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 8 -n 32 -s '+max_evt_sz })
+   #JBT
+   #JBT# daq-amo-mon05 => subscribed to DSS05
+   #JBT#   => mask = 16
+   procmgr_config_mon.append({host:daq_amo_mon05,  id:'monreqsrv_psana_3', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 16 -n 32 -s '+max_evt_sz })
+   #JBT
+   #JBT# daq-amo-mon06 => subscribed to DSS03 and DSS06
+   #JBT#   => mask = 4 + 32 = 36
+   #procmgr_config_mon.append({host:daq_amo_mon06,  id:'monreqsrv_psana_4', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 36 -n 32 -s '+max_evt_sz })
+   #cpo: only subcribe to DSS03
+   procmgr_config_mon.append({host:daq_amo_mon06,  id:'monreqsrv_psana_4', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 4 -n 32 -s '+max_evt_sz })
 
 
 
