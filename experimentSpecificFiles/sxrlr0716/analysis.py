@@ -4,9 +4,9 @@ from scipy.optimize import curve_fit
 import IPython
 
 #load data
-experiment_run_name = "sxrlr0716run18"
+experiment_run_name = "sxrlr0716run17"
 my_file = experiment_run_name+".h5"
-my_hdf5_object = h5py.File("small_h5_data/"+my_file,"r")
+my_hdf5_object = h5py.File(my_file,"r")
 
 #convert hdf5 to dict
 my_list = []
@@ -26,7 +26,7 @@ width_list = []
 my_hdf5_object.close()
 
 def gaussian(x, x0,sigma,a,offset):
-	sigma_min = 1
+	sigma_min = 0.75
 	#return a*exp(-(x-x0)**2/(2*sigma**2))+4e-2
 	return a*exp(-(x-1.0*x0)**2/(2*(sigma**2+sigma_min**2)))+offset
 
@@ -36,7 +36,7 @@ def get_peaks(my_spectra):
 	working_area = 10
 	initial_positions = argsort(my_spectra)[-num_peaks:]
 	initial_amplitudes = my_spectra[initial_positions]*1.0
-	known_good_region = 1200
+	known_good_region = 2200
 
 	my_fits = [0,0,0,0,0]
 
@@ -46,7 +46,7 @@ def get_peaks(my_spectra):
 				y = my_spectra[initial_positions[i]-working_area:initial_positions[i]+working_area]
 				x = energy[initial_positions[i]-working_area:initial_positions[i]+working_area]
 	
-				popt,pcov = curve_fit(gaussian,y,x,p0=[initial_positions[i]*1.0,0.1,initial_amplitudes[i],0.0])
+				popt,pcov = curve_fit(gaussian,x,y,p0=[initial_positions[i]*1.0,0.1,initial_amplitudes[i],0.0])
 		
 				my_fits = vstack([my_fits,[initial_positions[i],popt[0],popt[1],popt[2],popt[3]]])
 
@@ -72,8 +72,8 @@ for my_spectra in my_dict['andor_spec/image']:
 	
 	my_spectra=my_spectra*1.0
 	my_median= median(my_spectra)
-	for i in arange(4):
-		my_spectra[i::4]=my_spectra[i::4]-median(my_spectra[i::4])+my_median	#fourier filtering
+	for i in arange(5):
+		my_spectra[i::5]=my_spectra[i::5]-median(my_spectra[i::5])+my_median	#fourier filtering
 
 	my_fit = get_peaks(my_spectra)
 	my_amplitudes = append(my_amplitudes, my_fit[:,3])	
