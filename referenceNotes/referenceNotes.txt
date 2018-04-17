@@ -172,6 +172,12 @@ https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detect
 
 #ICS network  need to check with bruce about the channel access.
 172.21.46.*
+subnet
+255.255.255.0
+windows users need password (unless mysterious regedit bit is set.)
+also, mike browne sent email with how to modify regedit
+don't expect to be able to ping windows machines. but may be able to
+better to try to ping console or machine from windows machine
 
 #amo vme high voltage hvs
 /reg/g/pcds/package/epics/3.14/ioc/amo/hv/R1.0.3/db

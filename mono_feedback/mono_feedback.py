@@ -24,8 +24,10 @@ def main():
 	gdet, gmd, e_beam = get_time_stamped_data()
 	e_beam_mean = np.mean(e_beam)
 	e_beam_std = np.std(e_beam)
-	e_range = 6*e_beam_std
+	e_range = 10*e_beam_std
 	n_bins = 100
+	hist_size = 2400
+
 	my_bins = arange(e_beam_mean-e_range,e_beam_mean+e_range,2*e_range/n_bins)
 	
 	e_beam_histogram = np.histogram(e_beam,my_bins)[0]
@@ -37,7 +39,7 @@ def main():
 
 
 	#publish.local = True
-	hist_size = 2400
+	
 
 	gdet_list, gmd_list, e_beam_list = (array([]),array([]),array([]))
 
@@ -58,7 +60,7 @@ def main():
 			gdet_list = append(gdet_list[-hist_size:],gdet)
 
 			e_beam_histogram = np.histogram(e_beam_list,my_bins)[0]
-			gmd_histogram = np.histogram(e_beam_list,my_bins,weights=gmd_list)[0]*1.0/e_beam_histogram
+			gmd_histogram = nan_to_num(np.histogram(e_beam_list,my_bins,weights=gmd_list)[0]*1.0/e_beam_histogram)
 		
 		
 			plot_ebeam_hist = XYPlot(0,"counts vs. e_beam",my_bins[1:],e_beam_histogram)
