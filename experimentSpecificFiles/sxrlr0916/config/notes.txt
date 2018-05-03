@@ -1,0 +1,8 @@
+%matplotlib
+f, axarr = plt.subplots(1)
+axarr.plot(x,y-mean(y),'o')
+axarr.plot(x_small,y_small)
+xlim(5.5e-7,6e-7)
+
+p=poly1d(popt[0],popt[1],popt[2])
+axarr.plot(x_small,p(x_small-initial_peak_pos))

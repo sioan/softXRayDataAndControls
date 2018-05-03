@@ -812,3 +812,64 @@ psbuild-rhel7 ()
 procurement purchase
 https://slacspace.slac.stanford.edu/sites/xfd/os/Lists/Procurement_Support
 
+
+rdesktop -g 1480x1024 172.21.46.202 -u TPX_PC -p MCPTIMEPIX
+
+
+accelerator machines
+physics@lcls-srv01
+mcclogin
+
+
+#event_time
+my_seconds =  event_time>>32
+my_nano_seconds = event_time & 0xffffffff
+
+###################################################
+###################################################
+###################################################
+
+windows ics network. mounting directories.
+
+CORRECTION! Seems only the psdatmgr can write to the usrdaq data dir!
+
+sudo runuser psdatmgr -c '/reg/g/pcds/pds/datamvrtimepix/sync-data.cmd sxr sxrlr0916'
+
+or 
+
+sudo runuser psdatmgr -c '/reg/g/pcds/pds/datamvrtimepix/procserv-sync-data.sh sxr sxrlr0916'
+
+I already started the procserv and it is running now.
+
+I added some stuff here:
+/reg/g/pcds/pds/datamvrtimepix
+
+# to start/stop the mounting of the windows share
+/reg/g/pcds/pds/datamvrtimepix/sync-mount.cmd <start|stop>
+
+run this on sxr-console as root/sudo
+
+# script that runs until killed that moves the timepix data experiment directory
+/reg/g/pcds/pds/datamvrtimepix/sync-data.cmd <hutch> <experiment>
+
+The this exact command as you on sxr-console:
+/reg/g/pcds/pds/datamvrtimepix/sync-data.cmd sxr sxrlr0916
+
+I also put a script for running the above command in a procserv (takes the same parameters):
+/reg/g/pcds/pds/datamvrtimepix/procserv-sync-data.sh sxr sxrlr0916
+
+###################################################
+###################################################
+###################################################
+
+
+ez calculator
+https://docs.google.com/spreadsheets/d/1nEbJDWYzlJrBOqKph9d3z8mySInP_0kce1OXhNtChWs/edit?usp=sharing
+
+
+#ioc boot scripts
+/etc/init.d/ioc executes /reg/d/iocCommon/$HOSTNAME/startup.cmd at boot as root.  This should run /reg/g/pcds/pyps/apps/ioc/latest/initIOC to actually start the IOCs.
+    —Mike
+
+
+/reg/g/pcds/dist/pds/8.9.7-p8.6.8/build/pdsapp/bin/i386-linux-opt/evrsnoop -r a -n 10 -o 40 

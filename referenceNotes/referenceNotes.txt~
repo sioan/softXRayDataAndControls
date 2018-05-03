@@ -172,6 +172,12 @@ https://confluence.slac.stanford.edu/display/PSDM/Detector+alignment+tool#Detect
 
 #ICS network  need to check with bruce about the channel access.
 172.21.46.*
+subnet
+255.255.255.0
+windows users need password (unless mysterious regedit bit is set.)
+also, mike browne sent email with how to modify regedit
+don't expect to be able to ping windows machines. but may be able to
+better to try to ping console or machine from windows machine
 
 #amo vme high voltage hvs
 /reg/g/pcds/package/epics/3.14/ioc/amo/hv/R1.0.3/db
@@ -193,6 +199,14 @@ https://confluence.slac.stanford.edu/display/~mshankar/Exporting+data+from+the+q
 
 #dehong motor record untemplated is located here
 /reg/g/pcds/epics/ioc/common/ims/R2.2.0 (this current version is bad)
+
+reset a motor to factor settings
+telnet in to digiport with motor
+cp #clears program
+fd #factory default
+em 2 #echo mode
+py 0 #party mode 
+
 
 #tcpdump on all computers in amo and sxr now.  tcpick is only on psusr112
 sudo tcpdump port 56471 -w sxrMotor2113.txt
@@ -798,3 +812,15 @@ psbuild-rhel7 ()
 procurement purchase
 https://slacspace.slac.stanford.edu/sites/xfd/os/Lists/Procurement_Support
 
+
+rdesktop -g 1480x1024 172.21.46.202 -u TPX_PC -p MCPTIMEPIX
+
+
+accelerator machines
+physics@lcls-srv01
+mcclogin
+
+
+#event_time
+my_seconds =  event_time>>32
+my_nano_seconds = event_time & 0xffffffff
