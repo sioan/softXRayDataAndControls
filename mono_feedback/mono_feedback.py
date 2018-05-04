@@ -19,8 +19,6 @@ def main():
 
 	#pv_list = [gdet, gmd, ebeam]
 
-	#IPython.embed()
-
 	gdet, gmd, e_beam = get_time_stamped_data()
 	e_beam_mean = np.mean(e_beam)
 	e_beam_std = np.std(e_beam)
@@ -81,7 +79,6 @@ def main():
 			#plot_overlay = XYPlot(0,"gmd and ebeam",[x_temp,x_temp],[x_temp**2,x_temp**3])
 			publish.send('both_gmd_ebeam',plot_overlay)
 
-			#IPython.embed()
 		except KeyboardInterrupt:
 			break
 		except ValueError:
@@ -104,7 +101,6 @@ def main():
     
 
 	#my_list=array(my_list)
-	IPython.embed()
 
 def get_slope():
 
