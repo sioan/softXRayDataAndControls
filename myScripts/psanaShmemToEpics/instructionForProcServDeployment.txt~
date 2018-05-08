@@ -1,5 +1,5 @@
 #########################################
-##########RUNS ON sxr-console############
+##########RUNS ON <hutch>-console############
 #########################################
 
 
@@ -9,29 +9,31 @@
  1000  PATH="$PATH:/reg/g/pcds/package/epics/3.14/extensions/R3.14.12/bin/linux-x86_64"
  1004  sudo lsof -i -P -n
  1005  telnet 127.0.0.1 30030
- 1006  procServ -n "listenToPsanaShmem" -i ^D^C 30030 ./runOnSXR.sh
+ 1006  procServ "listenToPsanaShmem" -i ^D^C 30030 ./runOnHutch.sh <AMO or SXR>
  1007  telnet 127.0.0.1 30030
 
  1010  telnet 127.0.0.1 30030
 
-### use this to make accessible on sxr-daq
-ssh -nNT -R 30030:localhost:30030 sxropr@sxr-daq &
+### Note that the -n flag isn't needed for procServ as it takes arg0 as name by default.
+### use this to make accessible on <hutch>-daq. runs in background bash
+ssh -nNT -R 30030:localhost:30030 <hutch>opr@<hutch>-daq &
 
-
+#can then disown the job and l
+#how to keep track of daemon and ports?
 
 #########################################
-##########RUNS ON daq-sxr-mon06##########
+##########RUNS ON daq-<hutch>-mon06##########
 #########################################
 
   999  cd Desktop/softXRayDataAndControls/myScripts/psanaShmemToEpics/
  1014  PATH="$PATH:/reg/g/pcds/package/epics/3.14/extensions/R3.14.12/bin/linux-x86_64"
  1018  sudo lsof -i -P -n
- 1020  procServ -n "sendToSxrConsole" -i ^D^C 30030 ./runOnMonNode.sh
+ 1020  procServ "sendTo<hutch>Console" -i ^D^C 30030 ./runOnMonNode.sh <AMO or SXR>
  1021  telnet 127.0.0.1 30030
  1022  history
 
-### use this to make accesibale on sxr-daq. add the "-nNT" to get rid of the shell
-ssh -nNT -R 30031:localhost:30030 sxropr@sxr-daq &
+### use this to make accessible on <hutch>-daq. add the "-nNT" to get rid of the shell
+ssh -nNT -R 30031:localhost:30030 <hutch>opr@<hutch>-daq &
 
 
 

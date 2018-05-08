@@ -9,7 +9,7 @@
  1000  PATH="$PATH:/reg/g/pcds/package/epics/3.14/extensions/R3.14.12/bin/linux-x86_64"
  1004  sudo lsof -i -P -n
  1005  telnet 127.0.0.1 30030
- 1006  procServ "listenToPsanaShmem" -i ^D^C 30030 ./runOnHutch.sh <AMO or SXR>
+ 1006  procServ -n "listenToPsanaShmem" -i ^D^C 30030 ./runOnHutch.sh <AMO or SXR>
  1007  telnet 127.0.0.1 30030
 
  1010  telnet 127.0.0.1 30030
@@ -28,7 +28,7 @@ ssh -nNT -R 30030:localhost:30030 <hutch>opr@<hutch>-daq &
   999  cd Desktop/softXRayDataAndControls/myScripts/psanaShmemToEpics/
  1014  PATH="$PATH:/reg/g/pcds/package/epics/3.14/extensions/R3.14.12/bin/linux-x86_64"
  1018  sudo lsof -i -P -n
- 1020  procServ "sendTo<hutch>Console" -i ^D^C 30030 ./runOnMonNode.sh <AMO or SXR>
+ 1020  procServ -n "sendTo<hutch>Console" -i ^D^C 30030 ./runOnMonNode.sh <AMO or SXR>
  1021  telnet 127.0.0.1 30030
  1022  history
 

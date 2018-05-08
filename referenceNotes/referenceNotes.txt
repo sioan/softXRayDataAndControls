@@ -247,6 +247,9 @@ python princeton.py	#no more. use sxrpython instead
 daq.connect()
 slowcam.takeShotsInteractive(numShots=120)
 /reg/g/pcds/pyps/sxr/dev/sxr/sxrpython.sh
+monochromator scan
+slowcam.ascan(m.mon_motor_06,3.0222,3.0579,21,numShots=7200)
+
 
 #svn commands
 svn checkout (co)
@@ -873,3 +876,5 @@ https://docs.google.com/spreadsheets/d/1nEbJDWYzlJrBOqKph9d3z8mySInP_0kce1OXhNtC
 
 
 /reg/g/pcds/dist/pds/8.9.7-p8.6.8/build/pdsapp/bin/i386-linux-opt/evrsnoop -r a -n 10 -o 40 
+
+amo micronix has own IOC. need to rename serial number in order for IOC to identify them.

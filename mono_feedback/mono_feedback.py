@@ -22,7 +22,7 @@ def main():
 	gdet, gmd, e_beam = get_time_stamped_data()
 	e_beam_mean = np.mean(e_beam)
 	e_beam_std = np.std(e_beam)
-	e_range = 6*e_beam_std
+	e_range = 20+0*6*e_beam_std
 	n_bins = 100
 	my_bins = arange(e_beam_mean-e_range,e_beam_mean+e_range,2*e_range/n_bins)
 	
@@ -47,16 +47,17 @@ def main():
 
 			e_beam_mean = np.mean(e_beam)
 			e_beam_std = np.std(e_beam)
-			e_range = 3*e_beam_std
+			e_range = 10+0*6*e_beam_std
 			n_bins = 100
-			#my_bins = arange(e_beam_mean-e_range,e_beam_mean+e_range,2*e_range/n_bins)
+			my_bins = arange(e_beam_mean-e_range,e_beam_mean+e_range,2*e_range/n_bins)
 
 			e_beam_list = append(e_beam_list[-hist_size:],e_beam)
 			gmd_list = append(gmd_list[-hist_size:],gmd)
 			gdet_list = append(gdet_list[-hist_size:],gdet)
 
 			e_beam_histogram = np.histogram(e_beam_list,my_bins)[0]
-			gmd_histogram = np.histogram(e_beam_list,my_bins,weights=gmd_list)[0]*1.0/e_beam_histogram
+			gmd_histogram = np.histogram(e_beam_list,my_bins,weights=gmd_list)[0]*1.0/(e_beam_histogram+1e-12)
+			gdet_histogram = np.histogram(e_beam_list,my_bins,weights=gdet_list)[0]*1.0/(e_beam_histogram+1e-12)
 		
 		
 			plot_ebeam_hist = XYPlot(0,"counts vs. e_beam",my_bins[1:],e_beam_histogram)
@@ -66,18 +67,15 @@ def main():
 			plot_gmd_hist = XYPlot(0,"gmd vs. e_beam",my_bins[1:],gmd_histogram)
 			publish.send('gmd_ebeam',plot_gmd_hist)
 
-			#multi_plot_data = MultiPlot("test string 1","test string 2")
-			#multi_plot_data.add(plot_ebeam_hist)
-			#multi_plot_data.add(plot_gmd_hist)
-			#publish.send("dual_plot", multi_plot_data)
-
-			normalized_e_beam_histogram = e_beam_histogram*1.0/sum(nan_to_num(e_beam_histogram))
+			normalized_e_beam_histogram = e_beam_histogram*1.0/sum(nan_to_num(e_beam_histogram)+1e-12)
 			normalized_gmd_histogram = gmd_histogram*1.0/sum(nan_to_num(gmd_histogram))
+			normalized_gdet_histogram = gdet_histogram*1.0/sum(nan_to_num(gdet_histogram))
 
 			plot_overlay = XYPlot(0,"gmd and ebeam",[my_bins[1:],my_bins[1:]],[normalized_e_beam_histogram,normalized_gmd_histogram])
-			x_temp = arange(-10,10,1)
-			#plot_overlay = XYPlot(0,"gmd and ebeam",[x_temp,x_temp],[x_temp**2,x_temp**3])
+			#plot_overlay = XYPlot(0,"gmd and ebeam",[my_bins[1:],my_bins[1:],my_bins[1:]],[normalized_e_beam_histogram,normalized_gmd_histogram,normalized_gdet_histogram])
+			x_temp = arange(-10,10,1) 
 			publish.send('both_gmd_ebeam',plot_overlay)
+
 
 		except KeyboardInterrupt:
 			break
@@ -86,21 +84,6 @@ def main():
 			time.sleep(2)
 
 
-	#tst_one = Pv('SXR:TST:CTRL:1')
-	#tst_two = Pv('SXR:TST:CTRL:2')
-    
-	#temp = get_time_stamped_data()
-	#for i in np.arange(10):
-	#while(True):
-
-		#x,y,dydx = get_slope()
-		#tst_one.put(y)
-		#tst_two.put(dydx)
-		#my_list.append([x,y,dydx])
-		
-    
-
-	#my_list=array(my_list)
 
 def get_slope():
 
