@@ -5,13 +5,13 @@ PATH=$_CONDA_DIR/inst/miniconda2-prod-rhel7/bin:$PATH
 _ANA_CURRENT=`cat $_CONDA_DIR/ana-current/ana-current`
 unset PYTHONPATH
 unset LD_LIBRARY_PATH
-source activate $_ANA_CURRENT
+#source activate $_ANA_CURRENT
 unset _ANA_CURRENT
 unset _CONDA_DIR
 
 #export LD_LIBRARY_PATH=/reg/neh/home/cpo/junk
-#echo `hostname`
-#source /reg/g/psdm/etc/psconda.sh
+echo `hostname`
+source activate /reg/g/psdm/etc/psconda.sh
 
 python /reg/neh/home/sioan/softXRayDataAndControls/myAnalysisTools/reference_notes/mpirun_test/counter.py
 
