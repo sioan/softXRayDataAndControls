@@ -878,3 +878,6 @@ https://docs.google.com/spreadsheets/d/1nEbJDWYzlJrBOqKph9d3z8mySInP_0kce1OXhNtC
 /reg/g/pcds/dist/pds/8.9.7-p8.6.8/build/pdsapp/bin/i386-linux-opt/evrsnoop -r a -n 10 -o 40 
 
 amo micronix has own IOC. need to rename serial number in order for IOC to identify them.
+
+In AMO:  For labor charges: 10538-A4103, for M&S: 10538-A4001
+In SXR:  For labor charges:  11183-A4103, for M&S: 11183-A4001
