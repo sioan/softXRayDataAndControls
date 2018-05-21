@@ -92,6 +92,8 @@ then search for ports.
 #fpga pgp card computer
 #desktop
 lcls-pc83236
+drp-tst-acc02
+rdsrv223
 https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=231475834
 
 
@@ -458,6 +460,11 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 #can't open /dev/edt (engineering design team?)
 #edt won't appear in lspci
 #frame grabber problem.  turn off computer for 30 seconds and then turn on.
+some useful DAQ camera commands
+/opt/EDTpdv/pciload
+/opt/EDTpdv/simple_take
+
+
 
 #pnccd cards come lose during rack motion.  Just need reseating
 
@@ -881,3 +888,6 @@ amo micronix has own IOC. need to rename serial number in order for IOC to ident
 
 In AMO:  For labor charges: 10538-A4103, for M&S: 10538-A4001
 In SXR:  For labor charges:  11183-A4103, for M&S: 11183-A4001
+
+common platform
+https://confluence.slac.stanford.edu/pages/viewpage.action?spaceKey=ppareg&title=Common+Platform+Training
