@@ -1,10 +1,14 @@
 import numpy
 
+############################################
+###assumes 5x5 array from a larger image
+###
+############################################
 class Cluster(object):
     def __init__(self, col, row, energy):
-        self.seedCol = col
-        self.seedRow = row
-        self.seedEnergy = energy
+        self.seedCol = col		#is the pixel with the most analog digital units (ADU) from amongst the nearest neighbors
+        self.seedRow = row		#is the pixel with the most analog digital units (ADU) from amongst the nearest neighbors
+        self.seedEnergy = energy	#number of ADU
         self.nPixels = 0
         self.nMaskedPixels = 0
         self.eTotal = 0
@@ -17,6 +21,7 @@ class Cluster(object):
         self.addPixel(0, 0, energy)
         self.eTotalNoCuts += energy
 
+    #goes though nearest neighbors and decides whether to add them to the cluster.
     def addPixel(self, offsetC, offsetR, energy):
         self.nPixels += 1
         if (energy>self.seedEnergy): self.goodCluster = False
@@ -40,7 +45,7 @@ class Cluster(object):
         r = weightedR/self.eTotal - 1.5 + self.seedRow
         return (c, r)
 
-    def isSquare(self):
+    def isSquare(self):					#
         if (self.nPixels==1): return True
         if (self.nPixels==2):
             if (self.pixelE[0, 0]!=0 or

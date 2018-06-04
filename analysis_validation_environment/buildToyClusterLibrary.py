@@ -1,5 +1,16 @@
 import numpy
 
+############################################
+###assumes 5x5 array from a larger image
+###monte carlo simulation of how a segment of an area detector responds to a  deposited charge at position x and y.
+###some number of frames of photon hitting an area detector.
+###(very useful for identifying one, two, three, etc... number of photons events such as in the case of speckle.)
+###(can also be used to separate out elastic from inelastic photon. (histogramming of ADU)
+###(doesn't model the photon-silcon. Instead carries out toy monte carlo by sampling from empircal charge cloud density under the assumption it's a gaussian.
+############################################
+
+
+
 class BuildToyCluster(object):
     def __init__(self, label, pixelSize, fullWidthHalfMax, nSamples, x=None, y=None):
         self.__headerWords = 2
@@ -7,12 +18,12 @@ class BuildToyCluster(object):
         self.__centralOffset = int(self.__clusterSide/2)
         print "cluster is %d by %d, put photons in pixel %d %d" %(self.__clusterSide, self.__clusterSide, self.__centralOffset, self.__centralOffset)
         self.pixelSize = pixelSize
-        self.cloudWidth = fullWidthHalfMax/2.355
-        self.nSamples = nSamples
+        self.cloudWidth = fullWidthHalfMax/2.355		#FWHM is the spatial extent of the charge depostion
+        self.nSamples = nSamples				#number of electrons in the cloud or number of frames
         
         self.label = label+"_%d_%d_%d" %(self.pixelSize, fullWidthHalfMax, self.nSamples)
-        self.x = x
-        self.y = y
+        self.x = x				#are the position of the photon with sub pixel resolution
+        self.y = y				#are the position of the photon with sub pixel resolution
         if x is not None:
             self.label += "_x%d" %(x)
             self.x = x/100. ##convert percent of pixel unit to pixel unit

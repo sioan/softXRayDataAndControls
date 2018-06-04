@@ -117,6 +117,9 @@ python ~jana/utils/logcheck.py -e amo --beg '2017-11-04' -x
 0,0-9	come from a CPCI master timing crate in host daq-sxr-master. Provides opal, acqiris, and other permanent device triggers
 1,0-11   comes from a pcie express card loaded into daq-sxr-evr01. this is called the slac evr. Provides triggers to pnccd, and other devices that roam between hutches. made by herbst
 
+system logs
+/u1/logs/syslog/today/hosts/daq-sxr-adc01
+
 #acqiris calibration
 https://confluence.slac.stanford.edu/display/PCDS/Agilent+Acqiris+and+TDC+calibration
 
@@ -449,6 +452,8 @@ https://mmonit.com/documentation/mmonit_manual.pdf
 #the dss nodes are the final stop on the daq. 
 #psana copies ffb to the cloud lustre system.
 #next is the lustre filesystem.https://en.wikipedia.org/wiki/Lustre_(file_system)
+sudo -s
+/root/mount_lustre.sh
 
 #if machine doesn't ping on reboot. call ernesto cause pspxe is not sending boot, 
 
@@ -609,6 +614,11 @@ An alternative, less-invasive method proposed by Jack for clearing the EOFE erro
 Have the DAQ running with the pnccd removed from the partition.
 Watch the pnccd and make sure it is being triggered and sending frames.
 After letting the DAQ run for a minute or so, stop the daq and put the pnccd back in the system.
+
+
+machine boot file locations
+script that gets run at startup
+/reg/g/pcds/dist/pds/boot
 
 GPIB
 Make sure to have brought up the R&S first, then GPIB, then restart the IOC.
@@ -810,6 +820,8 @@ https://confluence.slac.stanford.edu/display/PCDS/Installing+a+new+serial+ports+
 (has some limited info on why and how you add terminal servers using addtermsrv)
 
 
+dedicated servers
+https://confluence.slac.stanford.edu/display/PCDS/Dedicated+central+server+roles
 
 cable infrastructure
 https://confluence.slac.stanford.edu/display/PCDS/Cable+Drawings
