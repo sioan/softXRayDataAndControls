@@ -156,6 +156,9 @@ mcbrowne/bin/evr_new.sh SXR:USR:EVR
 ./acq_export -o SXR:TST:ACQ:01, Acq01,0		#gets psana data from shared memory. arguments are pv Name, psana detector name, and then acquiris channel
 ./acq_ioc SXR:TST ACQ:01,10000				#generates a waveform IOC  10000 units long
 
+psana daq config
+https://confluence.slac.stanford.edu/display/PSDM/Getting+Acqiris+daq+config+from+psana
+
 
 #offline AMI
 /reg/g/pcds/dist/pds/ami-current/build/ami/bin/x86_64-linux-opt/offline_ami -p /reg/d/psdm/sxr/sxrcom11/xtc/
@@ -504,7 +507,41 @@ https://confluence.slac.stanford.edu/display/PCDS/Brocade+Switch+Commands
 https://confluence.slac.stanford.edu/display/PCDS/switch-sxr-h2
 http://www.brocade.com/content/html/en/command-reference-guide/fastiron-08040-commandref/GUID-894B57AD-7214-4DA0-94F4-57BA41555E00.html
 
+
 #how to read port field from show mac-address ethernet stack/slot/port
+
+#################################
+#################################
+#################################
+interface setting location for remote boot
+
+/etc/sysconfig/network-scripts
+
+#################################
+#################################
+#################################
+SSH@switch-sxr-h2#conf t
+SSH@switch-sxr-h2(config)#vlan 649
+SSH@switch-sxr-h2(config-vlan-649)#no untagged ethe 1/1/24
+SSH@switch-sxr-h2(config-vlan-649)#vlan  631
+SSH@switch-sxr-h2(config-vlan-631)#untagged ethe 1/1/24
+Added untagged port(s) ethe 1/1/24 to port-vlan 631.
+SSH@switch-sxr-h2(config-vlan-631)#wr mem
+...Write startup-config done.
+
+Automatic copy to member units:  2  3
+SSH@switch-sxr-h2(config-vlan-631)#Flash Memory Write (8192 bytes per dot) ..
+Flash to Flash Done.
+SSH@switch-sxr-h2(config-vlan-631)#exit
+SSH@switch-sxr-h2(config)#exit
+SSH@switch-sxr-h2#sh mac | inc 0cc4.7af9 
+0cc4.7af9.d4ff  1/1/24         Dynamic       29844  631  
+0cc4.7af9.d4fe  2/1/32         Dynamic       27860  649  
+
+#################################
+#################################
+#################################
+
 
 #git rogue
 https://github.com/slaclab/rogue
