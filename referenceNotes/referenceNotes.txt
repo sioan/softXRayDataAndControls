@@ -119,6 +119,7 @@ python ~jana/utils/logcheck.py -e amo --beg '2017-11-04' -x
 
 system logs
 /u1/logs/syslog/today/hosts/daq-sxr-adc01
+/var/log/messages
 
 #acqiris calibration
 https://confluence.slac.stanford.edu/display/PCDS/Agilent+Acqiris+and+TDC+calibration
@@ -717,6 +718,8 @@ netconfig edit ioc-amo-hv1 --info "AMO positive HV IOC"
 #may need to restart nscd
 sudo service nscd restart
 
+#more netconfig examples
+https://confluence.slac.stanford.edu/display/PCDS/Configuring+the+pnccd+DAQ+rack
 
 #glue
 #source activate ana-1.3.11
