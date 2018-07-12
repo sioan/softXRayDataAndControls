@@ -599,6 +599,10 @@ ssh ioc-det-pnccd02 #from psdev to back
 #run detector ioc manager from following
 /reg/g/pcds/pyps/config/det/iocmanager.sh	#note the detector have to be on ioc-det-pnccd01 
 
+#location of people authorized to restart ioc manager
+/reg/g/pcds/pyps/config/$(HUTCH)/iocmanager.auth
+
+
 turn on every ioc that runs on a pnccd host
 
 
