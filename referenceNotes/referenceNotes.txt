@@ -65,6 +65,13 @@ root / dbps
 
 the vacuum ioc for the monochromator, kb optics, and beamline components is controlled by two digis. these digis have acted up June 18th 2018 and needed power cycling. Their web interface was ok. but the ioc didn't finish booting.
 
+location of vacuum iocs and modules
+/reg/g/pcds/epics/modules/vacuum/R1.1.1                    #protocol files are here
+/reg/neh/home5/sioan/Desktop/EPICS/ioc/sxr/vacuum/current
+protocol and stream device documentation is here
+http://epics.web.psi.ch/software/streamdevice/doc/setup.html
+
+
 #parameter manager
 https://confluence.slac.stanford.edu/display/PCDS/Parameter+Manager+User+Guide
 
