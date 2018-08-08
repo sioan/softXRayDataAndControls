@@ -78,6 +78,14 @@ https://confluence.slac.stanford.edu/display/PCDS/Parameter+Manager+User+Guide
 #place to compile epics IOC's
 ssh psbuild-rhel5
 
+#ibootbar documentation
+https://confluence.slac.stanford.edu/display/PCDS/Installing+a+new+iBootBar
+#examples
+/reg/common/tools/bin/power <ibootbar_name>:1 on
+/reg/common/tools/bin/power <ibootbar_name>:1 off
+/reg/common/tools/bin/power <ibootbar_name>:8 cycle
+
+
 #moxa replacement
 https://confluence.slac.stanford.edu/display/PCDS/Moxa+NPort+6650+Setup
 https://confluence.slac.stanford.edu/display/PCDS/Replacing+a+Digi+IMS+Smart+Motor+Server+with+a+Moxa
@@ -207,6 +215,9 @@ Just to recap using the HV supplies, if you try to turn the HV on and it doesn't
 
 #epics and edm development area
 /reg/g/pcds/package/epics/3.14-dev
+
+command for running ims motor edm screen
+edm -x -m "MOTOR=SXR:EXP:MMS:01" emb-ims-motor-small.edl
 
 #questionaire exporting
 https://confluence.slac.stanford.edu/display/~mshankar/Exporting+data+from+the+questionnaire
@@ -959,3 +970,8 @@ In SXR:  For labor charges:  11183-A4103, for M&S: 11183-A4001
 
 common platform
 https://confluence.slac.stanford.edu/pages/viewpage.action?spaceKey=ppareg&title=Common+Platform+Training
+
+
+ps-sxr group can ssh to sxr
+cut -d: -f1 /etc/group | sort
+to view groups
