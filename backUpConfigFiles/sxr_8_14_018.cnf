@@ -1,0 +1,433 @@
+# paths for binaries
+
+base_path     = '/reg/g/pcds/dist/pds/sxr/current/build/'
+pdsapp_path   = base_path+'pdsapp/bin/i386-linux-opt'
+pdsapp64_path = base_path+'pdsapp/bin/x86_64-linux-opt'
+pdsapp64dbg_path = base_path+'pdsapp/bin/x86_64-linux-dbg'
+pdsappRH7_path = base_path+'pdsapp/bin/x86_64-rhel7-opt'
+monshmsrv_path = '/reg/g/pcds/dist/pds/8.2.1.monshmserver-devel/build/pdsapp/bin/x86_64-linux-opt'
+#hsd_path = '/reg/neh/home/tookey/hsdrelease/build'
+#controlguihsd_path = hsd_path+'/pdsapp/bin/x86_64-linux-dbg'
+hsd_path = '/reg/g/pcds/dist/pds/9.5.10-p8.8.4/build'
+controlguihsd_path = hsd_path+'/pdsapp/bin/x86_64-linux-dbg'
+
+ami_base      = '/reg/g/pcds/dist/pds/sxr/ami-current/build/'
+#ami_base      = '/reg/g/pcds/dist/pds/ami-epix10kaBeamTest/build/'
+#ami_base      = '/reg/neh/home/weaver/newami/build/'
+ami_path      = ami_base+'ami/bin/x86_64-linux-opt'
+amiRH7_path   = ami_base+'ami/bin/x86_64-rhel7-opt'
+amidbg_path   = ami_base+'ami/bin/x86_64-linux-dbg'
+amiv_path     = '/usr/bin/valgrind --log-file=`/bin/mktemp -p /tmp`.valgnd --leak-check=full '+amidbg_path
+
+timetool_path   = base_path+'/timetool/lib/x86_64-rhel7-opt/libttappmtdb.so'
+
+andor_path     = pdsappRH7_path
+plugin_path    = ami_base+'/ami/lib/x86_64-rhel7-opt'
+
+configdb_path  = '/reg/g/pcds/dist/pds/sxr/misc/.configdbrc'
+offlinerc_path = '/reg/g/pcds/dist/pds/sxr/misc'
+onlinextc_path = '/u2/pcds/pds/sxr'
+pnccdCfg_file  = '/reg/g/pcds/dist/pds/amo/misc/pnccdconfig/camp2/pnccdParam2Daq'
+
+instrument = 'SXR'
+expname = 'expname'
+expnum  = 'expnum'
+currentexpcmd = pdsapp_path+'/currentexp'
+
+#max_evt_sz = '0x1000000'
+max_evt_sz = '0x2000000' # for princeton 
+
+ami_group_base  = '239.255.35'
+#ami_group2 = '239.255.35.1'
+
+# NB: slow_readout MUST be set for SLOW cameras
+# changed Oct. 2016
+# Andor Newton is not a 'slow' camera!!! (Full Frame is 1Hz but it works with regular DAQ mode on a event code 45, small ROI or Full Vertical Binning -> 120 Hz)
+slow_readout = '1' # for princeton and andor (slow mode)
+#slow_readout = '0' # for non-princeton
+
+# NB: set the monitoring node configuration mode
+# 0: Default Mode - balanced AMI/PSANA setup
+# 1: SPI Mode - more PSANA, less AMI
+# 2: All AMI mode - all monitoring nodes used by ami - good for 'SLOW' cameras
+# 3: Single psana node mode - one monitoring node for psana the rest for AMI
+mon_node_mode = 3
+
+#
+#  ami command-line options (ami_opts)
+#    -L <plug in module path>
+#    -R (full resolution)
+#
+#ami_opts = ' '
+#ami_opts = ' -R'
+#ami_opts = ' -L /reg/g/pcds/dist/pds/sxr/current/build/timetool/lib/i386-linux-dbg/libami.so'
+#ami_opt = ' -L ~sxropr/ami_plugins/libamiuser.AreaIntegrator.so.3.1.6'
+#ami_opt = ' -L ~sxropr/ami_plugins/libamiuser_EventCodeOn.so,~sxropr/ami_plugins/libamiuser_EventCodeOff.so'
+#ami_opts = ' -R -L /reg/g/pcds/dist/pds/sxr/ami-current/build/ami/lib/x86_64-linux-opt/libtimetooldbd.so'
+ami_opts = ' -R -L '+plugin_path+'/libtimetooldbd.so'
+#ami_opts = ' -L '+plugin_path+'/libtimetooldbd.so'
+
+#    -stylesheet=<Qt display style>
+#ami_style = ' -stylesheet=/reg/g/pcds/dist/pds/sxr/misc/ami_style.txt'
+ami_style = ''
+
+# default platform number, represented as a string
+if not platform: platform = '0'
+
+#
+# FEZ addresses:
+sxr_daq = 		'172.21.21.35'
+daq_sxr_master =	'172.21.21.37'
+daq_sxr_evr01  =        '172.21.21.199'
+daq_sxr_princeton01 = 	'172.21.21.46'
+daq_sxr_encoder = 	'172.21.21.47'
+daq_sxr_cam01 = 	'172.21.21.43'
+daq_sxr_cam02 = 	'172.21.21.42'
+daq_sxr_cam03 = 	'172.21.21.119'
+daq_sxr_ipimb = 	'172.21.21.44'
+daq_sxr_acq01 = 	'172.21.21.77'
+daq_sxr_acq02 = 	'172.21.21.132'
+#daq_sxr_tdc01 = 	'172.21.21.49'
+daq_sxr_pgp01 =         '172.21.21.185'
+daq_det_pnccd02 =       '172.21.23.27'
+daq_sxr_mon01=		'172.21.21.104'
+daq_sxr_mon02=          '172.21.21.105'
+daq_sxr_mon03=          '172.21.21.52'
+daq_sxr_mon04=          '172.21.21.128'
+daq_sxr_mon05=		'172.21.21.201'
+daq_sxr_mon06=		'172.21.21.203'
+psanasxr=               '172.21.21.116'
+daq_sxr_dss01=          '172.21.21.54'
+daq_sxr_dss02=          '172.21.21.102'
+daq_sxr_dss03=          '172.21.21.92'
+daq_sxr_dss04=          '172.21.21.87'
+daq_sxr_dss05=          '172.21.21.131'
+daq_sxr_dss06=          '172.21.21.160'
+daq_sxd_spec=           '172.21.23.33'
+daq_sxr_adc01=          '172.21.21.76'
+
+#remove bad dss nodes from list below and report to IT.
+dss_nodes = [ daq_sxr_dss02, daq_sxr_dss03, daq_sxr_dss04, daq_sxr_dss05, daq_sxr_dss06 ]
+
+
+# Balanced AMI/PSANA MON node setup
+# - AMI MON Nodes:   MON01,MON02,MON03
+# - PSANA MON Nodes: MON04,MON05,MON06
+if mon_node_mode == 0:
+  mon_nodes = [ daq_sxr_mon01, daq_sxr_mon02, daq_sxr_mon03 ]
+  psana_nodes = [ daq_sxr_mon04, daq_sxr_mon05, daq_sxr_mon06 ]
+#
+# SPI Mode (or other PSANA heavy experiments)
+# - AMI MON Nodes:    MON01
+# - PSANA MON Nodes:  MON02,MON03,MON04,MON05,MON06
+elif mon_node_mode == 1:
+  mon_nodes = [ daq_sxr_mon01]
+  psana_nodes = [ daq_sxr_mon02, daq_sxr_mon03, daq_sxr_mon04, daq_sxr_mon05, daq_sxr_mon06 ]
+#
+# Slow camera AMI MON node setup (no psana and want to see all princeton images in AMI)
+# - AMI MON Nodes:   MON01,MON02,MON03,MON04,MON05,MON06
+# - PSANA MON Nodes:
+elif mon_node_mode == 2:
+  mon_nodes = [ daq_sxr_mon01, daq_sxr_mon02, daq_sxr_mon03, daq_sxr_mon04, daq_sxr_mon05, daq_sxr_mon06 ]
+  psana_nodes = []
+#
+# Single psana node configuration
+# - AMI MON Nodes:   MON01,MON02,MON03,MON04,MON05
+# - PSANA MON Nodes: MON06
+elif mon_node_mode == 3:
+  mon_nodes = [ daq_sxr_mon01, daq_sxr_mon02, daq_sxr_mon03, daq_sxr_mon04, daq_sxr_mon05 ]
+  psana_nodes = [ daq_sxr_mon06 ]
+#
+# Default AMI/PSANA MON node setup
+# - AMI MON Nodes:   MON01,MON02,MON03
+# - PSANA MON Nodes: MON04,MON05,MON06
+else:
+  mon_nodes = [ daq_sxr_mon01, daq_sxr_mon02, daq_sxr_mon03 ]
+  psana_nodes = [ daq_sxr_mon04, daq_sxr_mon05, daq_sxr_mon06 ]
+#
+
+ami_threads = 6
+shm_threads = 5
+#ami_threads = 1
+proxy_node = daq_sxr_dss04
+proxy_cds  = proxy_node.replace('21.21.','21.39.')
+
+
+# compression
+# --> All events compressed
+#compr_opt = ' -C 0'
+
+# --> No compression
+# NOTE:  JBT turned off compression on 2014-04-18 because compressed TSS opal image size was larger than original image - causing crashes
+compr_opt = ''
+
+#    
+# SXR trigger cabling: (counting from zero)
+# 0. TSS opal, 1. EXS opal, 2. Endstation Opal, 3. FCCD, 4. TSS IPIMB,
+# 5. Beamline IPIMB, 6. Endstation IPIMB, 7. Acqiris, 8. Encoder
+#
+# procmgr FLAGS: <port number> static port number to keep executable
+#                              running across multiple start/stop commands.
+#                "X" open xterm
+#                "s" send signal to child when stopping
+#
+# HOST       UNIQUEID      FLAGS  COMMAND+ARGS
+# list of processes to run
+#   required fields: id, cmd
+#   optional fields: host, port, flags
+
+procmgr_config_base = [
+  { host:daq_sxr_dss02,   id:'source',      port:'29150', cmd:pdsappRH7_path + '/source '+ daq_sxr_dss02},
+# {                       id:'control_gui', flags:'sp',   cmd:pdsapp64_path + '/control_gui -D ' + configdb_path + ' -P SXR -E ' + expname + ' -L '+offlinerc_path+'/.offlinerc'},
+#  {                       id:'control_gui', flags:'sp',   cmd:pdsapp64_path + '/control_gui -D ' + configdb_path + ' -P SXR -E ' + expname + ' -C '+offlinerc_path+'/.iocrc -L '+offlinerc_path+'/.offlinerc'},
+  {                       id:'control_gui', flags:'sp',   cmd:controlguihsd_path + '/control_gui -D ' + configdb_path + ' -P SXR -E ' + expname + ' -C '+offlinerc_path+'/.iocrc -L '+offlinerc_path+'/.offlinerc'},
+
+
+  # Rack24 Triggers
+  {host:daq_sxr_master,   id:'evr0',        flags:'sup', rtprio:'50', cmd:pdsapp_path+'/evr -r b -i "0/0/0"'},
+  {host:daq_sxr_evr01,    id:'evr1',        flags:'sup',              cmd:pdsappRH7_path+'/evr -r a -i "0/0/1"'},
+  {host:daq_sxr_master,   id:'evrp',        cmd:pdsapp_path+'/evrstandalone -r a -p 40,23800,11900,0 -k'}, # pnCCD clear signal 120Hz 
+
+# --> Faster EPICS ARCH readout 
+  {host:daq_sxr_dss04,    id:'epicsArch',   flags:'sp',               cmd:'/bin/env PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86/ '+pdsappRH7_path+'/epicsArch -i 0.1 -f /reg/g/pcds/dist/pds/sxr/misc/epicsArch.txt'},
+
+  {host:daq_sxr_dss04,    id:'bldeb',       flags:'sp',   cmd:pdsappRH7_path+'/bld -m 0x48000400004000007'},
+
+
+
+# ------------------------------
+# Core Detectors
+# ------------------------------
+## ---- Acqiris Setup ---------
+ {host:daq_sxr_acq01,    id:'Acq01',         flags:'sup', rtprio:'50',  evr:'0,5', cmd:pdsapp_path+'/acq -P SXR:DAQ:ACQ1  -t -i 12 -d 1'},
+ {host:daq_sxr_acq02,    id:'Acq02',         flags:'sup', rtprio:'50',  evr:'0,6', cmd:pdsapp_path+'/acq -P SXR:DAQ:ACQ2 -t  -i 12 -d 2'},
+
+# Digitizer
+{ host: daq_sxr_adc01,  id:'hsd'    ,flags:'spu',  cmd:hsd_path+'/pdsapp/bin/x86_64-rhel7-dbg/quadadc -i SxrEndstation/0/Wave8/0 -r0'},
+
+
+
+# Temperature readout to EPICS
+# {host:daq_sxr_acq01,    id:'Acq01',         flags:'sup', rtprio:'50',  evr:'0,5', cmd:pdsapp_path+'/acq -z -P SXR:DAQ:ACQ1 -t -i 12 -d 1'},
+
+## ---- OPAL Cameras -----------
+# For framegrabbers:  -g 0 is bottom slot; -g 1 is top slot; 
+# For EDT framegrabber:  -c 0 is channel closest to PCIe bus, -c 1 is farthest
+
+## ---- daq-sxr-cam01 ---------
+# {host:daq_sxr_cam01,    id:'OPAL1',   flags:'sup',    evr:'0,2',  cmd:pdsappRH7_path+'/camedt -i "SxrEndStation/0/Opal1000/1" -g 0 -c 0'+compr_opt },                      # OPAL1
+ {host:daq_sxr_cam01,    id:'OPAL1',   flags:'sup',    evr:'0,2',  cmd:pdsappRH7_path+'/camedt -i "SxrEndStation/0/Opal1000/1" -g 0 -c 0'+compr_opt+ ' -L '+timetool_path},  # OPAL1
+ {host:daq_sxr_cam01,    id:'OPAL2',   flags:'sup',    evr:'0,3',  cmd:pdsappRH7_path+'/camedt -i "SxrEndStation/0/Opal1000/2" -g 0 -c 1'+compr_opt+ ' -L '+timetool_path},  # OPAL2
+
+## ---- daq-sxr-cam02 ---------
+ {host:daq_sxr_cam02,    id:'OPAL3',    flags:'sup',    evr:'0,4',  cmd:pdsappRH7_path+'/camedt -i "SxrEndStation/0/Opal1000/3" -g 0 -c 0'+compr_opt+ ' -L '+timetool_path},  # OPAL3
+ {host:daq_sxr_cam02,    id:'TSS_OPAL', flags:'sup',    evr:'0,0', cmd:pdsappRH7_path+'/camedt -i "SxrBeamline/0/Opal1000/0"   -g 0 -c 1'+compr_opt+ ' -L '+timetool_path},  # TSS
+
+## ---- daq-sxr-cam03 ---------
+#  EXS ==> SXR Spectrometer  (NB: Will be migrated to EPICS).  Also, comment this line below out when switching to ioc-sxr-rec01.  Also reboot IOC when connecting to EPICS.
+ {host:daq_sxr_cam03,    id:'EXS_OPAL', flags:'sup',    evr:'0,1', cmd:pdsappRH7_path+'/camedt -i "SxrBeamline/0/Opal1000/1" -g 0 -c 0'+compr_opt+ ' -L '+timetool_path},
+
+
+## ---- IPIMB ----
+# {host:daq_sxr_ipimb,   id:'ipimb',       flags:'sp',    evr:'0,9',  cmd:pdsappRH7_path+'/ipimb -f /reg/g/pcds/dist/pds/sxr/misc/sxrIpimbPortmap_polarity.txt -b 1 -c 0'},
+#  {host:daq_sxr_ipimb,    id:'ipimb',       flags:'sp',    evr:'0,9',  cmd:pdsappRH7_path+'/ipimb -f /reg/g/pcds/dist/pds/sxr/misc/sxrIpimbPortTest.txt -b 1 -c 0'},
+
+
+
+## ---- Encoders ----
+  {host:daq_sxr_cam01,    id:'MONO_encoder',  flags:'sup',  evr:'0,8',  cmd:pdsappRH7_path+'/usdusb -i "SxrEndstation/0/USDUSB/0"'},
+  {host:daq_sxr_encoder,  id:'DLS_encoder',   flags:'sup',  evr:'0,7',  cmd:pdsappRH7_path+'/usdusb -i "SxrEndstation/0/USDUSB/1"'},
+
+
+
+
+
+
+
+# ------------------------------
+# Special Detectors
+# ------------------------------
+
+## -------- IMP ---------------
+# {host:daq_sxr_pgp01,          id:'imp0',     flags:'s',    cmd:pdsapp_path+'/imp -p '+platform+' -d SxrBeamline -i 0 -P 0x10 -D 0x1770'},  
+# {host:daq_sxr_pgp01,          id:'imp1',     flags:'s',    cmd:pdsapp_path+'/imp -p '+platform+' -d SxrEndstation -i 0 -P 0x20 -D 0x1770'},
+# {host:daq_sxr_pgp01,          id:'imp1',     flags:'sup',  evr:'0,1', cmd:pdsapp_path+'/imp -d SxrEndstation -i 0 -P 0x20 -D 0x1770'},
+
+## -------- fCCD (2014) ---------------
+# {host:daq_sxr_pgp01,     id:'fccd960',   flags:'sux', evr:'0,9', cmd:pdsapp_path+'/udpcam  -i SxrEndstation/0/Fccd960/0 -D 49201 -v -a 1 -d 0x8000', rtprio:'50'},
+# caf: adding 0x0020 flag to ignore packet count errors
+# {host:daq_sxr_pgp01,     id:'fccd960',   flags:'sux', evr:'0,9', cmd:pdsapp_path+'/udpcam  -i SxrEndstation/0/Fccd960/0 -D 49201 -v -a 1 -d 0x8020'},
+
+
+## PNCCD
+# {host:daq_det_pnccd02,     id:'pnccd',   flags:'sup', evr:'1,1',  cmd:pdsapp64_path+'/pnccd -P 0xf0 -d Camp -i 1 -D 0x20 -t PNCCD:BACK:SELFTRIGGER -f /reg/g/pcds/dist/pds/amo/misc/pnccdconfig/camp2/pnccdParam2Daq'},
+# {host:daq_det_pnccd02,   id:'simcam',   flags:'sup',  cmd:pdsapp64_path+'/simcam -i "SxrEndstation/0/Cspad/0" -C 0'},
+# {host:daq_sxr_cam01,   id:'simcam',   flags:'supx',  cmd:pdsapp_path+'/simcam -i "SxrEndstation/0/Cspad/0" -C 0'},
+
+## PRINCETON
+## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE!
+#  {host:daq_sxr_princeton01, id:'princeton',   flags:'supx', cmd:pdsapp_path+'/princeton -n -c 0 -d -l 5 -i "12/0/0" -g ' + configdb_path},
+#  {host:daq_sxr_princeton01, id:'princeton2',  flags:'sp', cmd:pdsapp_path+'/princeton -n -c 1 -l 5 -i "12/0/1" -g ' + configdb_path",
+#  {host:daq_sxr_princeton01, id:'rceProxy',     flags:'sp',    cmd:pdsapp64_path+'/rceProxy -r '+rce09+' -t SxrEndstation -v pnCCD -y pnCCDframe -f '+pnccdCfg_file},
+
+## ANDOR
+## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE (if using scripts for readout)!
+# JBT - Andor camera for Rohringer under test (new entry in sxr.cnf)
+#{host:daq_sxr_cam02, id:'userAndor', flags:'sxpu', evr:'1,1', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/0" -g ' + configdb_path},
+#second andor from yano group because their dual andor may be stuck in customs /7/27/2017
+# For  Holladay experiment Jan 2018 - is using 'Crop' mode a.k.a. the small square ROI fast readout mode
+{host:daq_sxr_cam03, id:'andor', flags:'sxpu', evr:'1,0', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/1" -g ' + configdb_path},
+
+
+
+
+## LBL Dual CCD ANDOR (Yano Group)
+## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE!
+#{host:daq_sxr_cam02, id:'andorBottom',  flags:'sxpu', evr:'1,0', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/1" -g ' + configdb_path},
+#{host:daq_sxr_cam02, id:'andorTop', 	flags:'sxpu', evr:'1,0', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/2" -g ' + configdb_path},
+
+#{host:daq_sxr_cam02, id:'andorTop',    flags:'sxpu', evr:'0,9', cmd:andor_path+'/andor -t SXR:ANDOR:TOP:TEMP -n -d -c 0 -l 5 -i "12/0/1" -g ' + configdb_path},
+#{host:daq_sxr_cam03, id:'andorBottom', flags:'sxpu', evr:'0,9', cmd:andor_path+'/andor -t SXR:ANDOR:BOTTOM:TEMP -n -d -c 0 -l 5 -i "12/0/2" -g ' + configdb_path},
+
+# -- LBL Dual Andor Setup
+## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE!
+#{host:daq_sxr_cam02, id:'andorDual', flags:'sxpu', evr:'0,9', cmd:andor_path+'/andordual -t SXR:ANDOR:TOP:TEMP,SXR:ANDOR:BOTTOM:TEMP -n -d -c 0 -l 5 -i "SxrEndstation/0/DualAndor/0" -g ' + configdb_path},
+#{host:daq_sxr_cam02, id:'andorDual', flags:'sxpu', evr:'0,9', cmd:andor_path+'/andordual -t SXR:EXP:DUALANDOR:TOP:TEMP,SXR:EXP:DUALANDOR:BOTTOM:TEMP -n -d -c 0 -l 5 -i "SxrEndstation/0/DualAndor/0" -g ' + configdb_path},
+
+## Portable Spectrometer ANDOR NOV 2015
+# NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE IF NOT RUNNING IN FULL VERTICAL BINNING MODE !
+{host:daq_sxd_spec, id:'andor_spec', flags:'sxpu', evr:'1,2', cmd:andor_path+'/andor -t SXD:SPC:ANDOR:TEMP -n -d -c 0 -l 5 -i "12/0/0" -g ' + configdb_path},
+
+#Ocean Optics
+#  {host:daq_sxr_princeton01,      id:'oospec_0',     flags:'spx',    cmd:pdsapp_path+'/oceanoptics -i "12/0/0" -d 0 -l 2'},
+
+
+
+  {id:'offlineobs',  flags:'sp',    cmd:pdsapp64_path+'/offlineobs -P SXR -E '+expname+' -L '+offlinerc_path+'/.offlinerc -V '+offlinerc_path+'/logbook.txt'},
+
+  # procstat
+  {id:'procstat',    flags:'s',    cmd:'/bin/env LD_LIBRARY_PATH=/reg/g/pcds/package/python-2.5.2/lib:/reg/g/pcds/package/qt-4.3.4_x86_64/lib PATH=/reg/g/pcds/package/python-2.5.2/bin:/reg/g/pcds/package/qt-4.3.4_x86_64/bin: PYTHONPATH= /reg/g/pcds/dist/pds/tools/procmgr/procstat.py -t sxr -e '+expnum+' -n '+'+'.join(dss_nodes)+' -p '+platform+' /reg/g/pcds/dist/pds/sxr/scripts/p'+platform+'.cnf.last'},
+  {                         id:'vmon', flags:'sp', cmd:pdsapp64dbg_path+'/vmonrecorder -P '+instrument+' -o /reg/g/pcds/pds/sxr/vmon/current'},
+#  {                         id:'vmondisp', flags:'sp', cmd:pdsapp64_path+'/vmondisplay -P '+instrument+' -o /reg/g/pcds/pds/sxr/vmon/current'},
+  ]
+
+#
+#  'event' processes are handled here
+#
+procmgr_config_dss = []
+for i in range(len(dss_nodes)):
+   slice = '%d'%i   
+   procmgr_config_dss.append({host:dss_nodes[i], id:'event'+slice, flags:'sp', cmd:pdsappRH7_path+'/event -d -s '+slice+' -f '+onlinextc_path+' -b '+max_evt_sz+' -r -c 0x1700000000 -n 64 -w ' + slow_readout+' -F '+plugin_path+'/libamil3t.so'})
+
+
+#   procmgr_config_dss.append({host:dss_nodes[i], id:'event'+slice, flags:'sp', cmd:pdsapp64_path+'/event -d -s '+slice+' -f '+onlinextc_path+' -b '+max_evt_sz+' -c 0x1700000 -n 64 -w ' + slow_readout+' -F '+plugin_path+'/libamil3t.so'})
+
+
+#
+#  monitoring processes are handled here
+#
+ami_group_top = ami_group_base+'.0'
+procmgr_config_mon = []
+
+for i in range(min(len(mon_nodes),len(dss_nodes))):
+   slice = '%d'%i
+   mask  = '%d'%(1<<i)
+   ami_group = ami_group_base+'.%d'%(i+1)
+
+   procmgr_config_mon.append({host:mon_nodes[i], id:'monreqsrvami'+slice, flags:'sp', cmd:pdsappRH7_path+'/monreqserver -c -P '+instrument+' -i '+mask+' -n 16 -s '+max_evt_sz + ' -d -q %d' % (ami_threads) + ' -w ' + slow_readout })
+   procmgr_config_mon.append({host:mon_nodes[i], id:'amicoll'+slice, flags:'s', cmd:amiRH7_path+'/ami_collection -I '+mon_nodes[i]+' -S '+ami_group_top+' -i lo -s '+ami_group})
+
+   for j in range(ami_threads):
+      mslice = '%d'%(j+0)
+      procmgr_config_mon.append({host:mon_nodes[i], id:'ami'+slice+'-'+mslice, flags:'s', cmd:amiRH7_path+'/ami -p '+instrument+' -i lo -s '+ami_group+' -n '+mslice+ami_opts})
+
+
+
+procmgr_config_mon.append({host:proxy_node, id:'ami_proxy', flags:'s', cmd:amiRH7_path+'/ami_proxy -I '+proxy_cds+' -i '+proxy_node+' -s '+ami_group_top})
+
+procmgr_config_mon.append({id:'ami_client', flags:'s', cmd:ami_path+'/online_ami -s '+proxy_cds+' -f /reg/neh/operator/sxropr/'+expname+' '+ami_style})
+
+
+
+############################################################
+### PSANA SHMEM SERVERS ####
+# DSS-NODE    DSS01  DSS02  DSS03  DSS04  DSS05  DSS06
+# MASK BIT      1      2      4      8     16     32
+#
+############################################################
+
+
+############################################################
+#
+# ****  Default mapping, 2 DSS nodes per PSANA node ****
+# [ staggered for crude load balancing attempt ]
+#
+if mon_node_mode == 0:
+  # psana_node[0] ==> Subscribe to DSS nodes 01,04
+  #  => mask = 1 + 8 = 9
+  mask = 9
+  procmgr_config_mon.append({host:psana_nodes[0], id:'monreqsrv_psana_0', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -i %d'%mask +' -n 16 -s '+max_evt_sz + ' -d -q 8 -t psana'})
+
+  # psana_node[1] ==> Subscribe to DSS nodes 02,05
+  #  => mask = 2 + 16 = 18
+  mask = 18
+  procmgr_config_mon.append({host:psana_nodes[1], id:'monreqsrv_psana_1', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -i %d'%mask +' -n 16 -s '+max_evt_sz + ' -d -q 8 -t psana'})
+
+  # psana_node[2] ==> Subscribe to DSS nodes 03,06
+  #  => mask = 4 + 32 = 36 
+  mask = 36
+  procmgr_config_mon.append({host:psana_nodes[2], id:'monreqsrv_psana_2', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -i %d'%mask +' -n 16 -s '+max_evt_sz + ' -d -q 8 -t psana'})
+#
+############################################################
+
+
+############################################################
+#
+# ****  SPI mapping, ~1 DSS nodes per PSANA node ****
+# [ staggered for crude load balancing attempt ]
+#
+if mon_node_mode == 1:
+  # daq-sxr-mon02 => subscribed to DSS01 
+  #   => mask = 1 
+  procmgr_config_mon.append({host:psana_nodes[0],  id:'monreqsrv_psana_0', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 1 -n 32 -s '+max_evt_sz })
+
+  # daq-sxr-mon03 => subscribed to DSS02
+  #   => mask = 2
+  procmgr_config_mon.append({host:psana_nodes[1],  id:'monreqsrv_psana_1', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 2 -n 32 -s '+max_evt_sz })
+
+  # daq-sxr-mon04 => subscribed to DSS04
+  #   => mask = 8
+  procmgr_config_mon.append({host:psana_nodes[2],  id:'monreqsrv_psana_2', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 8 -n 32 -s '+max_evt_sz })
+
+  # daq-sxr-mon05 => subscribed to DSS05
+  #   => mask = 16
+  procmgr_config_mon.append({host:psana_nodes[3],  id:'monreqsrv_psana_3', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 16 -n 32 -s '+max_evt_sz })
+
+  # daq-sxr-mon06 => subscribed to DSS03 and DSS06
+  #   => mask = 4 + 32 = 36
+  procmgr_config_mon.append({host:psana_nodes[4],  id:'monreqsrv_psana_4', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 36 -n 32 -s '+max_evt_sz })
+#
+############################################################
+
+
+############################################################
+#
+# ****  Single psana node setup, 1 DSS nodes per PSANA node ****
+# [ staggered for crude load balancing attempt ]
+#
+if mon_node_mode == 3:
+  # daq-sxr-mon06 => subscribed to DSS01 
+  #   => mask = 1
+  #   the -i in psana -d -q 8 in the line below is the mask for the which dss nodes send data to mon06.  (e.g. 37 = 100101 corresponds to DSS nodes 6,3, and 1.originally 1)
+  #   -q is the flag for the expected numbers of processes that read shared memory. originally 8
+  procmgr_config_mon.append({host:psana_nodes[0],  id:'monreqsrv_psana_0', flags:'sp', cmd:pdsappRH7_path+'/monreqserver -P '+instrument+' -t psana -d -q 8 -i 1 -n 32 -s '+max_evt_sz })
+#
+############################################################
+
+
+
+## CASS/XONLINE SHMEM SERVER
+## Runing on daq-sxr-mon04, subscribed to daq-sxr-dss02 ==> mask = 2
+## procmgr_config_mon.append({host:daq_sxr_mon04,  id:'monreqsrv_cass', flags:'sp', cmd:pdsapp64_path+'/monreqserver -P '+instrument+' -i 2 -n 16 -s '+max_evt_sz+' -c 1 -t cass'})
+
+procmgr_config = procmgr_config_base + procmgr_config_dss + procmgr_config_mon
