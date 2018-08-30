@@ -1,0 +1,5 @@
+PATH="$PATH:/reg/g/pcds/package/epics/3.14/extensions/R3.14.12/bin/linux-x86_64"
+procServ -n "listenToPsanaShmem" -i ^D^C 30030 ./mono_feedback.sh 
+/reg/g/psdm/sw/conda/inst/miniconda2-prod-rhel7/envs/ana-1.3.58/bin/psplot -s localhost both_gmd_ebeam
+
+
