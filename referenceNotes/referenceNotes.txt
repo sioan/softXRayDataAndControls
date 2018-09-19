@@ -52,6 +52,9 @@ https://confluence.slac.stanford.edu/display/PCDS/Getting+all+the+gate+valves+ou
 #and python
 /reg/g/pcds/pyps/apps
 /reg/g/pcds/pyps/config/amo
+camviewer.cfg
+/reg/g/pcds/pyps/config/sxr/camviewer.cfg
+
 
 #digi location
 web browser to digi-sxr-08/
@@ -89,6 +92,9 @@ https://confluence.slac.stanford.edu/display/PCDS/Installing+a+new+iBootBar
 #moxa replacement
 https://confluence.slac.stanford.edu/display/PCDS/Moxa+NPort+6650+Setup
 https://confluence.slac.stanford.edu/display/PCDS/Replacing+a+Digi+IMS+Smart+Motor+Server+with+a+Moxa
+
+#IMS motor code
+EPICS/modules/IMS/current/imsApp/src/imsRecord.cc below
 
 #calendar pcds scheduling
 https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=123314644
@@ -341,6 +347,9 @@ export EPICS=file:///afs/slac/g/pcds/vol2/svn/pcds/epics/trunk
 #SXR daq restart stop
 /reg/g/pcds/dist/pds/sxr/scripts/restart_sxr_daq.csh
 
+#recorder ioc config
+/reg/g/pcds/dist/pds/sxr/misc/.iocrc
+
 #remote connecting to VME crates
 console ioc-sxr-gmd-vme1
 https://confluence.slac.stanford.edu/display/LCLSControls/MotorolaProcessorRTEMS+How-to+Flash+an+mvme6100
@@ -500,6 +509,9 @@ some useful DAQ camera commands
 
 #pnccd cards come lose during rack motion.  Just need reseating
 
+https://docs.google.com/document/d/1o3pvLZ4UX4qTThj9aKUAcHxbb3AiIZw7kf-scKV3DG4/edit?usp=sharing
+
+#Just FYI... how the pnCCD *used* to work
 #problem with pnccd ioc, call mike browne
 
 #location of xtc files
@@ -509,9 +521,15 @@ some useful DAQ camera commands
 #/reg/d/ffb/sxr/sxrx22915/xtc/	#intermidate this is a lustre file system
 #/reg/d/psdm/sxr/sxrx22915/xtc/	#final stop this is also a lustre file system
 
-streams=0-79
-to get rid of iocrecorders from daq.
-
+#streams=0-79
+#to get rid of iocrecorders from daq.
+#
+#recorder data 
+#e.g. e938-r0133-s80-c00.xtc
+#is found in /reg/d/cameras/ioc-sxr-rec01/daq/xtc/
+#before wilko data mover and also in
+#/reg/d/psdm/sxr/sxr12416/xtc/ 
+#after move
 
 #xtc reader 
 alias xtcr='/reg/common/package/pdsdata/8.7.5/x86_64-linux-opt/bin/xtcreader -f'
@@ -975,3 +993,6 @@ https://confluence.slac.stanford.edu/pages/viewpage.action?spaceKey=ppareg&title
 ps-sxr group can ssh to sxr
 cut -d: -f1 /etc/group | sort
 to view groups
+
+inventory
+https://pswww.slac.stanford.edu/index.php
