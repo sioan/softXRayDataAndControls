@@ -1,9 +1,0 @@
-wavelength = a+b*x+c*x2
-x = SXR:MON:MMS:06.RBV
-a = 3.831564398
-b = -0.6.081163663
-c= = -0.01480327426
-
-convert to energy
-
-
