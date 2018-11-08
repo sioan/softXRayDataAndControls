@@ -23,9 +23,11 @@ def main(argd):
 		if(eventNumber%200==1):
 			print eventNumber
 
-		smldata.event()
+		my_dict= {"test":eventNumber}
 
-	smldata.save()
+		#smldata.event(my_dict)
+
+	#smldata.save()
 
 	IPython.embed()
 
@@ -36,7 +38,7 @@ if __name__ == '__main__':
 	myParser.add_argument('-e','--exp', help='the experiment name')
 	myParser.add_argument('-r','--run',type=int,help='the run number to use when running offline')
 	myParser.add_argument('-s','--start',type=int,help='skips until starting event reached', default=-1)
-	myParser.add_argument('-f','--final',type=int,help='up to final event. default is 100', default=100)
+	myParser.add_argument('-f','--final',type=int,help='up to final event. default is 100', default=200)
 	myParser.add_argument('-sh','--shared_mem',action='store_true',help='shared memory',default=False)
 	
 
