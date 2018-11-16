@@ -6,16 +6,8 @@ pdsapp64_path = base_path+'pdsapp/bin/x86_64-linux-opt'
 pdsapp64dbg_path = base_path+'pdsapp/bin/x86_64-linux-dbg'
 pdsappRH7_path = base_path+'pdsapp/bin/x86_64-rhel7-opt'
 monshmsrv_path = '/reg/g/pcds/dist/pds/8.2.1.monshmserver-devel/build/pdsapp/bin/x86_64-linux-opt'
-#hsd_path = '/reg/neh/home/tookey/hsdrelease/build'
-#controlguihsd_path = hsd_path+'/pdsapp/bin/x86_64-linux-dbg'
-#hsd_path = '/reg/g/pcds/dist/pds/9.5.10-p8.8.4/build'
-#controlguihsd_path = hsd_path+'/pdsapp/bin/x86_64-linux-dbg'
-hsd_path = pdsappRH7_path
-controlguihsd_path = pdsapp64_path
 
 ami_base      = '/reg/g/pcds/dist/pds/sxr/ami-current/build/'
-#ami_base      = '/reg/g/pcds/dist/pds/ami-epix10kaBeamTest/build/'
-#ami_base      = '/reg/neh/home/weaver/newami/build/'
 ami_path      = ami_base+'ami/bin/x86_64-linux-opt'
 amiRH7_path   = ami_base+'ami/bin/x86_64-rhel7-opt'
 amidbg_path   = ami_base+'ami/bin/x86_64-linux-dbg'
@@ -27,8 +19,6 @@ andor_path     = pdsappRH7_path
 plugin_path    = ami_base+'/ami/lib/x86_64-rhel7-opt'
 
 configdb_path  = '/reg/g/pcds/dist/pds/sxr/misc/.configdbrc'
-#configdb_path  = '/reg/g/pcds/dist/pds/sxr/misc/test.configdbrc'
-
 offlinerc_path = '/reg/g/pcds/dist/pds/sxr/misc'
 onlinextc_path = '/u2/pcds/pds/sxr'
 pnccdCfg_file  = '/reg/g/pcds/dist/pds/amo/misc/pnccdconfig/camp2/pnccdParam2Daq'
@@ -50,11 +40,6 @@ ami_group_base  = '239.255.35'
 slow_readout = '1' # for princeton and andor (slow mode)
 #slow_readout = '0' # for non-princeton
 
-# NB: Only set this to something other than normal when using 'special' detectors like the UXI, Rayonix, or Archon
-#partition_options = '0x20' # extreme disable timeouts - for UXI
-#partition_options = '0x10' # long disable timeouts - for Rayonix
-partition_options = '0' # for normal operation
-
 # NB: set the monitoring node configuration mode
 # 0: Default Mode - balanced AMI/PSANA setup
 # 1: SPI Mode - more PSANA, less AMI
@@ -74,7 +59,6 @@ mon_node_mode = 2
 #ami_opt = ' -L ~sxropr/ami_plugins/libamiuser_EventCodeOn.so,~sxropr/ami_plugins/libamiuser_EventCodeOff.so'
 #ami_opts = ' -R -L /reg/g/pcds/dist/pds/sxr/ami-current/build/ami/lib/x86_64-linux-opt/libtimetooldbd.so'
 ami_opts = ' -R -L '+plugin_path+'/libtimetooldbd.so'
-#ami_opts = ' -L '+plugin_path+'/libtimetooldbd.so'
 
 #    -stylesheet=<Qt display style>
 #ami_style = ' -stylesheet=/reg/g/pcds/dist/pds/sxr/misc/ami_style.txt'
@@ -113,10 +97,9 @@ daq_sxr_dss04=          '172.21.21.87'
 daq_sxr_dss05=          '172.21.21.131'
 daq_sxr_dss06=          '172.21.21.160'
 daq_sxd_spec=           '172.21.23.33'
-daq_sxr_adc01=          '172.21.21.76'
 
-#remove bad dss nodes from list below and report to IT.
-dss_nodes = [daq_sxr_dss02,daq_sxr_dss03, daq_sxr_dss04, daq_sxr_dss05, daq_sxr_dss06 ]
+#remove bad dss nodes from list below and report to it to it.
+dss_nodes = [ daq_sxr_dss01, daq_sxr_dss02, daq_sxr_dss03, daq_sxr_dss04, daq_sxr_dss05, daq_sxr_dss06 ]
 
 
 # Balanced AMI/PSANA MON node setup
@@ -188,9 +171,7 @@ compr_opt = ''
 procmgr_config_base = [
   { host:daq_sxr_dss02,   id:'source',      port:'29150', cmd:pdsappRH7_path + '/source '+ daq_sxr_dss02},
 # {                       id:'control_gui', flags:'sp',   cmd:pdsapp64_path + '/control_gui -D ' + configdb_path + ' -P SXR -E ' + expname + ' -L '+offlinerc_path+'/.offlinerc'},
-  {                       id:'control_gui', flags:'sp',   cmd:pdsapp64_path + '/control_gui -D ' + configdb_path + ' -P SXR -E ' + expname + ' -C '+offlinerc_path+'/.iocrc -L '+offlinerc_path+'/.offlinerc -w '+slow_readout+' -o '+partition_options},
-
-
+  {                       id:'control_gui', flags:'sp',   cmd:pdsapp64_path + '/control_gui -D ' + configdb_path + ' -P SXR -E ' + expname + ' -C '+offlinerc_path+'/.iocrc -L '+offlinerc_path+'/.offlinerc'},
   # Rack24 Triggers
   {host:daq_sxr_master,   id:'evr0',        flags:'sup', rtprio:'50', cmd:pdsapp_path+'/evr -r b -i "0/0/0"'},
   {host:daq_sxr_evr01,    id:'evr1',        flags:'sup',              cmd:pdsappRH7_path+'/evr -r a -i "0/0/1"'},
@@ -199,7 +180,8 @@ procmgr_config_base = [
 # --> Faster EPICS ARCH readout 
   {host:daq_sxr_dss04,    id:'epicsArch',   flags:'sp',               cmd:'/bin/env PATH=/reg/g/pcds/package/epics/3.14/base/current/bin/linux-x86/ '+pdsappRH7_path+'/epicsArch -i 0.1 -f /reg/g/pcds/dist/pds/sxr/misc/epicsArch.txt'},
 
-  {host:daq_sxr_dss04,    id:'bldeb',       flags:'sp',   cmd:pdsappRH7_path+'/bld -m 0x4000048000400004000007'},
+  {host:daq_sxr_dss04,    id:'bldeb',       flags:'sp',   cmd:pdsappRH7_path+'/bld -m 0x48000400004000007'},
+
 
 
 # ------------------------------
@@ -208,9 +190,6 @@ procmgr_config_base = [
 ## ---- Acqiris Setup ---------
  {host:daq_sxr_acq01,    id:'Acq01',         flags:'sup', rtprio:'50',  evr:'0,5', cmd:pdsapp_path+'/acq -P SXR:DAQ:ACQ1  -t -i 12 -d 1'},
  {host:daq_sxr_acq02,    id:'Acq02',         flags:'sup', rtprio:'50',  evr:'0,6', cmd:pdsapp_path+'/acq -P SXR:DAQ:ACQ2 -t  -i 12 -d 2'},
-
-# Digitizer
-#{ host: daq_sxr_adc01,  id:'hsd'    ,flags:'spu',  cmd:hsd_path+'/quadadc -i SxrEndstation/0/Wave8/0 -r0'},
 
 
 
@@ -227,12 +206,12 @@ procmgr_config_base = [
  {host:daq_sxr_cam01,    id:'OPAL2',   flags:'sup',    evr:'0,3',  cmd:pdsappRH7_path+'/camedt -i "SxrEndStation/0/Opal1000/2" -g 0 -c 1'+compr_opt+ ' -L '+timetool_path},  # OPAL2
 
 ## ---- daq-sxr-cam02 ---------
- {host:daq_sxr_cam03,    id:'OPAL3',    flags:'sup',    evr:'0,4',  cmd:pdsappRH7_path+'/camedt -i "SxrEndStation/0/Opal1000/3" -g 0 -c 0'+compr_opt+ ' -L '+timetool_path},  # OPAL3
+ {host:daq_sxr_cam02,    id:'OPAL3',    flags:'sup',    evr:'0,4',  cmd:pdsappRH7_path+'/camedt -i "SxrEndStation/0/Opal1000/3" -g 0 -c 0'+compr_opt+ ' -L '+timetool_path},  # OPAL3
  {host:daq_sxr_cam02,    id:'TSS_OPAL', flags:'sup',    evr:'0,0', cmd:pdsappRH7_path+'/camedt -i "SxrBeamline/0/Opal1000/0"   -g 0 -c 1'+compr_opt+ ' -L '+timetool_path},  # TSS
 
 ## ---- daq-sxr-cam03 ---------
 #  EXS ==> SXR Spectrometer  (NB: Will be migrated to EPICS).  Also, comment this line below out when switching to ioc-sxr-rec01.  Also reboot IOC when connecting to EPICS.
- {host:daq_sxr_cam02,    id:'EXS_OPAL', flags:'sup',    evr:'0,1', cmd:pdsappRH7_path+'/camedt -i "SxrBeamline/0/Opal1000/1" -g 0 -c 0'+compr_opt+ ' -L '+timetool_path},
+ {host:daq_sxr_cam03,    id:'EXS_OPAL', flags:'sup',    evr:'0,1', cmd:pdsappRH7_path+'/camedt -i "SxrBeamline/0/Opal1000/1" -g 0 -c 0'+compr_opt+ ' -L '+timetool_path},
 
 
 ## ---- IPIMB ----
@@ -255,14 +234,6 @@ procmgr_config_base = [
 # Special Detectors
 # ------------------------------
 
-## --------- EPIX100a ----------
-
-{host:daq_sxr_pgp01,          id:'Epix250s',    flags:'sup',    cmd:pdsappRH7_path+'/epix100a -d SxrEndstation -P 0x10 -R 0 -D 0x1770 -T -G'},
-
-## --------- Archon ----------
-
-{host:daq_sxr_cam01,          id:'rixs0',     	flags:'sup',    evr:'1,6', cmd:pdsappRH7_path+'/archon -i "SxrEndstation/0/Archon/0" -H 10.0.0.2'},
-
 ## -------- IMP ---------------
 # {host:daq_sxr_pgp01,          id:'imp0',     flags:'s',    cmd:pdsapp_path+'/imp -p '+platform+' -d SxrBeamline -i 0 -P 0x10 -D 0x1770'},  
 # {host:daq_sxr_pgp01,          id:'imp1',     flags:'s',    cmd:pdsapp_path+'/imp -p '+platform+' -d SxrEndstation -i 0 -P 0x20 -D 0x1770'},
@@ -281,25 +252,24 @@ procmgr_config_base = [
 
 ## PRINCETON
 ## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE!
-  {host:daq_sxr_princeton01, id:'princeton',   flags:'supx', cmd:pdsapp_path+'/princeton -n -c 0 -d -l 5 -i "12/0/0" -g ' + configdb_path},
+#  {host:daq_sxr_princeton01, id:'princeton',   flags:'supx', cmd:pdsapp_path+'/princeton -n -c 0 -d -l 5 -i "12/0/0" -g ' + configdb_path},
 #  {host:daq_sxr_princeton01, id:'princeton2',  flags:'sp', cmd:pdsapp_path+'/princeton -n -c 1 -l 5 -i "12/0/1" -g ' + configdb_path",
 #  {host:daq_sxr_princeton01, id:'rceProxy',     flags:'sp',    cmd:pdsapp64_path+'/rceProxy -r '+rce09+' -t SxrEndstation -v pnCCD -y pnCCDframe -f '+pnccdCfg_file},
 
 ## ANDOR
 ## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE (if using scripts for readout)!
 # JBT - Andor camera for Rohringer under test (new entry in sxr.cnf)
-#{host:daq_sxr_cam02, id:'userAndor', flags:'sxpu', evr:'1,1', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/0" -g ' + configdb_path},
+{host:daq_sxr_cam02, id:'userAndor', flags:'sxpu', evr:'1,1', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/1" -g ' + configdb_path},
 #second andor from yano group because their dual andor may be stuck in customs /7/27/2017
-# For  Holladay experiment Jan 2018 - is using 'Crop' mode a.k.a. the small square ROI fast readout mode
-{host:daq_sxr_cam03, id:'andor', flags:'sxpu', evr:'1,0', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/1" -g ' + configdb_path},
+{host:daq_sxr_cam03, id:'andor', flags:'sxpu', evr:'1,0', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/0" -g ' + configdb_path},
 
 
 
 
 ## LBL Dual CCD ANDOR (Yano Group)
 ## NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE!
-#{host:daq_sxr_cam02, id:'andorBottom',  flags:'sxpu', evr:'1,0', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/1" -g ' + configdb_path},
-#{host:daq_sxr_cam02, id:'andorTop', 	flags:'sxpu', evr:'1,0', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/2" -g ' + configdb_path},
+#{host:daq_sxr_cam02, id:'andorBottom',  flags:'sxpu', evr:'0,9', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/1" -g ' + configdb_path},
+#{host:daq_sxr_cam03, id:'andorTop', 	flags:'sxpu', evr:'0,9', cmd:andor_path+'/andor -n -d -c 0 -l 5 -i "12/0/2" -g ' + configdb_path},
 
 #{host:daq_sxr_cam02, id:'andorTop',    flags:'sxpu', evr:'0,9', cmd:andor_path+'/andor -t SXR:ANDOR:TOP:TEMP -n -d -c 0 -l 5 -i "12/0/1" -g ' + configdb_path},
 #{host:daq_sxr_cam03, id:'andorBottom', flags:'sxpu', evr:'0,9', cmd:andor_path+'/andor -t SXR:ANDOR:BOTTOM:TEMP -n -d -c 0 -l 5 -i "12/0/2" -g ' + configdb_path},
@@ -311,7 +281,7 @@ procmgr_config_base = [
 
 ## Portable Spectrometer ANDOR NOV 2015
 # NB: DON'T FORGET TO SET slow_readout AT TOP OF CNF FILE IF NOT RUNNING IN FULL VERTICAL BINNING MODE !
-#{host:daq_sxd_spec, id:'andor_spec', flags:'sxpu', evr:'1,2', cmd:andor_path+'/andor -t SXD:SPC:ANDOR:TEMP -n -d -c 0 -l 5 -i "12/0/0" -g ' + configdb_path},
+#  {host:daq_sxd_spec, id:'andor', flags:'sxpu', evr:'1,1', cmd:andor_path+'/andor -t SXD:SPC:ANDOR:TEMP -n -d -c 0 -l 5 -i "12/0/0" -g ' + configdb_path},
 
 #Ocean Optics
 #  {host:daq_sxr_princeton01,      id:'oospec_0',     flags:'spx',    cmd:pdsapp_path+'/oceanoptics -i "12/0/0" -d 0 -l 2'},
@@ -344,7 +314,7 @@ for i in range(len(dss_nodes)):
 ami_group_top = ami_group_base+'.0'
 procmgr_config_mon = []
 
-for i in range(min(len(mon_nodes),len(dss_nodes))):
+for i in range(len(mon_nodes)):
    slice = '%d'%i
    mask  = '%d'%(1<<i)
    ami_group = ami_group_base+'.%d'%(i+1)
@@ -354,7 +324,7 @@ for i in range(min(len(mon_nodes),len(dss_nodes))):
 
    for j in range(ami_threads):
       mslice = '%d'%(j+0)
-      procmgr_config_mon.append({host:mon_nodes[i], id:'ami'+slice+'-'+mslice, flags:'s', cmd:amiRH7_path+'/ami -p '+instrument+' -E '+expname+' -i lo -s '+ami_group+' -n '+mslice+ami_opts})
+      procmgr_config_mon.append({host:mon_nodes[i], id:'ami'+slice+'-'+mslice, flags:'s', cmd:amiRH7_path+'/ami -p '+instrument+' -i lo -s '+ami_group+' -n '+mslice+ami_opts})
 
 
 
