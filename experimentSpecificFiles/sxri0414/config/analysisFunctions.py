@@ -187,7 +187,7 @@ def get_projection(detectorObject,thisEvent):
 	if None == myImage:
 		return (zeros(1024))
 	else:
-		return sum(myImage,axis=1)
+		return sum(myImage[370:],axis=0)
 
 
 def genericSummaryZero(detectorObject,thisEvent,previousProcessing):
@@ -373,17 +373,16 @@ def generic_acqiris_analyzer(detectorObject,thisEvent):
 
 def get_raw_acq(detectorObject,thisEvent):
 	
+	mask_start = 4500
+	mask_end   = -1
+	mask_step  =  10
 
 	mask_dict = {}	
-	mask_dict['hsd',1] = [2000,2750]
-	mask_dict['hsd',2] = [2000,2750]
-	mask_dict['hsd',3] = [2000,2750]
-	mask_dict['hsd',4] = [2000,2750]
 
-	mask_dict['acq02',1] = [1100,1350]
-	mask_dict['acq02',2] = [1100,1350]
-	mask_dict['acq02',3] = [1100,1350]
-	mask_dict['acq02',4] = [1100,1350]	#750,2000
+	mask_dict['acq02',1] = [mask_start,mask_end,mask_step]
+	mask_dict['acq02',2] = [1,2,1]
+	mask_dict['acq02',3] = [1,2,1]
+	mask_dict['acq02',4] = [1,2,1]
 
 	selfName = detectorObject['self_name']
 	my_dict = {}
@@ -402,7 +401,7 @@ def get_raw_acq(detectorObject,thisEvent):
 
 		y = the_wave_forms[i]
 
-		my_dict['ch'+str(i+1)] = y[mask_dict[selfName,i+1][0]:mask_dict[selfName,i+1][1] ]
+		my_dict['ch'+str(i+1)] = y[mask_dict[selfName,i+1][0]:mask_dict[selfName,i+1][1]][::mask_dict[selfName,i+1][2]]
 
 	return my_dict
 
